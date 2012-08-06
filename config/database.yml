@@ -1,0 +1,23 @@
+development: &db
+  adapter: mysql2
+  encoding: utf8
+  database: db_21431895n1
+  username: user21431895n1
+  password: tnYt6AuO
+  host:     localhost
+
+test:
+  <<: *db
+
+  database: db_21431895n3
+  username: user21431895n3
+  password: AVfPYGGo
+  host:     localhost
+
+production:
+  <<: *db
+
+  database: db_21431895n2
+  username: user21431895n2
+  password: r7edev7f
+  host:     ny.railshoster.de
