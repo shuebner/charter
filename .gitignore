@@ -15,6 +15,7 @@
 /tmp
 
 # Ignore other unneeded files
+!Dokumentation/
 doc/
 *.swp
 *~

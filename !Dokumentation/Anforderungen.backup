@@ -1,0 +1,128 @@
+\documentclass[a4paper,10pt]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage{kpfonts}
+
+%opening
+\title{Anforderungen an die neue Palve-Müritz-Seite}
+\subtitle{Ausbaustufe 1}
+\author{Sven Hübner}
+
+\begin{document}
+
+\maketitle
+
+\section{Benutzeroberfläche}
+Dieser Abschnitt beschreibt die Seite, wie sie der potenzielle Charter-Kunde zu sehen bekommt.
+
+\subsection{Design}
+Das derzeitige Design wird in etwa eingehalten.
+
+\subsection{Navigation}
+Die derzeitige Navigation wird übernommen bis auf Folgendes:
+\begin{itemize}
+ \item Statt Menüpunkte für jedes einzelne Schiff gibt es nur noch einen Menüpunkt ``Schiffe'', der beim daraufzeigen ausklappt und eine Auswahl des gewünschten Schiffs ermöglicht
+ \item Es gibt eine Übersichtsseite für alle Schiffe mit jeweils Vorschaubild und den wichtigsten Schiffsdaten inkl. Preise 
+ \item Die Ansicht für die einzelnen Schiffe wird überarbeitet und vereinheitlicht 
+ \item Insbesondere werden die Preise der Schiffe auf der Schiffsseite selbst dargestellt und nicht auf einer extra Preisseite
+\end{itemize}
+
+\subsection{Titelseite}
+Die Titelseite enthält einen Begrüßungstext und das erweiterte Palve-Charter-Logo mit Hintergrund.
+
+\subsection{Revier}
+Die Seite Revier enthält einen Text mit einer Beschreibung des Reviers sowie Bildern des Reviers.
+
+\subsection{Törns}
+Die Seite Törnvorschläge enthält einen Text, der verschiedene Törns beschreibt. 
+Fakultativ können Bilder am Anfang links neben dem Text eingebunden werden.
+
+\subsection{Schiffe}
+\subsubsection{Übersicht}
+Die Übersicht über die Schiffe enthält ein Vorschaubild für jedes Schiff, sowie die wichtigsten Informationen über das jeweilige Schiff, d.~h. Name, Modell inkl. Länge, Personenzahl und Preise pro Woche.
+
+Durch Auswählen eines Schiffes gelangt man auf die Seite des gewählten Schiffes.
+
+\subsubsection{Schiffsseite}
+Die Seite eines Schiffes zeigt alle verfügbaren Informationen über dieses Schiff an, insbesondere:
+
+\begin{itemize}
+ \item ein großes Portraitbild sowie Thumbnails zu weiteren Bildern, die in einem neuen Fenster geöffnet werden    
+ \item eine kurze Beschreibung des Schiffes mit seinen speziellen Vorzügen    
+ \item die Daten des Schiffes, d.~h.
+  \begin{itemize}
+    \item Name
+    \item Hersteller und Modell
+    \item Baujahr
+    \item Refit-Jahr
+    \item Motorbezeichnung
+    \item Motorbauart (Außenborder, Saildrive usw.)
+    \item Motorleistung in PS
+    \item Heimathafen
+  \end{itemize}
+ \item die Daten des Schiffstyps, zu dem das Schiff gehört, d.~h.
+  \begin{itemize}
+    \item Länge über alles
+    \item Länger Wasserlinie
+    \item Breite über alles
+    \item Tiefgang
+    \item Höhe
+    \item Verdrängung
+    \item Segelfläche Genua, Fock, Großsegel, Fock+Großsegel, Genua+Großsegel
+    \item Tankvolumen Diesel, Trinkwasser
+    \item Stehhöhe normal und maximal (z.~B. durch Hubdach)
+    \item Anzahl der festen Kojen
+    \item Anzahl der zusätzlichen Kojen durch Umbau
+    \item maximale Anzahl an Gästen über Nacht
+    \item empfohlene Anzahl an Gästen über Nacht
+   \end{itemize}
+ \item die wichtigsten Ausrüstungsgegenstände des Schiffes
+ \item die Kosten des Schiffes, d.~h.
+   \begin{itemize}
+    \item Chartergebühr für die verschiedenen Zeiträume
+    \item Nebenkosten wie Kraftstoff und Gas
+    \item Endreinigung    
+   \end{itemize}
+ \item die möglichen zusätzlichen Ausrüstungsgegenstände für dieses Schiff und deren Kosten pro Tag und pro Woche
+\end{itemize}
+
+\subsection{Anmeldung}
+Auf der Anmeldeseite befindet sich ein Anmeldeformular für potenzielle Kunden, die dort ihre zur Buchung notwendigen Daten hinterlassen können. 
+Wird ein Anmeldeformular abgeschickt, wird automatisch eine E-Mail mit den Formulardaten an den zuständigen Ansprechpartner verschickt.
+
+\subsection{Bildergallerie}
+Die Bildergallerie enthält Folgendes:
+
+\begin{itemize}
+ \item Bilder des Reviers
+ \item Bilder der Schiffe in Aktion
+ \item die Vorschaubilder aller Schiffe
+\end{itemize}
+
+Bilder von Einzelheiten der Schiffe werden nicht in die Bildergallerie aufgenommen.
+
+\subsection{Impressum und Kontakt}
+Hier befinden sich noch einmal gesammelt die Kontaktinformationen von Palve-Charter und ihre Finanzamtsdaten.
+
+\subsection{Unsere Partner}
+Hier befinden sich Links zu den Seiten, auf denen Palve-Charter mit Anzeigen vertreten ist.
+
+
+\section{Administrationsoberfläche}
+Dieser Abschnitt beschreibt, welche Funktionen in der passwortgeschützten Administrationsoberfläche zur Verfügung stehen.
+
+\subsection{Verwaltung der Texte}
+Die Texte der Startseite, Revierbeschreibung, Törnbeschreibung und Impressum können hier geändert werden. 
+Außerdem können zu verwendende Bilder hinzugefügt, geändert und gelöscht werden.
+
+\subsection{Verwaltung der Schiffsdaten}
+Hier können neue Schiffe hinzugefügt und vorhandene Schiffe geändert sowie gelöscht werden. 
+Dies umfasst alle technischen Daten, den Beschreibungstext, die vorhandenen sowie zusätzlich buchbaren Ausrüstungs\-gegenstände, sowie alle auf der Schiffsseite befindlichen Bilder.
+Auch die Chartergebühr, Endreinigungskosten sowie Zusatzkosten für jedes einzelne Schiff können hier geändert werden.
+
+\subsection{Verwaltung der Bildergallerie}
+Hier kann festgelegt werden, welche Bilder in der Bildergallerie erscheinen sollen.
+Automatisch erscheinen alle Vorschaubilder der Schiffe sowie alle Revierbilder.
+Es können zusätzliche Bilder für die Gallerie hochgeladen und wieder entfernt werden.
+Das Entfernen von automatisch angezeigten Bildern ist hier nicht möglich.
+
+\end{document}
