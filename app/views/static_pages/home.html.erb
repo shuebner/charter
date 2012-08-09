@@ -1,2 +1,7 @@
-<h1>StaticPages#home</h1>
-<p>Find me in app/views/static_pages/home.html.erb</p>
+<% provide(:title, @page.title) %>
+<% if @page.heading %>
+  <h1><%= @page.heading %></h1>
+<% end %>
+<% if @page.text %>
+  <%= @page.text%>
+<% end %>
