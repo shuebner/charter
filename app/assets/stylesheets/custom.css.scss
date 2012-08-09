@@ -1,0 +1,17 @@
+$navigation_width: 15em;
+
+#navigation {
+  float: left;
+  width: $navigation_width;
+  
+  border: 1px solid black;
+  
+  li {
+    list-style: none;
+  }
+}
+
+#content {
+  margin-left: $navigation_width;
+  padding: 0 1em;
+}
