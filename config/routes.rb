@@ -3,7 +3,9 @@ Charter::Application.routes.draw do
   root to: 'static_pages#home'
 
   match '/start', to: 'static_pages#home'
-  
+  match '/revier', to: 'static_pages#area', as: 'area'
+  match '/toerns', to: 'static_pages#trips', as: 'trips'
+  match '/impressum', to: 'static_pages#imprint', as: 'imprint'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

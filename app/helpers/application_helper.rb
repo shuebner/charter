@@ -7,14 +7,14 @@ module ApplicationHelper
   end
 
   def full_title(title)
-    if title
-      base_title + " | " + (title)
-    else
+    if title.blank?
       base_title
+    else
+      base_title + " | " + (title)
     end
   end
 
   def sanitize_text (text)
-    sanitize text, tags: %w(p h2 h3 a)
+    sanitize text, tags: Charter::Application.config.allowed_tags_in_text
   end
 end
