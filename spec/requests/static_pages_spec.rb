@@ -6,7 +6,7 @@ describe "StaticPages" do
 
   describe "home page" do
     before do 
-      StaticPage.create(name: 'start', title: 'Willkommen', 
+      StaticPage.create!(name: 'start', title: 'Willkommen', 
         heading: 'Start', text: 'Hier ist Palve-Charter Müritz')
       visit root_path
     end
@@ -18,7 +18,7 @@ describe "StaticPages" do
 
   describe "area page" do
     before do
-      StaticPage.create(name: 'area', title: 'Revier',
+      StaticPage.create!(name: 'area', title: 'Revier',
         heading: 'Revier', text: 'Mecklenburgische Seenplatte')
       visit area_path
     end
@@ -30,7 +30,7 @@ describe "StaticPages" do
 
   describe "trip page" do
     before do
-      StaticPage.create(name: 'trips', title: 'Törns',
+      StaticPage.create!(name: 'trips', title: 'Törns',
         heading: 'Törns', text: 'Törnvorschläge für die Müritz')
       visit trips_path
     end
@@ -42,7 +42,7 @@ describe "StaticPages" do
 
   describe "imprint page" do
     before do
-      StaticPage.create(name: 'imprint', title: 'Impressum',
+      StaticPage.create!(name: 'imprint', title: 'Impressum',
         heading: 'Impressum', text: 'Klaus Wenz<br>Palve-Charter')
       visit imprint_path
     end
