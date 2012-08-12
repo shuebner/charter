@@ -49,6 +49,7 @@ describe "StaticPages" do
 
     it { should have_selector('title', text: 'Impressum') }
     it { should have_selector('h1', text: 'Impressum') }
-    it { should have_content('Klaus Wenz<br>Palve-Charter') }   
+    it { should have_content('Klaus Wenz') }   
+    it { should have_selector('br') }
   end 
 end
