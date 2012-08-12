@@ -2,6 +2,7 @@ include ApplicationHelper
 
 class StaticPage < ActiveRecord::Base
   attr_accessible :heading, :name, :text, :title
+  has_many :paragraphs, dependent: :destroy
 
   validates :name,
     presence: true,

@@ -1,33 +1,32 @@
 require 'spec_helper'
 
 describe StaticPage do
-  before { @static_page = StaticPage.new(name: 'start', title: 'Willkommen', 
-    heading: 'Segeln mit Palve-Charter', 
-    text: %#<h2>Hallo</h2><h3>zusammen</h3><p><a href="www.google.de">Test</a></p>#) }
+  let(:page) { FactoryGirl.create(:static_page) }
 
-  subject { @static_page }
+  subject { page }
 
   it { should respond_to(:name) }
   it { should respond_to(:title) }
   it { should respond_to(:heading) }
   it { should respond_to(:text) }
+  it { should respond_to(:paragraphs) }
 
   it { should be_valid }
 
   describe "when name" do
     describe "is not present" do
-      before { @static_page.name = " " }
+      before { page.name = " " }
       it { should_not be_valid }
     end
 
     describe "is too long" do
-      before { @static_page.name = 'a' * 31 }
+      before { page.name = 'a' * 31 }
       it { should_not be_valid}
     end
 
     describe "already exists" do
       before do 
-        @static_page_with_same_title = @static_page.dup
+        @static_page_with_same_title = page.dup
         @static_page_with_same_title.name = @static_page_with_same_title.name.upcase
         @static_page_with_same_title.save
       end
@@ -37,41 +36,52 @@ describe StaticPage do
 
   describe "when title" do
     describe "is not present" do
-      before { @static_page.name = " " }
+      before { page.name = " " }
       it { should_not be_valid }
     end
 
     describe "is too long" do
-      before { @static_page.title = 'a' * 101 }
+      before { page.title = 'a' * 101 }
       it { should_not be_valid }
     end
   end
 
   describe "when heading" do
     describe "is to long" do
-      before { @static_page.heading = 'a' * 101 }
+      before { page.heading = 'a' * 101 }
       it { should_not be_valid}
     end
   end
 
   describe "when text" do
     describe "uses forbidden HTML tags" do
-      before { @static_page.text = '<h1>h</h1> blablabla' }
+      before { page.text = '<h1>h</h1> blablabla' }
       it { should_not be_valid }
     end
-=begin
-    describe "uses allowed HTML tags but is not valid HTML because" do
-      describe "tags are not closed" do
-        before { @static_page.text = '<h2>Moin' }
-        it { should_not be_valid }
-      end
+  end
 
-      describe "the wrong close tag is used" do
-        before { @static_page.text = '<h2>Moin</h3>' }
-        it { should_not be_valid }
-      end      
+  describe "paragraph associations" do
+    before { page.save }
+    let!(:second_paragraph) do
+      FactoryGirl.create(:paragraph, static_page: page, order: 1)
     end
-=end
+    let!(:first_paragraph) do
+      FactoryGirl.create(:paragraph, static_page: page, order: 0)
+    end
+
+    it "should have the right paragraphs in the right order" do
+      page.paragraphs.should == [first_paragraph, second_paragraph]
+    end
+
+    it "should destroy associated paragraphs" do
+      paragraphs = page.paragraphs
+      page.destroy
+      paragraphs.each do |paragraph|
+        lambda do
+          Paragraph.find(paragraph.id)
+        end.should raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
   end
 end
 # == Schema Information
