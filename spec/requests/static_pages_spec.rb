@@ -18,7 +18,7 @@ describe "StaticPages" do
 
   describe "area page" do
     before do
-      StaticPage.create!(name: 'area', title: 'Revier',
+      StaticPage.create!(name: 'revier', title: 'Revier',
         heading: 'Revier', text: 'Mecklenburgische Seenplatte')
       visit area_path
     end
@@ -30,7 +30,7 @@ describe "StaticPages" do
 
   describe "trip page" do
     before do
-      StaticPage.create!(name: 'trips', title: 'Törns',
+      StaticPage.create!(name: 'toerns', title: 'Törns',
         heading: 'Törns', text: 'Törnvorschläge für die Müritz')
       visit trips_path
     end
@@ -42,14 +42,13 @@ describe "StaticPages" do
 
   describe "imprint page" do
     before do
-      StaticPage.create!(name: 'imprint', title: 'Impressum',
+      StaticPage.create!(name: 'impressum', title: 'Impressum',
         heading: 'Impressum', text: 'Klaus Wenz<br>Palve-Charter')
       visit imprint_path
     end
 
     it { should have_selector('title', text: 'Impressum') }
     it { should have_selector('h1', text: 'Impressum') }
-    it { should have_content('Klaus Wenz') }   
-    it { should have_selector('br') }
+    it { should have_content('Klaus Wenz<br>Palve-Charter') }
   end 
 end
