@@ -1,22 +1,24 @@
 
 class StaticPagesController < ApplicationController
   def home
-    @page = StaticPage.find_by_name('start')
-    render 'page'
+    fetch 'start'
   end
 
   def area
-    @page = StaticPage.find_by_name('revier')
-    render 'page'
+    fetch 'revier'
   end
 
   def trips
-    @page = StaticPage.find_by_name('toerns')
-    render 'page'
+    fetch 'toerns'
   end
 
   def imprint
-    @page = StaticPage.find_by_name('impressum')
+    fetch 'impressum'
+  end
+
+  private
+  def fetch(page)
+    @page = StaticPage.find_by_name(page)
     render 'page'
   end
 end
