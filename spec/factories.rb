@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :static_page do
-    name    "page"
+    name    "start"
     title   "Seite"
     heading "Überschrift"
     text    %#Text mit <h2>Überschrift</h2><h3>Unterüberschrift</h3><p>Einem
@@ -12,9 +12,11 @@ FactoryGirl.define do
 
   factory :paragraph do
     sequence(:heading) { |n| "Abschnitt #{n}" }
-    text     "Hier ist ein Text für den Abschnitt, der vielleicht Unter
+    sequence(:text) do |n| 
+      "Hier ist ein Text für den #{n}. Abschnitt, der vielleicht Unter
       Umständen und mit viel Glück auch zur Abwechslung mal länger ist als
       eine einzige Zeile"
+    end
     sequence(:order) { |n| n }
     static_page
   end

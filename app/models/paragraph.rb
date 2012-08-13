@@ -8,7 +8,8 @@ class Paragraph < ActiveRecord::Base
 
   validates :heading,
     length: { maximum: 255 },
-    format: { with: /\S(.*)/ }
+    # match empty string or string that starts with non-whitespace character
+    format: { with: /^$|\S(.*)/ }
 
   validates :order,
     presence: true

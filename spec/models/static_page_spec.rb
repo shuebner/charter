@@ -14,7 +14,12 @@ describe StaticPage do
   it { should be_valid }
 
   describe "when name" do
-    describe "is not present" do
+    describe "is nil" do
+      before { page.name = nil }
+      it { should_not be_valid }
+    end
+
+    describe "is blank" do
       before { page.name = " " }
       it { should_not be_valid }
     end
@@ -35,8 +40,13 @@ describe StaticPage do
   end
 
   describe "when title" do
-    describe "is not present" do
-      before { page.name = " " }
+    describe "is nil" do
+      before { page.title = nil }
+      it { should_not be_valid }
+    end
+
+    describe "is blank" do
+      before { page.title = " " }
       it { should_not be_valid }
     end
 
@@ -47,13 +57,23 @@ describe StaticPage do
   end
 
   describe "when heading" do
-    describe "is to long" do
+    describe "when heading is nil" do
+      before { page.heading = nil }
+      it { should be_valid }
+    end
+
+    describe "is too long" do
       before { page.heading = 'a' * 101 }
       it { should_not be_valid}
     end
   end
 
   describe "when text" do
+    describe "is nil" do
+      before { page.text = nil }
+      it { should be_valid }
+    end
+
     describe "uses forbidden HTML tags" do
       before { page.text = '<h1>h</h1> blablabla' }
       it { should_not be_valid }
