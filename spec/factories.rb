@@ -13,7 +13,7 @@ FactoryGirl.define do
   factory :paragraph do
     sequence(:heading) { |n| "Abschnitt #{n}" }
     sequence(:text) do |n| 
-      "Hier ist ein Text für den #{n}. Abschnitt, der vielleicht Unter
+      "Hier ist ein Text für den #{n}. Abschnitt, der vielleicht unter
       Umständen und mit viel Glück auch zur Abwechslung mal länger ist als
       eine einzige Zeile"
     end

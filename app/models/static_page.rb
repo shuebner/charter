@@ -14,7 +14,9 @@ class StaticPage < ActiveRecord::Base
     length: { maximum: 100 }
 
   validates :heading,
-    length: { maximum: 100 }
+    length: { maximum: 100 },
+    # match empty string or string that starts with non-whitespace character
+    format: { with: /^$|\S(.*)/ }    
 
   validates :text,
     constricted_html: true

@@ -10,5 +10,15 @@ namespace :db do
       heading: 'Törns', text: 'Törnvorschläge für die Müritz')
     StaticPage.create!(name: 'impressum', title: 'Impressum',
       heading: 'Impressum', text: 'Klaus Wenz<br>Palve-Charter')
+
+    start = StaticPage.find_by_name('start')
+    3.times do |n|
+      start.paragraphs.create!(
+        heading: "Abschnitt #{n}", 
+        text: "Hier ist ein Text für den #{n}. Abschnitt, der vielleicht unter
+          Umständen und mit viel Glück auch zur Abwechslung mal länger ist als
+          eine einzige Zeile",
+        order: n)
+    end
   end
 end

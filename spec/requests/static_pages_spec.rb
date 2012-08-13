@@ -64,33 +64,34 @@ describe "StaticPages" do
       it { should_not have_selector('h1') }
     end
 
-    describe "with paragraphs only" do
-      
+    describe "when paragraphs have no heading" do
+      let!(:static_page) { FactoryGirl.create(:static_page, text: nil) }
+      let!(:paragraph1) do
+        FactoryGirl.create(:paragraph, static_page: static_page, heading: nil)
+      end
+
+      before { visit start_path }
+
+      it { should_not have_selector('h2') }
+    end
+
+    describe "with paragraphs" do      
       let!(:static_page) { FactoryGirl.create(:static_page, text: nil) }
       let!(:paragraph1) { FactoryGirl.create(:paragraph, static_page: static_page) }
       let!(:paragraph2) { FactoryGirl.create(:paragraph, static_page: static_page) }
       before { visit start_path }
 
+      it { should have_selector('h2') }
       it { should have_selector('h2', text: paragraph1.heading) }
       it { should have_selector('p', text: paragraph1.text) }
       
       it { should have_selector('h2', text: paragraph2.heading) }
       it { should have_selector('p', text: paragraph2.text) }
-
-      describe "when paragraphs have no heading" do
-        let!(:static_page) { FactoryGirl.create(:static_page, text: nil) }
-        let!(:paragraph1) do
-          FactoryGirl.create(:paragraph, static_page: static_page, heading: nil)
-        end
-
-        before { visit start_path }
-
-        it { should_not have_selector('h2') }
-      end
     end
 
     describe "without paragraphs" do
       let(:static_page) { FactoryGirl.create(:static_page, text: nil) }
+      it { should_not have_selector('p') }
       it { should_not have_selector('h2') }
     end
   end
