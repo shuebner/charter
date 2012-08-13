@@ -2,9 +2,10 @@
 require 'spec_helper'
 
 describe "StaticPages" do
+  
   subject { page }
 
-  describe "home page" do
+  describe "home page" do    
     before do 
       StaticPage.create!(name: 'start', title: 'Willkommen', 
         heading: 'Start', text: 'Hier ist Palve-Charter Müritz')
@@ -49,6 +50,6 @@ describe "StaticPages" do
 
     it { should have_selector('title', text: 'Impressum') }
     it { should have_selector('h1', text: 'Impressum') }
-    it { should have_content('Klaus Wenz<br>Palve-Charter') }
+    it { should have_content('Klaus Wenz') }
   end 
 end
