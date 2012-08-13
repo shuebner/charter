@@ -14,7 +14,11 @@ module ApplicationHelper
     end
   end
 
-  def sanitize_text (text)
-    sanitize text, tags: Charter::Application.config.allowed_tags_in_text
+  def sanitize_page_text (text)
+    sanitize text, tags: Charter::Application.config.allowed_tags_in_page_text
+  end
+
+  def sanitize_paragraph_text (text)
+    sanitize text, tags: Charter::Application.config.allowed_tags_in_paragraph_text
   end
 end

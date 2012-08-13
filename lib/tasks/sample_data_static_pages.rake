@@ -12,7 +12,7 @@ namespace :db do
       heading: 'Impressum', text: 'Klaus Wenz<br>Palve-Charter')
 
     start = StaticPage.find_by_name('start')
-    3.times do |n|
+    (1..3).each do |n|
       start.paragraphs.create!(
         heading: "Abschnitt #{n}", 
         text: "Hier ist ein Text für den #{n}. Abschnitt, der vielleicht unter

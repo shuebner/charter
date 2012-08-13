@@ -47,6 +47,11 @@ describe Paragraph do
       it { should_not be_valid }
     end
   end
+
+  describe "when text contains HTML" do
+    before { paragraph.text = "<h1>h1</h1><h2>h2</h2><p>p</p>" }
+    it { should_not be_valid }
+  end
 end
 # == Schema Information
 #

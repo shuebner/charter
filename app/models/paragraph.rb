@@ -1,3 +1,5 @@
+include ApplicationHelper
+
 class Paragraph < ActiveRecord::Base
   attr_accessible :heading, :text, :order
   belongs_to :static_page
@@ -13,6 +15,13 @@ class Paragraph < ActiveRecord::Base
 
   validates :order,
     presence: true
+
+  validates :text,
+    no_html: true
+
+  before_save do |paragraph|
+    paragraph.text = sanitize_paragraph_text text
+  end
 end
 # == Schema Information
 #

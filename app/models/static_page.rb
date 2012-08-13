@@ -23,7 +23,7 @@ class StaticPage < ActiveRecord::Base
 
   before_save do |page|
     page.name = name.downcase
-    page.text = sanitize_text text
+    page.text = sanitize_page_text text
   end
 end
 
