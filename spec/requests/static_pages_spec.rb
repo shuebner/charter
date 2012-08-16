@@ -53,6 +53,14 @@ describe "StaticPages" do
     it { should have_content('Klaus Wenz') }
   end
 
+  describe "invalid page request" do
+    it "should raise a routing exception" do
+      lambda do
+        visit 'ungueltig'
+      end.should raise_error(ActionController::RoutingError)
+    end
+  end
+
   describe "general page content" do
      
     describe "without heading" do
