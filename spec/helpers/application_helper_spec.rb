@@ -16,14 +16,14 @@ describe ApplicationHelper do
     end
   end
 
-  describe "sanitize_text" do
+  describe "sanitize_page_text" do
     it "should remove forbidden HTML tags" do
-      sanitize_text("<script>bla</script>").should_not =~ /<script>/
+      sanitize_page_text("<script>bla</script>").should_not =~ /<script>/
     end
 
     it "should not remove allowed HTML tags" do
-      Charter::Application.config.allowed_tags_in_text.each do |tag|
-        sanitize_text("<#{tag}>").should =~ /<#{tag}>/
+      Charter::Application.config.allowed_tags_in_page_text.each do |tag|
+        sanitize_page_text("<#{tag}>").should =~ /<#{tag}>/
       end
     end
   end
