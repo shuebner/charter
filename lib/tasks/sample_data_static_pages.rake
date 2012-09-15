@@ -15,9 +15,9 @@ namespace :db do
     (1..3).each do |n|
       start.paragraphs.create!(
         heading: "Abschnitt #{n}", 
-        text: "Hier ist ein Text für den #{n}. Abschnitt, der vielleicht unter
-          Umständen und mit viel Glück auch zur Abwechslung mal länger ist als
-          eine einzige Zeile",
+        text: "Hier ist ein Text für den #{n}. Abschnitt, der vielleicht "\
+              "unter Umständen und mit viel Glück auch zur Abwechslung mal "\
+              "länger ist als eine einzige Zeile",
         order: n)
     end
   end

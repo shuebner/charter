@@ -1,8 +1,9 @@
 include ApplicationHelper
 
 class StaticPage < ActiveRecord::Base
-  attr_accessible :heading, :slug, :text, :title
+  attr_accessible :heading, :slug, :text, :title, :paragraphs_attributes
   has_many :paragraphs, dependent: :destroy
+  accepts_nested_attributes_for :paragraphs, allow_destroy: true
 
   validates :slug,
     presence: true,
