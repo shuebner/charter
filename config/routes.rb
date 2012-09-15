@@ -1,5 +1,9 @@
 Charter::Application.routes.draw do
 
+  ActiveAdmin.routes(self)
+
+  devise_for :admin_users, ActiveAdmin::Devise.config
+
   root to: 'static_pages#show', defaults: { slug: 'start' }
 
   get '/start', to: 'static_pages#show', 
