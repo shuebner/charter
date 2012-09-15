@@ -7,7 +7,7 @@ describe "StaticPages" do
 
   describe "home page should be accessible" do    
     before do 
-      StaticPage.create!(name: 'start', title: 'Willkommen', 
+      StaticPage.create!(slug: 'start', title: 'Willkommen', 
         heading: 'Start', text: 'Hier ist Palve-Charter Müritz')
       visit root_path
     end
@@ -19,7 +19,7 @@ describe "StaticPages" do
 
   describe "area page should be accessible" do
     before do
-      StaticPage.create!(name: 'revier', title: 'Revier',
+      StaticPage.create!(slug: 'revier', title: 'Revier',
         heading: 'Revier', text: 'Mecklenburgische Seenplatte')
       visit area_path
     end
@@ -31,7 +31,7 @@ describe "StaticPages" do
 
   describe "trip page should be accessible" do
     before do
-      StaticPage.create!(name: 'toerns', title: 'Törns',
+      StaticPage.create!(slug: 'toerns', title: 'Törns',
         heading: 'Törns', text: 'Törnvorschläge für die Müritz')
       visit trips_path
     end
@@ -43,7 +43,7 @@ describe "StaticPages" do
 
   describe "imprint page should be accessible" do
     before do
-      StaticPage.create!(name: 'impressum', title: 'Impressum',
+      StaticPage.create!(slug: 'impressum', title: 'Impressum',
         heading: 'Impressum', text: 'Klaus Wenz<br>Palve-Charter')
       visit imprint_path
     end

@@ -1,10 +1,10 @@
 include ApplicationHelper
 
 class StaticPage < ActiveRecord::Base
-  attr_accessible :heading, :name, :text, :title
+  attr_accessible :heading, :slug, :text, :title
   has_many :paragraphs, dependent: :destroy
 
-  validates :name,
+  validates :slug,
     presence: true,
     length: { maximum: 30 },
     uniqueness: true
@@ -22,17 +22,17 @@ class StaticPage < ActiveRecord::Base
     constricted_html: true
 
   before_save do |page|
-    page.name = name.downcase
+    page.slug = slug.downcase
     page.text = sanitize_page_text text
   end
 end
 
 # == Schema Information
 #
-# Table name: static_pages
+# Table slug: static_pages
 #
 #  id         :integer(4)      not null, primary key
-#  name       :string(30)      not null
+#  slug       :string(30)      not null
 #  title      :string(100)     not null
 #  heading    :string(100)
 #  text       :text

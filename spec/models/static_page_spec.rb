@@ -5,7 +5,7 @@ describe StaticPage do
 
   subject { page }
 
-  it { should respond_to(:name) }
+  it { should respond_to(:slug) }
   it { should respond_to(:title) }
   it { should respond_to(:heading) }
   it { should respond_to(:text) }
@@ -13,26 +13,26 @@ describe StaticPage do
 
   it { should be_valid }
 
-  describe "when name" do
+  describe "when slug" do
     describe "is nil" do
-      before { page.name = nil }
+      before { page.slug = nil }
       it { should_not be_valid }
     end
 
     describe "is blank" do
-      before { page.name = " " }
+      before { page.slug = " " }
       it { should_not be_valid }
     end
 
     describe "is too long" do
-      before { page.name = 'a' * 31 }
+      before { page.slug = 'a' * 31 }
       it { should_not be_valid}
     end
 
     describe "already exists" do
       before do 
         @static_page_with_same_title = page.dup
-        @static_page_with_same_title.name = @static_page_with_same_title.name.upcase
+        @static_page_with_same_title.slug = @static_page_with_same_title.slug.upcase
         @static_page_with_same_title.save
       end
       it { should_not be_valid }
@@ -106,10 +106,10 @@ describe StaticPage do
 end
 # == Schema Information
 #
-# Table name: static_pages
+# Table slug: static_pages
 #
 #  id         :integer(4)      not null, primary key
-#  name       :string(30)      not null
+#  slug       :string(30)      not null
 #  title      :string(100)     not null
 #  heading    :string(100)
 #  text       :text
