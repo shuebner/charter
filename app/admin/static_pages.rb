@@ -20,7 +20,6 @@ ActiveAdmin.register StaticPage do
 
   form do |f|
     f.inputs "Seite" do
-      f.input :title
       f.input :heading
       f.input :text
     end
