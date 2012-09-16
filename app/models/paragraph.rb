@@ -14,7 +14,8 @@ class Paragraph < ActiveRecord::Base
     format: { with: /^$|\S(.*)/ }
 
   validates :order,
-    presence: true
+    presence: true,
+    uniqueness: { scope: :static_page_id }
 
   validates :text,
     no_html: true

@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :static_page do
-    slug    "start"
-    title   "Seite"
+    slug "start"
+    title "Seite"
     heading "Überschrift"
     text    %#Text mit <h2>Überschrift</h2><h3>Unterüberschrift</h3><p>Einem
       Absatz</p>und einem <br> Zeilenwechsel und einem <a href="www.google.de">

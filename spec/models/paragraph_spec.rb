@@ -4,7 +4,7 @@ require 'spec_helper'
 describe Paragraph do
   
   let(:page) { FactoryGirl.create(:static_page) }    
-  let(:paragraph) { FactoryGirl.create(:paragraph, static_page: page) }
+  let(:paragraph) { FactoryGirl.build(:paragraph, static_page: page) }
 
   subject { paragraph }
 
@@ -31,9 +31,29 @@ describe Paragraph do
     it { should_not be_valid }
   end
 
-  describe "when order is not present" do
-    before { paragraph.order = nil }
-    it { should_not be_valid }
+  describe "when order" do
+    describe "is not present" do
+      before { paragraph.order = nil }
+      it { should_not be_valid }
+    end
+
+    describe "is not unique" do
+      before do
+        paragraph_with_same_order = paragraph.dup
+        paragraph_with_same_order.save
+      end
+      it { should_not be_valid }
+    end
+
+    describe "is not unique for multiple static pages" do
+      before do
+        page2 = FactoryGirl.create(:static_page, slug: 'slug2')
+        paragraph_with_same_order = page2.paragraphs.create(heading: '2', 
+          text: 'Abschnitt 2', order: paragraph.order)
+        paragraph_with_same_order.save
+      end
+      it { should be_valid }
+    end
   end
 
   describe "when heading" do
