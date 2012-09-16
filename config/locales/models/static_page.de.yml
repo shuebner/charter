@@ -1,0 +1,9 @@
+de:
+  activerecord:
+    models:
+      static_page:
+        one: Statische Seite
+        other: Statische Seiten
+    attributes:      
+      static_page:
+        title: Titel

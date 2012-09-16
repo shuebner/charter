@@ -1,0 +1,9 @@
+de:
+  activerecord:
+    models:
+      paragraph:
+        one: Abschnitt
+        other: Abschnitte
+    attributes:
+      paragraph:
+        order: Reihenfolge

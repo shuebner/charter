@@ -1,0 +1,6 @@
+de:
+  attributes:
+    heading: Überschrift
+    text: Text
+    created_at: Erstellt am
+    updated_at: Geändert am
