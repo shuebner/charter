@@ -16,9 +16,13 @@ ActiveAdmin.register StaticPage do
       row :heading
       row :text
       row :picture do
-        image_tag(page.picture.thumb('200x200').url)
+        page.picture.nil? ? I18n.t('no_picture_available') :
+          image_tag(page.picture.thumb('200x200').url)
       end
-      row :picture_name
+      row :picture_name do
+        page.picture.nil? ? I18n.t('no_picture_available') :
+          page.picture_name
+      end
       unless page.paragraphs.empty?
         table_for page.paragraphs do
           column :heading do |paragraph|
