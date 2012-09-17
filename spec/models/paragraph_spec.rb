@@ -12,6 +12,8 @@ describe Paragraph do
   it { should respond_to(:text) }
   it { should respond_to(:order) }
   it { should respond_to(:static_page_id) }
+  it { should respond_to(:picture_uid) }
+  it { should respond_to(:picture_name) }
   
   it { should respond_to(:static_page) }
   its(:static_page) { should == page }

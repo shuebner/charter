@@ -2,7 +2,7 @@ $navigation_width: 15em;
 
 #page {
   margin: 0 auto;
-  width: 1024px;
+  width: 900px;
   border: 1px dashed grey;
 }
 
@@ -20,25 +20,27 @@ $navigation_width: 15em;
 #content {
   margin-left: $navigation_width;
   padding: 0 1em;
+  border: 1px dashed grey;
 }
 
 .static_page {
-  .text {
-    text-align: justify;
-    img {
-      float: left;
-      margin-right: 10px;
-      margin-bottom: 20px;
-    }
+  text-align: justify;
+  img {
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 20px;
   }
+  
   .paragraph_wrapper {
-    p, h2 {
+    h2, p {
       clear: left;
     }
   }
 }
 
 header, footer {
+  clear: left;
   text-align: center;
   padding: 1em 0;
+  border: 1px dashed grey;
 }

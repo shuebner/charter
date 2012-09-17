@@ -1,6 +1,7 @@
-<% if paragraph.heading %>
-  <h2><%= paragraph.heading %></h2>
-<% end %>
-<% if paragraph.text %>
-  <p><%= paragraph.text %></p>
-<% end %>
+<div class="paragraph">
+  <h2><%= paragraph.heading if paragraph.heading %></h2>
+  <p>
+    <%= image_tag(paragraph.picture.thumb('200x200').url) if paragraph.picture %>
+    <%= paragraph.text %>
+  </p>
+</div>

@@ -28,6 +28,11 @@ ActiveAdmin.register StaticPage do
           column :text do |paragraph|
             paragraph.text
           end
+          column :picture do |paragraph|
+            paragraph.picture.nil? ? I18n.t('no_picture_available') :
+              image_tag(paragraph.picture.thumb('200x200').url)
+          end
+          column :picture_name
         end
       end
     end
@@ -53,6 +58,11 @@ ActiveAdmin.register StaticPage do
         p.input :order
         p.input :heading
         p.input :text
+        p.input :picture_name
+        p.input :picture, as: :file, hint:
+          p.object.picture.nil? ? p.template.content_tag(:span, I18n.t('no_picture_available')) :
+            p.template.image_tag(p.object.picture.thumb('200x200').url)
+        p.input :remove_picture, as: :boolean
       end
     end
     f.buttons

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120917074528) do
+ActiveRecord::Schema.define(:version => 20120917131231) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -53,6 +53,8 @@ ActiveRecord::Schema.define(:version => 20120917074528) do
     t.integer  "static_page_id", :null => false
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.string   "picture_uid"
+    t.string   "picture_name"
   end
 
   add_index "paragraphs", ["order"], :name => "index_paragraphs_on_order"

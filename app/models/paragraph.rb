@@ -1,8 +1,10 @@
 include ApplicationHelper
 
 class Paragraph < ActiveRecord::Base
-  attr_accessible :heading, :text, :order
+  attr_accessible :heading, :text, :order, :picture, :picture_name, 
+    :remove_picture, :retained_picture
   belongs_to :static_page
+  image_accessor :picture
   default_scope order: 'paragraphs.order ASC'
 
   validates :static_page_id,
