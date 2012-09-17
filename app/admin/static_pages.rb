@@ -15,11 +15,12 @@ ActiveAdmin.register StaticPage do
     attributes_table do 
       row :heading
       row :text
+      row :picture do
+        image_tag(page.picture.thumb('200x200').url)
+      end
+      row :picture_name
       unless page.paragraphs.empty?
         table_for page.paragraphs do
-          column :order do |paragraph|
-            paragraph.order
-          end
           column :heading do |paragraph|
             paragraph.heading
           end
@@ -31,25 +32,26 @@ ActiveAdmin.register StaticPage do
     end
   end
 
-  form html: {enctype: "multipart/form-data"} do |f|
-    f.inputs "Statische Seite", multipart: true do
+  form html: { enctype: "multipart/form-data" } do |f|
+    f.inputs I18n.t('activerecord.models.static_page.one'), multipart: true do
       f.input :heading
       f.input :text
+      f.input :picture_name
       f.input :picture, as: :file, hint: 
         f.object.picture.nil? ? f.template.content_tag(:span, I18n.t('no_picture_available')) : 
           f.template.image_tag(f.object.picture.thumb('200x200').url)
       f.input :remove_picture, as: :boolean
     end
 
-    f.has_many :paragraphs do |p_f|
-      p_f.inputs "Abschnitt" do
-        if !p_f.object.nil?
-          p_f.input :_destroy, as: :boolean, label: "Entfernen?"
+    f.has_many :paragraphs do |p|
+      p.inputs I18n.t('activerecord.models.paragraph.one') do
+        if !p.object.nil?
+          p.input :_destroy, as: :boolean, label: I18n.t('delete_paragraph_question')
         end
 
-        p_f.input :order
-        p_f.input :heading
-        p_f.input :text
+        p.input :order
+        p.input :heading
+        p.input :text
       end
     end
     f.buttons

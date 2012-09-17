@@ -22,6 +22,22 @@ $navigation_width: 15em;
   padding: 0 1em;
 }
 
+.static_page {
+  .text {
+    text-align: justify;
+    img {
+      float: left;
+      margin-right: 10px;
+      margin-bottom: 20px;
+    }
+  }
+  .paragraph_wrapper {
+    p, h2 {
+      clear: left;
+    }
+  }
+}
+
 header, footer {
   text-align: center;
   padding: 1em 0;
