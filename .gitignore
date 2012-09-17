@@ -15,10 +15,12 @@
 /tmp
 
 # Ignore other unneeded files
-!Dokumentation/
 doc/
 *.swp
 *~
 .project
 .DS_Store
 .idea
+
+# Ignore pictures
+public/system/dragonfly/

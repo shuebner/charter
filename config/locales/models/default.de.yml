@@ -1,6 +1,9 @@
 de:
   attributes:
-    heading: Überschrift
-    text: Text
-    created_at: Erstellt am
-    updated_at: Geändert am
+    heading: "Überschrift"
+    text: "Text"
+    picture: "Bild"
+    picture_name: "Name des Bildes"
+    remove_picture: "Bild entfernen"
+    created_at: "Erstellt am"
+    updated_at: "Geändert am"

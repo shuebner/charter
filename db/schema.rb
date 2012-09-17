@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120915151715) do
+ActiveRecord::Schema.define(:version => 20120917074528) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -59,12 +59,14 @@ ActiveRecord::Schema.define(:version => 20120915151715) do
   add_index "paragraphs", ["static_page_id"], :name => "index_paragraphs_on_static_page_id"
 
   create_table "static_pages", :force => true do |t|
-    t.string   "slug",       :limit => 30,  :null => false
-    t.string   "title",      :limit => 100, :null => false
-    t.string   "heading",    :limit => 100
+    t.string   "slug",         :limit => 30,  :null => false
+    t.string   "title",        :limit => 100, :null => false
+    t.string   "heading",      :limit => 100
     t.text     "text"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+    t.string   "picture_uid"
+    t.string   "picture_name"
   end
 
   add_index "static_pages", ["slug"], :name => "index_static_pages_on_name"

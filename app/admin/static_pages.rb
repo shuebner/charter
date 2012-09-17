@@ -31,15 +31,18 @@ ActiveAdmin.register StaticPage do
     end
   end
 
-
-  form do |f|
-    f.inputs :static_page do
+  form html: {enctype: "multipart/form-data"} do |f|
+    f.inputs "Statische Seite", multipart: true do
       f.input :heading
       f.input :text
+      f.input :picture, as: :file, hint: 
+        f.object.picture.nil? ? f.template.content_tag(:span, I18n.t('no_picture_available')) : 
+          f.template.image_tag(f.object.picture.thumb('200x200').url)
+      f.input :remove_picture, as: :boolean
     end
 
     f.has_many :paragraphs do |p_f|
-      p_f.inputs :paragraph do
+      p_f.inputs "Abschnitt" do
         if !p_f.object.nil?
           p_f.input :_destroy, as: :boolean, label: "Entfernen?"
         end

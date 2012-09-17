@@ -10,6 +10,8 @@ describe StaticPage do
   it { should respond_to(:heading) }
   it { should respond_to(:text) }
   it { should respond_to(:paragraphs) }
+  it { should respond_to(:picture_uid) }
+  it { should respond_to(:picture_name) }
 
   it { should be_valid }
 
