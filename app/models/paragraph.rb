@@ -4,7 +4,9 @@ class Paragraph < ActiveRecord::Base
   attr_accessible :heading, :text, :order, :picture, :picture_name, 
     :remove_picture, :retained_picture
   belongs_to :static_page
-  image_accessor :picture
+  image_accessor :picture do
+    storage_path { |p| "static_page/#{static_page.slug}/#{order}/#{rand(100)}_#{p.name}" }
+  end
   default_scope order: 'paragraphs.order ASC'
 
   validates :static_page_id,

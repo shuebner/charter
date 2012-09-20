@@ -5,7 +5,9 @@ class StaticPage < ActiveRecord::Base
     :picture, :picture_name, :remove_picture, :retained_picture
   has_many :paragraphs, dependent: :destroy
   accepts_nested_attributes_for :paragraphs, allow_destroy: true
-  image_accessor :picture
+  image_accessor :picture do
+    storage_path { |p| "static_page/#{slug}/#{rand(100)}_#{p.name}" }
+  end
 
   validates :slug,
     presence: true,
