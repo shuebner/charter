@@ -19,7 +19,6 @@ ActiveAdmin.register StaticPage do
         page.picture.nil? ? I18n.t('no_picture_available') :
           image_tag(page.picture.thumb('200x200').url)
       end
-      row :picture_name
       unless page.paragraphs.empty?
         table_for page.paragraphs do
           column :heading do |paragraph|
@@ -32,7 +31,6 @@ ActiveAdmin.register StaticPage do
             paragraph.picture.nil? ? I18n.t('no_picture_available') :
               image_tag(paragraph.picture.thumb('200x200').url)
           end
-          column :picture_name
         end
       end
     end
@@ -42,7 +40,6 @@ ActiveAdmin.register StaticPage do
     f.inputs I18n.t('activerecord.models.static_page.one'), multipart: true do
       f.input :heading
       f.input :text
-      f.input :picture_name
       f.input :picture, as: :file, hint: 
         f.object.picture.nil? ? f.template.content_tag(:span, I18n.t('no_picture_available')) : 
           f.template.image_tag(f.object.picture.thumb('200x200').url)
@@ -58,7 +55,6 @@ ActiveAdmin.register StaticPage do
         p.input :order
         p.input :heading
         p.input :text
-        p.input :picture_name
         p.input :picture, as: :file, hint:
           p.object.picture.nil? ? p.template.content_tag(:span, I18n.t('no_picture_available')) :
             p.template.image_tag(p.object.picture.thumb('200x200').url)
