@@ -20,4 +20,25 @@ FactoryGirl.define do
     sequence(:order) { |n| n }
     static_page
   end
+
+  factory :boat_type do
+    manufacturer "Testschiffhersteller"
+    model "Testschiff"
+    length_hull "12.34"
+    displacement "7.4"
+    sail_area_main_sail "51.3"
+    tank_volume_diesel "100"
+    headroom_saloon "1.90"
+  end
+
+  factory :boat do
+    boat_type
+    name "Palve Primus"
+    slug "palve-primus"
+    year_of_construction "2011"
+    available_for_boat_charter true
+    available_for_bunk_charter false
+    deposit "500"
+    fuel_charge "4.50"
+  end
 end

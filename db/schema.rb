@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120917131231) do
+ActiveRecord::Schema.define(:version => 20120922112715) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -45,6 +45,56 @@ ActiveRecord::Schema.define(:version => 20120917131231) do
 
   add_index "admin_users", ["email"], :name => "index_admin_users_on_email", :unique => true
   add_index "admin_users", ["reset_password_token"], :name => "index_admin_users_on_reset_password_token", :unique => true
+
+  create_table "boat_types", :force => true do |t|
+    t.string   "manufacturer",                                           :null => false
+    t.string   "model",                                                  :null => false
+    t.decimal  "length_hull",              :precision => 5, :scale => 3
+    t.decimal  "length_waterline",         :precision => 5, :scale => 3
+    t.decimal  "beam",                     :precision => 5, :scale => 3
+    t.decimal  "draft",                    :precision => 5, :scale => 3
+    t.decimal  "air_draft",                :precision => 5, :scale => 3
+    t.decimal  "displacement",             :precision => 5, :scale => 3
+    t.decimal  "sail_area_jib",            :precision => 5, :scale => 2
+    t.decimal  "sail_area_genoa",          :precision => 5, :scale => 2
+    t.decimal  "sail_area_main_sail",      :precision => 5, :scale => 2
+    t.integer  "tank_volume_diesel"
+    t.integer  "tank_volume_fresh_water"
+    t.integer  "tank_volume_waste_water"
+    t.integer  "permanent_bunks"
+    t.integer  "convertible_bunks"
+    t.integer  "max_no_of_people"
+    t.integer  "recommended_no_of_people"
+    t.decimal  "headroom_saloon",          :precision => 5, :scale => 3
+    t.datetime "created_at",                                             :null => false
+    t.datetime "updated_at",                                             :null => false
+  end
+
+  add_index "boat_types", ["manufacturer", "model"], :name => "index_boat_types_on_manufacturer_and_model", :unique => true
+
+  create_table "boats", :force => true do |t|
+    t.integer  "boat_type_id",                                             :null => false
+    t.string   "name",                                                     :null => false
+    t.string   "slug",                                                     :null => false
+    t.integer  "year_of_construction",                                     :null => false
+    t.integer  "year_of_refit"
+    t.string   "engine_manufacturer"
+    t.string   "engine_model"
+    t.string   "engine_design"
+    t.integer  "engine_output"
+    t.integer  "battery_capacity"
+    t.boolean  "available_for_boat_charter",                               :null => false
+    t.boolean  "available_for_bunk_charter",                               :null => false
+    t.decimal  "deposit",                    :precision => 6, :scale => 2
+    t.decimal  "cleaning_charge",            :precision => 5, :scale => 2
+    t.decimal  "fuel_charge",                :precision => 5, :scale => 2
+    t.decimal  "gas_charge",                 :precision => 5, :scale => 2
+    t.datetime "created_at",                                               :null => false
+    t.datetime "updated_at",                                               :null => false
+  end
+
+  add_index "boats", ["boat_type_id"], :name => "index_boats_on_boat_type_id"
+  add_index "boats", ["slug"], :name => "index_boats_on_slug"
 
   create_table "paragraphs", :force => true do |t|
     t.string   "heading"
