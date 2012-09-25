@@ -5,9 +5,11 @@ class Boat < ActiveRecord::Base
     :battery_capacity, :available_for_boat_charter, :available_for_bunk_charter,
     :deposit, :cleaning_charge, :fuel_charge, :gas_charge
 
-  validates :name, :slug, :year_of_construction, :available_for_boat_charter,
-    :available_for_bunk_charter,
+  validates :name, :slug, :year_of_construction,
     presence: true
+
+  validates :available_for_boat_charter, :available_for_bunk_charter,
+    inclusion: { in: [true, false] }
 
   before_validation :generate_slug
 
