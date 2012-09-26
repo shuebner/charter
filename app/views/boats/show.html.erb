@@ -1,0 +1,16 @@
+<h1><%= @boat.name %></h1>
+<h2>Technische Daten</h2>
+<table>
+  <% [:manufacturer, :model, :year_of_construction, :length_hull, 
+      :length_waterline, :beam, :draft, :air_draft, 
+      :displacement, :sail_are_jib, :sail_are_genoa, :sail_area_main_sail,
+      :tank_colume_diesel, :tank_colume_fresh_water,
+      :tank_volume_waste_water]. each do |a| %>
+    <% if @boat[a] %>
+      <tr>
+        <td><%= Boat.human_attribute_name(a) %></td>
+        <td><%= @boat[a] %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>

@@ -17,6 +17,8 @@ Charter::Application.routes.draw do
   
   get '/impressum', to: 'static_pages#show', 
     defaults: { slug: 'impressum' }, as: :imprint
+
+  resources :boats, only: [:index, :show]
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -4,7 +4,7 @@ de:
     :no: 'Nein'
     :create: 'Erstelle %{model}'
     :update: 'Speichere %{model}'
-    :submit: 'Bestätige %{model}'
+    :submit: 'Speichere %{model}'
     :cancel: 'Verwerfe %{model}'
     :reset: 'Setze %{model} zurück'
     :required: 'benötigt'
