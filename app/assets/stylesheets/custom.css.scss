@@ -1,7 +1,7 @@
 $navigation_width: 15em;
 
 body {
-  font-family: Helvetica,Arial,sans-serif;
+  font: normal 100.01% Helvetica, Arial, sans-serif;
 }
 
 ul {
@@ -11,8 +11,12 @@ ul {
 }
 
 nav {
+  float: left;
+  width: $navigation_width;
+  border: 1px solid black;
   ul {
     li {
+      margin: 0;
       >ul {
         display: none;
       }
@@ -29,16 +33,6 @@ nav {
   margin: 0 auto;
   width: 900px;
   border: 1px dashed grey;
-}
-
-#navigation {
-  float: left;
-  width: $navigation_width;
-  border: 1px solid black;
-  
-  li {
-    margin: 0;
-  }
 }
 
 #content {
