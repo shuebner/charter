@@ -1,5 +1,6 @@
 # encoding: utf-8
 include ActionView::Helpers::SanitizeHelper
+include ActionView::Helpers::NumberHelper
 
 module ApplicationHelper
   def base_title
@@ -20,5 +21,11 @@ module ApplicationHelper
 
   def sanitize_paragraph_text (text)
     sanitize text, tags: Charter::Application.config.allowed_tags_in_paragraph_text
+  end
+
+  def number_with_del(number, options = {})
+    precisions = { linear: 2, area: 1, volume: 0, mass: 3 }    
+    number_with_precision(number, precision: precisions[options[:as]], 
+      separator: ',', delimiter: '.')
   end
 end

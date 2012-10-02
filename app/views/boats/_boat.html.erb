@@ -1,13 +1,25 @@
 <li>
   <h1><%= boat.name %></h1>
   <table>
-    <tr>
-      <td><%= Boat.human_attribute_name('manufacturer') %></td>
-      <td><%= boat.manufacturer %></td>
-    </tr>
-    <tr>
-      <td><%= Boat.human_attribute_name('model') %></td>
-      <td><%= boat.model %></td>
-    </tr>
+      <tr>
+        <td><%= Boat.human_attribute_name(:model) %></td>
+        <td><%= boat.model %></td>
+      </tr>
+      <tr>
+        <td><%= Boat.human_attribute_name(:year_of_construction) %></td>
+        <td><%= boat.year_of_construction %></td>
+      </tr>
+      <tr>
+        <td><%= Boat.human_attribute_name(:length_hull) %></td>
+        <td><%= number_with_del(boat.length_hull, as: :linear) %></td>
+      </tr>
+      <tr>
+        <td><%= Boat.human_attribute_name(:beam) %></td>
+        <td><%= number_with_del(boat.beam, as: :linear) %></td>
+      </tr>
+      <tr>
+        <td><%= Boat.human_attribute_name(:recommended_no_of_people) %></td>
+        <td><%= boat.recommended_no_of_people %></td>
+      </tr>
   </table>
 </li>

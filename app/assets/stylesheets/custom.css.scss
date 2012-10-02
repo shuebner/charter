@@ -1,5 +1,30 @@
 $navigation_width: 15em;
 
+body {
+  font-family: Helvetica,Arial,sans-serif;
+}
+
+ul {
+  li {
+    list-style: none;
+  }
+}
+
+nav {
+  ul {
+    li {
+      >ul {
+        display: none;
+      }
+      &:hover {
+        >ul {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
 #page {
   margin: 0 auto;
   width: 900px;
@@ -12,7 +37,6 @@ $navigation_width: 15em;
   border: 1px solid black;
   
   li {
-    list-style: none;
     margin: 0;
   }
 }
