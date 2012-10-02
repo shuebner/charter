@@ -9,10 +9,10 @@ ActiveAdmin.register Boat do
     column :year_of_construction
     column :manufacturer
     column :model
-    column :length_hull
-    column :beam
-    column :draft
-    column :displacement
+    column(:length_hull) { |boat| number_with_delimiter boat.length_hull }
+    column(:beam) { |boat| number_with_delimiter boat.beam }
+    column(:draft) { |boat| number_with_delimiter boat.draft }
+    column(:displacement) { |boat| number_with_delimiter boat.displacement }
     default_actions
   end
 
@@ -22,7 +22,7 @@ ActiveAdmin.register Boat do
       row :manufacturer
       row :model
       row :year_of_construction
-      row :year_of_refit      
+      row :year_of_refit
       row(:length_hull) { |boat| number_with_delimiter boat.length_hull }
       row(:length_waterline) { |boat| number_with_delimiter boat.length_waterline }
       row(:beam) { |boat| number_with_delimiter boat.beam }
@@ -48,10 +48,12 @@ ActiveAdmin.register Boat do
       row :recommended_no_of_people
       row(:headroom_saloon) { |boat| number_with_delimiter boat.headroom_saloon }
       row :available_for_boat_charter do |boat|
-        status_tag(boat.available_for_boat_charter ? I18n.t('yes') : I18n.t('no'))
+        status_tag (boat.available_for_boat_charter ? "ja" : "nein"),
+          (boat.available_for_boat_charter ? :ok : :error)
       end
       row :available_for_bunk_charter do |boat|
-        status_tag(boat.available_for_bunk_charter ? I18n.t('yes') : I18n.t('no'))
+        status_tag (boat.available_for_bunk_charter ? "ja" : "nein"),
+          (boat.available_for_bunk_charter ? :ok : :error)
       end
       row(:deposit) { |boat| number_to_currency boat.deposit }
       row(:cleaning_charge) { |boat| number_to_currency boat.cleaning_charge }
@@ -61,7 +63,7 @@ ActiveAdmin.register Boat do
   end
 
   form do |f|
-    f.inputs "Schiffsdaten" do
+    f.inputs t("boat_data") do
       f.input :name
       f.input :manufacturer
       f.input :model
@@ -69,7 +71,7 @@ ActiveAdmin.register Boat do
       f.input :year_of_refit
     end
 
-    f.inputs "Technische Daten" do
+    f.inputs t("technical_data") do
       f.input :length_hull
       f.input :length_waterline
       f.input :beam
@@ -89,7 +91,7 @@ ActiveAdmin.register Boat do
       f.input :tank_volume_waste_water
     end
 
-    f.inputs "Wohndaten" do
+    f.inputs t("living_data") do
       f.input :permanent_bunks
       f.input :convertible_bunks
       f.input :max_no_of_people
@@ -97,7 +99,7 @@ ActiveAdmin.register Boat do
       f.input :headroom_saloon
     end
 
-    f.inputs "Daten für Charter" do
+    f.inputs t("charter_data") do
       f.input :available_for_boat_charter
       f.input :available_for_bunk_charter
       f.input :deposit

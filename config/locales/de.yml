@@ -1,4 +1,10 @@
 de:
+  yes: "ja"
+  no: "nein"
+  boat_data: "Schiffsdaten"
+  technical_data: "Technische Daten"
+  living_data: "Wohndaten"
+  charter_data: "Charterdaten"
   date:
     abbr_day_names:
     - So
