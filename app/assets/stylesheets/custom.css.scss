@@ -1,20 +1,38 @@
 $navigation_width: 15em;
 
-#page {
-  margin: 0 auto;
-  width: 900px;
-  border: 1px dashed grey;
+body {
+  font: normal 100.01% Helvetica, Arial, sans-serif;
+}
+
+ul {
+  li {
+    list-style: none;
+  }
 }
 
 nav {
   float: left;
   width: $navigation_width;
   border: 1px solid black;
-  
-  li {
-    list-style: none;
-    margin: 0;
+  ul {
+    li {
+      margin: 0;
+      >ul {
+        display: none;
+      }
+      &:hover {
+        >ul {
+          display: block;
+        }
+      }
+    }
   }
+}
+
+#page {
+  margin: 0 auto;
+  width: 900px;
+  border: 1px dashed grey;
 }
 
 #content {

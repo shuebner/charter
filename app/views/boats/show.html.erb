@@ -1,15 +1,29 @@
 <h1><%= @boat.name %></h1>
-<h2>Technische Daten</h2>
+<h2><%= t('technical_data') %></h2>
 <table>
-  <% [:manufacturer, :model, :year_of_construction, :length_hull, 
-      :length_waterline, :beam, :draft, :air_draft, 
-      :displacement, :sail_are_jib, :sail_are_genoa, :sail_area_main_sail,
-      :tank_colume_diesel, :tank_colume_fresh_water,
-      :tank_volume_waste_water]. each do |a| %>
+  <% { manufacturer: nil, model: nil, year_of_construction: nil,
+      length_hull: { as: :linear },
+      length_waterline: { as: :linear },
+      beam: { as: :linear },
+      draft: { as: :linear },
+      air_draft: { as: :linear },
+      displacement: { as: :mass },
+      sail_area_jib: { as: :area },
+      sail_are_genoa: { as: :area },
+      sail_area_main_sail: { as: :area },
+      tank_volume_diesel: { as: :volume },
+      tank_volume_fresh_water: { as: :volume },
+      tank_volume_waste_water: { as: :volume } }.each do |a, o| %>
     <% if @boat[a] %>
       <tr>
         <td><%= Boat.human_attribute_name(a) %></td>
-        <td><%= @boat[a] %></td>
+        <td>
+          <% if o %>
+              <%= number_with_del(@boat[a], o) %>
+            <% else %>
+              <%= @boat[a] %>
+            <% end %>
+        </td>
       </tr>
     <% end %>
   <% end %>
