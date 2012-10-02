@@ -1,7 +1,7 @@
 # encoding: utf-8
 namespace :db do
   desc "create sample data for static pages"
-  task populate: :environment do
+  task static_pages: :environment do
     StaticPage.create!(slug: 'start', title: 'Willkommen', 
       heading: 'Start', text: 'Hier ist Palve-Charter Müritz')
     StaticPage.create!(slug: 'revier', title: 'Revier',
