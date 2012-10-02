@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-ActiveAdmin.register Boat do
+ActiveAdmin.register Boat, as: "Schiff" do
   config.filters = false
   config.sort_order = 'name_asc'
   

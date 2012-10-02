@@ -1,6 +1,9 @@
 include ApplicationHelper
 
 class StaticPage < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :title, use: :slugged
+
   attr_accessible :heading, :slug, :text, :title, :paragraphs_attributes,
     :picture, :picture_name, :remove_picture, :retained_picture
   has_many :paragraphs, dependent: :destroy
@@ -8,11 +11,6 @@ class StaticPage < ActiveRecord::Base
   image_accessor :picture do
     storage_path { |p| "static_page/#{slug}/#{rand(100)}_#{p.name}" }
   end
-
-  validates :slug,
-    presence: true,
-    length: { maximum: 30 },
-    uniqueness: true
 
   validates :title,
     presence: true,
@@ -27,7 +25,6 @@ class StaticPage < ActiveRecord::Base
     constricted_html: true
 
   before_save do |page|
-    page.slug = slug.downcase
     page.text = sanitize_page_text text
   end
 end

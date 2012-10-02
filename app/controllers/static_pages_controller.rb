@@ -1,7 +1,6 @@
 
 class StaticPagesController < ApplicationController
   def show
-    @page = StaticPage.find_by_slug(params[:slug]) || not_found
-    render 'page'
+    @page = StaticPage.find(params[:id]) || not_found
   end
 end

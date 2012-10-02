@@ -1,17 +1,15 @@
-<div id="navigation">
-  <nav>
-    <ul>
-      <li><%= link_to "Startseite", root_path %></li>
-      <li><%= link_to "Revier", area_path %></li>
-      <li><%= link_to "Schiffe", boats_path %>
-        <ul>
-          <% Boat.visible.each do |boat| %>
-            <li><%= link_to boat.name, boat_path(boat) %></li>
-          <% end %>
-        </ul>
-      </li>
-      <li><%= link_to "Törnvorschläge", trips_path %></li>
-      <li><%= link_to "Impressum", imprint_path %></li>
-    </ul>
-  </nav>
-</div>
+<nav>
+  <ul>
+    <li><%= link_to "Startseite", static_page_path("start") %></li>
+    <li><%= link_to "Revier", static_page_path("revier") %></li>
+    <li><%= link_to "Schiffe", boats_path %>
+      <ul>
+        <% Boat.visible.each do |boat| %>
+          <li><%= link_to boat.name, boat_path(boat) %></li>
+        <% end %>
+      </ul>
+    </li>
+    <li><%= link_to "Törns", static_page_path("toerns") %></li>
+    <li><%= link_to "Impressum", static_page_path("impressum") %></li>
+  </ul>
+</nav>

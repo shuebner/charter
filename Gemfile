@@ -15,6 +15,7 @@ gem 'meta_search', '>= 1.1.0.pre'
 gem 'rack-cache', require: 'rack/cache'
 gem 'dragonfly', '~>0.9.12'
 gem 'delocalize'
+gem 'friendly_id', '~>4.0.1'
 
 
 # Gems used only for assets and not required

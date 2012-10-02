@@ -1,4 +1,7 @@
 class Boat < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :name, use: :slugged
+
   attr_accessible :manufacturer, :model, 
     :length_hull, :length_waterline, :beam, :draft, :air_draft, :displacement, 
     :sail_area_jib, :sail_area_genoa, :sail_area_main_sail, 
@@ -18,8 +21,6 @@ class Boat < ActiveRecord::Base
 
   validates :available_for_boat_charter, :available_for_bunk_charter,
     inclusion: { in: [true, false] }
-
-  before_validation :generate_slug
 
   default_scope order("name ASC")
 
@@ -41,14 +42,5 @@ class Boat < ActiveRecord::Base
 
   def visible?
     available_for_bunk_charter || available_for_boat_charter
-  end
-
-  protected
-  def generate_slug
-    if slug.blank?
-      self.slug = name.parameterize
-    else
-      self.slug = slug.parameterize
-    end
   end
 end

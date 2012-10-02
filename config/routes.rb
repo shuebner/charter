@@ -1,24 +1,19 @@
 Charter::Application.routes.draw do
 
-  ActiveAdmin.routes(self)
+  scope(path_names: { new: "neu", edit: "bearbeiten" }) do
 
-  devise_for :admin_users, ActiveAdmin::Devise.config
+    ActiveAdmin.routes(self)
 
-  root to: 'static_pages#show', defaults: { slug: 'start' }
+    devise_for :admin_users, ActiveAdmin::Devise.config
 
-  get '/start', to: 'static_pages#show', 
-    defaults: { slug: 'start' }, as: :start
-  
-  get '/revier', to: 'static_pages#show', 
-    defaults: { slug: 'revier' }, as: :area
-  
-  get '/toerns', to: 'static_pages#show', 
-    defaults: { slug: 'toerns' }, as: :trips
-  
-  get '/impressum', to: 'static_pages#show', 
-    defaults: { slug: 'impressum' }, as: :imprint
+    root to: 'static_pages#show', defaults: { id: 'start' }
+    
+    resources :boats, only: [:index, :show], path: "schiffe"
 
-  resources :boats, only: [:index, :show]
+    resources :static_pages, only: [:show], path: "/"
+
+  end
+
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -15,32 +15,6 @@ describe StaticPage do
 
   it { should be_valid }
 
-  describe "when slug" do
-    describe "is nil" do
-      before { page.slug = nil }
-      it { should_not be_valid }
-    end
-
-    describe "is blank" do
-      before { page.slug = " " }
-      it { should_not be_valid }
-    end
-
-    describe "is too long" do
-      before { page.slug = 'a' * 31 }
-      it { should_not be_valid}
-    end
-
-    describe "already exists" do
-      before do 
-        @static_page_with_same_title = page.dup
-        @static_page_with_same_title.slug = @static_page_with_same_title.slug.upcase
-        @static_page_with_same_title.save
-      end
-      it { should_not be_valid }
-    end
-  end
-
   describe "when title" do
     describe "is nil" do
       before { page.title = nil }

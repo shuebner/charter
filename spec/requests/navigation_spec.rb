@@ -4,8 +4,8 @@ require 'spec_helper'
 describe "Navigation" do
   let!(:boat) { create(:boat) }
   let!(:root_page) do
-    StaticPage.create!(slug: 'start', title: 'Willkommen', 
-      heading: 'Start', text: 'Hier ist Palve-Charter Müritz')
+    StaticPage.create!(title: 'Start', 
+      heading: 'Willkommen', text: 'Hier ist Palve-Charter Müritz')
   end
   subject { page }
 

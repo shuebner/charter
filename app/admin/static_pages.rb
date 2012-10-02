@@ -1,4 +1,4 @@
-ActiveAdmin.register StaticPage do
+ActiveAdmin.register StaticPage, as: "Statische Seite" do
   config.filters = false
   config.sort_order = "heading_asc"
   actions :all, except: [:destroy]
