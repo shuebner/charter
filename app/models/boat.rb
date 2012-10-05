@@ -16,6 +16,8 @@ class Boat < ActiveRecord::Base
     :available_for_boat_charter, :available_for_bunk_charter,
     :deposit, :cleaning_charge, :fuel_charge, :gas_charge
 
+  has_many :trips, dependent: :destroy
+
   validates :manufacturer, :model, :name, :slug, :year_of_construction,
     presence: true
 

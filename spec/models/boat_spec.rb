@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe Boat do
@@ -171,6 +173,24 @@ describe Boat do
     let!(:first_boat) { create(:boat, name: "AAA") }
     it "should sort ascending by name" do
       Boat.all.should == [first_boat, second_boat]
+    end
+  end
+
+  describe "trip association" do
+    let!(:second_trip) { create(:trip, name: "Z-Törn", boat: boat) }
+    let!(:first_trip) { create(:trip, name: "A-Törn", boat: boat) }
+    it "should have the right trips in the right order" do
+      boat.trips.should == [first_trip, second_trip]
+    end
+
+    it "should destroy associated trips" do
+      trips = boat.trips
+      boat.destroy
+      trips.each do |trip|
+        lambda do
+          Trip.find(trip.id)
+        end.should raise_error(ActiveRecord::RecordNotFound)
+      end
     end
   end
 end

@@ -28,4 +28,18 @@ FactoryGirl.define do
     available_for_boat_charter true
     available_for_bunk_charter false
   end
+
+  factory :trip do
+    sequence(:name) { |n| "Törn #{n}"}
+    description "Ein ganz toller Törn. Hurra, ich freu mich drauf"
+    no_of_bunks 3
+    price 560
+    boat
+  end
+
+  factory :trip_date do
+    sequence(:begin) { |n| (n*7).day.from_now }
+    sequence(:end) { |n| (n*7+4).day.from_now }
+    trip
+  end
 end
