@@ -10,6 +10,8 @@ Charter::Application.routes.draw do
     
     resources :boats, only: [:index, :show], path: "schiffe"
 
+    resources :trips, only: [:index, :show], path: "toerns"
+
     resources :static_pages, only: [:show], path: "/"
 
   end

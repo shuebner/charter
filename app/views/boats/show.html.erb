@@ -27,4 +27,12 @@
       </tr>
     <% end %>
   <% end %>
-</table>
+</table>  
+<% if @boat.trips.any? %>
+  <h2>Törns mit diesem Schiff</h2>
+  <ul>
+    <% @boat.trips.each do |trip| %>
+      <li><%= link_to trip.name, trip_path(trip) %></li>
+    <% end %>
+  </ul>
+<% end %>

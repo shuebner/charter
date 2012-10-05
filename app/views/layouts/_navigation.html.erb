@@ -9,7 +9,13 @@
         <% end %>
       </ul>
     </li>
-    <li><%= link_to "Törns", static_page_path("toerns") %></li>
+    <li><%= link_to "Törns", trips_path %>
+      <ul>
+        <% Trip.all.each do |trip| %>
+          <li><%= link_to trip.name, trip_path(trip) %></li>
+        <% end %>
+      </ul>
+    </li>
     <li><%= link_to "Impressum", static_page_path("impressum") %></li>
   </ul>
 </nav>
