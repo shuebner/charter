@@ -1,5 +1,6 @@
 de:
   attributes:
+    name: "Name"
     heading: "Überschrift"
     text: "Text"
     picture: "Bild"

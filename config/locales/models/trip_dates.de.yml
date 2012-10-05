@@ -1,0 +1,10 @@
+de:
+  activerecord:
+    models:
+      trip_date:
+        one: Termin
+        other: Termine
+    attributes:
+      trip_date:
+        begin: "Törnanfang"
+        end: "Törnende"
