@@ -25,8 +25,35 @@ FactoryGirl.define do
     model "Testschiff"
     sequence(:name) { |n| "Palve #{n}" }
     year_of_construction "2011"
+    deposit 1000
+    cleaning_charge 50
+    fuel_charge 7
+    gas_charge 5
     available_for_boat_charter true
-    available_for_bunk_charter false
+    available_for_bunk_charter true
+
+    factory :boat_charter_only_boat do
+      available_for_boat_charter true
+      available_for_bunk_charter false
+    end
+
+    factory :bunk_charter_only_boat do
+      deposit nil
+      cleaning_charge nil
+      fuel_charge nil
+      gas_charge nil
+      available_for_boat_charter false
+      available_for_bunk_charter true
+    end
+
+    factory :unavailable_boat do
+      deposit nil
+      cleaning_charge nil
+      fuel_charge nil
+      gas_charge nil
+      available_for_boat_charter false
+      available_for_bunk_charter false
+    end      
   end
 
   factory :trip do
