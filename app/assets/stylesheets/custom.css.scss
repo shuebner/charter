@@ -14,17 +14,21 @@ nav {
   float: left;
   width: $navigation_width;
   border: 1px solid black;
-  ul {
-    li {
-      margin: 0;
-      >ul {
-        display: none;
-      }
-      &:hover {
-        >ul {
-          display: block;
-        }
-      }
+  
+}
+
+//dynamische Navigation
+nav ul {
+  width: 5em;
+  li {
+    position: relative;
+    ul {
+      display: none;
+      position: absolute;
+      top: 0;
+    }
+    &:hover ul {
+      display: block;
     }
   }
 }
