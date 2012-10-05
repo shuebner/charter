@@ -10,3 +10,4 @@
     </tr>
   </table>
 <p><%= @trip.description %></p>
+<p>Dieser Törn ist verfügbar auf dem Schiff <%= link_to @trip.boat.name, boat_path(@trip.boat) %></p>

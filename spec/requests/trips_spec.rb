@@ -22,8 +22,8 @@ describe "Trips" do
       it { should have_content(trip.description) }
     end
 
-    describe "should show on which boat the trip is available" do
-      it { should have_content(trip.boat.name) }
+    it "should show on which boat the trip is available" do
+      page.should have_css('#content', text: trip.boat.name)
     end
   end
 end
