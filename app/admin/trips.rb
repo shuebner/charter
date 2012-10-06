@@ -19,10 +19,28 @@ ActiveAdmin.register Trip, as: "Toern" do
       row :description
       row(Boat.model_name.human) { t.boat.name }
     end
+    panel "Termine" do
+      table_for t.trip_dates, i18n: TripDate do
+        column :begin
+        column :end
+      end
+    end
   end
 
   form do |f|
     f.inputs :name, :no_of_bunks, :price, :description, :boat
+    
+    f.has_many :trip_dates do |td|
+      td.inputs do
+        if !td.object.nil?
+          td.input :_destroy, as: :boolean, label: "Termin löschen"
+        end
+      end
+      td.inputs do
+        td.input :begin
+        td.input :end
+      end
+    end
     f.buttons
   end
 end

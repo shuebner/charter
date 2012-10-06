@@ -25,5 +25,17 @@ describe "Trips" do
     it "should show on which boat the trip is available" do
       page.should have_css('#content', text: trip.boat.name)
     end
+
+    describe "trip dates" do
+      let!(:date) { create(:trip_date, trip:trip, begin: 2.days.from_now, end: 3.days.from_now) }
+      before { visit trip_path(trip) }
+      
+      it "should show the dates for the trip" do
+        page.should have_content(date.begin.day)
+        page.should have_content(date.begin.month)
+        page.should have_content(date.end.day)
+        page.should have_content(date.end.month)
+      end
+    end
   end
 end

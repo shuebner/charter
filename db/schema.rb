@@ -122,6 +122,7 @@ ActiveRecord::Schema.define(:version => 20121003102308) do
     t.datetime "updated_at", :null => false
   end
 
+  add_index "trip_dates", ["begin"], :name => "index_trip_dates_on_begin"
   add_index "trip_dates", ["trip_id"], :name => "index_trip_dates_on_trip_id"
 
   create_table "trips", :force => true do |t|

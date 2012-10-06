@@ -11,3 +11,23 @@
   </table>
 <p><%= @trip.description %></p>
 <p>Dieser Törn ist verfügbar auf dem Schiff <%= link_to @trip.boat.name, boat_path(@trip.boat) %></p>
+
+<h2>Termine</h2>
+<% if @trip.trip_dates.any? %>
+  <p>Dieser Törn ist an folgenden Terminen verfügbar:</p>
+  <table>
+    <tr>
+      <th><%= TripDate.human_attribute_name(:begin) %></th>
+      <th><%= TripDate.human_attribute_name(:end) %></th>
+    </tr>
+    <% @trip.trip_dates.each do |d| %>
+      <tr>
+        <td><%= d.begin.strftime("%d.%m.%Y, %H:%M Uhr") %></td>
+        <td><%= d.end.strftime("%d.%m.%Y, %H:%M Uhr") %></td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <p>Für diesen Törn sind keine Termine festgelegt.</p>
+<% end %>
+

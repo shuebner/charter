@@ -8,5 +8,6 @@ class CreateTripDates < ActiveRecord::Migration
       t.timestamps
     end
     add_index :trip_dates, :trip_id
+    add_index :trip_dates, :begin
   end
 end
