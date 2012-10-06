@@ -1,7 +1,9 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe Boat do
-  let(:boat) { FactoryGirl.create(:boat) }
+  let(:boat) { create(:boat) }
 
   subject { boat }
 
@@ -86,6 +88,40 @@ describe Boat do
     it { should_not be_valid }
   end
 
+  describe "when boat is not available for boat charter" do
+    let!(:no_boat_charter_boat) { build(:bunk_charter_only_boat) }
+    subject { no_boat_charter_boat }
+
+    describe "and charges are given" do
+      it "it should not be valid" do
+        [:deposit, :cleaning_charge, :fuel_charge, :gas_charge].each do |a|
+          no_boat_charter_boat[a] = 100
+          no_boat_charter_boat.should_not be_valid
+          no_boat_charter_boat[a] = nil
+        end
+      end
+    end
+  end
+
+  describe "when boat is available for boat charter" do
+    let!(:boat_for_boat_charter) { build(:boat, available_for_boat_charter: true) }
+    subject { boat_for_boat_charter }
+
+    describe "and any charge is missing (except for gas charge)" do
+      before do
+        [:deposit, :cleaning_charge, :fuel_charge].each do |a|
+          boat_for_boat_charter[a] = 100
+        end
+      end
+      it "it should not be valid" do
+        [:deposit, :cleaning_charge, :fuel_charge].each do |a|
+          boat_for_boat_charter[a] = nil
+          boat_for_boat_charter.should_not be_valid
+          boat_for_boat_charter[a] = 100
+        end
+      end
+    end
+  end
 
   describe "calculated field" do
     
@@ -141,22 +177,10 @@ describe Boat do
 
   describe "scope" do
     describe "visible" do
-      let(:visible_boat1) do 
-        create(:boat, 
-          available_for_boat_charter: true, available_for_bunk_charter: true)
-      end
-      let(:visible_boat2) do 
-        create(:boat, 
-          available_for_boat_charter: false, available_for_bunk_charter: true)
-      end
-      let(:visible_boat3) do 
-        create(:boat, 
-          available_for_boat_charter: true, available_for_bunk_charter: false)
-      end
-      let(:invisible_boat) do 
-        create(:boat, 
-          available_for_boat_charter: false, available_for_bunk_charter: false)
-      end
+      let(:visible_boat1) { create(:boat) }
+      let(:visible_boat2) { create(:bunk_charter_only_boat) }
+      let(:visible_boat3) { create(:boat_charter_only_boat) }
+      let(:invisible_boat) { create(:unavailable_boat) }
       it "should contain all visible boats" do
         Boat.visible.should include(visible_boat1, visible_boat2, visible_boat3)        
       end
@@ -169,8 +193,44 @@ describe Boat do
   describe "default sort order" do
     let!(:second_boat) { create(:boat, name: "ZZZ") }
     let!(:first_boat) { create(:boat, name: "AAA") }
+    
     it "should sort ascending by name" do
       Boat.all.should == [first_boat, second_boat]
+    end
+  end
+
+  describe "trip association" do
+    describe "with boat available for bunk charter" do
+      let!(:boat_for_bunk_charter) { create(:boat, available_for_bunk_charter: true) }
+      let!(:second_trip) { create(:trip, name: "Z-Törn", boat: boat_for_bunk_charter) }
+      let!(:first_trip) { create(:trip, name: "A-Törn", boat: boat_for_bunk_charter) }
+
+      subject { boat_for_bunk_charter }
+      
+      it "should have the right trips in the right order" do
+        boat_for_bunk_charter.trips.should == [first_trip, second_trip]
+      end
+
+      it "should destroy associated trips" do
+        trips = boat_for_bunk_charter.trips
+        boat_for_bunk_charter.destroy
+        trips.each do |trip|
+          lambda do
+            Trip.find(trip.id)
+          end.should raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
+    end
+
+    describe "with boat not available for bunk charter" do
+      let!(:boat_not_for_bunk_charter) { create(:boat, available_for_bunk_charter: false) }
+      subject { boat_not_for_bunk_charter }
+      
+      describe "if it nevertheless has trips" do
+        let!(:trip) { create(:trip, boat: boat_not_for_bunk_charter) }
+
+        it { should_not be_valid }
+      end
     end
   end
 end

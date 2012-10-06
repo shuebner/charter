@@ -1,0 +1,11 @@
+de:
+  activerecord:
+    models:
+      trip:
+        one: Törn
+        other: Törns
+    attributes:
+      trip:
+        description: "Törnbeschreibung"
+        no_of_bunks: "Maximale Teilnehmerzahl"
+        price: "Preis"

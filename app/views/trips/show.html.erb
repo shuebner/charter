@@ -1,0 +1,33 @@
+<h1><%= @trip.name %></h1>
+<table>
+    <tr>
+      <td><%= Trip.human_attribute_name(:no_of_bunks) %></td>
+      <td><%= @trip.no_of_bunks %></td>
+    </tr>
+    <tr>
+      <td><%= Trip.human_attribute_name(:price) %></td>
+      <td><%= number_to_currency(@trip.price) %></td>
+    </tr>
+  </table>
+<p><%= @trip.description %></p>
+<p>Dieser Törn ist verfügbar auf dem Schiff <%= link_to @trip.boat.name, boat_path(@trip.boat) %></p>
+
+<h2>Termine</h2>
+<% if @trip.trip_dates.any? %>
+  <p>Dieser Törn ist an folgenden Terminen verfügbar:</p>
+  <table>
+    <tr>
+      <th><%= TripDate.human_attribute_name(:begin) %></th>
+      <th><%= TripDate.human_attribute_name(:end) %></th>
+    </tr>
+    <% @trip.trip_dates.each do |d| %>
+      <tr>
+        <td><%= l(d.begin) %></td>
+        <td><%= l(d.end) %></td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <p>Für diesen Törn sind keine Termine festgelegt.</p>
+<% end %>
+

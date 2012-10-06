@@ -57,7 +57,6 @@ describe StaticPage do
   end
 
   describe "paragraph associations" do
-    before { page.save }
     let!(:second_paragraph) do
       FactoryGirl.create(:paragraph, static_page: page, order: 1)
     end

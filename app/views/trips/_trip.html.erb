@@ -1,0 +1,13 @@
+<li>
+  <h1><%= trip.name %></h1>
+  <table>
+    <tr>
+      <td><%= Trip.human_attribute_name(:no_of_bunks) %></td>
+      <td><%= trip.no_of_bunks %></td>
+    </tr>
+    <tr>
+      <td><%= Trip.human_attribute_name(:price) %></td>
+      <td><%= number_to_currency(trip.price) %></td>
+    </tr>
+  </table>
+</li>

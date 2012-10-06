@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Boat < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: :slugged
@@ -16,11 +17,21 @@ class Boat < ActiveRecord::Base
     :available_for_boat_charter, :available_for_bunk_charter,
     :deposit, :cleaning_charge, :fuel_charge, :gas_charge
 
+  has_many :trips, dependent: :destroy
+
   validates :manufacturer, :model, :name, :slug, :year_of_construction,
     presence: true
 
   validates :available_for_boat_charter, :available_for_bunk_charter,
     inclusion: { in: [true, false] }
+
+  validates :deposit, :cleaning_charge, :fuel_charge,
+    presence: { if: :available_for_boat_charter }
+
+  validates :deposit, :cleaning_charge, :fuel_charge, :gas_charge,
+    no_presence: { unless: :available_for_boat_charter }
+
+  validate :no_trips_present_when_not_available_for_bunk_charter
 
   default_scope order("name ASC")
 
@@ -42,5 +53,12 @@ class Boat < ActiveRecord::Base
 
   def visible?
     available_for_bunk_charter || available_for_boat_charter
+  end
+
+  private
+  def no_trips_present_when_not_available_for_bunk_charter
+    if (trips.any? && !available_for_bunk_charter)
+      errors.add(:trips, "muss leer sein wenn das Schiff nicht für Kojencharter verfügbar ist")
+    end
   end
 end

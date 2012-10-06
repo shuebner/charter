@@ -6,7 +6,6 @@ de:
         other: "Schiffe"
     attributes:
       boat:
-        name: "Name"
         manufacturer: "Hersteller"
         model: "Modell"
         year_of_construction: "Baujahr"
