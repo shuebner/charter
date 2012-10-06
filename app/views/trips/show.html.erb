@@ -22,8 +22,8 @@
     </tr>
     <% @trip.trip_dates.each do |d| %>
       <tr>
-        <td><%= d.begin.strftime("%d.%m.%Y, %H:%M Uhr") %></td>
-        <td><%= d.end.strftime("%d.%m.%Y, %H:%M Uhr") %></td>
+        <td><%= l(d.begin) %></td>
+        <td><%= l(d.end) %></td>
       </tr>
     <% end %>
   </table>
