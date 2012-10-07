@@ -11,25 +11,24 @@ ActiveAdmin.register StaticPage, as: "Statische Seite" do
     default_actions
   end
 
-  show title: :title do |page|
+  show title: :title do |p|
     attributes_table do 
       row :heading
       row :text
       row :picture do
-        page.picture.nil? ? I18n.t('no_picture_available') :
-          image_tag(page.picture.thumb('200x200').url)
+        p.picture.nil? ? I18n.t('no_picture_available') :
+          image_tag(p.picture.thumb('200x200').url)
       end
-      unless page.paragraphs.empty?
-        table_for page.paragraphs do
-          column :heading do |paragraph|
-            paragraph.heading
-          end
-          column :text do |paragraph|
-            paragraph.text
-          end
-          column :picture do |paragraph|
-            paragraph.picture.nil? ? I18n.t('no_picture_available') :
-              image_tag(paragraph.picture.thumb('200x200').url)
+    end
+    
+    unless page.paragraphs.empty?      
+      panel "Abschnitte" do
+        table_for page.paragraphs, i18n: Paragraph do
+          column :heading          
+          column :text
+          column :picture do |pg|
+            pg.picture.nil? ? I18n.t('no_picture_available') :
+              image_tag(pg.picture.thumb('200x200').url)
           end
         end
       end

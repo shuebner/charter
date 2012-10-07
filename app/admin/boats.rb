@@ -9,56 +9,56 @@ ActiveAdmin.register Boat, as: "Schiff" do
     column :year_of_construction
     column :manufacturer
     column :model
-    column(:length_hull) { |boat| number_with_delimiter boat.length_hull }
-    column(:beam) { |boat| number_with_delimiter boat.beam }
-    column(:draft) { |boat| number_with_delimiter boat.draft }
-    column(:displacement) { |boat| number_with_delimiter boat.displacement }
+    column(:length_hull) { |b| number_with_delimiter b.length_hull }
+    column(:beam) { |b| number_with_delimiter b.beam }
+    column(:draft) { |b| number_with_delimiter b.draft }
+    column(:displacement) { |b| number_with_delimiter b.displacement }
     default_actions
   end
 
-  show title: :name do |boat|
+  show title: :name do |b|
     attributes_table do
       row :name
       row :manufacturer
       row :model
       row :year_of_construction
       row :year_of_refit
-      row(:length_hull) { |boat| number_with_delimiter boat.length_hull }
-      row(:length_waterline) { |boat| number_with_delimiter boat.length_waterline }
-      row(:beam) { |boat| number_with_delimiter boat.beam }
-      row(:draft) { |boat| number_with_delimiter boat.draft }
-      row(:air_draft) { |boat| number_with_delimiter boat.air_draft }
-      row(:displacement) { |boat| number_with_delimiter boat.displacement }
-      row(:sail_area_jib) { |boat| number_with_delimiter boat.sail_area_jib }
-      row(:sail_area_genoa) { |boat| number_with_delimiter boat.sail_area_genoa }
-      row(:sail_area_main_sail) { |boat| number_with_delimiter boat.sail_area_main_sail }
-      row(:total_sail_area_with_jib) { |boat| number_with_delimiter boat.total_sail_area_with_jib }
-      row(:total_sail_area_with_genoa) { |boat| number_with_delimiter boat.total_sail_area_with_genoa }
+      row(:length_hull) { number_with_delimiter b.length_hull }
+      row(:length_waterline) { number_with_delimiter b.length_waterline }
+      row(:beam) { number_with_delimiter b.beam }
+      row(:draft) { number_with_delimiter b.draft }
+      row(:air_draft) { number_with_delimiter b.air_draft }
+      row(:displacement) { number_with_delimiter b.displacement }
+      row(:sail_area_jib) { number_with_delimiter b.sail_area_jib }
+      row(:sail_area_genoa) { number_with_delimiter b.sail_area_genoa }
+      row(:sail_area_main_sail) { number_with_delimiter b.sail_area_main_sail }
+      row(:total_sail_area_with_jib) { number_with_delimiter b.total_sail_area_with_jib }
+      row(:total_sail_area_with_genoa) { number_with_delimiter b.total_sail_area_with_genoa }
       row :engine_manufacturer
       row :engine_model
       row :engine_design
-      row(:engine_output) { |boat| number_with_delimiter boat.engine_output }
-      row(:battery_capacity) { |boat| number_with_delimiter boat.battery_capacity }
-      row(:tank_volume_diesel) { |boat| number_with_delimiter boat.tank_volume_diesel }
-      row(:tank_volume_fresh_water) { |boat| number_with_delimiter boat.tank_volume_fresh_water }
-      row(:tank_volume_waste_water) { |boat| number_with_delimiter boat.tank_volume_waste_water }
+      row(:engine_output) { number_with_delimiter b.engine_output }
+      row(:battery_capacity) { number_with_delimiter b.battery_capacity }
+      row(:tank_volume_diesel) { number_with_delimiter b.tank_volume_diesel }
+      row(:tank_volume_fresh_water) { number_with_delimiter b.tank_volume_fresh_water }
+      row(:tank_volume_waste_water) { number_with_delimiter b.tank_volume_waste_water }
       row :permanent_bunks
       row :convertible_bunks
       row :max_no_of_people
       row :recommended_no_of_people
-      row(:headroom_saloon) { |boat| number_with_delimiter boat.headroom_saloon }
-      row :available_for_boat_charter do |boat|
-        status_tag (boat.available_for_boat_charter ? "ja" : "nein"),
-          (boat.available_for_boat_charter ? :ok : :error)
+      row(:headroom_saloon) { number_with_delimiter b.headroom_saloon }
+      row :available_for_boat_charter do |b|
+        status_tag (b.available_for_boat_charter ? "ja" : "nein"),
+          (b.available_for_boat_charter ? :ok : :error)
       end
-      row :available_for_bunk_charter do |boat|
-        status_tag (boat.available_for_bunk_charter ? "ja" : "nein"),
-          (boat.available_for_bunk_charter ? :ok : :error)
+      row :available_for_bunk_charter do |b|
+        status_tag (b.available_for_bunk_charter ? "ja" : "nein"),
+          (b.available_for_bunk_charter ? :ok : :error)
       end
-      row(:deposit) { |boat| number_to_currency boat.deposit }
-      row(:cleaning_charge) { |boat| number_to_currency boat.cleaning_charge }
-      row(:fuel_charge) { |boat| number_to_currency boat.fuel_charge }
-      row(:gas_charge) { |boat| number_to_currency boat.gas_charge }
+      row(:deposit) { |b| number_to_currency b.deposit }
+      row(:cleaning_charge) { |b| number_to_currency b.cleaning_charge }
+      row(:fuel_charge) { |b| number_to_currency b.fuel_charge }
+      row(:gas_charge) { |b| number_to_currency b.gas_charge }
     end
   end
 
