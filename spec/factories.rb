@@ -69,4 +69,10 @@ FactoryGirl.define do
     sequence(:end) { |n| (n*7+4).day.from_now }
     trip
   end
+
+  factory :customer do
+    first_name "Hans"
+    last_name "Müller"
+    is_male true
+  end
 end
