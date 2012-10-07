@@ -21,9 +21,9 @@ ActiveAdmin.register StaticPage, as: "Statische Seite" do
       end
     end
     
-    unless page.paragraphs.empty?      
+    unless p.paragraphs.empty?      
       panel "Abschnitte" do
-        table_for page.paragraphs, i18n: Paragraph do
+        table_for p.paragraphs, i18n: Paragraph do
           column :heading          
           column :text
           column :picture do |pg|
