@@ -17,48 +17,66 @@ ActiveAdmin.register Boat, as: "Schiff" do
   end
 
   show title: :name do |b|
-    attributes_table do
-      row :name
-      row :manufacturer
-      row :model
-      row :year_of_construction
-      row :year_of_refit
-      row(:length_hull) { number_with_delimiter b.length_hull }
-      row(:length_waterline) { number_with_delimiter b.length_waterline }
-      row(:beam) { number_with_delimiter b.beam }
-      row(:draft) { number_with_delimiter b.draft }
-      row(:air_draft) { number_with_delimiter b.air_draft }
-      row(:displacement) { number_with_delimiter b.displacement }
-      row(:sail_area_jib) { number_with_delimiter b.sail_area_jib }
-      row(:sail_area_genoa) { number_with_delimiter b.sail_area_genoa }
-      row(:sail_area_main_sail) { number_with_delimiter b.sail_area_main_sail }
-      row(:total_sail_area_with_jib) { number_with_delimiter b.total_sail_area_with_jib }
-      row(:total_sail_area_with_genoa) { number_with_delimiter b.total_sail_area_with_genoa }
-      row :engine_manufacturer
-      row :engine_model
-      row :engine_design
-      row(:engine_output) { number_with_delimiter b.engine_output }
-      row(:battery_capacity) { number_with_delimiter b.battery_capacity }
-      row(:tank_volume_diesel) { number_with_delimiter b.tank_volume_diesel }
-      row(:tank_volume_fresh_water) { number_with_delimiter b.tank_volume_fresh_water }
-      row(:tank_volume_waste_water) { number_with_delimiter b.tank_volume_waste_water }
-      row :permanent_bunks
-      row :convertible_bunks
-      row :max_no_of_people
-      row :recommended_no_of_people
-      row(:headroom_saloon) { number_with_delimiter b.headroom_saloon }
-      row :available_for_boat_charter do |b|
-        status_tag (b.available_for_boat_charter ? "ja" : "nein"),
-          (b.available_for_boat_charter ? :ok : :error)
+    #attributes_table do
+    panel t("boat_data") do
+      attributes_table_for b do
+        row :name
+        row :manufacturer
+        row :model
+        row :year_of_construction
+        row :year_of_refit
       end
-      row :available_for_bunk_charter do |b|
-        status_tag (b.available_for_bunk_charter ? "ja" : "nein"),
-          (b.available_for_bunk_charter ? :ok : :error)
+    end
+
+    panel t("technical_data") do
+      attributes_table_for b do
+        row(:length_hull) { number_with_delimiter b.length_hull }
+        row(:length_waterline) { number_with_delimiter b.length_waterline }
+        row(:beam) { number_with_delimiter b.beam }
+        row(:draft) { number_with_delimiter b.draft }
+        row(:air_draft) { number_with_delimiter b.air_draft }
+        row(:displacement) { number_with_delimiter b.displacement }
+        row(:sail_area_jib) { number_with_delimiter b.sail_area_jib }
+        row(:sail_area_genoa) { number_with_delimiter b.sail_area_genoa }
+        row(:sail_area_main_sail) { number_with_delimiter b.sail_area_main_sail }
+        row(:total_sail_area_with_jib) { number_with_delimiter b.total_sail_area_with_jib }
+        row(:total_sail_area_with_genoa) { number_with_delimiter b.total_sail_area_with_genoa }
+        row :engine_manufacturer
+        row :engine_model
+        row :engine_design
+        row(:engine_output) { number_with_delimiter b.engine_output }
+        row(:battery_capacity) { number_with_delimiter b.battery_capacity }
+        row(:tank_volume_diesel) { number_with_delimiter b.tank_volume_diesel }
+        row(:tank_volume_fresh_water) { number_with_delimiter b.tank_volume_fresh_water }
+        row(:tank_volume_waste_water) { number_with_delimiter b.tank_volume_waste_water }
       end
-      row(:deposit) { |b| number_to_currency b.deposit }
-      row(:cleaning_charge) { |b| number_to_currency b.cleaning_charge }
-      row(:fuel_charge) { |b| number_to_currency b.fuel_charge }
-      row(:gas_charge) { |b| number_to_currency b.gas_charge }
+    end
+
+    panel t("living_data") do
+      attributes_table_for b do
+        row :permanent_bunks
+        row :convertible_bunks
+        row :max_no_of_people
+        row :recommended_no_of_people
+        row(:headroom_saloon) { number_with_delimiter b.headroom_saloon }
+      end
+    end
+
+    panel t("charter_data") do
+      attributes_table_for b do
+        row :available_for_boat_charter do |b|
+          status_tag (b.available_for_boat_charter ? "ja" : "nein"),
+            (b.available_for_boat_charter ? :ok : :error)
+        end
+        row :available_for_bunk_charter do |b|
+          status_tag (b.available_for_bunk_charter ? "ja" : "nein"),
+            (b.available_for_bunk_charter ? :ok : :error)
+        end
+        row(:deposit) { |b| number_to_currency b.deposit }
+        row(:cleaning_charge) { |b| number_to_currency b.cleaning_charge }
+        row(:fuel_charge) { |b| number_to_currency b.fuel_charge }
+        row(:gas_charge) { |b| number_to_currency b.gas_charge }
+      end
     end
   end
 
