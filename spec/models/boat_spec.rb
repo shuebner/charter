@@ -61,7 +61,7 @@ describe Boat do
 
   describe "when slug is empty" do
     let!(:boat_without_slug) do 
-      FactoryGirl.build(:boat, name: "Testschiff Bla 2", slug: nil)
+      build(:boat, name: "Testschiff Bla 2", slug: nil)
     end
 
     subject { boat_without_slug }

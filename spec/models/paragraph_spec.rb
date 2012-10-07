@@ -3,8 +3,8 @@ require 'spec_helper'
 
 describe Paragraph do
   
-  let(:page) { FactoryGirl.create(:static_page) }    
-  let(:paragraph) { FactoryGirl.build(:paragraph, static_page: page) }
+  let(:page) { create(:static_page) }    
+  let(:paragraph) { build(:paragraph, static_page: page) }
 
   subject { paragraph }
 
@@ -49,7 +49,7 @@ describe Paragraph do
 
     describe "is not unique for multiple static pages" do
       before do
-        page2 = FactoryGirl.create(:static_page, slug: 'slug2')
+        page2 = create(:static_page, slug: 'slug2')
         paragraph_with_same_order = page2.paragraphs.create(heading: '2', 
           text: 'Abschnitt 2', order: paragraph.order)
         paragraph_with_same_order.save
