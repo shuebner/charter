@@ -46,10 +46,10 @@ class Customer < ActiveRecord::Base
   before_save { self.email = email.downcase unless email.blank? }
 
   def street
-    street_name + " " + street_number
+    "#{street_name} #{street_number}"
   end
 
   def full_name
-    first_name + " " + last_name
+    "#{first_name} #{last_name}"
   end
 end
