@@ -1,0 +1,26 @@
+de:
+  activerecord:
+    models:
+      customer:
+        one: "Kunde"
+        other: "Kunden"
+    attributes:
+      customer:
+        first_name: "Vorname"
+        last_name: "Nachname"
+        gender: "Geschlecht"
+        street_name: "Straße"
+        street_number: "Hausnummer"
+        zip_code: "Postleitzahl"
+        city: "Ort"
+        country: "Land"
+        phone_landline: "Festnetznummer"
+        phone_mobile: "Handynummer"
+
+        full_name: "Name"
+        street: "Adresse"
+  formtastic:
+    hints:
+      customer:
+        phone_landline: "Format ohne Ländervorwahl: 0123-1234567, mit Ländervorwahl: +49123-1234567"
+        phone_mobile: "Format ohne Ländervorwahl: 0123-1234567, mit Ländervorwahl: +49123-1234567"
