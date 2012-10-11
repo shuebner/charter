@@ -3,7 +3,7 @@ class CreateCustomers < ActiveRecord::Migration
     create_table :customers do |t|
       t.string :first_name, null: false
       t.string :last_name, null: false
-      t.boolean :is_male, null: false
+      t.string :gender, null: false, limit: 1
       t.string :phone_landline
       t.string :phone_mobile
       t.string :email

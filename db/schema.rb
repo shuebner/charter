@@ -88,9 +88,9 @@ ActiveRecord::Schema.define(:version => 20121007101850) do
   add_index "boats", ["slug"], :name => "index_boats_on_slug"
 
   create_table "customers", :force => true do |t|
-    t.string   "first_name",     :null => false
-    t.string   "last_name",      :null => false
-    t.boolean  "is_male",        :null => false
+    t.string   "first_name",                  :null => false
+    t.string   "last_name",                   :null => false
+    t.string   "gender",         :limit => 1, :null => false
     t.string   "phone_landline"
     t.string   "phone_mobile"
     t.string   "email"
@@ -99,8 +99,8 @@ ActiveRecord::Schema.define(:version => 20121007101850) do
     t.string   "zip_code"
     t.string   "city"
     t.string   "country"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
   end
 
   add_index "customers", ["first_name"], :name => "index_customers_on_first_name"

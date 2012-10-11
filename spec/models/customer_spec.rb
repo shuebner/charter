@@ -15,7 +15,7 @@ describe Customer do
 
   it { should respond_to :first_name }
   it { should respond_to :last_name }
-  it { should respond_to :is_male }
+  it { should respond_to :gender }
   it { should respond_to :phone_landline }
   it { should respond_to :phone_mobile }
   it { should respond_to :email }
@@ -24,6 +24,9 @@ describe Customer do
   it { should respond_to :zip_code }
   it { should respond_to :city }
   it { should respond_to :country }
+
+  it { should respond_to :street }
+  it { should respond_to :full_name }
   
   it { should be_valid }
 
@@ -94,9 +97,15 @@ describe Customer do
     end
   end
 
-  describe "when gender is not present" do
-    before { customer.is_male = nil }
-    it { should_not be_valid }
+  describe "when gender" do
+    describe "is not present" do
+      before { customer.gender = nil }
+      it { should_not be_valid }
+    end
+    describe "is invalid" do
+      before { customer.gender = "n" }
+      it { should_not be_valid }
+    end
   end
 
   describe "when phone number" do
@@ -248,6 +257,24 @@ describe Customer do
           end
         end
       end
+    end
+  end
+
+  describe "calculated fields" do
+    describe "street" do
+      before do
+        customer.street_name = "Fürstenstraße"
+        customer.street_number = "14a"
+      end
+      its(:street) { should == "Fürstenstraße 14a" }
+    end
+
+    describe "full name" do
+      before do
+        customer.first_name = "Hans"
+        customer.last_name = "Albers"
+      end
+      its(:full_name) { should == "Hans Albers" }
     end
   end
 

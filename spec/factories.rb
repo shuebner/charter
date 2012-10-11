@@ -72,7 +72,7 @@ FactoryGirl.define do
 
   factory :customer do
     first_name { Faker::Name.first_name }
-    last_name { Faker::Name.last_name}
-    is_male [true, false].sample
+    last_name { Faker::Name.last_name }
+    gender ["m", "w"].sample
   end
 end

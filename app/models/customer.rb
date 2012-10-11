@@ -1,5 +1,5 @@
 class Customer < ActiveRecord::Base
-  attr_accessible :city, :email, :first_name, :gender, :last_name,
+  attr_accessible :city, :country, :gender, :email, :first_name, :last_name,
     :phone_landline, :phone_mobile, 
     :street_name, :street_number, :zip_code
 
@@ -13,8 +13,9 @@ class Customer < ActiveRecord::Base
     length: { minimum: 2 },
     format: { with: /^[[:alpha:] \-']+$/ }
 
-  validates :is_male,
-    inclusion: { in: [true, false] }
+  validates :gender,
+    presence: true,
+    inclusion: { in: ["m", "w"] }
 
   validates :phone_landline, :phone_mobile,
     allow_blank: true,
@@ -41,4 +42,12 @@ class Customer < ActiveRecord::Base
     format: { with: /^[[:upper:]][[:alpha:] \-]+$/ }
 
   default_scope order("last_name ASC, first_name ASC")
+
+  def street
+    street_name + " " + street_number
+  end
+
+  def full_name
+    first_name + " " + last_name
+  end
 end
