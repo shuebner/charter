@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(:version => 20121007101850) do
     t.datetime "updated_at",     :null => false
   end
 
+  add_index "customers", ["first_name"], :name => "index_customers_on_first_name"
   add_index "customers", ["last_name"], :name => "index_customers_on_last_name"
 
   create_table "paragraphs", :force => true do |t|

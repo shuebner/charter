@@ -71,8 +71,8 @@ FactoryGirl.define do
   end
 
   factory :customer do
-    first_name "Hans"
-    last_name "Müller"
-    is_male true
+    first_name { Faker::Name.first_name }
+    last_name { Faker::Name.last_name}
+    is_male [true, false].sample
   end
 end

@@ -32,9 +32,7 @@ describe "Trips" do
       
       it "should show the dates for the trip" do
         page.should have_content(date.begin.day)
-        page.should have_content(date.begin.month)
         page.should have_content(date.end.day)
-        page.should have_content(date.end.month)
       end
     end
   end

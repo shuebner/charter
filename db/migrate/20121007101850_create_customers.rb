@@ -16,5 +16,6 @@ class CreateCustomers < ActiveRecord::Migration
       t.timestamps
     end
     add_index :customers, :last_name
+    add_index :customers, :first_name
   end
 end
