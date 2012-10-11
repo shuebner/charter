@@ -163,6 +163,16 @@ describe Customer do
         end
       end
     end
+
+    describe "is mixed case then after saving" do
+      before do
+        customer.email = "HansMueller@gmx.de"
+        customer.save
+      end
+      it "should be lower case" do
+        customer.email.should == "hansmueller@gmx.de"
+      end
+    end
   end
 
   describe "when street_name" do

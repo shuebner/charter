@@ -43,6 +43,8 @@ class Customer < ActiveRecord::Base
 
   default_scope order("last_name ASC, first_name ASC")
 
+  before_save { self.email = email.downcase unless email.blank? }
+
   def street
     street_name + " " + street_number
   end
