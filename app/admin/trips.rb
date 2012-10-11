@@ -1,5 +1,5 @@
 # encoding: utf-8
-ActiveAdmin.register Trip, as: "Toern" do
+ActiveAdmin.register Trip do
   config.filters = false
   config.sort_order = 'name_asc'
 

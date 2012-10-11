@@ -1,3 +1,3 @@
-ActiveAdmin.register Paragraph, as: "Abschnitt" do
+ActiveAdmin.register Paragraph do
   menu false
 end

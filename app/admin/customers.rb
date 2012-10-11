@@ -1,4 +1,4 @@
-ActiveAdmin.register Customer, as: "Kunde" do
+ActiveAdmin.register Customer do
   config.sort_order = 'last_name_asc first_name_asc'
   filter :last_name
   filter :city
