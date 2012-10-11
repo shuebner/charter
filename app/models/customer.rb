@@ -1,7 +1,11 @@
 class Customer < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :full_name, use: :slugged
+
   attr_accessible :city, :country, :gender, :email, :first_name, :last_name,
     :phone_landline, :phone_mobile, 
-    :street_name, :street_number, :zip_code
+    :street_name, :street_number, :zip_code,
+    :slug
 
   validates :first_name,
     presence: true,

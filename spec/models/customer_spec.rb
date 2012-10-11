@@ -15,6 +15,7 @@ describe Customer do
 
   it { should respond_to :first_name }
   it { should respond_to :last_name }
+  it { should respond_to :slug }
   it { should respond_to :gender }
   it { should respond_to :phone_landline }
   it { should respond_to :phone_mobile }
@@ -95,6 +96,15 @@ describe Customer do
         end        
       end
     end
+  end
+
+  describe "slug should consist of first and last name" do
+    before do
+      customer.first_name = "Hans"
+      customer.last_name = "Schmidt"
+      customer.save
+    end
+    its(:slug) { should == "hans-schmidt" }
   end
 
   describe "when gender" do
