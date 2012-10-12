@@ -8,7 +8,7 @@ namespace :db do
 
     Boat.populate 7 do |b|
       b.manufacturer = Faker::Company.name
-      b.length_hull = l = rand(600..1600) / 100
+      b.length_hull = l = rand(600..1600).to_f / 100
       b.model = "#{b.manufacturer} #{(l * 3.3).ceil}"
       b.length_waterline = l * 0.9
       b.beam = l * 0.27
@@ -25,7 +25,7 @@ namespace :db do
       b.convertible_bunks = [0, 1, 2]
       b.max_no_of_people = b.permanent_bunks + b.convertible_bunks
       b.recommended_no_of_people = b.permanent_bunks
-      b.headroom_saloon = rand(180..200) / 100
+      b.headroom_saloon = rand(180..200).to_f / 100
       b.name = Faker::Name.first_name
       b.slug = b.name.parameterize
       b.year_of_construction = rand(1970..2005)
