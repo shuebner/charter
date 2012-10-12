@@ -68,8 +68,8 @@ describe Trip do
   end
 
   describe "TripDate association" do
-    let!(:date2) { create(:trip_date, trip: trip, begin: 2.day.from_now, end: 4.day.from_now) }
-    let!(:date1) { create(:trip_date, trip: trip, begin: 1.day.from_now, end: 5.day.from_now) }
+    let!(:date2) { create(:trip_date, trip: trip, begin: 4.day.from_now, end: 7.day.from_now) }
+    let!(:date1) { create(:trip_date, trip: trip, begin: 1.day.from_now, end: 3.day.from_now) }
     it "should have the right dates in the right order" do
       trip.trip_dates.should == [date1, date2]
     end

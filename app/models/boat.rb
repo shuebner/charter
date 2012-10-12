@@ -19,6 +19,8 @@ class Boat < ActiveRecord::Base
 
   has_many :trips, dependent: :destroy
 
+  has_many :trip_dates, through: :trips
+
   validates :manufacturer, :model, :name, :slug, :year_of_construction,
     presence: true
 

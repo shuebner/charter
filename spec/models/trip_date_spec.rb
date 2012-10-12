@@ -36,5 +36,16 @@ describe TripDate do
       date.end = 1.day.from_now
     end
     it { should_not be_valid }
-  end 
+  end
+
+  describe "when there is an overlapping trip_date for the same boat" do
+    before do
+      other_trip = create(:trip, boat: trip.boat)
+      @overlapping_trip_date = build(:trip_date, trip: other_trip, 
+        begin: date.begin - 1.day, end: date.begin + 1.day)
+    end
+    it "should not be valid" do
+      @overlapping_trip_date.should_not be_valid
+    end
+  end
 end
