@@ -6,13 +6,16 @@ ActiveAdmin.register Boat do
   
   index do
     column :name
-    column :year_of_construction
-    column :manufacturer
     column :model
-    column(:length_hull) { |b| number_with_delimiter b.length_hull }
-    column(:beam) { |b| number_with_delimiter b.beam }
-    column(:draft) { |b| number_with_delimiter b.draft }
-    column(:displacement) { |b| number_with_delimiter b.displacement }
+    column :year_of_construction
+    column :available_for_boat_charter do |b|
+      status_tag (b.available_for_boat_charter ? "ja" : "nein"),
+        (b.available_for_boat_charter ? :ok : :error)
+    end
+    column :available_for_bunk_charter do |b|
+      status_tag (b.available_for_bunk_charter ? "ja" : "nein"),
+        (b.available_for_bunk_charter ? :ok : :error)
+    end
     default_actions
   end
 
