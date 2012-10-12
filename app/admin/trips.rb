@@ -28,7 +28,13 @@ ActiveAdmin.register Trip do
   end
 
   form do |f|
-    f.inputs :name, :no_of_bunks, :price, :description, :boat
+    f.inputs do
+      f.input :name
+      f.input :no_of_bunks
+      f.input :price
+      f.input :description
+      f.input :boat, collection: Boat.bunk_charter_only
+    end
     
     f.has_many :trip_dates do |td|
       td.inputs do

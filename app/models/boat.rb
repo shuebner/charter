@@ -41,6 +41,9 @@ class Boat < ActiveRecord::Base
     where("available_for_boat_charter = ? OR available_for_bunk_charter = ?",
         true, true)
 
+  scope :bunk_charter_only,
+    where(available_for_bunk_charter: true)
+
   def total_sail_area_with_jib
     if sail_area_jib && sail_area_main_sail
       sail_area_main_sail + sail_area_jib

@@ -188,6 +188,17 @@ describe Boat do
         Boat.visible.should_not include(invisible_boat)
       end
     end
+
+    describe "bunk_charter_only" do
+      let(:boat_for_bunk_charter) { create(:bunk_charter_only_boat) }
+      let(:boat_not_for_bunk_charter) { create(:boat_charter_only_boat) }
+      it "should contain all boats available for bunk charter" do
+        Boat.bunk_charter_only.should include(boat_for_bunk_charter)
+      end
+      it "should not contain any boat not available for bunk charter" do
+        Boat.bunk_charter_only.should_not include(boat_not_for_bunk_charter)
+      end
+    end
   end
 
   describe "default sort order" do
