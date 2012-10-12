@@ -31,8 +31,8 @@ describe "Trips" do
       before { visit trip_path(trip) }
       
       it "should show the dates for the trip" do
-        page.should have_content(date.begin.day)
-        page.should have_content(date.end.day)
+        page.should have_content(I18n.l(date.begin))
+        page.should have_content(I18n.l(date.end))
       end
     end
   end
