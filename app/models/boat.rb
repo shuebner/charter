@@ -33,13 +33,14 @@ class Boat < ActiveRecord::Base
   validates :deposit, :cleaning_charge, :fuel_charge, :gas_charge,
     no_presence: { unless: :available_for_boat_charter }
 
-  validate :no_trips_present_when_not_available_for_bunk_charter
-
   default_scope order("name ASC")
 
   scope :visible, 
     where("available_for_boat_charter = ? OR available_for_bunk_charter = ?",
         true, true)
+
+  scope :bunk_charter_only,
+    where(available_for_bunk_charter: true)
 
   def total_sail_area_with_jib
     if sail_area_jib && sail_area_main_sail
@@ -55,12 +56,5 @@ class Boat < ActiveRecord::Base
 
   def visible?
     available_for_bunk_charter || available_for_boat_charter
-  end
-
-  private
-  def no_trips_present_when_not_available_for_bunk_charter
-    if (trips.any? && !available_for_bunk_charter)
-      errors.add(:trips, "muss leer sein wenn das Schiff nicht für Kojencharter verfügbar ist")
-    end
   end
 end

@@ -67,6 +67,14 @@ describe Trip do
     end
   end
 
+  describe "Boat association" do    
+    it "should only be possible with boats available for bunk charter" do
+      no_bunk_charter_boat = create(:boat_charter_only_boat)
+      trip = build(:trip, boat: no_bunk_charter_boat)
+      trip.should_not be_valid
+    end
+  end
+
   describe "TripDate association" do
     let!(:date2) { create(:trip_date, trip: trip, begin: 4.day.from_now, end: 7.day.from_now) }
     let!(:date1) { create(:trip_date, trip: trip, begin: 1.day.from_now, end: 3.day.from_now) }

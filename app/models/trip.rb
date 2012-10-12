@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Trip < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: :slugged
@@ -15,5 +16,14 @@ class Trip < ActiveRecord::Base
   validates :description,
     no_html: true
 
+  validate :boat_is_available_for_bunk_charter, if: :boat
+
   default_scope order("name ASC")
+
+  private
+  def boat_is_available_for_bunk_charter
+    unless boat.available_for_bunk_charter
+      errors.add(:boat, "ist nicht für Kojencharter verfügbar")
+    end    
+  end
 end

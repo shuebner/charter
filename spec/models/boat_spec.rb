@@ -188,6 +188,17 @@ describe Boat do
         Boat.visible.should_not include(invisible_boat)
       end
     end
+
+    describe "bunk_charter_only" do
+      let(:boat_for_bunk_charter) { create(:bunk_charter_only_boat) }
+      let(:boat_not_for_bunk_charter) { create(:boat_charter_only_boat) }
+      it "should contain all boats available for bunk charter" do
+        Boat.bunk_charter_only.should include(boat_for_bunk_charter)
+      end
+      it "should not contain any boat not available for bunk charter" do
+        Boat.bunk_charter_only.should_not include(boat_not_for_bunk_charter)
+      end
+    end
   end
 
   describe "default sort order" do
@@ -219,17 +230,6 @@ describe Boat do
             Trip.find(trip.id)
           end.should raise_error(ActiveRecord::RecordNotFound)
         end
-      end
-    end
-
-    describe "with boat not available for bunk charter" do
-      let!(:boat_not_for_bunk_charter) { create(:boat, available_for_bunk_charter: false) }
-      subject { boat_not_for_bunk_charter }
-      
-      describe "if it nevertheless has trips" do
-        let!(:trip) { create(:trip, boat: boat_not_for_bunk_charter) }
-
-        it { should_not be_valid }
       end
     end
   end
