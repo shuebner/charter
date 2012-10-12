@@ -232,16 +232,5 @@ describe Boat do
         end
       end
     end
-
-    describe "with boat not available for bunk charter" do
-      let!(:boat_not_for_bunk_charter) { create(:boat, available_for_bunk_charter: false) }
-      subject { boat_not_for_bunk_charter }
-      
-      describe "if it nevertheless has trips" do
-        let!(:trip) { create(:trip, boat: boat_not_for_bunk_charter) }
-
-        it { should_not be_valid }
-      end
-    end
   end
 end
