@@ -35,8 +35,15 @@ class TripDate < ActiveRecord::Base
 
   def no_overlap_at_same_boat
     unless trip.boat.trip_dates.overlapping(self).empty?
-      errors.add(:begin, 'Termin überschneidet sich')
-      errors.add(:end, 'Termin überschneidet sich')
+      overlapping_dates = trip.boat.trip_dates.overlapping(self)
+      
+      error_text = "Termin überschneidet sich mit: "
+      overlapping_dates.each do |d|
+        error_text << "#{d.trip.name} (#{I18n.l(d.begin)} - #{I18n.l(d.end)}) "
+      end
+      
+      errors.add(:begin, error_text)
+      errors.add(:end, error_text)
     end
   end
 end
