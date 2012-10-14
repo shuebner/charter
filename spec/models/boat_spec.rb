@@ -141,7 +141,7 @@ describe Boat do
       end
     end
 
-    describe "and integer field" do
+    describe "of type integer" do
       [:tank_volume_diesel, :tank_volume_fresh_water, :tank_volume_waste_water, 
       :permanent_bunks, :convertible_bunks, 
       :max_no_of_people, :recommended_no_of_people, 
@@ -149,6 +149,19 @@ describe Boat do
         describe "#{a} is not an integer" do
           before { boat[a] = 2.5 }
           it { should_not be_valid }
+        end
+      end
+    end
+  end
+
+  describe "when text field" do
+    [:manufacturer, :model, :name, 
+     :engine_manufacturer, :engine_model, :engine_design].each do |a|
+      describe "#{a} contains HTML" do
+        before { boat[a] = "<p>Hallo</p>" }
+        it "should be sanitized on save" do
+          boat.save
+          boat[a].should == "Hallo"
         end
       end
     end

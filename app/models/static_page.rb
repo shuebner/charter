@@ -24,8 +24,11 @@ class StaticPage < ActiveRecord::Base
   validates :text,
     constricted_html: true
 
-  before_save do |page|
-    page.text = sanitize_page_text text
+  before_save do
+    [:title, :heading].each do |a|    
+      self[a] = sanitize(self[a], tags: [])
+    end
+    self.text = sanitize_page_text(text)
   end
 end
 

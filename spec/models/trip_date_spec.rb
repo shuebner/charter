@@ -21,14 +21,34 @@ describe TripDate do
     end
   end
 
-  describe "when begin is not present" do
-    before { date.begin = nil }
-    it { should_not be_valid }
+  describe "when begin" do
+    describe "is not present" do    
+      before { date.begin = nil }
+      it { should_not be_valid }
+    end
+    describe "is not a datetime" do
+      before { date.begin = "10bla" }
+      it { should_not be_valid }
+    end
+    describe "is not a valid datetime" do
+      before { date.begin = "31.02.2012 12:00" }
+      it { should_not be_valid }
+    end
   end
 
-  describe "when end is not present" do
-    before { date.end = nil }
-    it { should_not be_valid }
+  describe "when end" do
+    describe "is not present" do
+      before { date.end = nil }
+      it { should_not be_valid }
+    end
+    describe "is not a datetime" do
+      before { date.end = "10bla" }
+      it { should_not be_valid }
+    end
+    describe "is not a valid datetime" do
+      before { date.end = "31.04.2012 12:00" }
+      it { should_not be_valid }
+    end
   end
 
   describe "when end is before beginning" do

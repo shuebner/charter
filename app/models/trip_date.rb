@@ -6,10 +6,13 @@ class TripDate < ActiveRecord::Base
 
   has_many :trip_bookings
 
-  validates :begin, :end,
-    presence: true
+  validates :begin,
+    presence: true,
+    timeliness: { type: :datetime }
 
-  validate :begin_lies_before_end
+  validates :end,
+    presence: true,
+    timeliness: { type: :datetime, after: :begin }
 
   validate :no_overlap_at_same_boat
 
@@ -36,14 +39,7 @@ class TripDate < ActiveRecord::Base
   end
   
   private
-  def begin_lies_before_end
-    if self.begin && self.end
-      unless self.begin < self.end
-        errors.add(:end,'muss nach dem Anfangszeitpunkt liegen')
-      end
-    end
-  end
-
+  
   def no_overlap_at_same_boat
     unless trip.boat.trip_dates.overlapping(self).empty?
       overlapping_dates = trip.boat.trip_dates.overlapping(self)
