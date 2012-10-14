@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe StaticPage do
-  let(:page) { create(:static_page) }
+  let(:page) { build(:static_page) }
 
   subject { page }
 
@@ -57,8 +57,9 @@ describe StaticPage do
   end
 
   describe "paragraph associations" do
-    let!(:second_paragraph) { create(:paragraph, static_page: page, order: 1) }
-    let!(:first_paragraph) { create(:paragraph, static_page: page, order: 0) }
+    before { page.save }
+    let!(:second_paragraph) { create(:paragraph, static_page: page, order: 2) }
+    let!(:first_paragraph) { create(:paragraph, static_page: page, order: 1) }
     
     it "should have the right paragraphs in the right order" do
       page.paragraphs.should == [first_paragraph, second_paragraph]

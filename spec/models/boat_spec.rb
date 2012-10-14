@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe Boat do
-  let(:boat) { create(:boat) }
+  let(:boat) { build(:boat) }
 
   subject { boat }
 
@@ -123,6 +123,37 @@ describe Boat do
     end
   end
 
+  describe "when numerical field" do
+    [:length_hull, :length_waterline, :beam, :draft, :air_draft, :displacement, 
+    :sail_area_jib, :sail_area_genoa, :sail_area_main_sail, 
+    :tank_volume_diesel, :tank_volume_fresh_water, :tank_volume_waste_water, 
+    :permanent_bunks, :convertible_bunks, 
+    :max_no_of_people, :recommended_no_of_people, 
+    :headroom_saloon, :year_of_construction, :year_of_refit, :engine_output,
+    :deposit, :cleaning_charge, :fuel_charge, :gas_charge].each do |a|
+      describe "#{a} is not a number" do
+        before { boat[a] = "20a" }
+        it { should_not be_valid }
+      end
+      describe "#{a} is not positive or zero" do
+        before { boat[a] = -1 }
+        it { should_not be_valid }
+      end
+    end
+
+    describe "and integer field" do
+      [:tank_volume_diesel, :tank_volume_fresh_water, :tank_volume_waste_water, 
+      :permanent_bunks, :convertible_bunks, 
+      :max_no_of_people, :recommended_no_of_people, 
+      :year_of_construction, :year_of_refit, :engine_output].each do |a|
+        describe "#{a} is not an integer" do
+          before { boat[a] = 2.5 }
+          it { should_not be_valid }
+        end
+      end
+    end
+  end
+
   describe "calculated field" do
     
     describe "sail area fields" do
@@ -150,7 +181,7 @@ describe Boat do
       end
     end
     
-    describe "visible" do
+    describe "visible?" do
       describe "should be true if boat is available for boat charter" do
         before do
           boat.available_for_boat_charter = true
@@ -172,6 +203,14 @@ describe Boat do
         end
         it { should_not be_visible }
       end
+    end
+
+    describe "max_no_of_bunks should be sum of permanent and convertible bunks" do
+      before do
+        boat.permanent_bunks = 4
+        boat.convertible_bunks = 2
+      end
+      its(:max_no_of_bunks) { should == 6 }
     end
   end
 

@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe Trip do
   let(:boat) { create(:boat) }
-  let(:trip) { create(:trip, boat: boat) }
+  let(:trip) { build(:trip, boat: boat) }
 
   subject { trip }
 
@@ -49,9 +49,35 @@ describe Trip do
     end
   end
 
-  describe "when number of bunks is not present" do
-    before { trip.no_of_bunks = nil }
-    it { should_not be_valid }
+  describe "when number of bunks" do
+    describe "is not present" do
+      before { trip.no_of_bunks = nil }
+      it { should_not be_valid }
+    end
+
+    describe "is not a number" do
+      before { trip.no_of_bunks = "a" }
+      it { should_not be_valid }
+    end
+
+    describe "is not an integer" do
+      before { trip.no_of_bunks = 2.5 }
+      it { should_not be_valid }
+    end
+
+    describe "is not positive" do
+      before { trip.no_of_bunks = 0 }
+      it { should_not be_valid }
+    end
+
+    describe "is not less than the maximum number of people on the boat" do
+      before do
+        boat.permanent_bunks = 4
+        boat.convertible_bunks = 2
+        trip.no_of_bunks = 6
+      end
+      it { should_not be_valid }
+    end
   end
 
   describe "when price is not present" do

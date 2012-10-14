@@ -39,6 +39,21 @@ describe Paragraph do
       it { should_not be_valid }
     end
 
+    describe "is not a number" do
+      before { paragraph.order = "a" }
+      it { should_not be_valid }
+    end
+
+    describe "is not an integer" do
+      before { paragraph.order = 2.5 }
+      it { should_not be_valid }
+    end
+
+    describe "is not positive" do
+      before { paragraph.order = -1 }
+      it { should_not be_valid }
+    end
+
     describe "is not unique" do
       before do
         paragraph_with_same_order = paragraph.dup

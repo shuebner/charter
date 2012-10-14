@@ -24,7 +24,9 @@ FactoryGirl.define do
     manufacturer "Testschiffhersteller"
     model "Testschiff"
     sequence(:name) { |n| "Palve #{n}" }
-    year_of_construction "2011"
+    year_of_construction 2011
+    permanent_bunks 4
+    convertible_bunks 2
     deposit 1000
     cleaning_charge 50
     fuel_charge 7
