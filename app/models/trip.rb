@@ -13,6 +13,9 @@ class Trip < ActiveRecord::Base
   validates :boat_id, :name, :description, :no_of_bunks, :price,
     presence: true
 
+  validates :price,
+    numericality: { greater_than_or_equal_to: 0 }
+
   validates :no_of_bunks,
     numericality: { only_integer: true, greater_than: 0 }
   validates :no_of_bunks,

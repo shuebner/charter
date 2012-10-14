@@ -92,9 +92,21 @@ describe Trip do
     end
   end
 
-  describe "when price is not present" do
-    before { trip.price = nil }
-    it { should_not be_valid }
+  describe "when price" do
+    describe "is not present" do
+      before { trip.price = nil }
+      it { should_not be_valid }
+    end
+
+    describe "is not a number" do
+      before { trip.price = "a" }
+      it { should_not be_valid }
+    end
+
+    describe "is not positive" do
+      before { trip.price = -100 }
+      it { should_not be_valid }
+    end
   end
 
   describe "default sort order" do
