@@ -13,10 +13,9 @@ class TripBooking < ActiveRecord::Base
   validates :no_of_bunks,
     presence: true,
     numericality: { only_integer: true, 
-      greater_than: 0}#,
-      #less_or_equal_than: Proc.new { |b| b.trip_date.no_of_available_bunks } }
-  validate :no_of_bunks_is_le_available_bunks, unless: "no_of_bunks.blank?" 
-
+      greater_than: 0,
+      less_than_or_equal_to: Proc.new { |b| b.trip_date.no_of_available_bunks } }
+  
   default_scope order("number DESC")
 
   scope :effective, 
@@ -30,12 +29,6 @@ class TripBooking < ActiveRecord::Base
   
   private
   
-  def no_of_bunks_is_le_available_bunks
-    unless no_of_bunks <= trip_date.no_of_available_bunks
-      errors.add(:no_of_bunks, "sind mehr als noch verfügbar sind")
-    end
-  end
-
   def self.highest_number_for_year(year)
     last_booking = where("number LIKE 'T-#{year}-%'").order("number DESC").first()
     if last_booking
