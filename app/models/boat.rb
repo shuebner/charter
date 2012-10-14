@@ -62,6 +62,13 @@ class Boat < ActiveRecord::Base
   scope :bunk_charter_only,
     where(available_for_bunk_charter: true)
 
+  before_save do
+    [:manufacturer, :model, :name, 
+     :engine_manufacturer, :engine_model, :engine_design].each do |a|
+      self[a] = sanitize(self[a], tags: [])
+    end
+  end
+
   def total_sail_area_with_jib
     if sail_area_jib && sail_area_main_sail
       sail_area_main_sail + sail_area_jib

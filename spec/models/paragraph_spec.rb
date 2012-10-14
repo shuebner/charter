@@ -83,11 +83,24 @@ describe Paragraph do
       before { paragraph.heading = " "}
       it { should_not be_valid }
     end
+
+    describe "contains HTML" do
+      before { paragraph.heading = "<p>Hallo</p>" }
+      it "should be sanitized on save" do
+        paragraph.save
+        paragraph.heading.should == "Hallo"
+      end
+    end
   end
 
-  describe "when text contains HTML" do
-    before { paragraph.text = "<h1>h1</h1><h2>h2</h2><p>p</p>" }
-    it { should_not be_valid }
+  [:heading, :text].each do |t|
+    describe "when #{t} contains HTML" do
+      before { paragraph[t] = "<p>Hallo</p>" }
+      it "should be sanitized on save" do
+        paragraph.save
+        paragraph[t].should == "Hallo"
+      end
+    end
   end
 end
 # == Schema Information

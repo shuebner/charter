@@ -30,6 +30,14 @@ describe StaticPage do
       before { page.title = 'a' * 101 }
       it { should_not be_valid }
     end
+
+    describe "contains HTML" do
+      before { page.title = "<p>Hallo</p>" }
+      it "should be sanitized on save" do
+        page.save
+        page.title.should == "Hallo"
+      end
+    end
   end
 
   describe "when heading" do
@@ -41,6 +49,14 @@ describe StaticPage do
     describe "is too long" do
       before { page.heading = 'a' * 101 }
       it { should_not be_valid}
+    end
+
+    describe "contains HTML" do
+      before { page.heading = "<p>Hallo</p>" }
+      it "should be sanitized on save" do
+        page.save
+        page.heading.should == "Hallo"
+      end
     end
   end
 

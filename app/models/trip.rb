@@ -13,9 +13,6 @@ class Trip < ActiveRecord::Base
   validates :boat_id, :name, :description, :no_of_bunks, :price,
     presence: true
 
-  validates :description,
-    no_html: true
-
   validates :no_of_bunks,
     numericality: { only_integer: true, greater_than: 0 }
   validates :no_of_bunks,
@@ -24,6 +21,12 @@ class Trip < ActiveRecord::Base
   validate :boat_is_available_for_bunk_charter, if: :boat
 
   default_scope order("name ASC")
+
+  before_save do
+    [:name, :description].each do |a|
+      self[a] = sanitize(self[a], tags: [])
+    end
+  end
 
   private
   def boat_is_available_for_bunk_charter

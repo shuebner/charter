@@ -32,9 +32,18 @@ describe Trip do
     it { should_not be_valid }
   end
 
-  describe "when name is not present" do
-    before { trip.name = "" }
-    it { should_not be_valid }
+  describe "when name" do 
+    describe "is not present" do
+      before { trip.name = "" }
+      it { should_not be_valid }
+    end
+    describe "contains HTML" do
+      before { trip.name = "<b>Name</b>" }
+      it "should be sanitized on save" do
+        trip.save
+        trip.name.should == "Name"
+      end
+    end
   end
 
   describe "when description" do
@@ -44,8 +53,11 @@ describe Trip do
     end
 
     describe "contains HTML" do
-      before { trip.description = "<p><h2>" }
-      it { should_not be_valid }
+      before { trip.description = "<p>Hallo</p>" }
+      it "should be sanitized on save" do
+        trip.save
+        trip.description.should == "Hallo"
+      end
     end
   end
 

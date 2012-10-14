@@ -22,11 +22,10 @@ class Paragraph < ActiveRecord::Base
     numericality: { only_integer: true, greater_than: 0 },
     uniqueness: { scope: :static_page_id }
 
-  validates :text,
-    no_html: true
-
-  before_save do |paragraph|
-    paragraph.text = sanitize_paragraph_text text
+  before_save do
+    [:heading, :text].each do |a|
+      self[a] = sanitize(self[a], tags: [])
+    end
   end
 end
 # == Schema Information
