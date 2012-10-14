@@ -150,7 +150,7 @@ describe Boat do
       end
     end
     
-    describe "visible" do
+    describe "visible?" do
       describe "should be true if boat is available for boat charter" do
         before do
           boat.available_for_boat_charter = true
@@ -172,6 +172,14 @@ describe Boat do
         end
         it { should_not be_visible }
       end
+    end
+
+    describe "max_no_of_bunks should be sum of permanent and convertible bunks" do
+      before do
+        boat.permanent_bunks = 4
+        boat.convertible_bunks = 2
+      end
+      its(:max_no_of_bunks) { should == 6 }
     end
   end
 

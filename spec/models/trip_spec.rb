@@ -49,9 +49,20 @@ describe Trip do
     end
   end
 
-  describe "when number of bunks is not present" do
-    before { trip.no_of_bunks = nil }
-    it { should_not be_valid }
+  describe "when number of bunks" do
+    describe "is not present" do
+      before { trip.no_of_bunks = nil }
+      it { should_not be_valid }
+    end
+
+    describe "is not less than the maximum number of people on the boat" do
+      before do
+        boat.permanent_bunks = 4
+        boat.convertible_bunks = 2
+        trip.no_of_bunks = 6
+      end
+      it { should_not be_valid }
+    end
   end
 
   describe "when price is not present" do

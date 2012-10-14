@@ -54,6 +54,12 @@ class Boat < ActiveRecord::Base
     end
   end
 
+  def max_no_of_bunks
+    if permanent_bunks && convertible_bunks
+      permanent_bunks + convertible_bunks
+    end
+  end
+
   def visible?
     available_for_bunk_charter || available_for_boat_charter
   end
