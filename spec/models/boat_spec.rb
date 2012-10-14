@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe Boat do
-  let(:boat) { create(:boat) }
+  let(:boat) { build(:boat) }
 
   subject { boat }
 

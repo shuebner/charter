@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe Customer do
-  let(:customer) { create(:customer) }
+  let(:customer) { build(:customer) }
 
   let(:invalid_name_chars) do
     '!"§$%&/=?,.;:_<>|+*~#()[]{}\°0123456789'.each_char

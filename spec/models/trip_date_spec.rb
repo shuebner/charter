@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe TripDate do
   let(:trip) { create(:trip) }
-  let(:date) { create(:trip_date, trip: trip) }
+  let(:date) { build(:trip_date, trip: trip) }
 
   subject { date }
 
@@ -39,13 +39,9 @@ describe TripDate do
   end
 
   describe "when there is an overlapping trip_date for the same boat" do
-    before do
-      other_trip = create(:trip, boat: trip.boat)
-      @overlapping_trip_date = build(:trip_date, trip: other_trip, 
-        begin: date.begin - 1.day, end: date.begin + 1.day)
-    end
-    it "should not be valid" do
-      @overlapping_trip_date.should_not be_valid
-    end
+    let(:other_trip) { create(:trip, boat: trip.boat) }
+    let!(:overlapping_trip_date) { create(:trip_date, trip: other_trip, 
+        begin: date.begin - 1.day, end: date.begin + 1.day) }
+    it { should_not be_valid }
   end
 end

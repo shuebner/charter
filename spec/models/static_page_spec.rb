@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe StaticPage do
-  let(:page) { create(:static_page) }
+  let(:page) { build(:static_page) }
 
   subject { page }
 
@@ -57,6 +57,7 @@ describe StaticPage do
   end
 
   describe "paragraph associations" do
+    before { page.save }
     let!(:second_paragraph) { create(:paragraph, static_page: page, order: 1) }
     let!(:first_paragraph) { create(:paragraph, static_page: page, order: 0) }
     

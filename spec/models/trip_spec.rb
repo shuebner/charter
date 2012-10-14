@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe Trip do
   let(:boat) { create(:boat) }
-  let(:trip) { create(:trip, boat: boat) }
+  let(:trip) { build(:trip, boat: boat) }
 
   subject { trip }
 
