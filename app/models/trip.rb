@@ -16,6 +16,9 @@ class Trip < ActiveRecord::Base
   validates :description,
     no_html: true
 
+  validates :no_of_bunks,
+    numericality: { less_than: Proc.new { |t| t.boat.max_no_of_bunks }, if: :boat }
+
   validate :boat_is_available_for_bunk_charter, if: :boat
 
   default_scope order("name ASC")
