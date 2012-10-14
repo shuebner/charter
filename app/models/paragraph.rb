@@ -19,6 +19,7 @@ class Paragraph < ActiveRecord::Base
 
   validates :order,
     presence: true,
+    numericality: { only_integer: true, greater_than: 0 },
     uniqueness: { scope: :static_page_id }
 
   validates :text,

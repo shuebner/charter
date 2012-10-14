@@ -21,7 +21,27 @@ class Boat < ActiveRecord::Base
 
   has_many :trip_dates, through: :trips
 
-  validates :manufacturer, :model, :name, :slug, :year_of_construction,
+  # Dezimalzahlen können entweder leer oder müssen >=0 sein
+  validates :length_hull, :length_waterline, :beam, :draft, :air_draft, :displacement, 
+    :sail_area_jib, :sail_area_genoa, :sail_area_main_sail, 
+    :headroom_saloon, 
+    :deposit, :cleaning_charge, :fuel_charge, :gas_charge,    
+    allow_nil: true,
+    numericality: { greater_than_or_equal_to: 0 }
+
+  # Ganze Zahlen können entweder leer oder müssen >= 0 sein
+  validates :tank_volume_diesel, :tank_volume_fresh_water, :tank_volume_waste_water, 
+    :permanent_bunks, :convertible_bunks, 
+    :max_no_of_people, :recommended_no_of_people, 
+    :year_of_refit, :engine_output,
+    allow_nil: true,
+    numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+
+  validates :year_of_construction, 
+    presence: true,
+    numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+
+  validates :manufacturer, :model, :name, :slug,
     presence: true
 
   validates :available_for_boat_charter, :available_for_bunk_charter,

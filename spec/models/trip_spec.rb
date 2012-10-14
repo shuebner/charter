@@ -55,6 +55,21 @@ describe Trip do
       it { should_not be_valid }
     end
 
+    describe "is not a number" do
+      before { trip.no_of_bunks = "a" }
+      it { should_not be_valid }
+    end
+
+    describe "is not an integer" do
+      before { trip.no_of_bunks = 2.5 }
+      it { should_not be_valid }
+    end
+
+    describe "is not positive" do
+      before { trip.no_of_bunks = 0 }
+      it { should_not be_valid }
+    end
+
     describe "is not less than the maximum number of people on the boat" do
       before do
         boat.permanent_bunks = 4

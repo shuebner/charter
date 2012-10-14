@@ -58,8 +58,8 @@ describe StaticPage do
 
   describe "paragraph associations" do
     before { page.save }
-    let!(:second_paragraph) { create(:paragraph, static_page: page, order: 1) }
-    let!(:first_paragraph) { create(:paragraph, static_page: page, order: 0) }
+    let!(:second_paragraph) { create(:paragraph, static_page: page, order: 2) }
+    let!(:first_paragraph) { create(:paragraph, static_page: page, order: 1) }
     
     it "should have the right paragraphs in the right order" do
       page.paragraphs.should == [first_paragraph, second_paragraph]
