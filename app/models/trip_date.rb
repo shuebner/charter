@@ -4,6 +4,8 @@ class TripDate < ActiveRecord::Base
 
   belongs_to :trip
 
+  has_many :trip_bookings
+
   validates :begin, :end,
     presence: true
 
@@ -22,6 +24,15 @@ class TripDate < ActiveRecord::Base
       where("begin BETWEEN :begin AND :end OR end BETWEEN :begin AND :end", 
         { begin: date.begin, end: date.end })
     end
+  end
+
+  def no_of_available_bunks
+    if trip_bookings.effective.any?
+      booked_bunks = trip_bookings.effective.map(&:no_of_bunks).inject(:+)
+    else
+      booked_bunks = 0
+    end
+    trip.no_of_bunks - booked_bunks
   end
   
   private
