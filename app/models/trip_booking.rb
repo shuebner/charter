@@ -34,7 +34,7 @@ class TripBooking < ActiveRecord::Base
     if last_booking
       last_booking.number
     else
-      "T-#{year}-001"
+      "T-#{year}-000"
     end
   end
     
