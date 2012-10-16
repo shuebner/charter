@@ -28,6 +28,7 @@ describe Customer do
 
   it { should respond_to :street }
   it { should respond_to :full_name }
+  it { should respond_to :display_name }
   
   it { should be_valid }
 
@@ -295,6 +296,10 @@ describe Customer do
         customer.last_name = "Albers"
       end
       its(:full_name) { should == "Hans Albers" }
+    end
+
+    describe "display name should be last_name, first_name" do
+      its(:display_name) { should == "#{customer.last_name}, #{customer.first_name}" }
     end
   end
 

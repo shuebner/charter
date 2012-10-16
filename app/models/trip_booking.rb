@@ -3,12 +3,14 @@ class TripBooking < ActiveRecord::Base
   extend FriendlyId
   friendly_id :number, use: :slugged
 
-  attr_accessible :no_of_bunks, :trip_date, :customer
+  attr_accessible :no_of_bunks, :trip_date_id, :customer_id
 
   belongs_to :customer
   belongs_to :trip_date
 
-  before_save :generate_number
+  delegate :trip, to: :trip_date
+
+  before_validation :generate_number
 
   validates :no_of_bunks,
     presence: true,
@@ -26,6 +28,12 @@ class TripBooking < ActiveRecord::Base
     self.cancelled_at = Time.now
   end
 
+  def number
+    unless self[:number]
+      self[:number] = generate_number
+    end
+    self[:number]
+  end
   
   private
   

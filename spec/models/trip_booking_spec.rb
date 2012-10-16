@@ -12,9 +12,11 @@ describe TripBooking do
   it { should respond_to(:cancelled_at) }
   it { should respond_to(:trip_date) }
   it { should respond_to(:customer) }
+  it { should respond_to(:trip) }
 
   its(:customer) { should == customer }
   its(:trip_date) { should == date }
+  its(:trip) { should == date.trip }
 
   describe "accessible attributes" do
     it "should not allow access to number" do
@@ -22,11 +24,11 @@ describe TripBooking do
         TripBooking.new(number: "T-2012-223")
       end.should raise_error(ActiveModel::MassAssignmentSecurity::Error)
     end
-    it "should not allow access to date_id" do
+=begin    it "should not allow access to date_id" do
       expect do
         TripBooking.new(trip_date_id: date.id)
       end.should raise_error(ActiveModel::MassAssignmentSecurity::Error)
-    end
+=end    end
     it "should not allow access to deleted_at" do
       expect do
         TripBooking.new(updated_at: Time.now)
@@ -57,6 +59,11 @@ describe TripBooking do
       end
       it { should_not be_valid }
     end
+  end
+
+  describe "slug should be the parameterized number" do
+    before { booking.save }
+    its(:slug) { should == booking.number.parameterize }
   end
 
   describe "scope effective" do

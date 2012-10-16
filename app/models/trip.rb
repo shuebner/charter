@@ -31,6 +31,10 @@ class Trip < ActiveRecord::Base
     end
   end
 
+  def display_name
+    name
+  end
+
   private
   def boat_is_available_for_bunk_charter
     unless boat.available_for_bunk_charter

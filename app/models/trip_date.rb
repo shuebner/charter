@@ -37,6 +37,14 @@ class TripDate < ActiveRecord::Base
     end
     trip.no_of_bunks - booked_bunks
   end
+
+  def display_name
+    "#{I18n.l(self.begin)} - #{I18n.l(self.end)}"
+  end
+
+  def display_name_with_trip
+    "#{trip.name} (#{display_name})"
+  end
   
   private
   

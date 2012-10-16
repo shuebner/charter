@@ -9,6 +9,7 @@ describe TripDate do
   it { should respond_to(:begin) }
   it { should respond_to(:end) }
   it { should respond_to(:no_of_available_bunks) }
+  it { should respond_to(:trip) }
   its(:trip) { should == trip }
 
   it { should be_valid }
@@ -86,5 +87,15 @@ describe TripDate do
     it "should be the number of bunks that are not effectively booked" do
       date.no_of_available_bunks.should == trip.no_of_bunks - effective_booking.no_of_bunks
     end
+  end
+
+  describe "display_name" do
+    it  "should include date and time of beginning and end" do
+      date.display_name.should == "#{I18n.l(date.begin)} - #{I18n.l(date.end)}"
+    end
+  end
+
+  describe "display_name_with_trip should include trip and display name" do
+    its(:display_name_with_trip) { should == "#{date.trip.name} (#{date.display_name})" }
   end
 end

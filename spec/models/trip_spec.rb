@@ -109,6 +109,12 @@ describe Trip do
     end
   end
 
+  describe "display name" do
+    it "should be the name of the trip" do
+      trip.display_name.should == trip.name
+    end
+  end
+
   describe "default sort order" do
     let!(:second_trip) { create(:trip, name: "Z-Törn") }
     let!(:first_trip) { create(:trip, name: "A-Törn") }
