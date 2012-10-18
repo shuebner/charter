@@ -138,9 +138,9 @@ ActiveRecord::Schema.define(:version => 20121012173402) do
   create_table "trip_bookings", :force => true do |t|
     t.integer  "trip_date_id", :null => false
     t.integer  "customer_id",  :null => false
-    t.string   "number"
-    t.string   "slug"
-    t.integer  "no_of_bunks"
+    t.string   "number",       :null => false
+    t.string   "slug",         :null => false
+    t.integer  "no_of_bunks",  :null => false
     t.datetime "cancelled_at"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false

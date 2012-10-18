@@ -3,9 +3,9 @@ class CreateTripBookings < ActiveRecord::Migration
     create_table :trip_bookings do |t|
       t.references :trip_date, null: false
       t.references :customer, null: false
-      t.string :number, unique: true
-      t.string :slug, unique: true
-      t.integer :no_of_bunks
+      t.string :number, null: false, unique: true
+      t.string :slug, null: false, unique: true
+      t.integer :no_of_bunks, null: false
       t.datetime :cancelled_at
 
       t.timestamps
