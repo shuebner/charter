@@ -25,7 +25,13 @@ class TripBooking < ActiveRecord::Base
 
 
   def cancel!
-    self.cancelled_at = Time.now
+    unless cancelled?
+      self.cancelled_at = Time.now
+    end
+  end
+
+  def cancelled?
+    !cancelled_at.blank?
   end
 
   def number

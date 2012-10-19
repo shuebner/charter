@@ -13,6 +13,7 @@ describe TripBooking do
   it { should respond_to(:trip_date) }
   it { should respond_to(:customer) }
   it { should respond_to(:trip) }
+  it { should respond_to(:cancelled?) }
 
   its(:customer) { should == customer }
   its(:trip_date) { should == date }
@@ -77,8 +78,26 @@ describe TripBooking do
     end
   end
 
-  describe "cancel! should set the right cancellation time" do
-    before { booking.cancel! }
-    its(:cancelled_at) { should >= Time.now - 1.second }
+  describe "cancel!" do
+    describe "if trip booking is still valid should set the right cancellation time" do
+      before { booking.cancel! }
+      its(:cancelled_at) { should >= Time.now - 1.second }
+    end
+    describe "if trip booking was already cancelled" do
+      before { booking.cancel! }
+      it "should not change the cancellation time" do
+        expect { booking.cancel! }.not_to change(booking, :cancelled_at)
+      end
+    end
+  end
+
+  describe "cancelled?" do
+    it "should return false if the trip booking has not been cancelled" do
+      booking.cancelled?.should == false
+    end
+    it "should return true if the trip booking has been cancelled" do
+      booking.cancel!
+      booking.cancelled?.should == true
+    end
   end
 end
