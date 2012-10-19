@@ -1,0 +1,1 @@
+Setting.defaults[:visible_season] = 2012

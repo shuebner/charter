@@ -149,6 +149,8 @@ GEM
       activesupport (= 3.2.5)
       bundler (~> 1.0)
       railties (= 3.2.5)
+    rails-settings-cached (0.2.2)
+      rails (>= 3.0.0)
     railties (3.2.5)
       actionpack (= 3.2.5)
       activesupport (= 3.2.5)
@@ -234,6 +236,7 @@ DEPENDENCIES
   populator
   rack-cache
   rails (= 3.2.5)
+  rails-settings-cached
   rb-inotify (= 0.8.8)
   rspec-rails (= 2.10.0)
   sass-rails (~> 3.2.3)
