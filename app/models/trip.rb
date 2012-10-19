@@ -7,7 +7,10 @@ class Trip < ActiveRecord::Base
     :trip_dates_attributes
 
   belongs_to :boat
-  has_many :trip_dates, dependent: :destroy
+  has_many :trip_dates
+
+  before_destroy :no_trip_dates_exist
+
   accepts_nested_attributes_for :trip_dates, allow_destroy: true
 
   validates :boat_id, :name, :description, :no_of_bunks, :price,
@@ -31,10 +34,21 @@ class Trip < ActiveRecord::Base
     end
   end
 
+  def display_name
+    name
+  end
+
   private
   def boat_is_available_for_bunk_charter
     unless boat.available_for_bunk_charter
       errors.add(:boat, "ist nicht für Kojencharter verfügbar")
     end    
+  end
+
+  def no_trip_dates_exist
+    unless trip_dates.empty?
+      errors.add(:base, "Es sind bereits Törntermine vorhanden.")
+      return false
+    end
   end
 end

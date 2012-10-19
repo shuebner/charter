@@ -4,7 +4,25 @@ namespace :db do
     require 'populator'
     require 'faker'
 
-    [Customer, TripDate, Trip, Boat].each(&:delete_all)
+    [Customer, TripBooking, TripDate, Trip, Boat].each(&:delete_all)
+    booking_number = "000"
+    
+
+    Customer.populate 200 do |c|
+      c.first_name = Faker::Name.first_name
+      c.last_name = Faker::Name.last_name
+      full_name = "#{c.first_name} #{c.last_name}"
+      c.slug = full_name.parameterize
+      c.gender = %w[m w].sample
+      c.street_name = Faker::Address.street_name
+      c.street_number = "#{rand(1..300)}#{["", "", "", "a", "b"].sample}"
+      c.zip_code = "#{rand(10000..99999)}"
+      c.city = Faker::Address.city
+      c.country = ["Deutschland", Faker::Address.country].sample
+      c.phone_landline = "0#{rand(10..999)}-#{rand(100000..9999999)}"
+      c.phone_mobile = "0#{rand(10..999)}-#{rand(100000..9999999)}"
+      c.email = Faker::Internet.email(full_name)
+    end
 
     Boat.populate 7 do |b|
       b.manufacturer = Faker::Company.name
@@ -55,27 +73,18 @@ namespace :db do
           t.price = rand(22..80) * 10
           TripDate.populate 2..4 do |td|
             td.trip_id = t.id
-            td.begin = 6.months.from_now..10.months.from_now
+            td.begin = DateTime.new(2013, 4, 1)..DateTime.new(2013, 9, 23)
             td.end = td.begin + rand(3..7).days
+            TripBooking.populate 1..3 do |tb|
+              tb.trip_date_id = td.id
+              tb.number = "T-#{td.begin.year}-#{booking_number.succ!}"
+              tb.slug = tb.number.downcase
+              tb.customer_id = Customer.all.map(&:id)
+              tb.no_of_bunks = 1
+            end
           end
         end
       end
-    end
-
-    Customer.populate 200 do |c|
-      c.first_name = Faker::Name.first_name
-      c.last_name = Faker::Name.last_name
-      full_name = "#{c.first_name} #{c.last_name}"
-      c.slug = full_name.parameterize
-      c.gender = %w[m w].sample
-      c.street_name = Faker::Address.street_name
-      c.street_number = "#{rand(1..300)}#{["", "", "", "a", "b"].sample}"
-      c.zip_code = "#{rand(10000..99999)}"
-      c.city = Faker::Address.city
-      c.country = ["Deutschland", Faker::Address.country].sample
-      c.phone_landline = "0#{rand(10..999)}-#{rand(100000..9999999)}"
-      c.phone_mobile = "0#{rand(10..999)}-#{rand(100000..9999999)}"
-      c.email = Faker::Internet.email(full_name)
     end
   end
 end

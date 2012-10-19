@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121011151210) do
+ActiveRecord::Schema.define(:version => 20121012173402) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -134,6 +134,22 @@ ActiveRecord::Schema.define(:version => 20121011151210) do
   end
 
   add_index "static_pages", ["slug"], :name => "index_static_pages_on_name"
+
+  create_table "trip_bookings", :force => true do |t|
+    t.integer  "trip_date_id", :null => false
+    t.integer  "customer_id",  :null => false
+    t.string   "number",       :null => false
+    t.string   "slug",         :null => false
+    t.integer  "no_of_bunks",  :null => false
+    t.datetime "cancelled_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "trip_bookings", ["customer_id"], :name => "index_trip_bookings_on_customer_id"
+  add_index "trip_bookings", ["number"], :name => "index_trip_bookings_on_number", :unique => true
+  add_index "trip_bookings", ["slug"], :name => "index_trip_bookings_on_slug", :unique => true
+  add_index "trip_bookings", ["trip_date_id"], :name => "index_trip_bookings_on_trip_date_id"
 
   create_table "trip_dates", :force => true do |t|
     t.integer  "trip_id",    :null => false

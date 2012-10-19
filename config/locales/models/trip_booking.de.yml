@@ -1,0 +1,12 @@
+de:
+  activerecord:
+    models:
+      trip_booking:
+        one: Törnbuchung
+        other: Törnbuchungen
+    attributes:
+      trip_booking:
+        trip: "Törn"
+        customer: "Kunde"
+        number: "Buchungsnummer"
+        no_of_bunks: "Anzahl der Kojen"

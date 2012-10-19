@@ -4,6 +4,8 @@ class TripDate < ActiveRecord::Base
 
   belongs_to :trip
 
+  has_many :trip_bookings
+
   validates :begin,
     presence: true,
     timeliness: { type: :datetime }
@@ -13,6 +15,8 @@ class TripDate < ActiveRecord::Base
     timeliness: { type: :datetime, after: :begin }
 
   validate :no_overlap_at_same_boat
+
+  before_destroy :no_trip_bookings_exist
 
   default_scope order("begin ASC")
 
@@ -25,6 +29,23 @@ class TripDate < ActiveRecord::Base
       where("begin BETWEEN :begin AND :end OR end BETWEEN :begin AND :end", 
         { begin: date.begin, end: date.end })
     end
+  end
+
+  def no_of_available_bunks
+    if trip_bookings.effective.any?
+      booked_bunks = trip_bookings.effective.map(&:no_of_bunks).inject(:+)
+    else
+      booked_bunks = 0
+    end
+    trip.no_of_bunks - booked_bunks
+  end
+
+  def display_name
+    "#{I18n.l(self.begin)} - #{I18n.l(self.end)}"
+  end
+
+  def display_name_with_trip
+    "#{trip.name} (#{display_name})"
   end
   
   private
@@ -40,6 +61,13 @@ class TripDate < ActiveRecord::Base
       
       errors.add(:begin, error_text)
       errors.add(:end, error_text)
+    end
+  end
+
+  def no_trip_bookings_exist
+    unless trip_bookings.empty?
+      errors.add(:base, "Für diesen Termin existieren bereits Buchungen.")
+      return false
     end
   end
 end

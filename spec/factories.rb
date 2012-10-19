@@ -77,4 +77,10 @@ FactoryGirl.define do
     last_name { Faker::Name.last_name }
     gender ["m", "w"].sample
   end
+
+  factory :trip_booking do
+    no_of_bunks 2
+    trip_date
+    customer
+  end
 end

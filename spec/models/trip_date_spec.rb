@@ -8,6 +8,8 @@ describe TripDate do
 
   it { should respond_to(:begin) }
   it { should respond_to(:end) }
+  it { should respond_to(:no_of_available_bunks) }
+  it { should respond_to(:trip) }
   its(:trip) { should == trip }
 
   it { should be_valid }
@@ -63,5 +65,50 @@ describe TripDate do
     let!(:overlapping_trip_date) { create(:trip_date, trip: other_trip, 
         begin: date.begin - 1.day, end: date.begin + 1.day) }
     it { should_not be_valid }
+  end
+
+  describe "association to trip bookings" do
+    let!(:booking1) { create(:trip_booking, trip_date: date, no_of_bunks: 1) }
+    let!(:booking2) { create(:trip_booking, trip_date: date, no_of_bunks: 1, cancelled_at: Time.now) }
+    it "should have the right bookings in the right order" do
+      date.trip_bookings.should == [booking2, booking1]
+    end
+
+    describe "deletion" do
+      describe "without bookings" do
+        let!(:date_without_bookings) { create(:trip_date) }
+        it "should be allowed" do
+          expect { date_without_bookings.destroy }.to change(TripDate, :count).by(-1)
+        end
+      end
+      describe "with bookings" do
+        before { date.save }
+        it "should not be allowed" do
+          expect { date.destroy }.not_to change(TripDate, :count)
+        end
+      end
+    end
+  end
+
+  describe "number of available bunks" do
+    let!(:effective_booking) do 
+      create(:trip_booking, trip_date: date, no_of_bunks: 1)
+    end
+    let!(:ineffective_booking) do 
+      create(:trip_booking, trip_date: date, no_of_bunks: 1, cancelled_at: Time.now)
+    end
+    it "should be the number of bunks that are not effectively booked" do
+      date.no_of_available_bunks.should == trip.no_of_bunks - effective_booking.no_of_bunks
+    end
+  end
+
+  describe "display_name" do
+    it  "should include date and time of beginning and end" do
+      date.display_name.should == "#{I18n.l(date.begin)} - #{I18n.l(date.end)}"
+    end
+  end
+
+  describe "display_name_with_trip should include trip and display name" do
+    its(:display_name_with_trip) { should == "#{date.trip.name} (#{date.display_name})" }
   end
 end

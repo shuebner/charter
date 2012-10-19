@@ -28,6 +28,7 @@ describe Customer do
 
   it { should respond_to :street }
   it { should respond_to :full_name }
+  it { should respond_to :display_name }
   
   it { should be_valid }
 
@@ -296,6 +297,10 @@ describe Customer do
       end
       its(:full_name) { should == "Hans Albers" }
     end
+
+    describe "display name should be last_name, first_name" do
+      its(:display_name) { should == "#{customer.last_name}, #{customer.first_name}" }
+    end
   end
 
   describe "default sort order" do
@@ -305,6 +310,26 @@ describe Customer do
 
     it "should sort ascending by first name, then ascending by last name" do
       Customer.all.should == [customer1, customer2, customer3]
+    end
+  end
+
+  describe "association to trip bookings" do
+    let!(:booking1) { create(:trip_booking, customer: customer) }
+    let!(:booking2) { create(:trip_booking, customer: customer) }
+    it "should have the right bookings in the right order" do
+      customer.trip_bookings.should == [booking2, booking1]
+    end
+    describe "when customer without bookings is to be deleted" do
+      let!(:customer_without_bookings) { create(:customer) }
+      it "should be allowed" do
+        expect { customer_without_bookings.destroy }.to change(Customer, :count).by(-1)
+      end
+    end
+
+    describe "when customer with valid bookings is to be deleted" do
+      it "should not be allowed" do
+        expect { customer.destroy }.not_to change(Customer, :count)
+      end
     end
   end
 end
