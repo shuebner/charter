@@ -26,11 +26,15 @@ ActiveAdmin.register TripBooking do
                "Buchung #{trip_booking.number} wirklich stornieren?"
   end
 
+  scope :all, default: true do |bookings|
+    bookings.includes [:customer]
+  end
+
   index do
     column :number
     column(Boat.model_name.human) { |b| b.trip.boat.name }
-    column :trip
-    column :customer
+    column :trip, sortable: false
+    column :customer, sortable: 'customers.last_name'
     column :no_of_bunks
     column :created_at
     column() do |b| 
