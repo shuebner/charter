@@ -73,6 +73,21 @@ describe TripDate do
     it "should have the right bookings in the right order" do
       date.trip_bookings.should == [booking2, booking1]
     end
+
+    describe "deletion" do
+      describe "without bookings" do
+        let!(:date_without_bookings) { create(:trip_date) }
+        it "should be allowed" do
+          expect { date_without_bookings.destroy }.to change(TripDate, :count).by(-1)
+        end
+      end
+      describe "with bookings" do
+        before { date.save }
+        it "should not be allowed" do
+          expect { date.destroy }.not_to change(TripDate, :count)
+        end
+      end
+    end
   end
 
   describe "number of available bunks" do

@@ -16,6 +16,8 @@ class TripDate < ActiveRecord::Base
 
   validate :no_overlap_at_same_boat
 
+  before_destroy :no_trip_bookings_exist
+
   default_scope order("begin ASC")
 
   def self.overlapping(date)
@@ -59,6 +61,13 @@ class TripDate < ActiveRecord::Base
       
       errors.add(:begin, error_text)
       errors.add(:end, error_text)
+    end
+  end
+
+  def no_trip_bookings_exist
+    unless trip_bookings.empty?
+      errors.add(:base, "Für diesen Termin existieren bereits Buchungen.")
+      return false
     end
   end
 end
