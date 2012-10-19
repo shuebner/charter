@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Customer < ActiveRecord::Base
   extend FriendlyId
   friendly_id :full_name, use: :slugged
@@ -6,6 +7,10 @@ class Customer < ActiveRecord::Base
     :phone_landline, :phone_mobile, 
     :street_name, :street_number, :zip_code,
     :slug
+
+  has_many :trip_bookings
+
+  before_destroy :no_trip_bookings_exist
 
   validates :first_name,
     presence: true,
@@ -59,5 +64,13 @@ class Customer < ActiveRecord::Base
 
   def display_name
     "#{last_name}, #{first_name}"
+  end
+
+  private
+  def no_trip_bookings_exist
+    unless trip_bookings.empty?
+      errors.add(:base, "Kunde kann nicht gelöscht werden, wenn bereits Törnbuchungen vorhanden sind")
+      return false
+    end
   end
 end

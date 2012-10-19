@@ -312,4 +312,24 @@ describe Customer do
       Customer.all.should == [customer1, customer2, customer3]
     end
   end
+
+  describe "association to trip bookings" do
+    let!(:booking1) { create(:trip_booking, customer: customer) }
+    let!(:booking2) { create(:trip_booking, customer: customer) }
+    it "should have the right bookings in the right order" do
+      customer.trip_bookings.should == [booking2, booking1]
+    end
+    describe "when customer without bookings is to be deleted" do
+      let!(:customer_without_bookings) { create(:customer) }
+      it "should be allowed" do
+        expect { customer_without_bookings.destroy }.to change(Customer, :count).by(-1)
+      end
+    end
+
+    describe "when customer with valid bookings is to be deleted" do
+      it "should not be allowed" do
+        expect { customer.destroy }.not_to change(Customer, :count)
+      end
+    end
+  end
 end
