@@ -137,13 +137,18 @@ describe Trip do
     it "should have the right dates in the right order" do
       trip.trip_dates.should == [date1, date2]
     end
-    it "should destroy associated dates" do
-      dates = trip.trip_dates
-      trip.destroy
-      dates.each do |date|
-        lambda do
-          TripDate.find(date.id)
-        end.should raise_error(ActiveRecord::RecordNotFound)
+    describe "deletion" do
+      describe "without trip dates" do
+        let!(:trip_without_dates) { create(:trip) }
+        it "should be allowed" do
+          expect { trip_without_dates.destroy }.to change(Trip, :count).by(-1)
+        end
+      end
+      describe "with trip dates" do
+        before { trip.save }
+        it "should not be allowed" do
+          expect { trip.destroy }.not_to change(Trip, :count)
+        end
       end
     end
   end
