@@ -12,6 +12,8 @@ class TripBooking < ActiveRecord::Base
 
   before_validation :generate_number
 
+  before_destroy  { return false }
+
   validates :no_of_bunks,
     presence: true,
     numericality: { only_integer: true, 

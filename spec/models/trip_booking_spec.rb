@@ -100,4 +100,11 @@ describe TripBooking do
       booking.cancelled?.should == true
     end
   end
+
+  describe "destruction of trip bookings" do
+    before { booking.save }
+    it "should not be possible" do
+      expect { booking.destroy }.not_to change(TripBooking, :count)
+    end
+  end
 end

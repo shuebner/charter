@@ -1,9 +1,30 @@
+# encoding: utf-8
 ActiveAdmin.register TripBooking do
   filter :number
   filter :created_at
   filter :customer
 
-  actions :all, except: [:edit]
+  actions :all, except: [:edit, :destroy]
+
+  member_action :cancel, method: :put do
+    booking = TripBooking.find(params[:id])
+    if booking.cancelled?
+      redirect_to admin_trip_booking_path(booking), 
+        alert: "Buchung #{booking.number} wurde bereits am " \
+                "#{I18n.l(booking.cancelled_at)} storniert"
+    else
+      booking.cancel!
+      booking.save
+      redirect_to admin_trip_booking_path(booking),
+        notice: "Buchung #{booking.number} wurde erfolgreich storniert"
+    end
+  end
+
+  action_item only: [ :show ] do
+    button_to "stornieren", cancel_admin_trip_booking_path, method: :put, 
+      confirm: "Eine Stornierung kann nicht rückgängig gemacht werden!\n" \
+               "Buchung #{trip_booking.number} wirklich stornieren?"
+  end
 
   index do
     column :number
@@ -12,6 +33,11 @@ ActiveAdmin.register TripBooking do
     column :customer
     column :no_of_bunks
     column :created_at
+    column() do |b| 
+      link_to "stornieren", cancel_admin_trip_booking_path(b), method: :put, 
+        confirm: "Eine Stornierung kann nicht rückgängig gemacht werden!\n" \
+                 "Buchung #{b.number} wirklich stornieren?"
+    end
     default_actions
   end
 
