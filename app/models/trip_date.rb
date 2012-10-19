@@ -54,7 +54,7 @@ class TripDate < ActiveRecord::Base
       
       error_text = "Termin überschneidet sich mit: "
       overlapping_dates.each do |d|
-        error_text << "#{d.trip.name} (#{I18n.l(d.begin)} - #{I18n.l(d.end)}) "
+        error_text << "#{d.display_name_with_trip} "
       end
       
       errors.add(:begin, error_text)
