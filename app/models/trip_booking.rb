@@ -10,8 +10,6 @@ class TripBooking < ActiveRecord::Base
 
   delegate :trip, to: :trip_date
 
-  before_validation :generate_number
-
   before_destroy  { return false }
 
   validates :no_of_bunks,
@@ -19,6 +17,10 @@ class TripBooking < ActiveRecord::Base
     numericality: { only_integer: true, 
       greater_than: 0,
       less_than_or_equal_to: Proc.new { |b| b.trip_date.no_of_available_bunks } }
+
+  validates :number,
+    presence: true,
+    uniqueness: true
   
   default_scope order("number DESC")
 

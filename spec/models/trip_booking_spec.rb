@@ -62,6 +62,14 @@ describe TripBooking do
     end
   end
 
+  describe "when number" do
+    describe "is already taken" do
+      let!(:booking_with_same_number) { create(:trip_booking, number: booking.number) }
+      it { should_not be_valid }
+    end
+  end
+
+
   describe "slug should be the parameterized number" do
     before { booking.save }
     its(:slug) { should == booking.number.parameterize }
@@ -79,6 +87,13 @@ describe TripBooking do
   end
 
   describe "cancel!" do
+    it "on existing trip bookings should not change the number on save" do
+      expect do
+        booking.save
+        booking.cancel!
+        booking.save
+      end.not_to change(booking, :number)
+    end
     describe "if trip booking is still valid should set the right cancellation time" do
       before { booking.cancel! }
       its(:cancelled_at) { should >= Time.now - 1.second }
