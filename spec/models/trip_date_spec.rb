@@ -70,10 +70,8 @@ describe TripDate do
   describe "association to trip bookings" do
     let!(:booking1) { create(:trip_booking, trip_date: date, no_of_bunks: 1) }
     let!(:booking2) { create(:trip_booking, trip_date: date, no_of_bunks: 1, cancelled_at: Time.now) }
-    let!(:booking3) { create(:trip_booking, trip_date: date, no_of_bunks: 1) }
-    before { date.reload }
     it "should have the right bookings in the right order" do
-      date.trip_bookings.should == [booking3, booking2, booking1]
+      date.trip_bookings.should == [booking2, booking1]
     end
   end
 
