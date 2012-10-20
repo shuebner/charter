@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121020083921) do
+ActiveRecord::Schema.define(:version => 20121020144144) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -45,6 +45,26 @@ ActiveRecord::Schema.define(:version => 20121020083921) do
 
   add_index "admin_users", ["email"], :name => "index_admin_users_on_email", :unique => true
   add_index "admin_users", ["reset_password_token"], :name => "index_admin_users_on_reset_password_token", :unique => true
+
+  create_table "boat_price_types", :force => true do |t|
+    t.string   "name",       :null => false
+    t.integer  "duration",   :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "boat_prices", :force => true do |t|
+    t.decimal  "value",              :precision => 7, :scale => 2, :null => false
+    t.integer  "boat_price_type_id",                               :null => false
+    t.integer  "season_id",                                        :null => false
+    t.integer  "boat_id",                                          :null => false
+    t.datetime "created_at",                                       :null => false
+    t.datetime "updated_at",                                       :null => false
+  end
+
+  add_index "boat_prices", ["boat_id"], :name => "index_boat_prices_on_boat_id"
+  add_index "boat_prices", ["boat_price_type_id"], :name => "index_boat_prices_on_boat_price_type_id"
+  add_index "boat_prices", ["season_id"], :name => "index_boat_prices_on_season_id"
 
   create_table "boats", :force => true do |t|
     t.string   "manufacturer",                                             :null => false
