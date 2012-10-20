@@ -2,6 +2,8 @@
 class Season < ActiveRecord::Base
   attr_accessible :begin_date, :end_date, :name
 
+  has_many :boat_prices, dependent: :destroy
+
   validates :name,
     presence: true
 
@@ -14,6 +16,8 @@ class Season < ActiveRecord::Base
     timeliness: { type: :date, after: :begin_date }
 
   validate :no_overlap
+
+  default_scope order("begin_date ASC")
 
   before_save { self.name = sanitize(name, tags: []) }
 

@@ -262,7 +262,7 @@ describe Boat do
     end
   end
 
-  describe "trip association" do
+  describe "association with trip" do
     describe "with boat available for bunk charter" do
       let!(:boat_for_bunk_charter) { create(:boat, available_for_bunk_charter: true) }
       let!(:second_trip) { create(:trip, name: "Z-Törn", boat: boat_for_bunk_charter) }
@@ -283,6 +283,15 @@ describe Boat do
           end.should raise_error(ActiveRecord::RecordNotFound)
         end
       end
+    end
+  end
+
+  describe "association with boat price" do
+    let!(:price) { create(:boat_price, boat: boat) }
+    its(:boat_prices) { should == [price] }
+
+    it "should delete associated boat prices" do
+      expect { boat.destroy }.to change(BoatPrice, :count).by(-1)
     end
   end
 end

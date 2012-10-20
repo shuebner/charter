@@ -46,5 +46,24 @@ describe BoatPriceType do
       before { type.duration = 2.3 }
       it { should_not be_valid }
     end
-  end  
+  end
+
+  describe "default sort order" do
+    let!(:type1) { create(:boat_price_type, duration: 7) }
+    let!(:type2) { create(:boat_price_type, duration: 3, name: "Wochenende") }
+    let!(:type3) { create(:boat_price_type, duration: 3, name: "Kurzwoche") }
+    it "should be ascending by duration, then ascending by name" do
+      BoatPriceType.all.should == [type3, type2, type1]
+    end
+  end
+
+  describe "association to boat prices" do
+    before { type.save }
+    let!(:price) { create(:boat_price, boat_price_type: type) }
+    its(:boat_prices) { should == [price] }
+
+    it "should delete associated boat prices" do
+      expect { type.destroy }.to change(BoatPrice, :count).by(-1)
+    end
+  end
 end

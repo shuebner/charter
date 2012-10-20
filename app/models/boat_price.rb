@@ -15,4 +15,4 @@ class BoatPrice < ActiveRecord::Base
   validates :boat_price_type_id,
     presence: true,
     uniqueness: { scope: [:boat_id, :season_id] }
-  end
+end

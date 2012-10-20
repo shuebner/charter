@@ -8,7 +8,7 @@ describe Season do
   it { should respond_to(:name) }
   it { should respond_to(:begin_date) }
   it { should respond_to(:end_date) }
-
+  
   it { should be_valid }
 
   describe "when name" do
@@ -66,5 +66,22 @@ describe Season do
         end_date: season.end_date + 1.day)
     end
     it { should_not be_valid }
+  end
+
+  describe "default sort order" do
+    let!(:season1) { create(:season, begin_date: 4.days.from_now, end_date: 5.days.from_now) }
+    let!(:season2) { create(:season, begin_date: 1.day.from_now, end_date: 2.days.from_now) }
+    it "should be ascending by begin date" do
+      Season.all.should == [season2, season1]
+    end
+  end
+
+  describe "association to boat prices" do
+    let!(:price) { create(:boat_price, season: season) }
+    its(:boat_prices) { should == [price] }
+
+    it "should delete associated boat prices" do
+      expect { season.destroy }.to change(BoatPrice, :count).by(-1)
+    end      
   end
 end
