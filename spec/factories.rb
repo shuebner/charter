@@ -83,4 +83,10 @@ FactoryGirl.define do
     trip_date
     customer
   end
+
+  factory :season do
+    name "Hauptsaison"
+    begin_date Date.new(2013, 4, 1)
+    end_date Date.new(2013, 9, 30)
+  end
 end
