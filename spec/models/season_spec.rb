@@ -9,6 +9,8 @@ describe Season do
   it { should respond_to(:begin_date) }
   it { should respond_to(:end_date) }
 
+  it { should be_valid }
+
   describe "when name" do
     describe "is not present" do
       before { season.name = "" }
