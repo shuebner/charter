@@ -18,15 +18,15 @@ class TripDate < ActiveRecord::Base
 
   default_scope order("begin ASC")
 
-  def self.overlapping(date)
-    if date.id
-      where("begin BETWEEN :begin AND :end OR end BETWEEN :begin AND :end", 
-        { begin: date.begin, end: date.end }).
-        where("NOT trip_dates.id = ?", date.id)
+  def self.overlapping(trip_date)
+    if trip_date.id
+      where("DATEDIFF(begin, :end) * DATEDIFF(:begin, end) >= 0", 
+        { begin: trip_date.begin, end: trip_date.end }).
+        where("NOT id = ?", trip_date.id)
     else
-      where("begin BETWEEN :begin AND :end OR end BETWEEN :begin AND :end", 
-        { begin: date.begin, end: date.end })
-    end
+      where("DATEDIFF(begin, :end) * DATEDIFF(:begin, end) >= 0", 
+        { begin: trip_date.begin, end: trip_date.end })
+    end  
   end
 
   def no_of_available_bunks
