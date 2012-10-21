@@ -225,6 +225,27 @@ describe Boat do
       end
       its(:max_no_of_bunks) { should == 6 }
     end
+
+    describe "prices" do
+      before do
+        2.times { create(:season) }
+        2.times { create(:boat_price_type) }
+        Season.all.each do |s|
+          BoatPriceType.all.each do |t|
+            create(:boat_price, boat: boat, season: s, boat_price_type: t)
+          end
+        end
+      end
+      it "should return the boat price for a season and boat price type" do
+        Season.all.each do |s|
+          BoatPriceType.all.each do |t|
+            right_price = BoatPrice.where(season_id: s.id, 
+              boat_price_type_id: t.id, boat_id: boat.id).first
+            boat.prices(s, t).should == right_price
+          end
+        end
+      end
+    end
   end
 
   describe "scope" do
