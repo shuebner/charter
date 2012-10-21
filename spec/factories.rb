@@ -86,8 +86,8 @@ FactoryGirl.define do
 
   factory :season do
     sequence(:name) { |n| "Saison #{n}" }
-    begin_date Date.new(2013, 4, 1)
-    end_date Date.new(2013, 9, 30)
+    sequence(:begin_date) { |n| Date.new(2013, 4, 1) + n.years }
+    sequence(:end_date) { |n| Date.new(2013, 9, 30) + n.years }
   end
 
   factory :boat_price_type do

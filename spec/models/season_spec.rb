@@ -23,6 +23,10 @@ describe Season do
         season.name.should == "Hallo"
       end
     end
+    describe "has already been taken" do
+      before { create(:season, name: season.name) }
+      it { should_not be_valid }
+    end
   end
 
   describe "when begin date" do

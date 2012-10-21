@@ -5,7 +5,8 @@ class Season < ActiveRecord::Base
   has_many :boat_prices, dependent: :destroy
 
   validates :name,
-    presence: true
+    presence: true,
+    uniqueness: true
 
   validates :begin_date,
     presence: true,
