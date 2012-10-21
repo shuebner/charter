@@ -53,4 +53,22 @@ describe BoatPrice do
     end
     it { should_not be_valid }
   end
+
+  describe "equality between two boat price objects" do
+    let!(:other_price) do 
+      create(:boat_price, boat: price.boat, season: price.season, 
+        boat_price_type: price.boat_price_type, value: price.value)
+    end
+    it "should be given if their associations and their value is equal" do
+      price.should == other_price
+    end
+    it "should not be given if they differ in association or value" do
+      [:boat_id, :season_id, :boat_price_type_id, :value].each do |a|
+        old_value = other_price[a]
+        other_price[a] += 1
+        price.should_not == other_price
+        other_price[a] = old_value
+      end
+    end
+  end
 end

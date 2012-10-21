@@ -15,4 +15,10 @@ class BoatPrice < ActiveRecord::Base
   validates :boat_price_type_id,
     presence: true,
     uniqueness: { scope: [:boat_id, :season_id] }
+
+  def ==(other)
+    other.instance_of?(BoatPrice) &&
+      value == other.value && boat == other.boat && 
+      boat_price_type == other.boat_price_type && season == other.season        
+  end
 end
