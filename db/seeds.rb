@@ -5,3 +5,11 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+# Erstelle die verschiedenen Saisonarten
+Season.create(name: "Vorsaison", 
+  begin_date: Date.new(2013, 4, 1), end_date: Date.new(2013, 5, 30))
+Season.create(name: "Hauptsaison",
+  begin_date: Date.new(2013, 6, 1), end_date: Date.new(2013, 8, 31))
+Season.create(name: "Nachsaison",
+  begin_date: Date.new(2013, 9, 1), end_date: Date.new(2013, 9, 30))

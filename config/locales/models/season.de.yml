@@ -1,0 +1,11 @@
+de:
+  activerecord:
+    models:
+      season:
+        one: Saison
+        other: Saisons
+    attributes:
+      season:
+        name: "Bezeichnung"
+        begin_date: "Anfang"
+        end_date: "Ende"
