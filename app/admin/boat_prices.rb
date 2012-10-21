@@ -1,11 +1,18 @@
 ActiveAdmin.register BoatPrice do
-  config.filters = false
-  config.sort_order = "boat_asc season_asc boat_price_type_asc"
+  filter :boat
+  filter :season
+  filter :boat_price_type
+
+  config.sort_order = "boats.name_asc"
+
+  scope :all, default: true do |prices|
+    prices.includes [:boat, :season, :boat_price_type]
+  end
 
   index do
-    column :boat
-    column :season
-    column :boat_price_type
+    column :boat, sortable: "boats.name"
+    column :season, sortable: "seasons.name"
+    column :boat_price_type, sortable: "boat_price_types.name"
     column(:value) { |p| number_to_currency(p.value) }
     default_actions
   end
