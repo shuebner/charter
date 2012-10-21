@@ -1,0 +1,10 @@
+de:
+  activerecord:
+    models:
+      boat_price_type:
+        one: "Schifsspreisart"
+        other: "Schiffspreisarten"
+    attributes:
+      boat_price_type:
+        name: "Bezeichnung"
+        duration: "Dauer"
