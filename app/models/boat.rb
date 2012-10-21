@@ -64,6 +64,9 @@ class Boat < ActiveRecord::Base
   scope :bunk_charter_only,
     where(available_for_bunk_charter: true)
 
+  scope :boat_charter_only,
+    where(available_for_boat_charter: true)
+
   before_save do
     [:manufacturer, :model, :name, 
      :engine_manufacturer, :engine_model, :engine_design].each do |a|

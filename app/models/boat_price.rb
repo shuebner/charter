@@ -1,5 +1,5 @@
 class BoatPrice < ActiveRecord::Base
-  attr_accessible :value
+  attr_accessible :value, :boat_id, :season_id, :boat_price_type_id
 
   belongs_to :boat
   belongs_to :season
@@ -7,7 +7,7 @@ class BoatPrice < ActiveRecord::Base
 
   validates :value,
     presence: true,
-    numericality: { greater_than: 0 }
+    numericality: { greater_than_or_equal_to: 0 }
 
   validates :season, :boat,
     presence: true

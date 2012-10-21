@@ -25,8 +25,8 @@ describe BoatPrice do
       before { price.value = "ab" }
       it { should_not be_valid }
     end
-    describe "is not positive" do
-      before { price.value = "-3" }
+    describe "is not positive or zero" do
+      before { price.value = -3 }
       it { should_not be_valid }
     end
   end

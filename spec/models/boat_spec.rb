@@ -241,14 +241,24 @@ describe Boat do
       end
     end
 
-    describe "bunk_charter_only" do
-      let(:boat_for_bunk_charter) { create(:bunk_charter_only_boat) }
-      let(:boat_not_for_bunk_charter) { create(:boat_charter_only_boat) }
-      it "should contain all boats available for bunk charter" do
-        Boat.bunk_charter_only.should include(boat_for_bunk_charter)
+    describe "bunk and boat charter only" do
+      let(:boat_for_bunk_charter_only) { create(:bunk_charter_only_boat) }
+      let(:boat_for_boat_charter_only) { create(:boat_charter_only_boat) }
+      describe "bunk_charter_only" do
+        it "should contain all boats available for bunk charter" do
+          Boat.bunk_charter_only.should include(boat_for_bunk_charter_only)
+        end
+        it "should not contain any boat not available for bunk charter" do
+          Boat.bunk_charter_only.should_not include(boat_for_boat_charter_only)
+        end
       end
-      it "should not contain any boat not available for bunk charter" do
-        Boat.bunk_charter_only.should_not include(boat_not_for_bunk_charter)
+      describe "boat_charter_only" do
+        it "should contain all boats available for boat charter" do
+          Boat.boat_charter_only.should include(boat_for_boat_charter_only)
+        end
+        it "should not contain any boat not available for boat charter" do
+          Boat.boat_charter_only.should_not include(boat_for_bunk_charter_only)
+        end
       end
     end
   end
