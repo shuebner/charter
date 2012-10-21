@@ -36,9 +36,15 @@ describe BoatPrice do
     it { should_not be_valid }
   end
 
-  describe "when boat is not present" do
-    before { price.boat = nil }
-    it { should_not be_valid }
+  describe "when boat" do
+    describe "is not present" do
+      before { price.boat = nil }
+      it { should_not be_valid }
+    end
+    describe "is not available for boat charter" do
+      before { price.boat = create(:bunk_charter_only_boat) }
+      it { should_not be_valid }
+    end
   end
 
   describe "when boat price type is not present" do

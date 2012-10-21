@@ -1,3 +1,4 @@
+# encoding: utf-8
 class BoatPrice < ActiveRecord::Base
   attr_accessible :value, :boat_id, :season_id, :boat_price_type_id
 
@@ -16,9 +17,20 @@ class BoatPrice < ActiveRecord::Base
     presence: true,
     uniqueness: { scope: [:boat_id, :season_id] }
 
+  validate :boat_is_available_for_boat_charter, if: :boat
+
+  
   def ==(other)
     other.instance_of?(BoatPrice) &&
       value == other.value && boat == other.boat && 
       boat_price_type == other.boat_price_type && season == other.season        
+  end
+
+  private
+
+  def boat_is_available_for_boat_charter
+    unless boat.available_for_boat_charter
+      errors.add(:boat, "ist nicht für Bootscharter verfügbar")
+    end
   end
 end
