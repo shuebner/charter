@@ -36,3 +36,27 @@
     <% end %>
   </ul>
 <% end %>
+<% if @boat.available_for_boat_charter %>
+  <h2>Schiffscharter</h2>
+  <p>Sie können dieses Schiff zu folgenden Preisen chartern</p>
+  <table>
+    <tr>
+      <th>Charterdauer</th>
+      <% @seasons.each do |s| %>
+        <th><%= s.name %></th>
+      <% end %>
+    </tr>
+    <% @boat_price_types.each do |t| %>
+      <tr>
+        <td><%= t.name %></td>
+        <% @seasons.each do |s| %>
+          <td>
+            <% price = @boat.prices(s, t) %>
+            <%= price.value ? number_to_currency(price.value) : "-" %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+

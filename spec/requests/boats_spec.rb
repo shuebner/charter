@@ -47,5 +47,56 @@ describe "Boats" do
 
       it { should_not have_selector('h2', text: 'Törns') }
     end
+
+    describe "boat charter section" do      
+      describe "prices" do
+        let!(:early_season) { create(:early_season) }
+        let!(:main_season) { create(:main_season) }
+        let!(:late_season) { create(:late_season) }
+        
+        let!(:weekend) { create(:boat_price_type, 
+          name: "Wochenendcharter", duration: 2) }
+        let!(:week) { create(:boat_price_type,
+          name: "Wochencharter", duration: 7) }
+
+        before do
+          Season.all.each do |s|
+            BoatPriceType.all.each do |t|
+              create(:boat_price, boat: boat, season: s, boat_price_type: t)
+            end
+          end
+          visit boat_path(boat)
+        end
+        
+=begin        let!(:early_price) do 
+          create(:boat_price, season: early_season, boat_price_type: weekend,
+            boat: boat) }
+        end
+        let!(:main_price) do
+          create(:boat_price, season: main_season, boat_price_type: weekend,
+            boat: boat)
+        end
+        let!(:late_price do
+          create(:boat_price, season: late_season, boat_price_type: weekend,
+            boat: boat)
+        end
+=end        
+        it "should contain the names of all seasons" do
+          Season.all.each do |s|
+            page.should have_selector('table th', text: s.name)
+          end
+        end
+        it "should contain the names of all boat price types" do
+          BoatPriceType.all.each do |t|
+            page.should have_selector('table tr', text: t.name)
+          end
+        end
+        it "should contain all boat charter prices of this boat" do
+          boat.boat_prices.each do |p|
+            page.should have_selector('table tr', text: number_to_currency(p.value))
+          end
+        end
+      end
+    end
   end
 end

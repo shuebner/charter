@@ -88,6 +88,24 @@ FactoryGirl.define do
     sequence(:name) { |n| "Saison #{n}" }
     sequence(:begin_date) { |n| Date.new(2013, 4, 1) + n.years }
     sequence(:end_date) { |n| Date.new(2013, 9, 30) + n.years }
+    
+    factory :early_season do
+      name "Vorsaison"
+      begin_date Date.new(2013, 4, 1)
+      end_date Date.new(2013, 5, 31)
+    end
+
+    factory :main_season do
+      name "Hauptsaison"
+      begin_date Date.new(2013, 6, 1)
+      end_date Date.new(2013, 8, 31)
+    end
+
+    factory :late_season do
+      name "Nachsaison"
+      begin_date Date.new(2013, 9, 1)
+      end_date Date.new(2013, 9, 30)
+    end
   end
 
   factory :boat_price_type do
