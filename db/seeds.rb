@@ -6,6 +6,15 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+# Erstelle einen Admin-User
+AdminUser.create(email: "admin@example.com", 
+  password: "password", password_confirmation: "password")
+
+# Erstelle die nötigen Statischen Seiten
+StaticPage.create(heading: "Willkommen", title: "Start", text: "Startseite")
+StaticPage.create(heading: "Revier", title: "Revier", text: "Revierseite")
+StaticPage.create(heading: "Impressum", title: "Impressum", text: "Impressumsseite")
+
 # Erstelle die gängigen Saisonarten
 Season.create(name: "Vorsaison", 
   begin_date: Date.new(2013, 4, 1), end_date: Date.new(2013, 5, 30))
