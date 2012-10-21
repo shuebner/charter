@@ -1,0 +1,12 @@
+de:
+  activerecord:
+    models:
+      boat_price:
+        one: "Schifsspreis"
+        other: "Schiffspreise"
+    attributes:
+      boat_price:
+        season: "Saison"
+        boat_price_type: "Preisart"
+        boat: "Schiff"
+        value: "Betrag"

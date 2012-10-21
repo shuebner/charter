@@ -21,6 +21,8 @@ class Boat < ActiveRecord::Base
 
   has_many :trip_dates, through: :trips
 
+  has_many :boat_prices, dependent: :destroy
+
   # Dezimalzahlen können entweder leer oder müssen >=0 sein
   validates :length_hull, :length_waterline, :beam, :draft, :air_draft, :displacement, 
     :sail_area_jib, :sail_area_genoa, :sail_area_main_sail, 
@@ -62,6 +64,9 @@ class Boat < ActiveRecord::Base
   scope :bunk_charter_only,
     where(available_for_bunk_charter: true)
 
+  scope :boat_charter_only,
+    where(available_for_boat_charter: true)
+
   before_save do
     [:manufacturer, :model, :name, 
      :engine_manufacturer, :engine_model, :engine_design].each do |a|
@@ -89,5 +94,9 @@ class Boat < ActiveRecord::Base
 
   def visible?
     available_for_bunk_charter || available_for_boat_charter
+  end
+
+  def prices(season, type)
+    boat_prices.where(season_id: season.id, boat_price_type_id: type.id).first
   end
 end

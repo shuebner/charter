@@ -225,6 +225,27 @@ describe Boat do
       end
       its(:max_no_of_bunks) { should == 6 }
     end
+
+    describe "prices" do
+      before do
+        2.times { create(:season) }
+        2.times { create(:boat_price_type) }
+        Season.all.each do |s|
+          BoatPriceType.all.each do |t|
+            create(:boat_price, boat: boat, season: s, boat_price_type: t)
+          end
+        end
+      end
+      it "should return the boat price for a season and boat price type" do
+        Season.all.each do |s|
+          BoatPriceType.all.each do |t|
+            right_price = BoatPrice.where(season_id: s.id, 
+              boat_price_type_id: t.id, boat_id: boat.id).first
+            boat.prices(s, t).should == right_price
+          end
+        end
+      end
+    end
   end
 
   describe "scope" do
@@ -241,14 +262,24 @@ describe Boat do
       end
     end
 
-    describe "bunk_charter_only" do
-      let(:boat_for_bunk_charter) { create(:bunk_charter_only_boat) }
-      let(:boat_not_for_bunk_charter) { create(:boat_charter_only_boat) }
-      it "should contain all boats available for bunk charter" do
-        Boat.bunk_charter_only.should include(boat_for_bunk_charter)
+    describe "bunk and boat charter only" do
+      let(:boat_for_bunk_charter_only) { create(:bunk_charter_only_boat) }
+      let(:boat_for_boat_charter_only) { create(:boat_charter_only_boat) }
+      describe "bunk_charter_only" do
+        it "should contain all boats available for bunk charter" do
+          Boat.bunk_charter_only.should include(boat_for_bunk_charter_only)
+        end
+        it "should not contain any boat not available for bunk charter" do
+          Boat.bunk_charter_only.should_not include(boat_for_boat_charter_only)
+        end
       end
-      it "should not contain any boat not available for bunk charter" do
-        Boat.bunk_charter_only.should_not include(boat_not_for_bunk_charter)
+      describe "boat_charter_only" do
+        it "should contain all boats available for boat charter" do
+          Boat.boat_charter_only.should include(boat_for_boat_charter_only)
+        end
+        it "should not contain any boat not available for boat charter" do
+          Boat.boat_charter_only.should_not include(boat_for_bunk_charter_only)
+        end
       end
     end
   end
@@ -262,7 +293,7 @@ describe Boat do
     end
   end
 
-  describe "trip association" do
+  describe "association with trip" do
     describe "with boat available for bunk charter" do
       let!(:boat_for_bunk_charter) { create(:boat, available_for_bunk_charter: true) }
       let!(:second_trip) { create(:trip, name: "Z-Törn", boat: boat_for_bunk_charter) }
@@ -283,6 +314,15 @@ describe Boat do
           end.should raise_error(ActiveRecord::RecordNotFound)
         end
       end
+    end
+  end
+
+  describe "association with boat price" do
+    let!(:price) { create(:boat_price, boat: boat) }
+    its(:boat_prices) { should == [price] }
+
+    it "should delete associated boat prices" do
+      expect { boat.destroy }.to change(BoatPrice, :count).by(-1)
     end
   end
 end

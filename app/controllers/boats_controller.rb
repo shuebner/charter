@@ -2,12 +2,14 @@
 class BoatsController < ApplicationController
 
   def index
-    @boats = Boat.where(
-      "available_for_boat_charter = ? OR available_for_bunk_charter = ?",
-      true, true)
+    @boats = Boat.visible
   end
 
   def show
     @boat = Boat.find(params[:id])
+    if @boat.available_for_boat_charter
+      @seasons = Season.all
+      @boat_price_types = BoatPriceType.all
+    end
   end
 end
