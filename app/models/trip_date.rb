@@ -24,7 +24,7 @@ class TripDate < ActiveRecord::Base
     if trip_date.id
       where("DATEDIFF(begin, :end) * DATEDIFF(:begin, end) >= 0", 
         { begin: trip_date.begin, end: trip_date.end }).
-        where("NOT id = ?", trip_date.id)
+        where("NOT trip_dates.id = ?", trip_date.id)
     else
       where("DATEDIFF(begin, :end) * DATEDIFF(:begin, end) >= 0", 
         { begin: trip_date.begin, end: trip_date.end })
