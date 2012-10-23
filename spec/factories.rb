@@ -119,4 +119,16 @@ FactoryGirl.define do
     season
     boat
   end
+
+  factory :attachment do
+    attachable { FactoryGirl.create(:boat) }
+    attachment "/home/sven/Bilder/random file.rnd"
+    attachment_title "Eine zufällige Datei"
+    factory :image, class: Image do
+      attachment "/home/sven/Bilder/HYS3.jpg"
+      attachment_title "Ein schönes Bild"
+      factory :boat_image, class: BoatImage do
+      end
+    end
+  end
 end
