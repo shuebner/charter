@@ -325,4 +325,17 @@ describe Boat do
       expect { boat.destroy }.to change(BoatPrice, :count).by(-1)
     end
   end
+
+  describe "association with images" do
+    before { boat.save }
+    let!(:boat_image) { create(:boat_image, attachable: boat) }
+
+    it "should have the right images" do
+      boat.images.should == [boat_image]
+    end
+
+    it "should delete associated images" do
+      expect { boat.destroy }.to change(Image, :count).by(-1)
+    end
+  end
 end

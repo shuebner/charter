@@ -31,6 +31,13 @@ ActiveAdmin.register Boat do
       end
     end
 
+    panel "Bilder" do
+      table_for b.images, i18n: Image do
+        column :attachment_title
+        column(:attachment) { |i| image_tag(i.attachment.thumb('200x200').url) }
+      end
+    end
+
     panel t("technical_data") do
       attributes_table_for b do
         row(:length_hull) { number_with_delimiter b.length_hull }
@@ -83,13 +90,27 @@ ActiveAdmin.register Boat do
     end
   end
 
-  form do |f|
+  form html: { enctype: "multipart/form-data" } do |f|
     f.inputs t("boat_data") do
       f.input :name
       f.input :manufacturer
       f.input :model
       f.input :year_of_construction
       f.input :year_of_refit
+    end
+
+    f.has_many :images do |i|
+      i.inputs do
+        if !i.object.nil?
+          i.input :_destroy, as: :boolean, label: "Bild löschen"
+        end
+        i.input :attachment_title
+        i.input :attachment, as: :file,
+          hint: i.object.attachment.nil? ? 
+            i.template.content_tag(:span, I18n.t('no_picture_available')) :
+            i.template.image_tag(i.object.attachment.thumb('200x200').url)
+        i.input :retained_attachment, as: :hidden
+      end
     end
 
     f.inputs t("technical_data") do

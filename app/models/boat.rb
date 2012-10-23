@@ -23,6 +23,11 @@ class Boat < ActiveRecord::Base
 
   has_many :boat_prices, dependent: :destroy
 
+  has_many :images, as: :attachable, class_name: "BoatImage", 
+    dependent: :destroy
+  accepts_nested_attributes_for :images, allow_destroy: true
+  attr_accessible :images_attributes
+
   # Dezimalzahlen können entweder leer oder müssen >=0 sein
   validates :length_hull, :length_waterline, :beam, :draft, :air_draft, :displacement, 
     :sail_area_jib, :sail_area_genoa, :sail_area_main_sail, 
