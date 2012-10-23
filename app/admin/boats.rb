@@ -32,7 +32,7 @@ ActiveAdmin.register Boat do
     end
 
     panel t("activerecord.models.boat_image.other") do
-      table_for b.images, i18n: Image do
+      table_for b.images, i18n: BoatImage do
         column :attachment_title
         column(:attachment) { |i| image_tag(i.attachment.thumb('200x200').url) }
       end
