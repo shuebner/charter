@@ -1,0 +1,9 @@
+de:
+  activerecord:
+    models:
+      trip_image:
+        one: "Törnbild"
+        other: "Törnbilder"
+    attributes:
+      trip_image:
+        attachment: "Bild"

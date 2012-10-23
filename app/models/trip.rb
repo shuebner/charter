@@ -7,7 +7,13 @@ class Trip < ActiveRecord::Base
     :trip_dates_attributes
 
   belongs_to :boat
+  
   has_many :trip_dates
+
+  has_many :images, as: :attachable, class_name: "TripImage",
+    dependent: :destroy
+  accepts_nested_attributes_for :images, allow_destroy: true
+  attr_accessible :images_attributes
 
   before_destroy :no_trip_dates_exist
 

@@ -129,6 +129,9 @@ FactoryGirl.define do
       attachment_title "Ein schönes Bild"
       factory :boat_image, class: BoatImage do
       end
+      factory :trip_image, class: TripImage do
+        attachable { FactoryGirl.create(:trip) }
+      end
     end
   end
 end
