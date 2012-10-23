@@ -126,7 +126,7 @@ FactoryGirl.define do
     attachment_title "Eine zufällige Datei"
     factory :image, class: Image do
       attachment "/home/sven/Bilder/HYS3.jpg"
-      attachment_title "Ein schönes Bild"
+      sequence(:attachment_title) { |n| "Ein schönes Bild #{n}" }
       factory :boat_image, class: BoatImage do
       end
       factory :trip_image, class: TripImage do

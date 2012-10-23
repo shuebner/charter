@@ -9,6 +9,11 @@
       <td><%= number_to_currency(@trip.price) %></td>
     </tr>
   </table>
+<% if @trip.images.any? %>
+  <% @trip.images.each do |i| %>
+    <%= image_tag(i.attachment.thumb('300x300').url, alt: i.attachment_title) %>
+  <% end %>
+<% end %>
 <p><%= @trip.description %></p>
 <p>Dieser Törn ist verfügbar auf dem Schiff <%= link_to @trip.boat.name, boat_path(@trip.boat) %></p>
 

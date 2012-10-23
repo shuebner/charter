@@ -21,13 +21,21 @@ describe "Boats" do
 
   describe "show page" do
     let!(:boat) { create(:boat) }
-
+    let!(:image) { create(:boat_image, attachable: boat) }
+    
     describe "boat section" do
       before { visit boat_path(boat) }
       
       describe "should display information about the boat" do
         it { should have_content(boat.name) }
         it { should have_content(boat.manufacturer) }
+      end
+
+      describe "images" do
+        it "should show the images of the boat with alt text" do
+          page.should have_selector('img', src: image.attachment.thumb('300x300').url,
+            alt: image.attachment_title)
+        end
       end
     end
 

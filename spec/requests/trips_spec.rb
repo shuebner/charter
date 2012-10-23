@@ -15,13 +15,19 @@ describe "Trips" do
   end
 
   describe "show page" do
+    let!(:image) { create(:trip_image, attachable: trip) }
     before { visit trip_path(trip) }
 
     describe "should display information about the trip" do
       it { should have_content(trip.name) }
       it { should have_content(trip.description) }
     end
-
+    describe "images" do
+      it "should show the images of the trip with alt text" do
+        page.should have_selector('img', src: image.attachment.thumb('300x300').url,
+          alt: image.attachment_title)
+      end
+    end
     it "should show on which boat the trip is available" do
       page.should have_css('#content', text: trip.boat.name)
     end

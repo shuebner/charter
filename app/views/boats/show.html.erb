@@ -28,6 +28,12 @@
     <% end %>
   <% end %>
 </table>  
+<% if @boat.images.any? %>
+  <h2>Bilder</h2>
+  <% @boat.images.each do |i| %>
+    <%= image_tag(i.attachment.thumb('300x300').url, alt: i.attachment_title) %>
+  <% end %>
+<% end %>
 <% if @boat.trips.any? %>
   <h2>Törns mit diesem Schiff</h2>
   <ul>
