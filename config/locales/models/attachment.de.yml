@@ -1,0 +1,11 @@
+de:
+  activerecord:
+    models:
+      attachment:
+        one: "Anhang"
+        other: "Anhänge"
+    attributes:
+      attachment:
+        attachment_name: "Dateiname"
+        attachment_title: "Bezeichnung"
+        attachment: "Anhang"

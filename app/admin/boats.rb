@@ -31,7 +31,7 @@ ActiveAdmin.register Boat do
       end
     end
 
-    panel "Bilder" do
+    panel t("activerecord.models.boat_image.other") do
       table_for b.images, i18n: Image do
         column :attachment_title
         column(:attachment) { |i| image_tag(i.attachment.thumb('200x200').url) }

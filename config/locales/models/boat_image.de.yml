@@ -1,0 +1,9 @@
+de:
+  activerecord:
+    models:
+      boat_image:
+        one: "Schiffsbild"
+        other: "Schiffsbilder"
+    attributes:
+      boat_image:
+        attachment: "Bild"
