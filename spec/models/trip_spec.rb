@@ -155,10 +155,11 @@ describe Trip do
 
   describe "association with trip images" do
     before { trip.save }
-    let!(:trip_image) { create(:trip_image, attachable: trip) }
+    let!(:trip_image2) { create(:trip_image, attachable: trip, order: 2) }
+    let!(:trip_image1) { create(:trip_image, attachable: trip, order: 1) }
 
-    it "should have the right images" do
-      trip.images.should == [trip_image]
+    it "should have the right images in the right order" do
+      trip.images.should == [trip_image1, trip_image2]
     end
     it "should destroy associated images" do
       expect { trip.destroy }.to change(TripImage, :count).by(-1)

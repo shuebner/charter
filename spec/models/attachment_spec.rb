@@ -14,6 +14,7 @@ describe Attachment do
   it { should respond_to(:attachment) }
   it { should respond_to(:remove_attachment) }
   it { should respond_to(:retained_attachment) }
+  it { should respond_to(:order) }
 
   it { should be_valid }
 
@@ -55,6 +56,32 @@ describe Attachment do
         attachment.save
         attachment.attachment_title.should == "Hallo"
       end
+    end
+  end
+
+  describe "when order" do
+    describe "is not present" do
+      before { attachment.order = "" }
+      it { should_not be_valid }
+    end
+    describe "is not a number" do
+      before { attachment.order = "a"}
+      it { should_not be_valid }
+    end
+    describe "is not an integer" do
+      before { attachment.order = 2.3 }
+      it { should_not be_valid }
+    end
+    describe "is not positive" do
+      before { attachment.order = 0 }
+      it { should_not be_valid }
+    end
+    describe "is already used for the same type, attachable_id and attachable_type" do
+      before do
+        create(:attachment, attachable: attachment.attachable, 
+          attachment: attachment.attachment, order: attachment.order)
+      end
+      it { should_not be_valid }
     end
   end
 end

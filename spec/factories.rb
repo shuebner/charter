@@ -124,6 +124,7 @@ FactoryGirl.define do
     attachable { FactoryGirl.create(:boat) }
     attachment "/home/sven/Bilder/random file.rnd"
     attachment_title "Eine zufällige Datei"
+    sequence(:order) { |n| n }
     factory :image, class: Image do
       attachment "/home/sven/Bilder/HYS3.jpg"
       sequence(:attachment_title) { |n| "Ein schönes Bild #{n}" }

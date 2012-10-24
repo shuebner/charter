@@ -22,6 +22,7 @@ ActiveAdmin.register Trip do
 
     panel t("activerecord.models.trip_image.other") do
       table_for t.images, i18n: TripImage do
+        column :order
         column :attachment_title
         column(:attachment) { |i| image_tag(i.attachment.thumb('200x200').url) }
       end
@@ -49,11 +50,12 @@ ActiveAdmin.register Trip do
         if !i.object.nil?
           i.input :_destroy, as: :boolean, label: "Bild löschen"
         end
+        i.input :order
         i.input :attachment_title
         i.input :attachment, as: :file,
           hint: i.object.attachment.nil? ?
             i.template.content_tag(:span, I18n.t('no_picture_available')) :
-            i.template.image_tag(i.object.attachment.thumg('200x200').url)
+            i.template.image_tag(i.object.attachment.thumb('200x200').url)
         i.input :retained_attachment, as: :hidden
       end
     end

@@ -33,6 +33,7 @@ ActiveAdmin.register Boat do
 
     panel t("activerecord.models.boat_image.other") do
       table_for b.images, i18n: BoatImage do
+        column :order
         column :attachment_title
         column(:attachment) { |i| image_tag(i.attachment.thumb('200x200').url) }
       end
@@ -104,6 +105,7 @@ ActiveAdmin.register Boat do
         if !i.object.nil?
           i.input :_destroy, as: :boolean, label: "Bild löschen"
         end
+        i.input :order
         i.input :attachment_title
         i.input :attachment, as: :file,
           hint: i.object.attachment.nil? ? 

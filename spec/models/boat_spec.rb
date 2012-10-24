@@ -328,10 +328,11 @@ describe Boat do
 
   describe "association with images" do
     before { boat.save }
-    let!(:boat_image) { create(:boat_image, attachable: boat) }
+    let!(:boat_image2) { create(:boat_image, attachable: boat, order: 2) }
+    let!(:boat_image1) { create(:boat_image, attachable: boat, order: 1) }
 
-    it "should have the right images" do
-      boat.images.should == [boat_image]
+    it "should have the right images in the right order" do
+      boat.images.should == [boat_image1, boat_image2]
     end
 
     it "should delete associated images" do
