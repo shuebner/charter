@@ -162,7 +162,7 @@ describe Trip do
       trip.images.should == [trip_image1, trip_image2]
     end
     it "should destroy associated images" do
-      expect { trip.destroy }.to change(TripImage, :count).by(-1)
+      expect { trip.destroy }.to change(TripImage, :count).by(-2)
     end
   end
 end

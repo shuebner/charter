@@ -336,7 +336,7 @@ describe Boat do
     end
 
     it "should delete associated images" do
-      expect { boat.destroy }.to change(Image, :count).by(-1)
+      expect { boat.destroy }.to change(Image, :count).by(-2)
     end
   end
 end
