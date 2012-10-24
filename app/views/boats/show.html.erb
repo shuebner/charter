@@ -58,7 +58,7 @@
         <% @seasons.each do |s| %>
           <td>
             <% price = @boat.prices(s, t) %>
-            <%= price.value ? number_to_currency(price.value) : "-" %>
+            <%= price ? number_to_currency(price.value) : "-" %>
           </td>
         <% end %>
       </tr>
