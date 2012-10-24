@@ -2,7 +2,7 @@ de:
   activerecord:
     models:
       boat_price_type:
-        one: "Schifsspreisart"
+        one: "Schiffsspreisart"
         other: "Schiffspreisarten"
     attributes:
       boat_price_type:

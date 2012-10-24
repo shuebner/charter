@@ -2,7 +2,7 @@ de:
   activerecord:
     models:
       boat_price:
-        one: "Schifsspreis"
+        one: "Schiffsspreis"
         other: "Schiffspreise"
     attributes:
       boat_price:
