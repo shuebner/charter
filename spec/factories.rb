@@ -134,5 +134,9 @@ FactoryGirl.define do
         attachable { FactoryGirl.create(:trip) }
       end
     end
+    factory :document, class: Document do
+      attachment File.new("/home/sven/Dokumente/Anforderungen.pdf")
+      sequence(:attachment_title) { |n| "Ein Dokument #{n}" }
+    end
   end
 end

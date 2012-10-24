@@ -39,6 +39,14 @@ ActiveAdmin.register Boat do
       end
     end
 
+    panel t("activerecord.models.document.other") do
+      table_for b.documents, i18n: Document do
+        column :order
+        column :attachment_title
+        column :attachment_name
+      end
+    end    
+
     panel t("technical_data") do
       attributes_table_for b do
         row(:length_hull) { number_with_delimiter b.length_hull }
@@ -112,6 +120,21 @@ ActiveAdmin.register Boat do
             i.template.content_tag(:span, I18n.t('no_picture_available')) :
             i.template.image_tag(i.object.attachment.thumb('200x200').url)
         i.input :retained_attachment, as: :hidden
+      end
+    end
+
+    f.has_many :documents do |d|
+      d.inputs do
+        if !d.object.nil?
+          d.input :_destroy, as: :boolean, label: "Dokument löschen"
+        end
+        d.input :order
+        d.input :attachment_title
+        d.input :attachment, as: :file,
+          hint: d.object.attachment.nil? ?
+            d.template.content_tag(:span, I18n.t('no_document_available')) :
+            d.object.attachment_name
+        d.input :retained_attachment, as: :hidden
       end
     end
 

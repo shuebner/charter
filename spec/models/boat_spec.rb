@@ -339,4 +339,18 @@ describe Boat do
       expect { boat.destroy }.to change(Image, :count).by(-2)
     end
   end
+
+  describe "association with documents" do
+    before { boat.save }
+    let!(:boat_doc2) { create(:document, attachable: boat, order: 2) }
+    let!(:boat_doc1) { create(:document, attachable: boat, order: 1) }
+    
+    it "should have the right documents in the right order" do
+      boat.documents.should == [boat_doc1, boat_doc2]
+    end
+
+    it "should delete associated documents" do
+      expect { boat.destroy }.to change(Document, :count).by(-2)
+    end
+  end     
 end
