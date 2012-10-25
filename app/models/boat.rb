@@ -108,4 +108,10 @@ class Boat < ActiveRecord::Base
   def prices(season, type)
     boat_prices.where(season_id: season.id, boat_price_type_id: type.id).first
   end
+
+  def title_image
+    unless images.empty?
+      images.first
+    end
+  end
 end

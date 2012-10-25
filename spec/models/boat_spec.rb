@@ -338,6 +338,20 @@ describe Boat do
     it "should delete associated images" do
       expect { boat.destroy }.to change(Image, :count).by(-2)
     end
+
+    describe "title_image" do
+      describe "if there is at least one image" do
+        it "should return the first image of the boat" do
+          boat.title_image.should == boat_image1
+        end
+      end
+      describe "if there are no images" do
+        before { boat.images.destroy_all }
+        it "should not raise an error and return nil" do
+          boat.title_image.should be_nil
+        end
+      end
+    end
   end
 
   describe "association with documents" do
