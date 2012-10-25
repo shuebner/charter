@@ -1,21 +1,24 @@
 <nav>
-  <ul>
-    <li><%= link_to "Startseite", static_page_path("start") %></li>
-    <li><%= link_to "Revier", static_page_path("revier") %></li>
-    <li><%= link_to "Schiffe", boats_path %>
-      <ul>
-        <% Boat.visible.each do |boat| %>
-          <li><%= link_to boat.name, boat_path(boat) %></li>
-        <% end %>
-      </ul>
-    </li>
-    <li><%= link_to "Törns", trips_path %>
-      <ul>
-        <% Trip.all.each do |trip| %>
-          <li><%= link_to trip.name, trip_path(trip) %></li>
-        <% end %>
-      </ul>
-    </li>
-    <li><%= link_to "Impressum", static_page_path("impressum") %></li>
-  </ul>
+  <div id="nav-frame">
+    <ul>
+      <li><%= link_to "Startseite", static_page_path("start") %></li>
+      <li><%= link_to "Revier", static_page_path("revier") %></li>
+      <li><%= link_to "Schiffe", boats_path %>
+        <ul>
+          <% Boat.visible.each do |boat| %>
+            <li><%= link_to boat.name, boat_path(boat) %></li>
+          <% end %>
+        </ul>
+      </li>
+      <li><%= link_to "Törns", trips_path %>
+        <ul>
+          <% Trip.all.each do |trip| %>
+            <li><%= link_to trip.name, trip_path(trip) %></li>
+          <% end %>
+        </ul>
+      </li>
+      <li><%= link_to "Impressum", static_page_path("impressum") %></li>
+    </ul>
+    <div></div>
+  </div>
 </nav>

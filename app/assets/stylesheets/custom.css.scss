@@ -1,9 +1,12 @@
-$navigation_width: 15em;
+$nav_background_color: #4444aa;
+$nav_text_color: white;
 
 // GLOBALE EINSTELLUNGEN
 
 body {
   font: normal 100.01% Helvetica, Arial, sans-serif;
+  color: black;
+  background-color: white;
   margin: 0 auto;
   width: 900px;
   border: 1px dashed grey;  
@@ -23,24 +26,53 @@ header, footer {
 // NAVIGATION
 
 // Formatierung
-nav {
-  float: left;
-  width: $navigation_width;
+#nav-frame {
   border: 1px solid black;
-  li {
-    list-style: none;
+  background-color: $nav_background_color;
+}
+
+nav {
+  ul {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    li {
+      list-style: none;
+      ul {        
+        margin: 0;
+        padding: 0;
+        border: 1px solid black;
+      }
+    }
+  }
+  a {
+    display: block;
+    width: 8em;
+    color: white;
+    background-color: $nav_background_color;
+    text-decoration: none;
+    &:hover {
+      background-color: white;
+      color: $nav_background_color;      
+    }  
+  }
+  div {
+    clear: left;
   }
 }
 
 // Dynamik
 nav ul {
-  width: 5em;
   li {
-    position: relative;
+    float: left;
+    position: relative;    
     ul {
       display: none;
-      position: absolute;
-      top: 0;
+      position: absolute;      
+      li {        
+        float: none;
+        display: block;
+      }
     }
     &:hover ul {
       display: block;
@@ -52,7 +84,6 @@ nav ul {
 // SEITENINHALT
 
 #content {
-  margin-left: $navigation_width;
   padding: 0 1em;
   border: 1px dashed grey;
 }
