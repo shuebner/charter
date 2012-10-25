@@ -1,3 +1,40 @@
 // Place all the styles related to the Boats controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+// index
+
+ul#boat-list {  
+  margin: 0;
+  padding: 0;
+  li {
+    list-style: none;
+    border: 1px solid black;
+    margin-bottom: 1em;
+    img {
+      float: left;
+      margin-right: 2em;
+    }
+    .boat-data {
+      h2, p {
+        margin: 0;
+      }
+      table {
+        font-size: 90%;
+        margin-top: 0.5em;
+        td {
+          padding-right: 0.5em;
+        }
+      }
+    }
+    a {
+      text-decoration: none;
+      display: block;
+      color: black;
+      padding: 1em;
+      &:hover {
+        background-color: #eeeeff;
+      }    
+    }
+  }
+}
