@@ -1,23 +1,38 @@
 $navigation_width: 15em;
 
+// GLOBALE EINSTELLUNGEN
+
 body {
   font: normal 100.01% Helvetica, Arial, sans-serif;
+  margin: 0 auto;
+  width: 900px;
+  border: 1px dashed grey;  
 }
 
-ul {
+
+// KOPF- UND FUSSZEILE
+
+header, footer {
+  clear: left;
+  text-align: center;
+  padding: 1em 0;
+  border: 1px dashed grey;
+}
+
+
+// NAVIGATION
+
+// Formatierung
+nav {
+  float: left;
+  width: $navigation_width;
+  border: 1px solid black;
   li {
     list-style: none;
   }
 }
 
-nav {
-  float: left;
-  width: $navigation_width;
-  border: 1px solid black;
-  
-}
-
-//dynamische Navigation
+// Dynamik
 nav ul {
   width: 5em;
   li {
@@ -33,17 +48,17 @@ nav ul {
   }
 }
 
-#page {
-  margin: 0 auto;
-  width: 900px;
-  border: 1px dashed grey;
-}
+
+// SEITENINHALT
 
 #content {
   margin-left: $navigation_width;
   padding: 0 1em;
   border: 1px dashed grey;
 }
+
+
+// Statische Seiten
 
 .static_page {
   text-align: justify;
@@ -58,11 +73,4 @@ nav ul {
       clear: left;
     }
   }
-}
-
-header, footer {
-  clear: left;
-  text-align: center;
-  padding: 1em 0;
-  border: 1px dashed grey;
 }
