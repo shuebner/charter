@@ -4,6 +4,8 @@ class Image < Attachment
     after_assign :resize_image
   end
 
+  delegate :thumb, to: :attachment
+
   validates :type,
     presence: true
 

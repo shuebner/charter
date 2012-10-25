@@ -36,4 +36,10 @@ describe Image do
       end
     end
   end
+
+  describe "delegation" do
+    it "should delegate the thumb method" do
+      image.thumb('100x100').url.should == image.attachment.thumb('100x100').url
+    end
+  end
 end

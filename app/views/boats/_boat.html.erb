@@ -3,7 +3,7 @@
     <span style="display:block">
       <% image = boat.title_image %>
       <% if image %>
-        <%= image_tag(image.attachment.thumb('200x200').url,
+        <%= image_tag(image.thumb('200x200').url,
           alt: image.attachment_title) %>
       <% end %>
       <div class="boat-data">
