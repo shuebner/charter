@@ -37,9 +37,12 @@ describe Image do
     end
   end
 
-  describe "delegation" do
+  describe "shortcuts" do
     it "should delegate the thumb method" do
       image.thumb('100x100').url.should == image.attachment.thumb('100x100').url
+    end
+    it "should provide a title method for retrieving the attachment_title" do
+      image.title.should == image.attachment_title
     end
   end
 end

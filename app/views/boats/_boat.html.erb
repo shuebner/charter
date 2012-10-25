@@ -4,7 +4,7 @@
       <% image = boat.title_image %>
       <% if image %>
         <%= image_tag(image.thumb('200x200').url,
-          alt: image.attachment_title) %>
+          alt: image.title) %>
       <% end %>
       <div class="boat-data">
         <h2><%= boat.name %></h2>
