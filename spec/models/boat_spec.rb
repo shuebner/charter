@@ -352,6 +352,20 @@ describe Boat do
         end
       end
     end
+
+    describe "other_images" do
+      describe "if there is at least one other than the title image" do
+        it "should return all the images except the title image" do
+          boat.other_images.should == [boat_image2]
+        end
+      end
+      describe "if there are no images except the title image" do
+        before { boat.images.destroy(boat_image2) }
+        it "should return an empty array" do
+          boat.other_images.should == []
+        end
+      end
+    end
   end
 
   describe "association with documents" do

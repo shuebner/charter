@@ -114,4 +114,8 @@ class Boat < ActiveRecord::Base
       images.first
     end
   end
+
+  def other_images
+    images.offset(1)
+  end
 end
