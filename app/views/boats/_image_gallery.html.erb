@@ -1,0 +1,23 @@
+<div id="image-gallery">
+  <% if title_image %>
+    <div class="title-image">  
+      <%= link_to title_image.thumb('1280x1280>').url, target: '_blank' do 
+        image_tag(title_image.thumb('400x400').url, 
+          alt: title_image.title)
+      end %>
+      <%= title_image.title %>
+    </div>
+    <% if other_images.any? %>
+      <div class="image-list">
+        <% other_images.each do |i| %>
+          <div class="other-image">
+            <%= link_to i.thumb('1280x1280>').url, target: '_blank' do
+              image_tag(i.thumb('150x150').url, alt: i.title)
+            end %>
+            <%= i.title %>
+          </div>
+        <% end %>        
+      </div>
+    <% end %>
+  <% end %>
+</div>

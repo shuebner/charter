@@ -38,3 +38,34 @@ ul#boat-list {
     }
   }
 }
+
+
+// show page
+
+#image-gallery {
+  float: left;
+  width: 400px;
+  margin-right: 1em;
+  margin-bottom: 2em;
+  font-size: 80%;
+  font-style: italic;
+  text-align: center;
+  img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .image-list {
+    margin-top: 2em;
+    .other-image {
+      float: left;
+      margin-right: 1.5em;
+      margin-bottom: 1.5em;
+      width: 180px;
+    }    
+  }
+}
+
+#boat-technical-data {
+
+}

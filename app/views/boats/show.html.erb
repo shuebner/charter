@@ -1,39 +1,39 @@
 <h1><%= @boat.name %></h1>
-<h2><%= t('technical_data') %></h2>
-<table>
-  <% { manufacturer: nil, model: nil, year_of_construction: nil,
-      length_hull: { as: :linear },
-      length_waterline: { as: :linear },
-      beam: { as: :linear },
-      draft: { as: :linear },
-      air_draft: { as: :linear },
-      displacement: { as: :mass },
-      sail_area_jib: { as: :area },
-      sail_are_genoa: { as: :area },
-      sail_area_main_sail: { as: :area },
-      tank_volume_diesel: { as: :volume },
-      tank_volume_fresh_water: { as: :volume },
-      tank_volume_waste_water: { as: :volume } }.each do |a, o| %>
-    <% if @boat[a] %>
-      <tr>
-        <td><%= Boat.human_attribute_name(a) %></td>
-        <td>
-          <% if o %>
-              <%= number_with_del(@boat[a], o) %>
-            <% else %>
-              <%= @boat[a] %>
-            <% end %>
-        </td>
-      </tr>
+<%= render partial: 'image_gallery', 
+  locals: { title_image: @boat.title_image, 
+            other_images: @boat.other_images } %>
+<div id="boat-technical-data">
+  <h2><%= t('technical_data') %></h2>
+  <table>
+    <% { manufacturer: nil, model: nil, year_of_construction: nil,
+        length_hull: { as: :linear },
+        length_waterline: { as: :linear },
+        beam: { as: :linear },
+        draft: { as: :linear },
+        air_draft: { as: :linear },
+        displacement: { as: :mass },
+        sail_area_jib: { as: :area },
+        sail_are_genoa: { as: :area },
+        sail_area_main_sail: { as: :area },
+        tank_volume_diesel: { as: :volume },
+        tank_volume_fresh_water: { as: :volume },
+        tank_volume_waste_water: { as: :volume } }.each do |a, o| %>
+      <% if @boat[a] %>
+        <tr>
+          <td><%= Boat.human_attribute_name(a) %></td>
+          <td>
+            <% if o %>
+                <%= number_with_del(@boat[a], o) %>
+              <% else %>
+                <%= @boat[a] %>
+              <% end %>
+          </td>
+        </tr>
+      <% end %>
     <% end %>
-  <% end %>
-</table>  
-<% if @boat.images.any? %>
-  <h2>Bilder</h2>
-  <% @boat.images.each do |i| %>
-    <%= image_tag(i.attachment.thumb('300x300').url, alt: i.attachment_title) %>
-  <% end %>
-<% end %>
+  </table>
+</div>
+
 <% if @boat.trips.any? %>
   <h2>Törns mit diesem Schiff</h2>
   <ul>
@@ -65,4 +65,4 @@
     <% end %>
   </table>
 <% end %>
-
+<div class="cl"></div>
