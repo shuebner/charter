@@ -3,7 +3,7 @@
     <span>
       <% image = boat.title_image %>
       <% if image %>
-        <%= image_tag(image.thumb('200x200').url,
+        <%= image_tag(image.thumb('120x120').url,
           alt: image.title) %>
       <% end %>
       <div class="boat-data">
@@ -12,23 +12,15 @@
           <%= boat.model %><br/>
           <%= Boat.human_attribute_name(:year_of_construction) %> <%= boat.year_of_construction %>
         </p>
-        <table>        
-            <tr>
-              <td><%= Boat.human_attribute_name(:length_hull) %></td>
-              <td><%= num_with_del_and_u(boat.length_hull, as: :linear) %></td>
-            </tr>
-            <tr>
-              <td><%= Boat.human_attribute_name(:beam) %></td>
-              <td><%= num_with_del_and_u(boat.beam, as: :linear) %></td>
-            </tr>
-            <tr>
-              <td><%= Boat.human_attribute_name(:max_no_of_people) %></td>
-              <td><%= boat.max_no_of_people %></td>
-            </tr>
-            <tr>
-              <td><%= Boat.human_attribute_name(:recommended_no_of_people) %></td>
-              <td><%= boat.recommended_no_of_people %></td>
-            </tr>
+        <table>
+          <tr>
+            <td><%= Boat.human_attribute_name(:max_no_of_people) %></td>
+            <td><%= boat.max_no_of_people %></td>
+          </tr>
+          <tr>
+            <td><%= Boat.human_attribute_name(:recommended_no_of_people) %></td>
+            <td><%= boat.recommended_no_of_people %></td>
+          </tr>
         </table>
       </div>
     </span>
