@@ -8,3 +8,4 @@ de:
       trip_date:
         begin: "Törnanfang"
         end: "Törnende"
+        no_of_available_bunks: "freie Plätze"

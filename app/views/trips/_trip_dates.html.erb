@@ -1,0 +1,22 @@
+<div id="trip-dates">
+  <h2>Termine</h2>
+  <% if trip_dates.any? %>
+    <p>Dieser Törn ist an folgenden Terminen verfügbar:</p>
+    <table>
+      <tr>
+        <th><%= TripDate.human_attribute_name(:begin) %></th>
+        <th><%= TripDate.human_attribute_name(:end) %></th>
+        <th><%= TripDate.human_attribute_name(:no_of_available_bunks) %></th>
+      </tr>
+      <% trip_dates.each do |d| %>
+        <tr>
+          <td><%= l(d.begin) %></td>
+          <td><%= l(d.end) %></td>
+          <td><%= d.no_of_available_bunks %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <p>Für diesen Törn sind keine Termine festgelegt.</p>
+  <% end %>
+</div>

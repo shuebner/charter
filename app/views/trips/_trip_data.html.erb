@@ -1,0 +1,5 @@
+<p><%= Trip.human_attribute_name(:no_of_bunks) %>: 
+  <%= trip.no_of_bunks %><br>
+  <%= Trip.human_attribute_name(:price) %>: 
+    <%= trip.number_to_currency(trip.price) %>
+</p>

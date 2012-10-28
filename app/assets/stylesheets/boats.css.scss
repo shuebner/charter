@@ -5,15 +5,9 @@
 // index
 
 ul.boat-list {    
-  li {    
-    img {
-      margin-right: 2em;
-    }
+  li {
     .boat-data {
       float: left;
-      h2, p {
-        margin: 0;
-      }
       table {
         font-size: 90%;
         margin-top: 0.5em;
