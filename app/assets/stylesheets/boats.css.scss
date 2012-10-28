@@ -28,28 +28,42 @@ ul.boat-list {
 // show page
 
 #image-gallery {
-  width: 400px;
   margin-bottom: 2em;
-  font-size: 80%;
+  font-size: 75%;
   font-style: italic;
   text-align: center;
-  img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+  .title-image {
+    float: left;
+    margin-right: 2em;
+    img {
+      display: block;
+      border: 1px solid black;
+    }
   }
   .image-list {
-    margin-top: 2em;
+    float: left;
+    width: 400px;
+    margin-top: 0;
     .other-image {
+      padding-bottom: 3px;
+      margin: 0 3px 3px 3px;
       float: left;
-      margin-right: 1.5em;
-      margin-bottom: 1.5em;
-      width: 180px;
+      img {
+        display: block;        
+        margin-left: auto;
+        margin-right: auto;
+        border: 1px solid black;
+      }
     }    
   }
 }
 
 #boat-technical-data {
+  width: 400px;
+  font-size: 90%;
+  h2 {
+    margin-top: 0;
+  }
   table {
     td {
       &.col-1 {
@@ -79,6 +93,9 @@ ul.boat-list {
 }
 
 #boat-charter {
+  h2 {
+    margin-top: 0;
+  }
   table {
     border-collapse: collapse;
     font-size: 90%;

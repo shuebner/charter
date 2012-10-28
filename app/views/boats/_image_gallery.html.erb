@@ -1,4 +1,4 @@
-<div id="image-gallery">
+<div id="image-gallery" class="clearfix">
   <% if title_image %>
     <div class="title-image">  
       <%= link_to title_image.thumb('1280x1280>').url, target: '_blank' do 
@@ -10,9 +10,10 @@
     <% if other_images.any? %>
       <div class="image-list">
         <% other_images.each do |i| %>
-          <div class="other-image">
-            <%= link_to i.thumb('1280x1280>').url, target: '_blank' do
-              image_tag(i.thumb('150x150').url, alt: i.title)
+          <% thumb = i.thumb('100x100') %>
+          <div class="other-image" style="width: <%= thumb.width + 20 %>px">
+            <%= link_to i.thumb('1280x960>').url, target: '_blank' do
+              image_tag(thumb.url, alt: i.title)
             end %>
             <%= i.title %>
           </div>

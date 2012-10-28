@@ -1,13 +1,16 @@
 <li>
   <a href="<%= trip_path(trip) %>">
-    <span>
+    <span class="clearfix">
       <% image = trip.title_image %>
       <% if image %>
-        <%= image_tag(image.thumb('120x120').url,
+        <%= image_tag(image.thumb('100x100').url,
           alt: image.title) %>
       <% end %>
       <h3><%= trip.name %></h3>
-      <div class="cl"></div>
+      <p>
+        maximale Personenzahl: <%= trip.no_of_bunks %><br>
+        Preis: <%= number_to_currency(trip.price) %>
+      </p>
     </span>
   </a>
 </li>
