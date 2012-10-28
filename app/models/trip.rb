@@ -44,6 +44,16 @@ class Trip < ActiveRecord::Base
     name
   end
 
+  def title_image
+    unless images.empty?
+      images.first
+    end
+  end
+
+  def other_images
+    images.offset(1)
+  end
+
   private
   def boat_is_available_for_bunk_charter
     unless boat.available_for_bunk_charter

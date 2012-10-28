@@ -164,5 +164,33 @@ describe Trip do
     it "should destroy associated images" do
       expect { trip.destroy }.to change(TripImage, :count).by(-2)
     end
+
+    describe "title_image" do
+      describe "if there is at least one image" do
+        it "should return the first image of the trip" do
+          trip.title_image.should == trip_image1
+        end
+      end
+      describe "if there are no images" do
+        before { trip.images.destroy_all }
+        it "should not raise an error and return nil" do
+          trip.title_image.should be_nil
+        end
+      end
+    end
+
+    describe "other_images" do
+      describe "if there is at least one other than the title image" do
+        it "should return all the images except the title image" do
+          trip.other_images.should == [trip_image2]
+        end
+      end
+      describe "if there are no images except the title image" do
+        before { trip.images.destroy(trip_image2) }
+        it "should return an empty array" do
+          trip.other_images.should == []
+        end
+      end
+    end    
   end
 end
