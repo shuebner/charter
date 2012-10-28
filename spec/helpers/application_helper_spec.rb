@@ -27,4 +27,16 @@ describe ApplicationHelper do
       end
     end
   end
+
+  describe "num_with_del" do
+    [:linear, :area, :volume, :mass].each do |option|
+      describe "when called with #{option.to_s}" do
+        let!(:precision) { Charter::Application.config.precisions }
+        it "should show the number with the right precision" do
+          fraction = precision[option] > 0 ? ",#{0.to_s * precision[option]}" : ''
+          num_with_del(3, { as: option }).should == "3#{fraction}"
+        end
+      end
+    end
+  end
 end

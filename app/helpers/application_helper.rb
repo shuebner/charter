@@ -19,9 +19,8 @@ module ApplicationHelper
     sanitize text, tags: Charter::Application.config.allowed_tags_in_page_text
   end
 
-  def number_with_del(number, options = {})
-    precisions = { linear: 2, area: 1, volume: 0, mass: 3 }    
-    number_with_precision(number, precision: precisions[options[:as]], 
-      separator: ',', delimiter: '.')
+  def num_with_del(number, options = {})
+    precisions = Charter::Application.config.precisions
+    number_with_precision(number, precision: precisions[options[:as]])
   end
 end
