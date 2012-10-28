@@ -4,15 +4,9 @@
 
 // index
 
-ul#boat-list {  
-  margin: 0;
-  padding: 0;
-  li {
-    list-style: none;
-    border: 1px solid black;
-    margin-bottom: 1em;
+ul.boat-list {    
+  li {    
     img {
-      float: left;
       margin-right: 2em;
     }
     .boat-data {
@@ -27,15 +21,6 @@ ul#boat-list {
         }
       }
     }
-    a {
-      text-decoration: none;
-      display: block;
-      color: black;
-      padding: 1em;
-      &:hover {
-        background-color: #eeeeff;
-      }    
-    }
   }
 }
 
@@ -43,9 +28,7 @@ ul#boat-list {
 // show page
 
 #image-gallery {
-  float: left;
   width: 400px;
-  margin-right: 2em;
   margin-bottom: 2em;
   font-size: 80%;
   font-style: italic;
@@ -74,6 +57,22 @@ ul#boat-list {
       }
       &.col-2 {
         text-align: right;
+      }
+    }
+  }
+}
+
+#boat-trips {
+  ul.boat-trips-list {
+    li {
+      h3 {
+        margin-top: 0;
+      }
+      img {
+        margin-right: 1em;
+      }
+      a {
+        padding: 0.5em;
       }
     }
   }

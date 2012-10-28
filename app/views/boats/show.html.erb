@@ -1,39 +1,39 @@
 <h1><%= @boat.name %></h1>
-<%= render partial: 'image_gallery', 
-  locals: { title_image: @boat.title_image, 
-            other_images: @boat.other_images } %>
-<%= render partial: 'technical_data',
-  locals: { boat: @boat } %>
+<div class="twocol clearfix">
+  <div class="twocol-col1 w400">
+    <%= render partial: 'image_gallery', 
+      locals: { title_image: @boat.title_image, 
+                other_images: @boat.other_images } %>
+  </div>
+  <div class="twocol-col2">
+    <%= render partial: 'technical_data',
+      locals: { boat: @boat } %>
 
-<% if @boat.trips.any? %>
-  <h2>Törns mit diesem Schiff</h2>
-  <ul>
-    <% @boat.trips.each do |trip| %>
-      <li><%= link_to trip.name, trip_path(trip) %></li>
-    <% end %>
-  </ul>
-<% end %>
-<% if @boat.available_for_boat_charter %>
-  <h2>Schiffscharter</h2>
-  <p>Sie können dieses Schiff zu folgenden Preisen chartern</p>
-  <table>
-    <tr>
-      <th>Charterdauer</th>
-      <% @seasons.each do |s| %>
-        <th><%= s.name %></th>
-      <% end %>
-    </tr>
-    <% @boat_price_types.each do |t| %>
-      <tr>
-        <td><%= t.name %></td>
-        <% @seasons.each do |s| %>
-          <td>
-            <% price = @boat.prices(s, t) %>
-            <%= price ? number_to_currency(price.value) : "-" %>
-          </td>
+    <%= render partial: 'trip_list',
+      locals: { trips: @boat.trips } %>
+
+    <% if @boat.available_for_boat_charter %>
+      <h2>Schiffscharter</h2>
+      <p>Sie können dieses Schiff zu folgenden Preisen chartern</p>
+      <table>
+        <tr>
+          <th>Charterdauer</th>
+          <% @seasons.each do |s| %>
+            <th><%= s.name %></th>
+          <% end %>
+        </tr>
+        <% @boat_price_types.each do |t| %>
+          <tr>
+            <td><%= t.name %></td>
+            <% @seasons.each do |s| %>
+              <td>
+                <% price = @boat.prices(s, t) %>
+                <%= price ? number_to_currency(price.value) : "-" %>
+              </td>
+            <% end %>
+          </tr>
         <% end %>
-      </tr>
+      </table>
     <% end %>
-  </table>
-<% end %>
-<div class="cl"></div>
+  </div>
+</div>

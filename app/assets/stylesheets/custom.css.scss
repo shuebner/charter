@@ -3,7 +3,7 @@ $nav_text_color: white;
 
 // GLOBALE EINSTELLUNGEN
 
-body {
+body, html {
   font: normal 100.01% Helvetica, Arial, sans-serif;
   color: black;
   background-color: white;
@@ -28,6 +28,60 @@ header, footer {
 // left clearer
 .cl {
   clear: left;
+}
+
+// clearfix
+.clearfix:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+// SPALTENLAYOUTS
+.twocol {
+  .twocol-col1 {
+    float: left;
+    margin-right: 2em;
+  }
+  .twocol-col2 {
+    float: left;
+  }
+}
+
+.w400 {
+  width: 400px;
+}
+
+.m420 {
+  margin-left: 420px;
+}
+
+// INDEXE
+ul.index-list {
+  margin: 0;
+  padding: 0;
+  li {
+    list-style: none;
+    border: 1px solid black;
+    margin-bottom: 1em;
+    img {
+      float: left;
+    }
+    a {
+      text-decoration: none;
+      display: block;
+      color: black;
+      padding: 1em;
+      &:hover {
+        background-color: #eeeeff;
+      }
+      span {
+        display: block;
+      }
+    }
+  }
 }
 
 // NAVIGATION

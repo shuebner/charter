@@ -1,0 +1,13 @@
+<li>
+  <a href="<%= trip_path(trip) %>">
+    <span>
+      <% image = trip.title_image %>
+      <% if image %>
+        <%= image_tag(image.thumb('120x120').url,
+          alt: image.title) %>
+      <% end %>
+      <h3><%= trip.name %></h3>
+      <div class="cl"></div>
+    </span>
+  </a>
+</li>

@@ -1,6 +1,6 @@
 <li>
-  <a href="<%= boat_path(boat) %>">
-    <span style="display:block">
+  <a href="<%= boat_path(boat) %>" class="clearfix">
+    <span>
       <% image = boat.title_image %>
       <% if image %>
         <%= image_tag(image.thumb('200x200').url,
@@ -31,7 +31,6 @@
             </tr>
         </table>
       </div>
-      <div class="cl"></div>
     </span>
   </a>
 </li>

@@ -1,0 +1,10 @@
+<% if trips.any? %>
+  <div id="boat-trips">
+    <h2>Törns mit diesem Schiff</h2>
+    <ul class="index-list boat-trips-list">
+      <% trips.each do |trip| %>
+        <%= render partial: 'trip', locals: { trip: trip } %>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
