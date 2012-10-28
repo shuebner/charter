@@ -77,3 +77,33 @@ ul.boat-list {
     }
   }
 }
+
+#boat-charter {
+  table {
+    border-collapse: collapse;
+    font-size: 90%;
+    th {
+      font-weight: bold;      
+      border-bottom: 1px solid black;
+      padding-right: 0.5em;
+      &.boat-price-type-heading {
+        text-align: left;
+        border-right: 1px solid black;
+      }
+      &.season-heading {
+        text-align: right;
+      }
+    }
+    td {
+      padding-right: 0.5em;
+      &.boat-price-type-col {
+        font-weight: bold;
+        text-align: left;
+        border-right: 1px solid black;
+      }
+      &.boat-price-col {
+        text-align: right;
+      }
+    }
+  }
+}
