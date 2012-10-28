@@ -15,11 +15,11 @@
         <table>        
             <tr>
               <td><%= Boat.human_attribute_name(:length_hull) %></td>
-              <td><%= num_with_del(boat.length_hull, as: :linear) %></td>
+              <td><%= num_with_del_and_u(boat.length_hull, as: :linear) %></td>
             </tr>
             <tr>
               <td><%= Boat.human_attribute_name(:beam) %></td>
-              <td><%= num_with_del(boat.beam, as: :linear) %></td>
+              <td><%= num_with_del_and_u(boat.beam, as: :linear) %></td>
             </tr>
             <tr>
               <td><%= Boat.human_attribute_name(:max_no_of_people) %></td>

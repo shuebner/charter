@@ -1,0 +1,31 @@
+<div id="boat-technical-data">
+  <h2><%= t('technical_data') %></h2>
+  <table>
+    <% { manufacturer: nil, model: nil, year_of_construction: nil,
+        length_hull: { as: :linear },
+        length_waterline: { as: :linear },
+        beam: { as: :linear },
+        draft: { as: :linear },
+        air_draft: { as: :linear },
+        displacement: { as: :mass },
+        sail_area_jib: { as: :area },
+        sail_area_genoa: { as: :area },
+        sail_area_main_sail: { as: :area },
+        tank_volume_diesel: { as: :volume },
+        tank_volume_fresh_water: { as: :volume },
+        tank_volume_waste_water: { as: :volume } }.each do |a, o| %>
+      <% if boat[a] %>
+        <tr>
+          <td class="col-1"><%= Boat.human_attribute_name(a) %></td>
+          <td class="col-2">
+            <% if o %>
+                <%= num_with_del_and_u(boat[a], o) %>
+              <% else %>
+                <%= boat[a] %>
+              <% end %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </table>
+</div>

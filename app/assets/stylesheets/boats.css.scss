@@ -45,7 +45,7 @@ ul#boat-list {
 #image-gallery {
   float: left;
   width: 400px;
-  margin-right: 1em;
+  margin-right: 2em;
   margin-bottom: 2em;
   font-size: 80%;
   font-style: italic;
@@ -67,5 +67,14 @@ ul#boat-list {
 }
 
 #boat-technical-data {
-
+  table {
+    td {
+      &.col-1 {
+        text-align: left;
+      }
+      &.col-2 {
+        text-align: right;
+      }
+    }
+  }
 }
