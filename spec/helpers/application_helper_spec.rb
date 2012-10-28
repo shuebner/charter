@@ -39,4 +39,17 @@ describe ApplicationHelper do
       end
     end
   end
+
+  describe "num_with_del_and_u" do
+    [:linear, :area, :volume, :mass].each do |option|
+      describe "when called with #{option.to_s}" do
+        let!(:units) { Charter::Application.config.units }
+        it "should show the number with the right precision and unit" do
+          unit = units[option]
+          number_with_del = num_with_del(3, { as: option})
+          num_with_del_and_u(3, { as: option}).should == "#{number_with_del} #{unit}"
+        end
+      end
+    end
+  end
 end

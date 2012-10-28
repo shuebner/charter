@@ -23,4 +23,9 @@ module ApplicationHelper
     precisions = Charter::Application.config.precisions
     number_with_precision(number, precision: precisions[options[:as]])
   end
+
+  def num_with_del_and_u(number, options = {})
+    units = Charter::Application.config.units
+    "#{num_with_del(number, options)} #{units[options[:as]]}"
+  end
 end
