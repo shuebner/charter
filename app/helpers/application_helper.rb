@@ -4,7 +4,7 @@ include ActionView::Helpers::NumberHelper
 
 module ApplicationHelper
   def base_title
-    "Palve-Charter Müritz"
+    "Palve-Charter Ostsee"
   end
 
   def full_title(title)
