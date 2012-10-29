@@ -56,11 +56,11 @@ ul.boat-list {
 
 #boat-technical-data {
   width: 400px;
-  font-size: 90%;
   h2 {
     margin-top: 0;
   }
   table {
+    font-size: 90%;  
     td {
       &.col-1 {
         text-align: left;
@@ -73,6 +73,9 @@ ul.boat-list {
 }
 
 #boat-trips {
+  h2 {
+    margin-top: 0;
+  }
   ul.boat-trips-list {
     li {
       h3 {
@@ -89,6 +92,7 @@ ul.boat-list {
 }
 
 #boat-charter {
+  margin-bottom: 2em;
   h2 {
     margin-top: 0;
   }
