@@ -3,23 +3,88 @@ $nav_text_color: white;
 
 // GLOBALE EINSTELLUNGEN
 
-body, html {
+html {
   font: normal 100.01% Helvetica, Arial, sans-serif;
   color: black;
-  background-color: white;
-  margin: 0 auto;
+  background-color: #eeeeff;
+}
+
+body {
+  background-color: white;    
+  margin: 0 auto; 
   width: 900px;
-  border: 1px dashed grey;  
 }
 
 
 // KOPF- UND FUSSZEILE
 
-header, footer {
+footer {
+  img {
+    float: right;
+  }
   clear: left;
-  text-align: center;
-  padding: 1em 0;
-  border: 1px dashed grey;
+  padding: 1em 0 0 0;
+}
+
+header {
+}
+
+
+// NAVIGATION
+
+// Formatierung
+#nav-frame {
+  border: 1px solid black;
+  background-color: $nav_background_color
+}
+
+nav {
+  ul {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    li {
+      list-style: none;
+      ul {        
+        margin: 0;
+        padding: 0;
+        border: 1px solid black;
+      }
+    }
+  }
+  a {
+    display: block;
+    width: 8em;
+    color: white;
+    background-color: $nav_background_color;
+    text-decoration: none;
+    &:hover {
+      background-color: white;
+      color: $nav_background_color;      
+    }  
+  }
+  div {
+    clear: left;
+  }
+}
+
+// Dynamik
+nav ul {
+  li {
+    float: left;
+    position: relative;    
+    ul {
+      display: none;
+      position: absolute;      
+      li {        
+        float: none;
+        display: block;
+      }
+    }
+    &:hover ul {
+      display: block;
+    }
+  }
 }
 
 
@@ -84,69 +149,11 @@ ul.index-list {
   }
 }
 
-// NAVIGATION
-
-// Formatierung
-#nav-frame {
-  border: 1px solid black;
-  background-color: $nav_background_color;
-}
-
-nav {
-  ul {
-    margin: 0;
-    padding: 0;
-    text-align: center;
-    li {
-      list-style: none;
-      ul {        
-        margin: 0;
-        padding: 0;
-        border: 1px solid black;
-      }
-    }
-  }
-  a {
-    display: block;
-    width: 8em;
-    color: white;
-    background-color: $nav_background_color;
-    text-decoration: none;
-    &:hover {
-      background-color: white;
-      color: $nav_background_color;      
-    }  
-  }
-  div {
-    clear: left;
-  }
-}
-
-// Dynamik
-nav ul {
-  li {
-    float: left;
-    position: relative;    
-    ul {
-      display: none;
-      position: absolute;      
-      li {        
-        float: none;
-        display: block;
-      }
-    }
-    &:hover ul {
-      display: block;
-    }
-  }
-}
-
-
 // SEITENINHALT
 
 #content {
   padding: 0 1em;
-  border: 1px dashed grey;
+  //border: 1px dashed grey;
 }
 
 
