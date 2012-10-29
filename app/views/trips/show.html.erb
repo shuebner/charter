@@ -1,3 +1,4 @@
+<% provide(:title, "Törns") %>
 <h1><%= @trip.name %></h1>
 <div class="clearfix">
   <%= render partial: 'shared/image_gallery', 
@@ -11,4 +12,3 @@
 <%= render partial: 'boat', locals: { boat: @trip.boat } %>
 
 <%= render partial: 'trip_dates', locals: { trip_dates: @trip.trip_dates } %>
-
