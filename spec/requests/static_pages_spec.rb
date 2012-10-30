@@ -16,6 +16,14 @@ describe "StaticPages" do
     it { should have_content('Hier ist Palve-Charter Müritz') }
   end
 
+  describe "if static page does not exist" do
+    it "should raise a routing error" do
+      expect do
+        visit static_page_path('bla')
+      end.to raise_error(ActionController::RoutingError)
+    end
+  end
+
   describe "general page content" do
      
     describe "without heading" do

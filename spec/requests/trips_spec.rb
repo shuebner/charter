@@ -14,6 +14,14 @@ describe "Trips" do
     end
   end
 
+  describe "when trip does not exist" do
+    it "should raise a routing error" do
+      expect do
+        visit trip_path('bla')
+      end.to raise_error(ActionController::RoutingError)
+    end
+  end
+
   describe "show page" do
     let!(:image) { create(:trip_image, attachable: trip) }
     before { visit trip_path(trip) }
