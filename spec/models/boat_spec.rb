@@ -83,9 +83,19 @@ describe Boat do
     it { should_not be_valid }
   end
 
-  describe "when available_for_bunk_charter is empty" do
-    before { boat.available_for_bunk_charter = nil}
-    it { should_not be_valid }
+  describe "when available_for_bunk_charter" do
+    describe "is empty" do
+      before { boat.available_for_bunk_charter = nil}
+      it { should_not be_valid }
+    end
+    describe "is set to false with trips associated to the boat" do
+      before do
+        boat.save
+        create(:trip, boat: boat)
+        boat.available_for_bunk_charter = false
+      end
+      it { should_not be_valid }
+    end
   end
 
   describe "when boat is not available for boat charter" do
