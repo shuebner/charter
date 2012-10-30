@@ -47,6 +47,10 @@ class Boat < ActiveRecord::Base
   validates :available_for_boat_charter, :available_for_bunk_charter,
     inclusion: { in: [true, false] }
 
+  validates :available_for_bunk_charter, if: 'trips.any?',
+    inclusion: { in: [true], 
+      message: 'es sind noch Törns mit diesem Schiff vorhanden' }
+
   validates :deposit, :cleaning_charge, :fuel_charge,
     presence: { if: :available_for_boat_charter }
 
