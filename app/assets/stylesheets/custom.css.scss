@@ -125,6 +125,7 @@ ul.index-list {
   li {
     list-style: none;
     border: 1px solid grey;
+    background-color: #ddddff;
     margin-bottom: 1em;
     h2, p {
       margin: 0;
@@ -140,7 +141,7 @@ ul.index-list {
       color: black;
       padding: 1em;
       &:hover {
-        background-color: #eeeeff;
+        background-color: #ccccff;
       }
       span {
         display: block;
