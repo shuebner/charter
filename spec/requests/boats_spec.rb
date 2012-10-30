@@ -22,6 +22,15 @@ describe "Boats" do
   describe "show page" do
     let!(:boat) { create(:boat) }
 
+    describe "when boat is not visible" do
+      let!(:invisible_boat) { create(:unavailable_boat) }
+      it "should not be available" do        
+        expect do
+          visit boat_path(invisible_boat)
+        end.to raise_error(ActionController::RoutingError)
+      end
+    end        
+
     describe "boat section" do
       before { visit boat_path(boat) }
       
