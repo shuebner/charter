@@ -10,3 +10,4 @@ de:
         customer: "Kunde"
         number: "Buchungsnummer"
         no_of_bunks: "Anzahl der Kojen"
+        trip_date: "Törndatum"
