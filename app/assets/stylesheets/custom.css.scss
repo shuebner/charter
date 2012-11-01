@@ -96,6 +96,28 @@ nav ul {
   visibility: hidden;
 }
 
+ul.block-button-list {
+  margin: 0;
+  padding: 0;
+  li {
+    list-style: none;
+    border: 1px solid grey;
+    background-color: #ddddff;
+    a {
+      text-decoration: none;
+      display: block;
+      color: black;
+      padding: 1em;
+      &:hover {
+        background-color: #ccccff;
+      }
+      span {
+        display: block;
+      }
+    }
+  }
+}
+
 // SPALTENLAYOUTS
 .twocol {
   .twocol-col1 {

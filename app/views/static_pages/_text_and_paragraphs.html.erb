@@ -1,0 +1,11 @@
+<% if page.text %>
+  <div class="text">
+    <p>
+      <%= image_tag(page.picture.thumb('300x300').url) if page.picture %>
+      <%= page.text.html_safe %>
+    </p>
+  </div>
+<% end %>
+<div class="paragraph_wrapper">
+  <%= render page.paragraphs %>
+</div>

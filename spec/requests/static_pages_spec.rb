@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe "StaticPages" do
   let(:static_page) do 
-    create(:static_page, title: "Start", heading: "Überschrift",
+    create(:static_page, title: "Seite", heading: "Überschrift",
       text: "Hier ist Palve-Charter Müritz")
   end
   subject { page }
@@ -11,7 +11,7 @@ describe "StaticPages" do
   describe "static page should be accessible" do    
     before { visit static_page_path(static_page) }
     
-    it { should have_selector('title', text: 'Start') }
+    it { should have_selector('title', text: 'Seite') }
     it { should have_selector('h1', text: 'Überschrift') }
     it { should have_content('Hier ist Palve-Charter Müritz') }
   end
@@ -58,6 +58,22 @@ describe "StaticPages" do
     describe "without paragraphs" do
       it { should_not have_selector('p') }
       it { should_not have_selector('h2') }
+    end
+  end
+
+  describe "Starting page" do
+    let!(:start) { create(:static_page, title: 'Start') }
+    before { visit root_path }
+    
+    it "should be handled separately" do
+      page.should have_selector('h1', text: 'Segeln auf der Ostsee')
+    end
+
+    it "should contain buttons directly to boat charter and bunk charter" do
+      within('#content') do
+        page.should have_selector('a', text: 'Kojencharter')
+        page.should have_selector('a', text: 'Schiffscharter')
+      end
     end
   end
 end

@@ -1,7 +1,9 @@
 <% provide(:title, @page.title) %>
 <div class="static_page">
+  <h1>Segeln auf der Ostsee mit Palve-Charter</h1>
+  <%= render partial: 'buttons' %>
   <% if @page.heading %>
-    <h1><%= @page.heading %></h1>
+    <h2><%= @page.heading %></h2>
   <% end %>
   <%= render partial: 'text_and_paragraphs', locals: { page: @page } %>
 </div>

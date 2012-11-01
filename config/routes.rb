@@ -6,7 +6,8 @@ Charter::Application.routes.draw do
 
     devise_for :admin_users, ActiveAdmin::Devise.config
 
-    root to: 'static_pages#show', defaults: { id: 'start' }
+    root to: 'static_pages#home'
+    get '/start' => 'static_pages#home'
     
     resources :boats, only: [:index, :show], path: "schiffe"
 
