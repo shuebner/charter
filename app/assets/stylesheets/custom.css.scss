@@ -1,12 +1,31 @@
-$nav_background_color: #4444aa;
-$nav_text_color: white;
+// Farben für ganze Seite
+$c_bg: #eeeeff;
+
+// Farben für Navigation
+$c_nav_bg: #4444aa;
+$c_nav_text: white;
+
+// Farben für Blocklinks
+$c_block_link_border: grey;
+$c_block_link_bg: #e9e9ff;
+$c_block_link_bg_hover: #ddddff;
+
+// Runde Ecken
+@mixin round-edges {
+  $radius: 10px;
+
+  border-radius: $radius;
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+  -khtml-border-radius: $radius;
+}
 
 // GLOBALE EINSTELLUNGEN
 
 html {
   font: normal 100.01% Helvetica, Arial, sans-serif;
   color: black;
-  background-color: #eeeeff;
+  background-color: $c_bg;
 }
 
 body {
@@ -35,7 +54,7 @@ header {
 // Formatierung
 #nav-frame {
   border: 1px solid black;
-  background-color: $nav_background_color
+  background-color: $c_nav_bg
 }
 
 nav {
@@ -56,11 +75,11 @@ nav {
     display: block;
     width: 8em;
     color: white;
-    background-color: $nav_background_color;
+    background-color: $c_nav_bg;
     text-decoration: none;
     &:hover {
       background-color: white;
-      color: $nav_background_color;      
+      color: $c_nav_bg;      
     }  
   }
 }
@@ -105,8 +124,9 @@ ul.block-list {
 }
 
 a.block-link {  
-  border: 1px solid grey;  
-  background-color: #ddddff;
+  @include round-edges;
+  border: 1px solid $c_block_link_border;
+  background-color: $c_block_link_bg;
   text-decoration: none;
   display: block;
   color: black;
@@ -119,7 +139,7 @@ a.block-link {
     text-align: left;
   }
   &:hover {
-    background-color: #ccccff;
+    background-color: $c_block_link_bg_hover;
   }  
 }
 
