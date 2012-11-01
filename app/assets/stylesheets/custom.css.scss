@@ -96,26 +96,31 @@ nav ul {
   visibility: hidden;
 }
 
-ul.block-button-list {
+ul.block-list {
   margin: 0;
   padding: 0;
   li {
-    list-style: none;
-    border: 1px solid grey;
-    background-color: #ddddff;
-    a {
-      text-decoration: none;
-      display: block;
-      color: black;
-      padding: 1em;
-      &:hover {
-        background-color: #ccccff;
-      }
-      span {
-        display: block;
-      }
-    }
+    list-style: none;  
   }
+}
+
+a.block-link {  
+  border: 1px solid grey;  
+  background-color: #ddddff;
+  text-decoration: none;
+  display: block;
+  color: black;
+  padding: 1em;
+  h1, h2, h3 {
+    margin: 0;
+  }
+  p {
+    margin: 0;
+    text-align: left;
+  }
+  &:hover {
+    background-color: #ccccff;
+  }  
 }
 
 // SPALTENLAYOUTS
@@ -139,32 +144,12 @@ ul.block-button-list {
 
 // INDEXE
 ul.index-list {
-  margin: 0;
-  padding: 0;
   li {
-    list-style: none;
-    border: 1px solid grey;
-    background-color: #ddddff;
     margin-bottom: 1em;
-    h2, p {
-      margin: 0;
-    }
     img {
       float: left;
       border: 1px solid grey;
       margin-right: 2em;
-    }
-    a {
-      text-decoration: none;
-      display: block;
-      color: black;
-      padding: 1em;
-      &:hover {
-        background-color: #ccccff;
-      }
-      span {
-        display: block;
-      }
     }
   }
 }

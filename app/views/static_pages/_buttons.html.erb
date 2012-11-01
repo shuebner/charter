@@ -1,18 +1,14 @@
-<ul id="home-button-list" class="block-button-list clearfix">
+<ul id="home-button-list" class="block-list clearfix">
   <li>
-    <%= link_to boats_path do %>
-      <span>
-        <h2>Schiffscharter</h2>
-        <p>Segeln Sie selbst auf unseren Schiffen, wohin Sie möchten</p>
-      </span>
+    <%= block_link_to boats_path do %>
+      <h2>Schiffscharter</h2>
+      <p>Segeln Sie selbst auf unseren Schiffen, wohin Sie möchten</p>
     <% end %>
   </li>
   <li>
-    <%= link_to trips_path do %>
-      <span>
-        <h2>Kojencharter</h2>
-        <p>Seien Sie Gast auf einem unserer Segeltörns</p>
-      </span>
+    <%= block_link_to trips_path do %>
+      <h2>Kojencharter</h2>
+      <p>Seien Sie Gast auf einem unserer Segeltörns</p>
     <% end %>
   </li>
 </ul>
