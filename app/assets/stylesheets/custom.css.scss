@@ -34,6 +34,13 @@ body {
   width: 900px;
 }
 
+// kein Rahmen um verlinkte Bilder im IE
+a {
+  img {
+    border: none;
+  }
+}
+
 
 // KOPF- UND FUSSZEILE
 
