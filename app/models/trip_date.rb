@@ -22,11 +22,11 @@ class TripDate < ActiveRecord::Base
 
   def self.overlapping(trip_date)
     if trip_date.id
-      where("DATEDIFF(begin, :end) * DATEDIFF(:begin, end) >= 0", 
+      where("TIMEDIFF(begin, :end) * TIMEDIFF(:begin, end) >= 0", 
         { begin: trip_date.begin, end: trip_date.end }).
         where("NOT trip_dates.id = ?", trip_date.id)
     else
-      where("DATEDIFF(begin, :end) * DATEDIFF(:begin, end) >= 0", 
+      where("TIMEDIFF(begin, :end) * TIMEDIFF(:begin, end) >= 0", 
         { begin: trip_date.begin, end: trip_date.end })
     end  
   end

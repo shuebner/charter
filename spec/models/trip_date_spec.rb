@@ -67,6 +67,13 @@ describe TripDate do
     it { should_not be_valid }
   end
 
+  describe "when trip dates are not overlapping but have the same day" do
+    let(:other_trip) { create(:trip, boat: trip.boat) }
+    let!(:not_overlapping_trip_date) { create(:trip_date, trip: other_trip, 
+      begin: date.end + 1.minute, end: date.end + 1.day) }
+    it { should be_valid }
+  end
+
   describe "association to trip bookings" do
     let!(:booking1) { create(:trip_booking, trip_date: date, no_of_bunks: 1) }
     let!(:booking2) { create(:trip_booking, trip_date: date, no_of_bunks: 1, cancelled_at: Time.now) }
