@@ -4,9 +4,15 @@
 
 #trip-dates {
   table {
+    font-size: 90%;
     text-align: left;
     td, th {
       padding: 0.5em 1em 0 0.5em;
     }
   }
+}
+
+.trip-description {
+  width: 380px;
+  text-align: justify;
 }
