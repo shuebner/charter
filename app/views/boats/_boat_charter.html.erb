@@ -1,18 +1,18 @@
 <% if boat.available_for_boat_charter %>
   <div id="boat-charter">
     <h2>Schiffscharter</h2>
-    <p>Sie können dieses Schiff zu folgenden Preisen chartern</p>
+    <p>Sie können dieses Schiff zu folgenden Preisen chartern:</p>
     <table>
       <tr>
-        <th class="boat-price-type-heading">Charterdauer</th>
-        <% seasons.each do |s| %>
-          <th class="season-heading"><%= s.name %></th>
+        <th class="season-heading">Saison</th>
+        <% boat_price_types.each do |t| %>
+          <th class="boat-price-type-heading"><%= t.name %></th>
         <% end %>
       </tr>
-      <% boat_price_types.each do |t| %>
+      <% seasons.each do |s| %>
         <tr>
-          <td class="boat-price-type-col"><%= t.name %></td>
-          <% seasons.each do |s| %>
+          <td class="season-col"><%= s.name %></td>
+          <% boat_price_types.each do |t| %>
             <td class="boat-price-col">
               <% price = boat.prices(s, t) %>
               <%= price ? number_to_currency(price.value) : "-" %>
