@@ -12,7 +12,6 @@ AdminUser.create(email: "admin@example.com",
 
 # Erstelle die nötigen Statischen Seiten
 StaticPage.create(heading: "Willkommen", title: "Start", text: "Startseite")
-StaticPage.create(heading: "Revier", title: "Revier", text: "Revierseite")
 StaticPage.create(heading: "Impressum", title: "Impressum", text: "Impressumsseite")
 
 # Erstelle die gängigen Saisonarten
