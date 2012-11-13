@@ -7,16 +7,14 @@
 </div>
 <div class="twocol clearfix">
   <div class="twocol-col1">
-    <%= render partial: 'technical_data',
-      locals: { boat: @boat } %>
-  </div>
-  <div class="twocol-col2">
     <%= render partial: 'boat_charter',
       locals: { boat: @boat, seasons: @seasons, 
                 boat_price_types: @boat_price_types } %>   
     <%= render partial: 'trip_list',
       locals: { trips: @boat.trips } %>
-
- 
+  </div>
+  <div class="twocol-col2">
+    <%= render partial: 'technical_data',
+      locals: { boat: @boat } %> 
   </div>
 </div>
