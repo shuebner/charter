@@ -6,7 +6,7 @@ class Customer < ActiveRecord::Base
   attr_accessible :city, :country, :gender, :email, :first_name, :last_name,
     :phone_landline, :phone_mobile, 
     :street_name, :street_number, :zip_code,
-    :slug
+    :slug, :number
 
   has_many :trip_bookings
 
@@ -44,15 +44,26 @@ class Customer < ActiveRecord::Base
 
   validates :zip_code,
     allow_blank: true,
-    format: { with: /^\d[1-9]\d{3}$/ }
+    format: { with: /^(0[1-9]|[1-9]\d)\d{3}$/ }
 
   validates :city, :country,
     allow_blank: true,
-    format: { with: /^[[:upper:]][[:alpha:] \-]+$/ }
+    format: { with: /^[[:upper:]][[:alpha:] \-\.]+$/ }
 
-  default_scope order("last_name ASC, first_name ASC")
+  validates :number,
+    presence: true,
+    uniqueness: true
+
+  scope :by_name, order("last_name ASC, first_name ASC")
 
   before_save { self.email = email.downcase unless email.blank? }
+
+  def number
+    unless self[:number]
+      self[:number] = generate_number
+    end
+    self[:number]
+  end
 
   def street
     "#{street_name} #{street_number}"
@@ -71,6 +82,15 @@ class Customer < ActiveRecord::Base
     unless trip_bookings.empty?
       errors.add(:base, "Kunde kann nicht gelöscht werden, wenn bereits Törnbuchungen vorhanden sind")
       return false
+    end
+  end
+
+  def generate_number
+    last_customer = self.class.order("number DESC").first()
+    if last_customer && !last_customer[:number].blank?
+      last_customer.number.succ
+    else
+      31201
     end
   end
 end

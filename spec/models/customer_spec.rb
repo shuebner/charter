@@ -25,6 +25,7 @@ describe Customer do
   it { should respond_to :zip_code }
   it { should respond_to :city }
   it { should respond_to :country }
+  it { should respond_to :number }
 
   it { should respond_to :street }
   it { should respond_to :full_name }
@@ -249,7 +250,7 @@ describe Customer do
     end
     describe "has the right format" do
       it "should be valid" do
-        valid_zip_codes = %w[01234 98765]
+        valid_zip_codes = %w[01234 98765 80143]
         valid_zip_codes.each do |z|
           customer.zip_code = z
           customer.should be_valid
@@ -271,13 +272,21 @@ describe Customer do
       end
       describe "has the right format" do
         it "should be valid" do
-          valid_names = ["Deutschland", "Burkina Faso", "Annaberg-Buchholz"]
+          valid_names = ["Deutschland", "Burkina Faso", "Annaberg-Buchholz",
+            "St. Vincent"]
           valid_names.each do |n|
             customer[c] = n
             customer.should be_valid
           end
         end
       end
+    end
+  end
+
+  describe "when number" do
+    describe "is already taken" do
+      let!(:customer_with_same_number) { create(:customer, number: customer.number) }
+      it { should_not be_valid }
     end
   end
 
@@ -303,13 +312,13 @@ describe Customer do
     end
   end
 
-  describe "default sort order" do
+  describe "scope by_name" do
     let!(:customer3) { create(:customer, last_name: "Zeppelin", first_name: "Ferdinand") }
     let!(:customer2) { create(:customer, last_name: "Aschoff", first_name: "Zacharias") }
     let!(:customer1) { create(:customer, last_name: "Aschoff", first_name: "Adalbert") }
 
     it "should sort ascending by first name, then ascending by last name" do
-      Customer.all.should == [customer1, customer2, customer3]
+      Customer.by_name.should == [customer1, customer2, customer3]
     end
   end
 
