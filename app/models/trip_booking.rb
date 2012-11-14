@@ -5,7 +5,7 @@ class TripBooking < ActiveRecord::Base
 
   attr_accessible :no_of_bunks, :trip_date_id, :customer_id
 
-  belongs_to :customer
+  belongs_to :customer, foreign_key: "customer_number"
   belongs_to :trip_date
 
   delegate :trip, to: :trip_date
