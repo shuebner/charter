@@ -31,4 +31,12 @@ class Captain < ActiveRecord::Base
   def full_name
     "#{first_name} #{last_name}"
   end
+
+  def sailing_certificates_array
+    sailing_certificates.split(';').each { |c| c.strip! }
+  end
+
+  def additional_certificates_array
+    additional_certificates.split(';').each { |c| c.strip! }
+  end
 end

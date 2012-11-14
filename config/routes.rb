@@ -13,6 +13,8 @@ Charter::Application.routes.draw do
 
     resources :trips, only: [:index, :show], path: "toerns"
 
+    resources :captains, only: [:index], path: "skipper"
+
     resources :static_pages, only: [:show], path: "/"
 
   end

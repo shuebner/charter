@@ -147,6 +147,16 @@ describe Captain do
         captain.full_name.should == "#{captain.first_name} #{captain.last_name}"
       end
     end
+
+    [:sailing_certificates, :additional_certificates].each do |a|
+      describe "#{a.to_s}_array" do
+        before { captain[a] = "SKS;SBF See; Signal-Waffen-Zeugnis" }
+        it "should give the single certificates as fields in an array" do
+          captain.send("#{a.to_s}_array".to_sym).should == 
+            ["SKS", "SBF See", "Signal-Waffen-Zeugnis"]
+        end
+      end
+    end
   end
 
   describe "association" do

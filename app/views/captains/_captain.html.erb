@@ -1,0 +1,21 @@
+<li>
+  <h2><%= captain.full_name %></h2>
+  <% if captain.image %>
+    <%= image_tag(captain.image.thumb('200x200').url, alt: captain.image.title) %>
+  <% end %>
+  <% if captain.sailing_certificates %>
+    <ul class="certificates-list">
+      <% captain.sailing_certificates_array.each do |c| %>
+        <li><%= c %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <% if captain.additional_certificates %>
+    <ul class="certificates-list">
+      <% captain.additional_certificates_array.each do |c| %>
+        <li><%= c %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <p><%= captain.description %></p>
+</li>
