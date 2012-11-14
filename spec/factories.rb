@@ -139,4 +139,10 @@ FactoryGirl.define do
       sequence(:attachment_title) { |n| "Ein Dokument #{n}" }
     end
   end
+
+  factory :captain do
+    first_name { Faker::Name.first_name }
+    last_name { Faker::Name.last_name }
+    phone "01234-12345678"
+  end
 end
