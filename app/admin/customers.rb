@@ -1,10 +1,12 @@
 ActiveAdmin.register Customer do
-  config.sort_order = 'last_name_asc first_name_asc'
+  config.sort_order = 'last_name_asc'
+  filter :number
   filter :last_name
   filter :city
   filter :created_at
 
   index do
+    column :number
     column :last_name
     column :first_name
     column :street
@@ -18,6 +20,7 @@ ActiveAdmin.register Customer do
   show title: :full_name do |c|
     panel "Person" do
       attributes_table_for c do
+        row :number
         row :first_name
         row :last_name
         row :gender

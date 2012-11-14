@@ -16,6 +16,7 @@ de:
         country: "Land"
         phone_landline: "Festnetznummer"
         phone_mobile: "Handynummer"
+        number: "Kundennummer"
 
         full_name: "Name"
         street: "Adresse"
