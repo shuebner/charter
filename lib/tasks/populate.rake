@@ -4,11 +4,13 @@ namespace :db do
     require 'populator'
     require 'faker'
 
-    [Customer, TripBooking, TripDate, Trip, Boat, BoatPrice].each(&:delete_all)
+    [Customer, TripBooking, TripDate, Trip, Boat, 
+      BoatPrice, Captain, Attachment].each(&:delete_all)
     booking_number = "000"
+    customer_number = 31200
     
 
-    Customer.populate 200 do |c|
+    Customer.populate 100 do |c|
       c.first_name = Faker::Name.first_name
       c.last_name = Faker::Name.last_name
       full_name = "#{c.first_name} #{c.last_name}"
@@ -22,6 +24,8 @@ namespace :db do
       c.phone_landline = "0#{rand(10..999)}-#{rand(100000..9999999)}"
       c.phone_mobile = "0#{rand(10..999)}-#{rand(100000..9999999)}"
       c.email = Faker::Internet.email(full_name)
+      c.number = customer_number
+      customer_number += 1
     end
 
     Boat.populate 7 do |b|
@@ -79,7 +83,7 @@ namespace :db do
               tb.trip_date_id = td.id
               tb.number = "T-#{td.begin.year}-#{booking_number.succ!}"
               tb.slug = tb.number.downcase
-              tb.customer_id = Customer.all.map(&:id)
+              tb.customer_number = Customer.all.map(&:number)
               tb.no_of_bunks = 1
             end
           end
@@ -98,6 +102,18 @@ namespace :db do
           end
         end
       end
+    end
+
+    Captain.populate 3 do |c|
+      c.first_name = Faker::Name.first_name
+      c.last_name = Faker::Name.last_name
+      full_name = "#{c.first_name} #{c.last_name}"
+      c.slug = full_name.parameterize
+      c.sailing_certificates = Populator.words(2..5).split(' ').join('; ')
+      c.additional_certificates = Populator.words(2..5).split(' ').join('; ')
+      c.description = Populator.sentences(5..10)
+      c.email = Faker::Internet.email(full_name)
+      c.phone_mobile = "0#{rand(10..999)}-#{rand(100000..9999999)}"
     end
   end
 end
