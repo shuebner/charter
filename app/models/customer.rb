@@ -14,21 +14,18 @@ class Customer < ActiveRecord::Base
 
   validates :first_name,
     presence: true,
-    length: { minimum: 2 },
-    format: { with: /^[[:upper:]][[:alpha:] \-]+$/ }
+    first_name: { allow_blank: true }
 
   validates :last_name,
     presence: true,
-    length: { minimum: 2 },
-    format: { with: /^[[:alpha:] \-']+$/ }
+    last_name: { allow_blank: true }
 
   validates :gender,
     presence: true,
     inclusion: { in: ["m", "w"] }
 
   validates :phone_landline, :phone_mobile,
-    allow_blank: true,
-    format: { with: /^(\+\d{2,3})?\d+\-\d+$/ }
+    phone_number: { allow_blank: true }
 
   validates :email,
     allow_blank: true,
