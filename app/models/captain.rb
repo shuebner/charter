@@ -3,7 +3,7 @@ class Captain < ActiveRecord::Base
   friendly_id :full_name, use: :slugged
 
   attr_accessible :additional_certificates, :description, :email, 
-    :first_name, :last_name, :phone, :sailing_certificates
+    :first_name, :last_name, :phone_mobile, :sailing_certificates
 
   validates :first_name,
     presence: true,
@@ -13,7 +13,7 @@ class Captain < ActiveRecord::Base
     presence: true,
     last_name: { allow_blank: true }
 
-  validates :phone,
+  validates :phone_mobile,
     presence: true,
     phone_number: { allow_blank: true }
 

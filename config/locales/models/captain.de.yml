@@ -8,7 +8,7 @@ de:
       captain:
         first_name: "Vorname"
         last_name: "Nachname"
-        phone: "Telefonnummer"
+        phone_mobile: "Handynummer"
         email: "E-Mail-Adresse"
         description: "Kurzbeschreibung"
         sailing_certificates: "Segelscheine"
@@ -17,6 +17,6 @@ de:
   formtastic:
     hints:
       captain:
-        phone: "Format ohne Ländervorwahl: 0123-1234567, mit Ländervorwahl: +49123-1234567"
+        phone_mobile: "Format ohne Ländervorwahl: 0123-1234567, mit Ländervorwahl: +49123-1234567"
         sailing_certificates: "Scheine mit Semikolon getrennt eingeben"
         additional_certificates: "Scheine mit Semikolon getrennt eingeben"

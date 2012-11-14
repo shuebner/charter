@@ -8,7 +8,7 @@ describe Captain do
 
   it { should respond_to(:first_name) }
   it { should respond_to(:last_name) }
-  it { should respond_to(:phone) }
+  it { should respond_to(:phone_mobile) }
   it { should respond_to(:email) }
   it { should respond_to(:sailing_certificates) }
   it { should respond_to(:additional_certificates) }
@@ -71,9 +71,9 @@ describe Captain do
     end
   end
 
-  describe "when phone" do
+  describe "when phone_mobile" do
     describe "is not present" do
-      before { captain.phone = nil }
+      before { captain.phone_mobile = nil }
       it { should_not be_valid }
     end
 
@@ -81,7 +81,7 @@ describe Captain do
       let(:invalid_numbers) { %w[12a3-123456 0123-12#4] }
       it "should not be valid" do
         invalid_numbers.each do |n|
-          captain.phone = n
+          captain.phone_mobile = n
           captain.should_not be_valid
         end        
       end
@@ -91,7 +91,7 @@ describe Captain do
       let(:valid_numbers) { %w[0221-1345558 +49371-123645] }
       it "should be valid" do
         valid_numbers.each do |n|
-          captain.phone = n
+          captain.phone_mobile = n
           captain.should be_valid
         end
       end

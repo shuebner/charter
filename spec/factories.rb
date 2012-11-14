@@ -143,6 +143,6 @@ FactoryGirl.define do
   factory :captain do
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
-    phone "01234-12345678"
+    phone_mobile "01234-12345678"
   end
 end

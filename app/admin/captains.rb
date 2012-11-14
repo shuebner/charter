@@ -6,7 +6,7 @@ ActiveAdmin.register Captain do
   index do
     column :first_name
     column :last_name
-    column :phone
+    column :phone_mobile
   end
 
   show do
@@ -14,7 +14,7 @@ ActiveAdmin.register Captain do
     row :last_name
     row :sailing_certificates
     row :additional_certificates
-    row :phone
+    row :phone_mobile
     row :email
     row :description
   end
@@ -32,7 +32,7 @@ ActiveAdmin.register Captain do
     end
 
     f.inputs "Kontakt" do
-      f.input :phone      
+      f.input :phone_mobile
       f.input :email
     end
   end
