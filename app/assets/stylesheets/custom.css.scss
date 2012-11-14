@@ -70,6 +70,7 @@ nav {
     padding: 0;
     text-align: center;
     li {
+      float: left;
       list-style: none;
       ul {        
         margin: 0;
@@ -94,7 +95,6 @@ nav {
 // Dynamik
 nav ul {
   li {
-    float: left;
     position: relative;    
     ul {
       display: none;
