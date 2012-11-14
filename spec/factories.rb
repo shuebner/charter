@@ -133,6 +133,9 @@ FactoryGirl.define do
       factory :trip_image, class: TripImage do
         attachable { FactoryGirl.create(:trip) }
       end
+      factory :captain_image, class: CaptainImage do
+        attachable { FactoryGirl.create(:captain) }
+      end
     end
     factory :document, class: Document do
       attachment File.new("/home/sven/Dokumente/Anforderungen.pdf")

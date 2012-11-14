@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe Captain do
-  let(:captain) { create(:captain) }
+  let(:captain) { build(:captain) }
 
   subject { captain }
 
@@ -145,6 +145,19 @@ describe Captain do
     describe "full name" do
       it "should give first name and last name" do
         captain.full_name.should == "#{captain.first_name} #{captain.last_name}"
+      end
+    end
+  end
+
+  describe "association" do
+    describe "with image" do
+      before { captain.save! }
+      let!(:image) { create(:captain_image, attachable: captain) }
+      it "should have the right image" do
+        captain.image.should == image
+      end
+      it "should delete associated images" do
+        expect { captain.destroy }.to change(CaptainImage, :count).by(-1)
       end
     end
   end

@@ -5,6 +5,11 @@ class Captain < ActiveRecord::Base
   attr_accessible :additional_certificates, :description, :email, 
     :first_name, :last_name, :phone_mobile, :sailing_certificates
 
+  has_one :image, as: :attachable, class_name: "CaptainImage",
+    dependent: :destroy
+  accepts_nested_attributes_for :image, allow_destroy: true
+  attr_accessible :image_attributes
+
   validates :first_name,
     presence: true,
     first_name: { allow_blank: true }
