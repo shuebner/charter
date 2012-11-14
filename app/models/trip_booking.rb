@@ -3,9 +3,9 @@ class TripBooking < ActiveRecord::Base
   extend FriendlyId
   friendly_id :number, use: :slugged
 
-  attr_accessible :no_of_bunks, :trip_date_id, :customer_id
+  attr_accessible :no_of_bunks, :trip_date_id, :customer_number
 
-  belongs_to :customer, foreign_key: "customer_number"
+  belongs_to :customer, foreign_key: :customer_number, primary_key: :number
   belongs_to :trip_date
 
   delegate :trip, to: :trip_date

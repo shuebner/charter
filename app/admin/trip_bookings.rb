@@ -59,7 +59,7 @@ ActiveAdmin.register TripBooking do
 
   form do |f|
     f.inputs do
-      f.input :customer
+      f.input :customer, collection: Customer.all.map{ |c| [c.display_name, c.number] }
       f.input :trip_date, collection: TripDate.all.map{ |d| [d.display_name_with_trip, d.id] }
       f.input :no_of_bunks, as: :select, collection: 1..6
     end

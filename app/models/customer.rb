@@ -8,7 +8,7 @@ class Customer < ActiveRecord::Base
     :street_name, :street_number, :zip_code,
     :slug
 
-  has_many :trip_bookings, foreign_key: "customer_number"
+  has_many :trip_bookings, foreign_key: :customer_number, primary_key: :number
 
   before_destroy :no_trip_bookings_exist
 

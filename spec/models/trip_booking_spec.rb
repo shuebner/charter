@@ -16,6 +16,7 @@ describe TripBooking do
   it { should respond_to(:cancelled?) }
 
   its(:customer) { should == customer }
+  its(:customer_number) { should == customer.number }
   its(:trip_date) { should == date }
   its(:trip) { should == date.trip }
 
@@ -59,6 +60,15 @@ describe TripBooking do
         booking.no_of_bunks = date.trip.no_of_bunks
       end
       it { should_not be_valid }
+    end
+  end
+
+  describe "when created through a customer" do
+    let(:booking_through_customer) do
+      customer.trip_bookings.create(trip_date_id: date.id, no_of_bunks: 1)
+    end
+    it "should have the right customer number" do
+      booking_through_customer.customer_number.should == customer.number
     end
   end
 
