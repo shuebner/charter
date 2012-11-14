@@ -1,9 +1,10 @@
 ActiveAdmin.register StaticPage do
   config.filters = false
-  config.sort_order = "heading_asc"
+  config.sort_order = "title_asc"
   actions :all, except: [:destroy]
 
   index do
+    column :title
     column :heading
     column :text
     column :created_at
@@ -13,6 +14,7 @@ ActiveAdmin.register StaticPage do
 
   show title: :title do |p|
     attributes_table do 
+      row :title
       row :heading
       row :text
       row :picture do
@@ -37,6 +39,12 @@ ActiveAdmin.register StaticPage do
 
   form html: { enctype: "multipart/form-data" } do |f|
     f.inputs I18n.t('activerecord.models.static_page.one'), multipart: true do
+      if f.object.new_record?
+        f.input :title
+      else
+        f.input :title, hint: "Nicht mehr editierbar", input_html: { readonly: true }
+      end
+
       f.input :heading
       f.input :text
       f.input :picture, as: :file, hint: 
