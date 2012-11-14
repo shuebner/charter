@@ -6,7 +6,7 @@ class Customer < ActiveRecord::Base
   attr_accessible :city, :country, :gender, :email, :first_name, :last_name,
     :phone_landline, :phone_mobile, 
     :street_name, :street_number, :zip_code,
-    :slug, :number
+    :slug
 
   has_many :trip_bookings, foreign_key: "customer_number"
 

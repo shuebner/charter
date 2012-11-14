@@ -33,6 +33,14 @@ describe Customer do
   
   it { should be_valid }
 
+  describe "accessible attributes" do
+    it "should not allow access to number" do
+      expect do
+        Customer.new(number: 223)
+      end.should raise_error(ActiveModel::MassAssignmentSecurity::Error)
+    end
+  end
+
   describe "when first name" do
     describe "is not present" do
       before { customer.first_name = "" }
