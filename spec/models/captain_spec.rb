@@ -132,6 +132,16 @@ describe Captain do
     end
   end
 
+  describe "when description contains forbidden HTML" do
+    before do
+      captain.description = "<li>Hallo<br>Du</li>"
+    end
+    it "should be sanitized on save" do
+      captain.save
+      captain.description.should == "Hallo<br>Du"
+    end
+  end
+
   describe "slug should be first and last name" do
     before do
       captain.first_name = "Hans"

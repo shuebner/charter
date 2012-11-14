@@ -26,7 +26,7 @@ class Captain < ActiveRecord::Base
     allow_blank: true,
     email_format: true
 
-  before_save { self.email = email.downcase unless email.blank? }
+  before_save :standardize_email, :sanitize_description
 
   def full_name
     "#{first_name} #{last_name}"
@@ -38,5 +38,16 @@ class Captain < ActiveRecord::Base
 
   def additional_certificates_array
     additional_certificates.split(';').each { |c| c.strip! }
+  end
+
+
+  private
+
+  def standardize_email
+    self.email = email.downcase unless email.blank?
+  end
+
+  def sanitize_description
+    self.description = sanitize_page_text(description)
   end
 end
