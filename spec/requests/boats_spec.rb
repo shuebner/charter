@@ -100,12 +100,12 @@ describe "Boats" do
 =end        
         it "should contain the names of all seasons" do
           Season.all.each do |s|
-            page.should have_selector('table th', text: s.name)
+            page.should have_selector('table tr', text: s.name)
           end
         end
         it "should contain the names of all boat price types" do
           BoatPriceType.all.each do |t|
-            page.should have_selector('table tr', text: t.name)
+            page.should have_selector('table th', text: t.name)
           end
         end
         it "should contain all boat charter prices of this boat" do
