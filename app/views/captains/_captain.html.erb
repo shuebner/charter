@@ -17,5 +17,7 @@
       <% end %>
     </ul>
   <% end %>
-  <p><%= captain.description.html_safe %></p>
+  <% if captain.description %>
+    <p><%= captain.description.html_safe %></p>
+  <% end %>
 </li>
