@@ -1,7 +1,7 @@
 <nav>
   <div id="nav-frame" class="clearfix">
     <ul>
-      <li><%= link_to "Startseite", static_page_path("start") %></li>
+      <!--<li><%= link_to "Startseite", static_page_path("start") %></li>-->
       <li><%= link_to "Schiffe", boats_path %>
         <ul>
           <% Boat.visible.each do |boat| %>
@@ -18,6 +18,7 @@
       </li>
       <li><%= link_to "Skipper", captains_path %></li>
       <li><%= link_to "Reisebedingungen", static_page_path("reisebedingungen") %></li>
+      <li><%= link_to "Anfrage", new_inquiry_path %></li>
       <li><%= link_to "Impressum", static_page_path("impressum") %></li>
     </ul>
   </div>

@@ -13,8 +13,18 @@ Charter::Application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
-  # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = false
+  # Please care if the mailer can't send
+  config.action_mailer.raise_delivery_errors = true
+  
+  # use the real setting
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: "smtp.strato.de",
+    port: 25,
+    user_name: 'mailer@palve-charter.de',
+    password: '!c#b!nm4!13?',
+    authentication: 'plain'
+  }
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log

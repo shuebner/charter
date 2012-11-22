@@ -15,6 +15,8 @@ Charter::Application.routes.draw do
 
     resources :captains, only: [:index], path: "skipper"
 
+    resources :inquiries, only: [:new, :create], path: "allgemeine-anfragen"
+
     resources :static_pages, only: [:show], path: "/"
 
   end

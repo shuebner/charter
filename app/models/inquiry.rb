@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Inquiry < ActiveRecord::Base
   attr_accessible :email, :first_name, :last_name, :text
 
@@ -11,7 +12,7 @@ class Inquiry < ActiveRecord::Base
 
   validates :email,
     presence: true,
-    email_format: true
+    email_format: { message: 'ist keine gültige E-Mail-Adresse' }
 
   before_save :sanitize_text, :standardize_email
 

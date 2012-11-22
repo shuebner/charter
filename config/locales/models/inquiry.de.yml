@@ -1,0 +1,12 @@
+de:
+  activerecord:
+    models:
+      inquiry:
+        one: "Allgemeine Anfrage"
+        other: "Allgemeine Anfragen"
+    attributes:
+      inquiry:
+        first_name: "Vorname"
+        last_name: "Nachname"
+        email: "E-Mail-Adresse"
+        text: "Nachricht"
