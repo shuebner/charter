@@ -5,6 +5,6 @@ de:
     :create: 'Erstelle %{model}'
     :update: 'Speichere %{model}'
     :submit: 'Speichere %{model}'
-    :cancel: 'Verwerfe %{model}'
+    :cancel: 'Verwirf %{model}'
     :reset: 'Setze %{model} zurück'
     :required: 'benötigt'
