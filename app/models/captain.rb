@@ -33,10 +33,10 @@ class Captain < ActiveRecord::Base
   end
 
   def sailing_certificates_array
-    sailing_certificates.split(';').each { |c| c.strip! }
+    sailing_certificates.split(';').each(&:strip!)
   end
 
   def additional_certificates_array
-    additional_certificates.split(';').each { |c| c.strip! }
+    additional_certificates.split(';').each(&:strip!)
   end
 end
