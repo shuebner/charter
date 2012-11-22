@@ -18,6 +18,7 @@ de:
         phone_mobile: "Handynummer"
         email: "E-Mail-Adresse"
         number: "Kundennummer"
+        has_sks_or_higher: "hat mindestens SKS"
 
         full_name: "Name"
         street: "Adresse"

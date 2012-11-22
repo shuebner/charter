@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121114121445) do
+ActiveRecord::Schema.define(:version => 20121122130329) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -135,9 +135,9 @@ ActiveRecord::Schema.define(:version => 20121114121445) do
   add_index "captains", ["slug"], :name => "index_captains_on_slug", :unique => true
 
   create_table "customers", :force => true do |t|
-    t.string   "first_name",                  :null => false
-    t.string   "last_name",                   :null => false
-    t.string   "gender",         :limit => 1, :null => false
+    t.string   "first_name",                     :null => false
+    t.string   "last_name",                      :null => false
+    t.string   "gender",            :limit => 1, :null => false
     t.string   "phone_landline"
     t.string   "phone_mobile"
     t.string   "email"
@@ -146,10 +146,11 @@ ActiveRecord::Schema.define(:version => 20121114121445) do
     t.string   "zip_code"
     t.string   "city"
     t.string   "country"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.string   "slug"
-    t.integer  "number",                      :null => false
+    t.integer  "number",                         :null => false
+    t.boolean  "has_sks_or_higher"
   end
 
   add_index "customers", ["first_name"], :name => "index_customers_on_first_name"

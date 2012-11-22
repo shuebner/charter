@@ -25,6 +25,7 @@ namespace :db do
       c.phone_mobile = "0#{rand(10..999)}-#{rand(100000..9999999)}"
       c.email = Faker::Internet.email(full_name)
       c.number = customer_number
+      c.has_sks_or_higher = [true, false, nil]
       customer_number += 1
     end
 

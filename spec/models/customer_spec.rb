@@ -26,6 +26,7 @@ describe Customer do
   it { should respond_to :city }
   it { should respond_to :country }
   it { should respond_to :number }
+  it { should respond_to :has_sks_or_higher }
 
   it { should respond_to :street }
   it { should respond_to :full_name }

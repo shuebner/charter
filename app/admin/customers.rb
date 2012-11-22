@@ -1,3 +1,4 @@
+# encoding: utf-8
 ActiveAdmin.register Customer do
   config.sort_order = 'last_name_asc'
   filter :number
@@ -24,6 +25,14 @@ ActiveAdmin.register Customer do
         row :first_name
         row :last_name
         row :gender
+        row :has_sks_or_higher do
+          if c.has_sks_or_higher.nil?
+            status_tag("unbekannt")
+          else
+            status_tag (c.has_sks_or_higher ? "ja" : "nein"),
+              (c.has_sks_or_higher ? :ok : :error)
+          end
+        end
       end
     end
 
@@ -51,6 +60,9 @@ ActiveAdmin.register Customer do
       f.input :first_name
       f.input :last_name
       f.input :gender, as: :radio, collection: ["m", "w"]
+      f.input :has_sks_or_higher, as: :radio, 
+        collection: {"ja" => true, "nein" => false},
+        hint: "falls unbekannt, bitte keinen Punkt auswählen"
     end
 
     f.inputs "Adresse" do
