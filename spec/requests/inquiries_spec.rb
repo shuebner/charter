@@ -43,6 +43,6 @@ describe "Inquiries" do
   end
 
   def submit_form
-    click_button 'Erstelle Allgemeine Anfrage'
+    click_button 'Absenden'
   end
 end
