@@ -1,7 +1,9 @@
-<%= semantic_form_for @inquiry do |i| %>
-  <%= i.inputs :first_name, :last_name, :email, :text %>
-  <%= i.actions do %>
-    <%= i.action :submit %>
-    <%= i.action :cancel, url: root_path %>
-  <% end %>
-<% end %>
+<h1>Allgemeine Anfrage</h1>
+<p>
+  Um uns eine allgemeine Anfrage zukommen zu lassen, füllen Sie bitte das Formular unten aus.
+</p>
+<p class="important">
+  Um eine Buchungsanfrage für ein Schiff oder einen Törn zu stellen, 
+  benutzen Sie bitte die Buchungs-Links auf der konkreten Schiffs- bzw. Törnseite.
+</p>
+<%= render partial: 'form', locals: { inquiry: @inquiry } %>
