@@ -1,5 +1,6 @@
 # encoding: utf-8
 class Inquiry < ActiveRecord::Base
+  acts_as_citier
   attr_accessible :email, :first_name, :last_name, :text
 
   validates :first_name,
