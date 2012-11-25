@@ -18,6 +18,8 @@ gem 'friendly_id', '~>4.0.1'
 
 gem 'validates_email_format_of'
 gem 'validates_timeliness', '~>3.0'
+gem 'citier'
+gem 'rails_sql_views', git: 'git://github.com/centresource/rails_sql_views'
 
 
 # Gems used only for assets and not required
