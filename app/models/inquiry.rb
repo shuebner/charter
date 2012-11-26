@@ -17,6 +17,10 @@ class Inquiry < ActiveRecord::Base
 
   before_save :sanitize_text, :standardize_email
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
   private
 
   def sanitize_text
