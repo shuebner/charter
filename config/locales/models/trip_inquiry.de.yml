@@ -1,0 +1,9 @@
+de:
+  activerecord:
+    models:
+      trip_inquiry:
+        one: "Törnanfrage"
+        other: "Törnanfragen"
+    attributes:
+      trip_inquiry:
+        bunks: "Kojenzahl"

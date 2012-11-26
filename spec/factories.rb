@@ -153,9 +153,15 @@ FactoryGirl.define do
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
     email { Faker::Internet.email("#{first_name} #{last_name}") }
+    factory :full_inquiry do
+      text { Faker::Lorem.sentence(4) }
+    end
     factory :trip_inquiry, class: TripInquiry do
       trip_date
       bunks 1
+      factory :full_trip_inquiry do
+        text { Faker::Lorem.sentence(4) }
+      end
     end
   end
 end

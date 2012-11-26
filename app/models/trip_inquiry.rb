@@ -1,6 +1,6 @@
 class TripInquiry < Inquiry  
   acts_as_citier
-  attr_accessible :bunks
+  attr_accessible :bunks, :trip_date_id
 
   belongs_to :trip_date
 

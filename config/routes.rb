@@ -17,6 +17,8 @@ Charter::Application.routes.draw do
 
     resources :inquiries, only: [:new, :create], path: "allgemeine-anfragen"
 
+    resources :trip_inquiries, only: [:new, :create], path: "toernanfragen"
+
     resources :static_pages, only: [:show], path: "/"
 
   end

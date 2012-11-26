@@ -1,0 +1,17 @@
+<h2>Anfrage für <%= trip_date.display_name_with_trip %></h2>
+<%= semantic_form_for trip_inquiry do |i| %>
+  <%= i.inputs "Angaben zum Törn" do %>
+    <%= i.input :trip_date_id, as: :hidden, value: trip_date.id %>
+    <%= i.input :bunks, as: :select, collection: 1..trip_date.no_of_available_bunks %>
+  <% end %>
+  <%= i.inputs "Persönliche Angaben" do %>
+    <%= i.input :first_name %>
+    <%= i.input :last_name %>
+    <%= i.input :email %>
+    <%= i.input :text %>
+  <% end %>
+  <%= i.actions do %>
+    <%= i.action :submit, label: "Absenden" %>
+    <%= i.action :cancel, label: "Verwerfen", url: trip_path(trip_date.trip) %>
+  <% end %>
+<% end %>

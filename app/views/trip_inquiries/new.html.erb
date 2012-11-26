@@ -1,0 +1,6 @@
+<h1>Buchungsanfrage für Törn</h1>
+<p>
+  Um eine Buchungsanfrage für den Törn <%= @trip_date.display_name_with_trip %> zu stellen, füllen Sie bitte das Formular unten aus.
+</p>
+<%= render partial: 'form', 
+  locals: { trip_inquiry: @trip_inquiry, trip_date: @trip_date } %>
