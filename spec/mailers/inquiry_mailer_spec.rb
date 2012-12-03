@@ -6,7 +6,7 @@ describe InquiryMailer do
   include EmailSpec::Matchers
 
   shared_examples_for "inquiry_mail" do
-    it { should deliver_to('anfragen@palve-charter.de') }
+    it { should deliver_to('klaus.wenz@palve-charter.de') }
     it { should have_body_text(inquiry.text) }
     it { should have_body_text(inquiry.email) }
   end
