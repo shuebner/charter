@@ -13,6 +13,13 @@
           <td><%= l(d.begin) %></td>
           <td><%= l(d.end) %></td>
           <td><%= d.no_of_available_bunks %></td>
+          <% if d.no_of_available_bunks > 0 %>
+            <td>
+              <%= link_to "buchen", new_trip_inquiry_path(trip_date_id: d.id) %>
+            </td>
+          <% else %>
+            <td>ausgebucht</td>
+          <% end %>
         </tr>
       <% end %>
     </table>

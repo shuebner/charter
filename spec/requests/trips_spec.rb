@@ -48,6 +48,19 @@ describe "Trips" do
         page.should have_content(I18n.l(date.begin))
         page.should have_content(I18n.l(date.end))
       end
+
+      describe "links to trip inquiries" do
+        let!(:full_date) { create(:trip_date, trip: trip) }
+        let!(:full_booking) { create(:trip_booking, trip_date: full_date, 
+          no_of_bunks: full_date.no_of_available_bunks) }
+        before { visit trip_path(trip) }
+        it "should have a link to the right trip inquiry form for non-full trips" do
+          page.should have_link("buchen", href: new_trip_inquiry_path(trip_date_id: date.id))
+        end
+        it "should not have a link to an inquiry for full trips" do
+          page.should_not have_link("buchen", href: new_trip_inquiry_path(trip_date_id: full_date.id))
+        end
+      end
     end
   end
 end

@@ -1,7 +1,7 @@
 <nav>
   <div id="nav-frame" class="clearfix">
     <ul>
-      <!--<li><%= link_to "Startseite", static_page_path("start") %></li>-->
+      <li><%= link_to "Startseite", static_page_path("start") %></li>
       <li><%= link_to "Schiffe", boats_path %>
         <ul>
           <% Boat.visible.each do |boat| %>

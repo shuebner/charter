@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121122133906) do
+ActiveRecord::Schema.define(:version => 20121125122615) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(:version => 20121122133906) do
     t.text     "text"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "type"
   end
 
   create_table "paragraphs", :force => true do |t|
@@ -229,6 +230,11 @@ ActiveRecord::Schema.define(:version => 20121122133906) do
   add_index "trip_dates", ["begin"], :name => "index_trip_dates_on_begin"
   add_index "trip_dates", ["trip_id"], :name => "index_trip_dates_on_trip_id"
 
+  create_table "trip_inquiries", :force => true do |t|
+    t.integer "trip_date_id", :null => false
+    t.integer "bunks",        :null => false
+  end
+
   create_table "trips", :force => true do |t|
     t.integer  "boat_id",                                   :null => false
     t.string   "name",                                      :null => false
@@ -242,5 +248,18 @@ ActiveRecord::Schema.define(:version => 20121122133906) do
 
   add_index "trips", ["boat_id"], :name => "index_trips_on_boat_id"
   add_index "trips", ["slug"], :name => "index_trips_on_slug", :unique => true
+
+  create_view "view_trip_inquiries", "select `inquiries`.`id` AS `id`,`inquiries`.`first_name` AS `first_name`,`inquiries`.`last_name` AS `last_name`,`inquiries`.`email` AS `email`,`inquiries`.`text` AS `text`,`inquiries`.`created_at` AS `created_at`,`inquiries`.`updated_at` AS `updated_at`,`inquiries`.`type` AS `type`,`trip_inquiries`.`trip_date_id` AS `trip_date_id`,`trip_inquiries`.`bunks` AS `bunks` from (`inquiries` join `trip_inquiries`) where (`inquiries`.`id` = `trip_inquiries`.`id`)", :force => true do |v|
+    v.column :id
+    v.column :first_name
+    v.column :last_name
+    v.column :email
+    v.column :text
+    v.column :created_at
+    v.column :updated_at
+    v.column :type
+    v.column :trip_date_id
+    v.column :bunks
+  end
 
 end
