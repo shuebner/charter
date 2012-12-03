@@ -1,7 +1,7 @@
 # encoding: utf-8
 class InquiryMailer < ActionMailer::Base
   default from: 'mailer@palve-charter.de'
-  default to: 'anfragen@palve-charter.de'
+  default to: 'klaus.wenz@palve-charter.de'
 
   def general_inquiry(inquiry)
     @inquiry = inquiry
