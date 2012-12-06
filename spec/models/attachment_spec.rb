@@ -89,5 +89,8 @@ describe Attachment do
     it "should provide a title method for retrieving the attachment_title" do
       attachment.title.should == attachment.attachment_title
     end
+    it "should provide a url method for retrieving the attachment's url" do
+      attachment.url.should == attachment.attachment.url
+    end
   end    
 end

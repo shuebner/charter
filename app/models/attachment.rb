@@ -18,6 +18,8 @@ class Attachment < ActiveRecord::Base
 
   default_scope order('attachments.order ASC')
 
+  delegate :url, to: :attachment
+
   def title
     attachment_title
   end
