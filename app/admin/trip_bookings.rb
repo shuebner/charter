@@ -20,7 +20,7 @@ ActiveAdmin.register TripBooking do
     end
   end
 
-  action_item only: [ :show ] do
+  action_item only: :show, if: Proc.new { !trip_booking.cancelled? } do
     button_to "stornieren", cancel_admin_trip_booking_path, method: :put, 
       confirm: "Eine Stornierung kann nicht rückgängig gemacht werden!\n" \
                "Buchung #{trip_booking.number} wirklich stornieren?"
@@ -37,10 +37,12 @@ ActiveAdmin.register TripBooking do
     column :customer, sortable: 'customers.last_name'
     column :no_of_bunks
     column :created_at
-    column() do |b| 
-      link_to "stornieren", cancel_admin_trip_booking_path(b), method: :put, 
-        confirm: "Eine Stornierung kann nicht rückgängig gemacht werden!\n" \
-                 "Buchung #{b.number} wirklich stornieren?"
+    column() do |b|
+      if !b.cancelled?
+        link_to "stornieren", cancel_admin_trip_booking_path(b), method: :put, 
+          confirm: "Eine Stornierung kann nicht rückgängig gemacht werden!\n" \
+                   "Buchung #{b.number} wirklich stornieren?"
+      end
     end
     default_actions
   end
