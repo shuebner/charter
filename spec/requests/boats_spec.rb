@@ -65,7 +65,7 @@ describe "Boats" do
       it { should_not have_selector('h2', text: 'Törns') }
     end
 
-    describe "boat charter section" do      
+    describe "boat charter section" do
       describe "prices" do
         let!(:early_season) { create(:early_season) }
         let!(:main_season) { create(:main_season) }
@@ -84,20 +84,7 @@ describe "Boats" do
           end
           visit boat_path(boat)
         end
-        
-=begin        let!(:early_price) do 
-          create(:boat_price, season: early_season, boat_price_type: weekend,
-            boat: boat) }
-        end
-        let!(:main_price) do
-          create(:boat_price, season: main_season, boat_price_type: weekend,
-            boat: boat)
-        end
-        let!(:late_price do
-          create(:boat_price, season: late_season, boat_price_type: weekend,
-            boat: boat)
-        end
-=end        
+
         it "should contain the names of all seasons" do
           Season.all.each do |s|
             page.should have_selector('table tr', text: s.name)
@@ -114,6 +101,21 @@ describe "Boats" do
           end
         end
       end
+
+      describe "accessory charges" do
+        before { visit boat_path(boat) }
+        [:deposit, :cleaning_charge, :fuel_charge, :gas_charge].each do |c|
+          it "should contain the #{c.to_s}" do
+            page.should have_selector('table td', text: number_to_currency(boat[c]) )
+          end
+        end
+      end
+    end
+
+    describe "should not show charter section when boat is not available for boat charter" do
+      let!(:no_boat_charter_boat) { create(:bunk_charter_only_boat) }
+      before { visit boat_path(no_boat_charter_boat) }
+      it { should_not have_selector('h2', 'Schiffscharter') }
     end
   end
 end

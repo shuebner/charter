@@ -1,8 +1,9 @@
 <% if boat.available_for_boat_charter %>
   <div id="boat-charter">
     <h2>Schiffscharter</h2>
+    <h3>Charterpreise</h3>
     <p>Sie können dieses Schiff zu folgenden Preisen chartern:</p>
-    <table>
+    <table id="boat-prices">
       <tr>
         <th class="season-heading">Saison</th>
         <% boat_price_types.each do |t| %>
@@ -22,6 +23,21 @@
       <% end %>
     </table>
     <p>Andere Charterdauern oder Termine sind auf Anfrage möglich.</p>
+    
+    <h3>Nebenkosten</h3>
+    <p>Folgende Nebenkosten fallen zusätzlich an:</p>
+    <table id="accessory-charges">
+      <% [:deposit, :fuel_charge, :gas_charge, :cleaning_charge].each do |c| %>
+        <% if @boat[c] && @boat[c] > 0 %>
+          <tr>
+            <th><%= Boat.human_attribute_name(c) %></th>
+            <td><%= number_to_currency(@boat[c]) %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </table>
+
+    <h3>Buchung</h3>
     <p>
       Um eine Buchungsanfrage für dieses Schiff zu stellen, senden Sie uns bitte eine <%= link_to "allgemeine Anfrage", new_inquiry_path %>, 
       in der Sie das gewünschte Schiff sowie den von Ihnen gewünschten Zeitraum benennen.

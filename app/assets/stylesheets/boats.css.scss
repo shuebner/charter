@@ -87,24 +87,40 @@ ul.boat-list {
     font-size: 90%;
     th {
       font-weight: bold;      
-      border-bottom: 1px solid black;
       padding-right: 0.5em;
-      &.boat-price-type-heading {
-        text-align: right;
-      }
-      &.season-heading {
-        text-align: left;        
-        border-right: 1px solid black;
-      }
     }
     td {
       padding-right: 0.5em;
-      &.season-col {
-        font-weight: bold;
-        text-align: left;
-        border-right: 1px solid black;
+    }
+
+    &#boat-prices {
+      th {
+        border-bottom: 1px solid black;
+        &.boat-price-type-heading {
+          text-align: right;
+        }
+        &.season-heading {
+          text-align: left;        
+          border-right: 1px solid black;
+        }
       }
-      &.boat-price-col {
+      td {
+        &.season-col {
+          font-weight: bold;
+          text-align: left;
+          border-right: 1px solid black;
+        }
+        &.boat-price-col {
+          text-align: right;
+        }
+      }
+    }
+
+    &#accessory-charges {
+      th {
+        text-align: left;
+      }
+      td {
         text-align: right;
       }
     }

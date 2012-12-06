@@ -38,7 +38,7 @@ de:
         available_for_bunk_charter: "für Kojencharter verfügbar"
         deposit: "Kaution"
         cleaning_charge: "Endreinigungspauschale"
-        fuel_charge: "Kraftstoffpauschale"
+        fuel_charge: "Kraftstoffpauschale pro h"
         gas_charge: "Gaspauschale"
   formtastic:
     hints:
