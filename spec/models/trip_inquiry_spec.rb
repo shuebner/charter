@@ -45,7 +45,8 @@ describe TripInquiry do
     describe "is not less than the maximum number of bunks still available for the date" do      
       before do
         trip_date.trip.no_of_bunks = 4
-        trip_date.trip_bookings.create(no_of_bunks: 1)
+        customer = create(:customer)
+        trip_date.trip_bookings.create(customer_number: customer.number, no_of_bunks: 1)
         inquiry.bunks = 4
       end
       it { should_not be_valid }

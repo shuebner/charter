@@ -63,6 +63,11 @@ describe TripBooking do
     end
   end
 
+  describe "if customer number is not present" do
+    before { booking.customer = nil }
+    it { should_not be_valid }
+  end
+
   describe "when created through a customer" do
     let(:booking_through_customer) do
       customer.trip_bookings.create(trip_date_id: date.id, no_of_bunks: 1)

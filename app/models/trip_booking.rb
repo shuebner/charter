@@ -21,6 +21,9 @@ class TripBooking < ActiveRecord::Base
   validates :number,
     presence: true,
     uniqueness: true
+
+  validates :customer,
+    presence: true
   
   default_scope order("number DESC")
 
