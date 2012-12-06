@@ -15,6 +15,9 @@
   </div>
   <div class="twocol-col2">
     <%= render partial: 'technical_data',
-      locals: { boat: @boat } %> 
+      locals: { boat: @boat } %>
+
+    <%= render partial: 'document_list',
+      locals: { documents: @boat.documents } %>
   </div>
 </div>

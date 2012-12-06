@@ -1,0 +1,9 @@
+<% if documents.any? %>
+  <div id="boat-documents">
+    <h2>Dokumente</h2>
+    <p>Folgende Dokumente stehen für Sie zum Download bereit:</p>
+    <ul id='documents'>
+      <%= render documents %>
+    </ul>
+  </div>
+<% end %>

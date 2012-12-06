@@ -117,5 +117,31 @@ describe "Boats" do
       before { visit boat_path(no_boat_charter_boat) }
       it { should_not have_selector('h2', 'Schiffscharter') }
     end
+
+    describe "documents section" do
+      
+      describe "when there are some" do
+        let!(:document) { create(:document, attachable: boat) }
+        before { visit boat_path(boat) }
+        
+        it "should show the document title" do
+          page.should have_content(document.title)
+        end
+        
+        it "should provide a link to the document" do
+          page.should have_selector('a', href: document.url)
+        end
+      end
+
+      describe "when there are none" do
+        before do
+          boat.documents.each(&:destroy)
+          visit boat_path(boat)
+        end
+        it "should not show the document section" do
+          page.should_not have_content('Dokumente')
+        end
+      end
+    end
   end
 end
