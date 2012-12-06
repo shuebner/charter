@@ -9,10 +9,6 @@ class Image < Attachment
   validates :type,
     presence: true
 
-  def title
-    attachment_title
-  end
-
   private
 
   def resize_image

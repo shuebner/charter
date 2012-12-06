@@ -84,4 +84,10 @@ describe Attachment do
       it { should_not be_valid }
     end
   end
+
+  describe "shortcuts" do
+    it "should provide a title method for retrieving the attachment_title" do
+      attachment.title.should == attachment.attachment_title
+    end
+  end    
 end

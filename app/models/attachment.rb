@@ -17,4 +17,8 @@ class Attachment < ActiveRecord::Base
   before_save { self.attachment_title = sanitize(attachment_title, tags: []) }
 
   default_scope order('attachments.order ASC')
+
+  def title
+    attachment_title
+  end
 end
