@@ -6,6 +6,11 @@ ActiveAdmin.register Customer do
   filter :city
   filter :created_at
 
+  action_item only: :show do
+    link_to I18n.t('active_admin.create_model', model: Customer.model_name.human), 
+      new_admin_customer_path
+  end
+
   index do
     column :number
     column :last_name
