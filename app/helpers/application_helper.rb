@@ -20,12 +20,12 @@ module ApplicationHelper
   end
 
   def num_with_del(number, options = {})
-    precisions = Charter::Application.config.precisions
-    number_with_precision(number, precision: precisions[options[:as]])
+    precision = Charter::Application.config.num_formats[options[:as]][:precision]
+    number_with_precision(number, precision: precision)
   end
 
   def num_with_del_and_u(number, options = {})
-    units = Charter::Application.config.units
-    "#{num_with_del(number, options)} #{units[options[:as]]}"
+    unit = Charter::Application.config.num_formats[options[:as]][:unit]
+    "#{num_with_del(number, options)} #{unit}"
   end
 end

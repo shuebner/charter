@@ -31,9 +31,10 @@ describe ApplicationHelper do
   describe "num_with_del" do
     [:linear, :area, :volume, :mass].each do |option|
       describe "when called with #{option.to_s}" do
-        let!(:precision) { Charter::Application.config.precisions }
+        let!(:formats) { Charter::Application.config.num_formats }
         it "should show the number with the right precision" do
-          fraction = precision[option] > 0 ? ",#{0.to_s * precision[option]}" : ''
+          precision = formats[option][:precision]
+          fraction = precision > 0 ? ",#{0.to_s * precision}" : ''
           num_with_del(3, { as: option }).should == "3#{fraction}"
         end
       end
@@ -43,9 +44,9 @@ describe ApplicationHelper do
   describe "num_with_del_and_u" do
     [:linear, :area, :volume, :mass].each do |option|
       describe "when called with #{option.to_s}" do
-        let!(:units) { Charter::Application.config.units }
+        let!(:formats) { Charter::Application.config.num_formats }
         it "should show the number with the right precision and unit" do
-          unit = units[option]
+          unit = formats[option][:unit]
           number_with_del = num_with_del(3, { as: option})
           num_with_del_and_u(3, { as: option}).should == "#{number_with_del} #{unit}"
         end
