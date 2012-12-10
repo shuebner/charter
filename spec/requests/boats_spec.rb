@@ -104,10 +104,13 @@ describe "Boats" do
 
       describe "accessory charges" do
         before { visit boat_path(boat) }
-        [:deposit, :cleaning_charge, :fuel_charge, :gas_charge].each do |c|
+        [:deposit, :cleaning_charge, :gas_charge].each do |c|
           it "should contain the #{c.to_s}" do
             page.should have_selector('table td', text: number_to_currency(boat[c]) )
           end
+        end
+        it "should contain the fuel_charge" do
+          page.should have_selector('small', text: number_to_currency(boat.fuel_charge))
         end
       end
     end

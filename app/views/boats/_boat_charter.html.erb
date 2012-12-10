@@ -27,7 +27,7 @@
     <h3>Nebenkosten</h3>
     <p>Folgende Nebenkosten fallen zusätzlich an:</p>
     <table id="accessory-charges">
-      <% [:deposit, :fuel_charge, :gas_charge, :cleaning_charge].each do |c| %>
+      <% [:deposit, :gas_charge, :cleaning_charge].each do |c| %>
         <% if @boat[c] && @boat[c] > 0 %>
           <tr>
             <th><%= Boat.human_attribute_name(c) %></th>
@@ -35,7 +35,18 @@
           </tr>
         <% end %>
       <% end %>
+      <% if @boat.fuel_charge && @boat.fuel_charge > 0 %>
+        <tr>
+          <th>Kraftstoff*</th>
+          <td>nach Verbrauch</td>
+        </tr>        
+      <% end %>
     </table>
+    <% if @boat.fuel_charge && @boat.fuel_charge > 0 %>
+      <small>
+        * auf Wunsch Abrechnung pro Betriebsstunde <%= number_to_currency(@boat.fuel_charge) %>
+      </small>
+    <% end %>
 
     <h3>Buchung</h3>
     <p>
