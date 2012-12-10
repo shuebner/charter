@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121122133906) do
+ActiveRecord::Schema.define(:version => 20121207160854) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -57,6 +57,22 @@ ActiveRecord::Schema.define(:version => 20121122133906) do
     t.datetime "updated_at",       :null => false
     t.integer  "order",            :null => false
   end
+
+  create_table "boat_bookings", :force => true do |t|
+    t.integer  "customer_id", :null => false
+    t.integer  "boat_id",     :null => false
+    t.string   "number",      :null => false
+    t.string   "slug",        :null => false
+    t.datetime "begin_date",  :null => false
+    t.datetime "end_date",    :null => false
+    t.integer  "adults",      :null => false
+    t.integer  "children",    :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "boat_bookings", ["number"], :name => "index_boat_bookings_on_number"
+  add_index "boat_bookings", ["slug"], :name => "index_boat_bookings_on_slug"
 
   create_table "boat_price_types", :force => true do |t|
     t.string   "name",       :null => false
@@ -165,6 +181,7 @@ ActiveRecord::Schema.define(:version => 20121122133906) do
     t.text     "text"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "type"
   end
 
   create_table "paragraphs", :force => true do |t|
@@ -220,14 +237,19 @@ ActiveRecord::Schema.define(:version => 20121122133906) do
 
   create_table "trip_dates", :force => true do |t|
     t.integer  "trip_id",    :null => false
-    t.datetime "begin",      :null => false
-    t.datetime "end",        :null => false
+    t.datetime "begin_date", :null => false
+    t.datetime "end_date",   :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  add_index "trip_dates", ["begin"], :name => "index_trip_dates_on_begin"
+  add_index "trip_dates", ["begin_date"], :name => "index_trip_dates_on_begin"
   add_index "trip_dates", ["trip_id"], :name => "index_trip_dates_on_trip_id"
+
+  create_table "trip_inquiries", :force => true do |t|
+    t.integer "trip_date_id", :null => false
+    t.integer "bunks",        :null => false
+  end
 
   create_table "trips", :force => true do |t|
     t.integer  "boat_id",                                   :null => false
@@ -242,5 +264,18 @@ ActiveRecord::Schema.define(:version => 20121122133906) do
 
   add_index "trips", ["boat_id"], :name => "index_trips_on_boat_id"
   add_index "trips", ["slug"], :name => "index_trips_on_slug", :unique => true
+
+  create_table "view_trip_inquiries", :id => false, :force => true do |t|
+    t.integer  "id",           :default => 0, :null => false
+    t.string   "first_name",                  :null => false
+    t.string   "last_name",                   :null => false
+    t.string   "email",                       :null => false
+    t.text     "text"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+    t.string   "type"
+    t.integer  "trip_date_id",                :null => false
+    t.integer  "bunks",                       :null => false
+  end
 
 end

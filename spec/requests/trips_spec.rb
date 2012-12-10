@@ -41,12 +41,13 @@ describe "Trips" do
     end
 
     describe "trip dates" do
-      let!(:date) { create(:trip_date, trip:trip, begin: 2.days.from_now, end: 3.days.from_now) }
+      let!(:date) { create(:trip_date, trip:trip, 
+        begin_date: 2.days.from_now, end_date: 3.days.from_now) }
       before { visit trip_path(trip) }
       
       it "should show the dates for the trip" do
-        page.should have_content(I18n.l(date.begin))
-        page.should have_content(I18n.l(date.end))
+        page.should have_content(I18n.l(date.begin_date))
+        page.should have_content(I18n.l(date.end_date))
       end
     end
   end
