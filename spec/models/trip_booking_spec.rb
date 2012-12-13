@@ -79,6 +79,10 @@ describe TripBooking do
     end
   end
 
+  describe "when trip date is not present" do
+    before { booking.trip_date = nil }
+    it { should_not be_valid }
+  end
 
   describe "slug should be the parameterized number" do
     before { booking.save }

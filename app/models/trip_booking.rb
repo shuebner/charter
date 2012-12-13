@@ -15,12 +15,18 @@ class TripBooking < ActiveRecord::Base
   validates :no_of_bunks,
     presence: true,
     numericality: { only_integer: true, 
-      greater_than: 0,
-      less_than_or_equal_to: Proc.new { |b| b.trip_date.no_of_available_bunks } }
+      greater_than: 0 }
+  
+  validates :no_of_bunks,
+    numericality: {
+      less_than_or_equal_to: Proc.new { |b| b.trip_date.no_of_available_bunks },
+      if: :trip_date }
 
   validates :number,
-    presence: true,
     uniqueness: true
+
+  validates :trip_date,
+    presence: true
   
   default_scope order("number DESC")
 
@@ -57,6 +63,8 @@ class TripBooking < ActiveRecord::Base
   end
     
   def generate_number
-    self.class.highest_number_for_year(trip_date.begin_date.year).succ      
+    if trip_date
+      self.class.highest_number_for_year(trip_date.begin_date.year).succ
+    end
   end
 end
