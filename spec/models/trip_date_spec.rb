@@ -60,11 +60,20 @@ describe TripDate do
     it { should_not be_valid }
   end
 
-  describe "when there is an overlapping trip_date for the same boat" do
-    let(:other_trip) { create(:trip, boat: trip.boat) }
-    let!(:overlapping_trip_date) { create(:trip_date, trip: other_trip, 
-        begin_date: date.begin_date - 1.day, end_date: date.begin_date + 1.day) }
-    it { should_not be_valid }
+  describe "when trip date overlaps" do
+    describe "with other trip date for the same boat" do
+      let(:other_trip) { create(:trip, boat: trip.boat) }
+      let!(:overlapping_trip_date) { create(:trip_date, trip: other_trip, 
+          begin_date: date.begin_date - 1.day, end_date: date.begin_date + 1.day) }
+      it { should_not be_valid }
+    end
+    describe "with boat booking for the same boat" do
+      let!(:boat_booking) do
+        create(:boat_booking, boat: date.trip.boat,
+          begin_date: date.begin_date - 1.day, end_date: date.begin_date + 1.day)        
+      end
+      it { should_not be_valid }
+    end
   end
 
   describe "when trip dates are not overlapping but have the same day" do

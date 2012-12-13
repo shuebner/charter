@@ -14,7 +14,7 @@ class TripDate < ActiveRecord::Base
     presence: true,
     timeliness: { type: :datetime, after: :begin_date }
 
-  validate :no_overlap_at_same_boat
+  validate :boat_is_available
 
   before_destroy :no_trip_bookings_exist
 
@@ -50,17 +50,32 @@ class TripDate < ActiveRecord::Base
   
   private
   
-  def no_overlap_at_same_boat
-    unless trip.boat.trip_dates.overlapping(self).empty?
-      overlapping_dates = trip.boat.trip_dates.overlapping(self)
-      
+  def boat_is_available
+    unless trip.boat.available_for_reservation?(self)
+      overlap = trip.boat.overlapping_reservations(self)
+      trip_dates = overlap[:trip_dates]
+      boat_bookings = overlap[:boat_bookings]
+
       error_text = "Termin überschneidet sich mit: "
-      overlapping_dates.each do |d|
-        error_text << "#{d.display_name_with_trip} "
+      if trip_dates.any?
+        error_text << "Törnterminen ("
+        trip_dates.each do |d|
+          error_text << "#{d.display_name_with_trip} "
+        end        
+        error_text << ")"
       end
       
-      errors.add(:begin_date, error_text)
-      errors.add(:end_date, error_text)
+      if boat_bookings.any?
+        error_text << " Schiffsbuchungen ("
+        boat_bookings.each do |b|
+          error_text << "#{b.display_name} "
+        end
+        error_text << ")"
+      end
+
+      [:begin_date, :end_date].each do |d|
+        errors.add(d, error_text)
+      end
     end
   end
 
