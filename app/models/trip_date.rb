@@ -20,14 +20,14 @@ class TripDate < ActiveRecord::Base
 
   default_scope order("begin_date ASC")
 
-  def self.overlapping(trip_date)
-    if trip_date.id
+  def self.overlapping(reservation)
+    if reservation.instance_of?(TripDate) && reservation.id
       where("TIMEDIFF(begin_date, :end_date) * TIMEDIFF(:begin_date, end_date) >= 0", 
-        { begin_date: trip_date.begin_date, end_date: trip_date.end_date }).
-        where("NOT trip_dates.id = ?", trip_date.id)
+        { begin_date: reservation.begin_date, end_date: reservation.end_date }).
+        where("NOT trip_dates.id = ?", reservation.id)
     else
       where("TIMEDIFF(begin_date, :end_date) * TIMEDIFF(:begin_date, end_date) >= 0", 
-        { begin_date: trip_date.begin_date, end_date: trip_date.end_date })
+        { begin_date: reservation.begin_date, end_date: reservation.end_date })
     end  
   end
 

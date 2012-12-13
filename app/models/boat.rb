@@ -109,6 +109,13 @@ class Boat < ActiveRecord::Base
     available_for_bunk_charter || available_for_boat_charter
   end
 
+  # gibt zurück, ob der durch begin_date und end_date in reservation 
+  # angegebene Zeitraum mit einer anderen (!) das Schiff betreffenden
+  # Reservierung kollidiert
+  def available_for_reservation?(reservation)
+    trip_dates.overlapping(reservation).empty? 
+  end
+
   def prices(season, type)
     boat_prices.where(season_id: season.id, boat_price_type_id: type.id).first
   end

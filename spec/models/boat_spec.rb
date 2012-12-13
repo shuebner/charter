@@ -258,6 +258,49 @@ describe Boat do
     end
   end
 
+  describe "availability methods" do    
+    let!(:trip_date1) do
+      create(:trip_date, 
+        begin_date: 1.day.from_now, end_date: 5.days.from_now)
+    end
+
+    let(:trip) { trip_date1.trip }
+    let(:boat) { trip.boat }
+
+    let!(:trip_date2) do
+      create(:trip_date, trip: trip_date1.trip, 
+        begin_date: 10.days.from_now, end_date: 14.days.from_now)
+    end
+    
+    describe "when reservation" do
+      
+      describe "does not overlap with trip dates" do
+        let!(:reservation) do
+          build(:trip_date, trip: trip, 
+            begin_date: trip_date1.end_date + 1.minute, end_date: trip_date2.begin_date - 1.minute)
+        end
+        it "available_for_reservation? should return true" do
+          boat.should be_available_for_reservation(reservation)
+        end
+
+        it "after saving the new reservation should still return true" do
+          reservation.save!
+          boat.should be_available_for_reservation(reservation)
+        end
+      end
+      
+      describe "overlaps with trip dates" do
+        let!(:reservation) do
+          build(:trip_date, trip: trip, 
+            begin_date: trip_date1.end_date - 1.minute, end_date: trip_date2.begin_date - 1.minute)
+        end            
+        it "available_for_reservation? should return false" do
+          boat.should_not be_available_for_reservation(reservation)
+        end
+      end
+    end
+  end
+
   describe "scope" do
     describe "visible" do
       let(:visible_boat1) { create(:boat) }
