@@ -282,10 +282,18 @@ describe Boat do
         it "available_for_reservation? should return true" do
           boat.should be_available_for_reservation(reservation)
         end
+        it "overlapping_reservations should return an empty list" do
+          boat.overlapping_reservations(reservation).should be_empty
+        end
 
-        it "after saving the new reservation should still return true" do
-          reservation.save!
-          boat.should be_available_for_reservation(reservation)
+        describe "after saving the new reservation" do
+          before { reservation.save! }
+          it "available_for_reservation? should still return true" do
+            boat.should be_available_for_reservation(reservation)
+          end
+          it "overlapping_reservations should still return an empty list" do
+            boat.overlapping_reservations(reservation).should be_empty
+          end          
         end
       end
       
@@ -296,6 +304,9 @@ describe Boat do
         end            
         it "available_for_reservation? should return false" do
           boat.should_not be_available_for_reservation(reservation)
+        end
+        it "overlapping_reservations should return a list with the overlapping reservations" do
+          boat.overlapping_reservations(reservation).should include(trip_date1)
         end
       end
     end
