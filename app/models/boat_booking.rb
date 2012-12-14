@@ -22,9 +22,7 @@ class BoatBooking < ActiveRecord::Base
   validates :children,
     numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
-  validates :people,
-    numericality: { less_than_or_equal_to: lambda { |b| b.boat.max_no_of_people },
-    if: lambda { |b| b.boat && b.boat.max_no_of_people } }
+  validate :max_no_of_people_on_boat_is_not_exceeded
 
   validates :begin_date,
     timeliness: { type: :datetime }
@@ -90,6 +88,16 @@ class BoatBooking < ActiveRecord::Base
 
       [:begin_date, :end_date].each do |d|
         errors.add(d, error_text)
+      end
+    end
+  end
+
+  def max_no_of_people_on_boat_is_not_exceeded
+    if boat && boat.max_no_of_people && (adults || children)
+      unless people < boat.max_no_of_people
+        error_text = "Es dürfen maximal #{boat.max_no_of_people} Personen auf dem Schiff sein"
+        errors.add(:adults, error_text)
+        errors.add(:children, error_text)
       end
     end
   end
