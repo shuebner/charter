@@ -2,8 +2,8 @@
 <%= semantic_form_for boat_inquiry do |i| %>
   <%= i.inputs "Angaben zum Schiff" do %>
     <%= i.input :boat_id, as: :hidden, value: boat.id %>
-    <%= i.input :begin_date %>
-    <%= i.input :end_date %>
+    <%= i.input :begin_date, as: :ui_date_picker %>
+    <%= i.input :end_date, as: :ui_date_picker %>
     <%= i.input :adults, as: :select, collection: 1..(boat.max_no_of_people || 6) %>
     <%= i.input :children, as: :select, collection: 0..(boat.max_no_of_people || 6) %>
   <% end %>
