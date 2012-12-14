@@ -163,6 +163,13 @@ FactoryGirl.define do
         text { Faker::Lorem.sentence(4) }
       end
     end
+    factory :boat_inquiry, class: BoatInquiry do
+      boat
+      sequence(:begin_date) { |n| (n*7).days.from_now }
+      sequence(:end_date) { |n| (n*7 + 7).days.from_now }
+      adults 2
+      children 0
+    end
   end
 
   factory :boat_booking do

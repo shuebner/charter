@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121214075813) do
+ActiveRecord::Schema.define(:version => 20121214100609) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -73,6 +73,14 @@ ActiveRecord::Schema.define(:version => 20121214075813) do
 
   add_index "boat_bookings", ["number"], :name => "index_boat_bookings_on_number"
   add_index "boat_bookings", ["slug"], :name => "index_boat_bookings_on_slug"
+
+  create_table "boat_inquiries", :force => true do |t|
+    t.integer "boat_id",    :null => false
+    t.date    "begin_date", :null => false
+    t.date    "end_date",   :null => false
+    t.integer "adults",     :null => false
+    t.integer "children"
+  end
 
   create_table "boat_price_types", :force => true do |t|
     t.string   "name",       :null => false
@@ -264,6 +272,22 @@ ActiveRecord::Schema.define(:version => 20121214075813) do
 
   add_index "trips", ["boat_id"], :name => "index_trips_on_boat_id"
   add_index "trips", ["slug"], :name => "index_trips_on_slug", :unique => true
+
+  create_view "view_boat_inquiries", "select `inquiries`.`id` AS `id`,`inquiries`.`first_name` AS `first_name`,`inquiries`.`last_name` AS `last_name`,`inquiries`.`email` AS `email`,`inquiries`.`text` AS `text`,`inquiries`.`created_at` AS `created_at`,`inquiries`.`updated_at` AS `updated_at`,`inquiries`.`type` AS `type`,`boat_inquiries`.`boat_id` AS `boat_id`,`boat_inquiries`.`begin_date` AS `begin_date`,`boat_inquiries`.`end_date` AS `end_date`,`boat_inquiries`.`adults` AS `adults`,`boat_inquiries`.`children` AS `children` from (`inquiries` join `boat_inquiries`) where (`inquiries`.`id` = `boat_inquiries`.`id`)", :force => true do |v|
+    v.column :id
+    v.column :first_name
+    v.column :last_name
+    v.column :email
+    v.column :text
+    v.column :created_at
+    v.column :updated_at
+    v.column :type
+    v.column :boat_id
+    v.column :begin_date
+    v.column :end_date
+    v.column :adults
+    v.column :children
+  end
 
   create_view "view_trip_inquiries", "select `inquiries`.`id` AS `id`,`inquiries`.`first_name` AS `first_name`,`inquiries`.`last_name` AS `last_name`,`inquiries`.`email` AS `email`,`inquiries`.`text` AS `text`,`inquiries`.`created_at` AS `created_at`,`inquiries`.`updated_at` AS `updated_at`,`inquiries`.`type` AS `type`,`trip_inquiries`.`trip_date_id` AS `trip_date_id`,`trip_inquiries`.`bunks` AS `bunks` from (`inquiries` join `trip_inquiries`) where (`inquiries`.`id` = `trip_inquiries`.`id`)", :force => true do |v|
     v.column :id
