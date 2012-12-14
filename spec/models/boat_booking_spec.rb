@@ -18,6 +18,19 @@ describe BoatBooking do
   its(:customer) { should == customer }
 
   it { should be_valid }
+  
+  describe "accessible attributes" do
+    it "should not allow access to number" do
+      expect do
+        BoatBooking.new(number: "B-2012-223")
+      end.should raise_error(ActiveModel::MassAssignmentSecurity::Error)
+    end
+    it "should not allow access to slug" do
+      expect do
+        BoatBooking.new(slug: "blabla")
+      end.should raise_error(ActiveModel::MassAssignmentSecurity::Error)
+    end
+  end
 
   [:boat, :customer, :begin_date, :end_date, 
    :adults, :children].each do |a|
