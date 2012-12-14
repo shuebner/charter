@@ -73,5 +73,15 @@ describe BoatInquiry do
       before { inquiry.children = -1 }
       it { should_not be_valid}
     end
-  end  
+  end
+
+  describe "method time_period_name" do
+    before do
+      inquiry.begin_date = Date.new(2013, 07, 13)
+      inquiry.end_date = Date.new(2013, 07, 19)
+    end
+    it "should include begin_date and end_date" do
+      inquiry.time_period_name.should == "13.07.2013 - 19.07.2013"
+    end
+  end
 end

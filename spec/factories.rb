@@ -169,6 +169,9 @@ FactoryGirl.define do
       sequence(:end_date) { |n| (n*7 + 7).days.from_now }
       adults 2
       children 0
+      factory :full_boat_inquiry do
+        text { Faker::Lorem.sentence(4) }
+      end
     end
   end
 

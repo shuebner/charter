@@ -13,4 +13,9 @@ class InquiryMailer < ActionMailer::Base
     trip_name = inquiry.trip_date.display_name_with_trip
     mail(subject: "Törnanfrage zu #{trip_name} von #{inquiry.full_name}")
   end
+
+  def boat_inquiry(inquiry)
+    @inquiry = inquiry
+    mail(subject: "Schiffsanfrage für #{inquiry.boat.name} für #{inquiry.time_period_name}")
+  end
 end

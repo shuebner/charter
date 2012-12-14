@@ -23,4 +23,12 @@ module InquiryFormHelper
   def submit_form
     click_button 'Absenden'
   end
+
+  def select_date(page, date, options = {})  
+    raise ArgumentError, 'from is a required option' if options[:from].blank?
+    field = options[:from].to_s
+    page.select date.year.to_s,               :from => "#{field}_1i"
+    page.select Date::MONTHNAMES[date.month], :from => "#{field}_2i"
+    page.select date.day.to_s,                :from => "#{field}_3i"
+  end  
 end

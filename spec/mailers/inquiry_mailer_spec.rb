@@ -33,4 +33,17 @@ describe InquiryMailer do
       "Törnanfrage zu #{inquiry.trip_date.display_name_with_trip} von #{inquiry.full_name}") }
     it { should have_body_text("Kojenzahl: #{inquiry.bunks}") }
   end
+
+  describe "boat inquiry" do
+    let(:boat) { create(:boat) }
+    let(:inquiry) { create(:full_boat_inquiry) }
+    let(:mail) { InquiryMailer.boat_inquiry(inquiry) }
+
+    subject { mail }
+
+    it_should_behave_like "inquiry_mail"
+    it { should have_subject(
+      "Schiffsanfrage für #{inquiry.boat.name} für #{inquiry.time_period_name}") }
+    it { should have_body_text("#{inquiry.full_name}") }
+  end
 end

@@ -1,0 +1,13 @@
+de:
+  activerecord:
+    models:
+      boat_inquiry:
+        one: "Schiffsanfrage"
+        other: "Schiffsanfragen"
+    attributes:
+      inquiry:
+        begin_date: "Anfang"
+        end_date: "Ende"
+        boat: "Schiff"
+        adults: "Anzahl der Erwachsenen"
+        children: "Anzahl der Kinder"

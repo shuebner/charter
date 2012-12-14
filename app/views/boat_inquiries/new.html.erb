@@ -1,0 +1,6 @@
+<h1>Buchungsanfrage für Schiff <%= @boat.name %></h1>
+<p>
+  Um eine Buchungsanfrage für das Schiff <%= @boat.name %> zu stellen, füllen Sie bitte das Formular unten aus.
+</p>
+<%= render partial: 'form', 
+  locals: { boat_inquiry: @boat_inquiry, boat: @boat } %>

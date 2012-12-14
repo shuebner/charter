@@ -1,0 +1,8 @@
+Sie haben eine Schiffsanfrage für <%= @inquiry.boat.name %> für <%= @inquiry.time_period_name %> erhalten.
+
+von: <%= "#{@inquiry.full_name}" %>
+E-Mail: <%= @inquiry.email %>
+Erwachsene: <%= @inquiry.adults %>
+Kinder: <%= @inquiry.children %>
+Nachricht:
+<%= @inquiry.text %>

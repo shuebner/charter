@@ -1,6 +1,6 @@
 class BoatInquiry < Inquiry
   acts_as_citier
-  attr_accessible :adults, :begin_date, :children, :end_date
+  attr_accessible :adults, :begin_date, :children, :end_date, :boat_id
 
   belongs_to :boat
 
@@ -15,4 +15,8 @@ class BoatInquiry < Inquiry
 
   validates :end_date,
     timeliness: { type: :date, after: :begin_date }
+
+  def time_period_name
+    "#{I18n.l(begin_date)} - #{I18n.l(end_date)}"
+  end
 end

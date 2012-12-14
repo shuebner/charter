@@ -100,6 +100,10 @@ describe "Boats" do
             page.should have_selector('table tr', text: number_to_currency(p.value))
           end
         end
+
+        it "should contain link to boat inquiry form" do
+          page.should have_link("buchen", href: new_boat_inquiry_path(boat: boat.slug))
+        end
       end
 
       describe "accessory charges" do
