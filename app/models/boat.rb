@@ -23,6 +23,8 @@ class Boat < ActiveRecord::Base
 
   has_many :boat_prices, dependent: :destroy
 
+  has_many :boat_bookings
+
   has_many :images, as: :attachable, class_name: "BoatImage", 
     dependent: :destroy
   accepts_nested_attributes_for :images, allow_destroy: true
@@ -87,6 +89,13 @@ class Boat < ActiveRecord::Base
     end
   end
 
+  before_destroy do
+    unless boat_bookings.empty?
+      errors.add(:base, "Es sind bereits Schiffsbuchungen vorhanden.")
+      return false
+    end
+  end
+
   def total_sail_area_with_jib
     if sail_area_jib && sail_area_main_sail
       sail_area_main_sail + sail_area_jib
@@ -107,6 +116,19 @@ class Boat < ActiveRecord::Base
 
   def visible?
     available_for_bunk_charter || available_for_boat_charter
+  end
+
+  # gibt zurück, ob der durch begin_date und end_date in reservation 
+  # angegebene Zeitraum mit einer anderen (!) das Schiff betreffenden
+  # Reservierung kollidiert
+  def available_for_reservation?(reservation)
+    trip_dates.overlapping(reservation).empty? &&
+      boat_bookings.overlapping(reservation).empty?
+  end
+
+  def overlapping_reservations(reservation)
+    { trip_dates: trip_dates.overlapping(reservation),
+      boat_bookings: boat_bookings.overlapping(reservation) }
   end
 
   def prices(season, type)

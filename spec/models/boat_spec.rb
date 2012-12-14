@@ -258,6 +258,79 @@ describe Boat do
     end
   end
 
+  describe "availability methods" do    
+    let!(:trip_date) do
+      create(:trip_date, 
+        begin_date: 1.day.from_now, end_date: 5.days.from_now)
+    end
+
+    let(:trip) { trip_date.trip }
+    let(:boat) { trip.boat }
+
+    let!(:boat_booking) do
+      create(:boat_booking, boat: boat,
+        begin_date: 10.days.from_now, end_date: 14.days.from_now)
+    end
+    
+    describe "when reservation" do
+      
+      describe "does not overlap with trip dates or boat bookings" do
+        let!(:reservation) do
+          build(:trip_date, trip: trip, 
+            begin_date: trip_date.end_date + 1.minute, end_date: boat_booking.begin_date - 1.minute)
+        end
+        it "available_for_reservation? should return true" do
+          boat.should be_available_for_reservation(reservation)
+        end
+        it "overlapping_reservations should return empty lists" do
+          overlap = boat.overlapping_reservations(reservation)
+          overlap[:trip_dates].should be_empty
+          overlap[:boat_bookings].should be_empty
+        end
+
+        describe "after saving the new reservation" do
+          before { reservation.save! }
+          it "available_for_reservation? should still return true" do
+            boat.should be_available_for_reservation(reservation)
+          end
+          it "overlapping_reservations should still return empty lists" do
+            overlap = boat.overlapping_reservations(reservation)
+            overlap[:trip_dates].should be_empty
+            overlap[:boat_bookings].should be_empty
+          end          
+        end
+      end
+      
+      describe "overlaps with trip dates" do
+        let!(:reservation) do
+          build(:trip_date, trip: trip, 
+            begin_date: trip_date.end_date - 1.minute, end_date: boat_booking.begin_date - 1.minute)
+        end            
+        it "available_for_reservation? should return false" do
+          boat.should_not be_available_for_reservation(reservation)
+        end
+        it "overlapping_reservations should return a list with the overlapping trip dates" do
+          boat.overlapping_reservations(reservation).should == 
+            { trip_dates: [trip_date], boat_bookings: [] }
+        end
+      end
+
+      describe "overlaps with boat bookings" do
+        let!(:reservation) do
+          build(:trip_date, trip: trip,
+            begin_date: trip_date.end_date + 1.minute, end_date: boat_booking.begin_date + 1.minute)
+        end
+        it "available_for_reservation? should return false" do
+          boat.should_not be_available_for_reservation(reservation)
+        end
+        it "overlapping_reservations should return a list with the overlapping boat bookings" do
+          boat.overlapping_reservations(reservation).should ==
+            { trip_dates: [], boat_bookings: [boat_booking] }
+        end
+      end
+    end
+  end
+
   describe "scope" do
     describe "visible" do
       let(:visible_boat1) { create(:boat) }
@@ -322,6 +395,36 @@ describe Boat do
           lambda do
             Trip.find(trip.id)
           end.should raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
+    end
+  end
+
+  describe "association with boat booking" do
+    let!(:boat_booking2) { create(:boat_booking, boat: boat) }
+    let!(:boat_booking1) do
+      create(:boat_booking, boat: boat,
+        begin_date: boat_booking2.begin_date - 10.days,
+        end_date: boat_booking2.begin_date - 3.days)
+    end
+    
+    it "should have the right boat bookings in the right order" do
+      boat.boat_bookings.should == [boat_booking1, boat_booking2]
+    end
+
+    describe "destruction of boat" do
+      describe "with boat bookings present" do
+        it "should not be possible" do
+          expect { boat.destroy }.not_to change(Boat, :count)
+        end
+      end
+      describe "without boat bookings present" do
+        before do
+          boat_booking1.destroy
+          boat_booking2.destroy
+        end
+        it "should be possible" do
+          expect { boat.destroy }.to change(Boat, :count).by(-1)
         end
       end
     end

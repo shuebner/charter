@@ -6,6 +6,6 @@ de:
         other: Termine
     attributes:
       trip_date:
-        begin: "Törnanfang"
-        end: "Törnende"
+        begin_date: "Törnanfang"
+        end_date: "Törnende"
         no_of_available_bunks: "freie Plätze"

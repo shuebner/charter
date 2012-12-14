@@ -26,6 +26,11 @@ describe TripBooking do
         TripBooking.new(number: "T-2012-223")
       end.should raise_error(ActiveModel::MassAssignmentSecurity::Error)
     end
+    it "should not allow access to slug" do
+      expect do
+        BoatBooking.new(slug: "blabla")
+      end.should raise_error(ActiveModel::MassAssignmentSecurity::Error)
+    end    
 =begin    it "should not allow access to date_id" do
       expect do
         TripBooking.new(trip_date_id: date.id)
@@ -84,6 +89,10 @@ describe TripBooking do
     end
   end
 
+  describe "when trip date is not present" do
+    before { booking.trip_date = nil }
+    it { should_not be_valid }
+  end
 
   describe "slug should be the parameterized number" do
     before { booking.save }

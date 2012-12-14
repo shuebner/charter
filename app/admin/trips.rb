@@ -30,8 +30,8 @@ ActiveAdmin.register Trip do
     
     panel "Termine" do
       table_for t.trip_dates, i18n: TripDate do
-        column :begin
-        column :end
+        column :begin_date
+        column :end_date
       end
     end
   end
@@ -67,8 +67,8 @@ ActiveAdmin.register Trip do
         end
       end
       td.inputs do
-        td.input :begin
-        td.input :end
+        td.input :begin_date
+        td.input :end_date
       end
     end
     f.buttons
