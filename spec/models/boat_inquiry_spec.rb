@@ -18,6 +18,13 @@ describe BoatInquiry do
 
   it { should be_valid }
 
+  [:boat_id, :begin_date, :end_date, :adults, :children].each do |a|
+    describe "when #{a.to_s} is not present" do
+      before { inquiry[a] = nil }
+      it { should_not be_valid }
+    end
+  end
+
   describe "dates" do
     [:begin_date, :end_date].each do |d|
       describe "when #{d.to_s}" do
