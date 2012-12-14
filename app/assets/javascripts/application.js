@@ -12,4 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
+//= require 'i18n/jquery.ui.datepicker-de.js'
 //= require_tree .

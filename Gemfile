@@ -16,6 +16,8 @@ gem 'dragonfly', '~>0.9.12'
 gem 'delocalize'
 gem 'friendly_id', '~>4.0.1'
 
+gem 'ui_datepicker-rails3'
+
 gem 'validates_email_format_of'
 gem 'validates_timeliness', '~>3.0'
 gem 'citier'
