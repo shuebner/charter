@@ -3,9 +3,10 @@ class BoatBooking < ActiveRecord::Base
   extend FriendlyId
   friendly_id :number, use: :slugged
 
-  attr_accessible :adults, :begin_date, :children, :end_date
+  attr_accessible :adults, :begin_date, :children, :end_date,
+    :customer_number, :boat_id
 
-  belongs_to :customer
+  belongs_to :customer, foreign_key: :customer_number, primary_key: :number
   belongs_to :boat
 
   validates :adults, :children, :begin_date, :end_date,
