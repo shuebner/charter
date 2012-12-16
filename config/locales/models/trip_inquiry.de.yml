@@ -7,3 +7,4 @@ de:
     attributes:
       trip_inquiry:
         bunks: "Kojenzahl"
+        trip_date: "Törndatum"
