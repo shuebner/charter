@@ -1,4 +1,6 @@
 ActiveAdmin.register BoatPriceType do
+  menu parent: I18n.t("boat_data")
+
   config.filters = false
   config.sort_order = "duration_asc name_asc"
 

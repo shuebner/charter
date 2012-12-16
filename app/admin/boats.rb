@@ -1,6 +1,8 @@
 # encoding: utf-8
 
 ActiveAdmin.register Boat do
+  menu parent: I18n.t("boat_data")
+
   config.filters = false
   config.sort_order = 'name_asc'
   

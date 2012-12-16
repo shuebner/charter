@@ -1,4 +1,6 @@
 ActiveAdmin.register BoatBooking do
+  menu parent: I18n.t('bookings')
+
   filter :number
   filter :created_at
   filter :customer

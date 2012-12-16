@@ -1,5 +1,7 @@
 # encoding: utf-8
 ActiveAdmin.register TripBooking do
+  menu parent: I18n.t('bookings')
+  
   filter :number
   filter :created_at
   filter :customer

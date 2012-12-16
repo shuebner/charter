@@ -1,4 +1,6 @@
 ActiveAdmin.register BoatPrice do
+  menu parent: I18n.t("boat_data")
+
   filter :boat
   filter :season
   filter :boat_price_type

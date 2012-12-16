@@ -1,4 +1,6 @@
 ActiveAdmin.register Season do
+  menu parent: I18n.t("boat_data")
+
   config.filters = false
   config.sort_order = 'begin_date_asc'
 
