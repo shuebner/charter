@@ -1,0 +1,9 @@
+de:
+  activerecord:
+    models:
+      boat_owner:
+        one: "Schiffseigner"
+        other: "Schiffseigner"
+    attributes:
+      boat_owner:
+        is_self: "ist Inhaber dieser Seite"
