@@ -7,7 +7,7 @@ ActiveAdmin.register BoatInquiry do
   filter :email
   filter :created_at  
   
-  actions :all, except: [:edit]
+  actions :all, except: [:create, :edit]
 
   index do
     column :created_at
