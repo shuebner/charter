@@ -9,6 +9,7 @@ ActiveAdmin.register BoatOwner do
       status_tag (o.is_self ? "ja" : "nein"),
         (o.is_self ? :ok : :error)
     end
+    default_actions
   end
 
   show do |o|
