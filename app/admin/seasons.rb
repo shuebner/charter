@@ -19,6 +19,6 @@ ActiveAdmin.register Season do
 
   form do |f|
     f.inputs :name, :begin_date, :end_date
-    f.buttons
+    f.actions
   end
 end

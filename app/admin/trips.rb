@@ -71,6 +71,6 @@ ActiveAdmin.register Trip do
         td.input :end_date
       end
     end
-    f.buttons
+    f.actions
   end
 end

@@ -33,6 +33,6 @@ ActiveAdmin.register BoatPrice do
       f.input :boat_price_type
       f.input :value
     end
-    f.buttons
+    f.actions
   end
 end

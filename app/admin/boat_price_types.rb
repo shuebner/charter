@@ -17,6 +17,6 @@ ActiveAdmin.register BoatPriceType do
 
   form do |f|
     f.inputs :name, :duration
-    f.buttons
+    f.actions
   end
 end

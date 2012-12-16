@@ -68,6 +68,6 @@ ActiveAdmin.register StaticPage do
         p.input :remove_picture, as: :boolean
       end
     end
-    f.buttons
+    f.actions
   end
 end

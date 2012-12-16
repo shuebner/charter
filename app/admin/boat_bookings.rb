@@ -44,6 +44,6 @@ ActiveAdmin.register BoatBooking do
       f.input :adults, as: :select, collection: 1..6
       f.input :children, as: :select, collection: 0..6
     end
-    f.buttons
+    f.actions
   end
 end

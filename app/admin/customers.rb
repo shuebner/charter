@@ -83,6 +83,6 @@ ActiveAdmin.register Customer do
       f.input :phone_mobile
       f.input :email
     end
-    f.buttons
+    f.actions
   end
 end

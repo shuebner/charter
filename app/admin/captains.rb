@@ -63,6 +63,6 @@ ActiveAdmin.register Captain do
       f.input :email
     end
 
-    f.buttons
+    f.actions
   end
 end

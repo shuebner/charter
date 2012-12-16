@@ -174,6 +174,6 @@ ActiveAdmin.register Boat do
       f.input :fuel_charge
       f.input :gas_charge
     end
-    f.buttons
+    f.actions
   end
 end

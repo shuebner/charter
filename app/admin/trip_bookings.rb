@@ -65,6 +65,6 @@ ActiveAdmin.register TripBooking do
       f.input :trip_date, collection: TripDate.all.map{ |d| [d.display_name_with_trip, d.id] }
       f.input :no_of_bunks, as: :select, collection: 1..6
     end
-    f.buttons
+    f.actions
   end
 end
