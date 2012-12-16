@@ -7,7 +7,7 @@ ActiveAdmin.register GeneralInquiry do
   filter :email
   filter :created_at  
   
-  actions :all, except: [:edit]
+  actions :all, except: [:new, :edit]
 
   index do
     column :created_at
