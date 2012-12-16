@@ -91,4 +91,14 @@ describe BoatInquiry do
       inquiry.time_period_name.should == "13.07.2013 - 19.07.2013"
     end
   end
+
+  describe "method people" do
+    before do
+      inquiry.adults = 2
+      inquiry.children = 1
+    end
+    it "should return sum of adults and children" do
+      inquiry.people.should == 3
+    end
+  end
 end

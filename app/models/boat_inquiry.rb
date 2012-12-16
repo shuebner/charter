@@ -26,4 +26,8 @@ class BoatInquiry < Inquiry
   def time_period_name
     "#{I18n.l(begin_date)} - #{I18n.l(end_date)}"
   end
+
+  def people
+    (adults || 0) + (children || 0)
+  end
 end
