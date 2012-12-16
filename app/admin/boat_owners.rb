@@ -20,6 +20,14 @@ ActiveAdmin.register BoatOwner do
           (o.is_self ? :ok : :error)
       end
     end
+
+    panel t("activerecord.models.boat.other") do
+      table_for o.boats, i18n: Boat do
+        column :name
+        column :manufacturer
+        column :model
+      end
+    end
   end
 
   form do |f|
