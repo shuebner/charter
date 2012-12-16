@@ -21,6 +21,7 @@ FactoryGirl.define do
   end
 
   factory :boat do
+    association :owner, factory: :boat_owner
     manufacturer "Testschiffhersteller"
     model "Testschiff"
     sequence(:name) { |n| "Palve #{n}" }

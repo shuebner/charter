@@ -17,6 +17,13 @@ class Boat < ActiveRecord::Base
     :available_for_boat_charter, :available_for_bunk_charter,
     :deposit, :cleaning_charge, :fuel_charge, :gas_charge
 
+# Association to Boat Owner
+  belongs_to :owner, class_name: "BoatOwner", foreign_key: "boat_owner_id"
+  validates :owner,
+    presence: true
+  attr_accessible :boat_owner_id
+###
+
   has_many :trips, dependent: :destroy
 
   has_many :trip_dates, through: :trips
