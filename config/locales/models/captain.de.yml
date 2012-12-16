@@ -6,14 +6,11 @@ de:
         other: "Skipper"
     attributes:
       captain:
-        first_name: "Vorname"
-        last_name: "Nachname"
         phone_mobile: "Handynummer"
         email: "E-Mail-Adresse"
         description: "Kurzbeschreibung"
         sailing_certificates: "Segelscheine"
-        additional_certificates: "Andere Scheine"        
-        full_name: "Name"
+        additional_certificates: "Andere Scheine"
         image: "Portrait"
   formtastic:
     hints:

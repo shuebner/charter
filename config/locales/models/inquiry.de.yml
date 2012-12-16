@@ -6,7 +6,4 @@ de:
         other: "Anfragen"
     attributes:
       inquiry:
-        first_name: "Vorname"
-        last_name: "Nachname"
-        email: "E-Mail-Adresse"
         text: "Nachricht"

@@ -6,8 +6,6 @@ de:
         other: "Kunden"
     attributes:
       customer:
-        first_name: "Vorname"
-        last_name: "Nachname"
         gender: "Geschlecht"
         street_name: "Straße"
         street_number: "Hausnummer"
@@ -16,11 +14,9 @@ de:
         country: "Land"
         phone_landline: "Festnetznummer"
         phone_mobile: "Handynummer"
-        email: "E-Mail-Adresse"
         number: "Kundennummer"
         has_sks_or_higher: "hat mindestens SKS"
 
-        full_name: "Name"
         street: "Adresse"
   formtastic:
     hints:

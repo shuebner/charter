@@ -1,6 +1,10 @@
 de:
   attributes:
+    first_name: "Vorname"
+    last_name: "Nachname"
+    email: "E-Mail-Adresse"
     name: "Name"
+    full_name: "Name"
     heading: "Überschrift"
     text: "Text"
     picture: "Bild"
