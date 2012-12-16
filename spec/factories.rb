@@ -183,4 +183,9 @@ FactoryGirl.define do
     adults 2
     children 0
   end
+
+  factory :boat_owner do
+    name { Faker::Name.last_name }
+    is_self false
+  end
 end
