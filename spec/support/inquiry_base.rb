@@ -8,6 +8,11 @@ shared_examples_for Inquiry do
 
   it { should be_valid }
 
+  describe "when type is not present" do
+    before { inquiry.type = nil }
+    it { should_not be_valid }
+  end
+
   describe "when first name" do
     describe "is not present" do
       before { inquiry.first_name = nil }
@@ -111,4 +116,9 @@ shared_examples_for Inquiry do
     end
   end
 
+  describe "method full_name" do
+    it "should return the full name" do
+      inquiry.full_name.should == "#{inquiry.first_name} #{inquiry.last_name}"
+    end
+  end
 end

@@ -149,11 +149,11 @@ FactoryGirl.define do
     phone_mobile "01234-12345678"
   end
 
-  factory :inquiry do
+  factory :general_inquiry, class: GeneralInquiry do
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
     email { Faker::Internet.email("#{first_name} #{last_name}") }
-    factory :full_inquiry do
+    factory :full_general_inquiry do
       text { Faker::Lorem.sentence(4) }
     end
     factory :trip_inquiry, class: TripInquiry do

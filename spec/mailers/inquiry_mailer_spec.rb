@@ -12,7 +12,7 @@ describe InquiryMailer do
   end
   
   describe "general_inquiry" do
-    let(:inquiry) { create(:full_inquiry) }
+    let(:inquiry) { create(:full_general_inquiry) }
     let(:mail) { InquiryMailer.general_inquiry(inquiry) }
 
     subject { mail }

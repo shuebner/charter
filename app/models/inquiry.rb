@@ -3,6 +3,9 @@ class Inquiry < ActiveRecord::Base
   acts_as_citier
   attr_accessible :email, :first_name, :last_name, :text
 
+  validates :type,
+    presence: true
+
   validates :first_name,
     presence: true,
     first_name: { allow_blank: true }

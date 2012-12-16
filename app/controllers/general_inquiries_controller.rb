@@ -1,12 +1,12 @@
 
-class InquiriesController < ApplicationController
+class GeneralInquiriesController < ApplicationController
 
   def new
-    @inquiry = Inquiry.new
+    @inquiry = GeneralInquiry.new
   end
 
   def create
-    @inquiry = Inquiry.new(params[:inquiry])
+    @inquiry = GeneralInquiry.new(params[:general_inquiry])
     if @inquiry.save
       InquiryMailer.general_inquiry(@inquiry).deliver
       render 'create'

@@ -2,8 +2,8 @@ de:
   activerecord:
     models:
       inquiry:
-        one: "Allgemeine Anfrage"
-        other: "Allgemeine Anfragen"
+        one: "Anfrage"
+        other: "Anfragen"
     attributes:
       inquiry:
         first_name: "Vorname"

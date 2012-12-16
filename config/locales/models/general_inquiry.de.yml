@@ -1,0 +1,6 @@
+de:
+  activerecord:
+    models:
+      general_inquiry:
+        one: "Allgemeine Anfrage"
+        other: "Allgemeine Anfragen"

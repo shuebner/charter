@@ -7,8 +7,8 @@ describe "Inquiries" do
   subject { page }
 
   describe "general inquiry" do
-    before { visit new_inquiry_path }
+    before { visit new_general_inquiry_path }
 
-    include_examples "inquiries request", Inquiry, :general_inquiry
+    include_examples "inquiries request", GeneralInquiry, :general_inquiry
   end
 end
