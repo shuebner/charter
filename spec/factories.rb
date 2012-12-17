@@ -189,4 +189,8 @@ FactoryGirl.define do
     name { Faker::Name.last_name }
     is_self false
   end
+
+  factory :port do
+    name { Faker::Address.city }
+  end
 end

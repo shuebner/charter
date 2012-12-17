@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121216141905) do
+ActiveRecord::Schema.define(:version => 20121217081032) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -217,6 +217,15 @@ ActiveRecord::Schema.define(:version => 20121216141905) do
 
   add_index "paragraphs", ["order"], :name => "index_paragraphs_on_order"
   add_index "paragraphs", ["static_page_id"], :name => "index_paragraphs_on_static_page_id"
+
+  create_table "ports", :force => true do |t|
+    t.string   "name",       :null => false
+    t.string   "slug",       :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "ports", ["slug"], :name => "index_ports_on_slug", :unique => true
 
   create_table "seasons", :force => true do |t|
     t.string   "name",       :null => false
