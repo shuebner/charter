@@ -28,7 +28,7 @@ class Boat < ActiveRecord::Base
   belongs_to :port
   validates :port,
     presence: true
-  attr_accessible :boat_owner_id
+  attr_accessible :port_id
 ###
 
   has_many :trips, dependent: :destroy
