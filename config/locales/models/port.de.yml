@@ -1,0 +1,6 @@
+de:
+  activerecord:
+    models:
+      port:
+        one: "Heimathafen"
+        other: "Heimathäfen"

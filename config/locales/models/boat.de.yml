@@ -41,6 +41,7 @@ de:
         fuel_charge: "Kraftstoffpauschale pro h"
         gas_charge: "Gaspauschale"
         owner: "Eigner"
+        port: "Heimathafen"
   formtastic:
     hints:
       boat:

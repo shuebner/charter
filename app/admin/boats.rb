@@ -8,6 +8,7 @@ ActiveAdmin.register Boat do
   
   index do
     column :owner
+    column :port
     column :name
     column :model
     column :available_for_boat_charter do |b|
@@ -26,6 +27,7 @@ ActiveAdmin.register Boat do
     panel t("boat_data") do
       attributes_table_for b do
         row :owner
+        row :port
         row :name
         row :manufacturer
         row :model
@@ -105,6 +107,7 @@ ActiveAdmin.register Boat do
   form html: { enctype: "multipart/form-data" } do |f|
     f.inputs t("boat_data") do
       f.input :owner
+      f.input :port
       f.input :name
       f.input :manufacturer
       f.input :model
