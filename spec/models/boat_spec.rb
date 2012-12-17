@@ -43,6 +43,7 @@ describe Boat do
   it { should respond_to(:gas_charge) }
 
   it { should respond_to(:owner) }
+  it { should respond_to(:port) }
 
   it { should be_valid }
   
@@ -181,6 +182,11 @@ describe Boat do
 
   describe "when owner is not present" do
     before { boat.owner = nil }
+    it { should_not be_valid }
+  end
+
+  describe "when port is not present" do
+    before { boat.port = nil }
     it { should_not be_valid }
   end
 

@@ -24,6 +24,13 @@ class Boat < ActiveRecord::Base
   attr_accessible :boat_owner_id
 ###
 
+# Association to Port
+  belongs_to :port
+  validates :port,
+    presence: true
+  attr_accessible :boat_owner_id
+###
+
   has_many :trips, dependent: :destroy
 
   has_many :trip_dates, through: :trips
