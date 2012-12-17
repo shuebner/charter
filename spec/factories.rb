@@ -21,6 +21,8 @@ FactoryGirl.define do
   end
 
   factory :boat do
+    association :owner, factory: :boat_owner
+    port
     manufacturer "Testschiffhersteller"
     model "Testschiff"
     sequence(:name) { |n| "Palve #{n}" }
@@ -182,5 +184,14 @@ FactoryGirl.define do
     sequence(:end_date) { |n| (n*7 + 7).days.from_now }
     adults 2
     children 0
+  end
+
+  factory :boat_owner do
+    name { Faker::Name.last_name }
+    is_self false
+  end
+
+  factory :port do
+    name { Faker::Address.city }
   end
 end

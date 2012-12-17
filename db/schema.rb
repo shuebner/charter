@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121216103130) do
+ActiveRecord::Schema.define(:version => 20121217083011) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -82,6 +82,16 @@ ActiveRecord::Schema.define(:version => 20121216103130) do
     t.integer "children"
   end
 
+  create_table "boat_owners", :force => true do |t|
+    t.string   "name",       :null => false
+    t.string   "slug",       :null => false
+    t.boolean  "is_self",    :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "boat_owners", ["slug"], :name => "index_boat_owners_on_slug", :unique => true
+
   create_table "boat_price_types", :force => true do |t|
     t.string   "name",       :null => false
     t.integer  "duration",   :null => false
@@ -139,8 +149,12 @@ ActiveRecord::Schema.define(:version => 20121216103130) do
     t.decimal  "gas_charge",                 :precision => 7, :scale => 2
     t.datetime "created_at",                                               :null => false
     t.datetime "updated_at",                                               :null => false
+    t.integer  "boat_owner_id",                                            :null => false
+    t.integer  "port_id",                                                  :null => false
   end
 
+  add_index "boats", ["boat_owner_id"], :name => "index_boats_on_boat_owner_id"
+  add_index "boats", ["port_id"], :name => "index_boats_on_port_id"
   add_index "boats", ["slug"], :name => "index_boats_on_slug"
 
   create_table "captains", :force => true do |t|
@@ -205,6 +219,15 @@ ActiveRecord::Schema.define(:version => 20121216103130) do
 
   add_index "paragraphs", ["order"], :name => "index_paragraphs_on_order"
   add_index "paragraphs", ["static_page_id"], :name => "index_paragraphs_on_static_page_id"
+
+  create_table "ports", :force => true do |t|
+    t.string   "name",       :null => false
+    t.string   "slug",       :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "ports", ["slug"], :name => "index_ports_on_slug", :unique => true
 
   create_table "seasons", :force => true do |t|
     t.string   "name",       :null => false
