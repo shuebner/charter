@@ -58,4 +58,15 @@ describe Port do
       Port.all.should == [port2, port]
     end
   end
+
+  describe "scope with_visible_boat" do
+    # zwei Boote für Hafen erstellen, um Mehrfachnennung eines Hafens im Array auszuschließen
+    let!(:boat1) { create(:boat, port: port) }
+    let!(:boat2) { create(:boat, port: port) }
+    let!(:port_without_visible_boat) { create(:port) }
+    let!(:invisible_boat) { create(:unavailable_boat, port: port_without_visible_boat) }
+    it "should only yield ports with at least one visible boat" do
+      Port.with_visible_boat.should == [port]
+    end
+  end
 end

@@ -14,6 +14,9 @@ class Port < ActiveRecord::Base
 
   default_scope order("name ASC")
 
+  scope :with_visible_boat, joins(:boats).merge(Boat.visible).
+    select('ports.*').group('ports.id')
+
   private
 
   def no_boats_exist
