@@ -5,16 +5,45 @@ describe "Boats" do
   subject { page }
 
   describe "index page" do
-    let!(:visible_boat) { create(:boat) }
-    let!(:invisible_boat) { create(:unavailable_boat) }
+    let!(:port_with_visible_boat2) { create(:port, name: "Zamonien") }
+    let!(:visible_boat2_2) { create(:boat, port: port_with_visible_boat2, name: "Zora") }
+    let!(:visible_boat2_1) { create(:boat, port: port_with_visible_boat2, name: "Adam") }
+    let!(:invisible_boat2_1) { create(:unavailable_boat, port: port_with_visible_boat2) }
+
+    let!(:port_with_visible_boat1) { create(:port, name: "Azeroth") }
+    let!(:visible_boat1_1) { create(:boat, port: port_with_visible_boat1) }
+
+    let!(:port_without_visible_boat) { create(:port) }
+    let!(:invisible_boat) { create(:unavailable_boat, port: port_without_visible_boat) }
+    
     before { visit boats_path }
 
-    describe "should display all visible boats" do
-      it { should have_content(visible_boat.name) }
+    it "should display ports with visible boats in alphabetical order" do
+      within 'ul.port-list' do
+        page.should have_selector('li:first-child', text: port_with_visible_boat1.name)
+        page.should have_selector('li:last-child', text: port_with_visible_boat2.name)
+      end
     end
 
-    describe "should not display any invisible boats" do      
-      it { should_not have_content(invisible_boat.name) }
+    it "should not display ports without visible boats" do
+      within 'ul.port-list' do
+        page.should_not have_content(port_without_visible_boat.name)
+      end
+    end
+
+    describe "for a given port" do
+      it "should display all visible boats with this port in alphabetical order" do
+        within 'ul.port-list li:nth-child(2) ul.boat-list' do
+          page.should have_selector('li:first-child', text: visible_boat2_1.name)
+          page.should have_selector('li:last-child', text: visible_boat2_2.name)
+        end
+      end
+
+      it "should not display invisible boats with this port" do
+        within 'ul.port-list li:nth-child(2) ul.boat-list' do
+          page.should_not have_content(invisible_boat2_1.name)
+        end
+      end
     end
   end
 
