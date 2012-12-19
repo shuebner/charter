@@ -12,6 +12,8 @@ class Port < ActiveRecord::Base
 
   before_destroy :no_boats_exist
 
+  default_scope order("name ASC")
+
   private
 
   def no_boats_exist

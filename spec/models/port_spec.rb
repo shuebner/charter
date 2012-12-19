@@ -24,24 +24,38 @@ describe Port do
 
   describe "association with boats" do
     before { port.save! }
-    let(:boat1) { create(:boat, port: port) }
-    let(:boat2) { create(:boat) }
-    it "should have the right boats" do
-      port.boats.should == [boat1]
+    let!(:boat2) { create(:boat, port: port, name: "Zora") }
+    let!(:boat1) { create(:boat, port: port, name: "Adam") }
+    it "should have the right boats in the right order" do
+      port.boats.should == [boat1, boat2]
     end
 
     describe "destruction" do
       describe "when there are boats at the port" do
-        let!(:boat) { create(:boat, port: port) }
         it "should not be possible" do
           expect { port.destroy }.not_to change(Port, :count)
         end
       end
       describe "when there are no boats at the port" do
+        before do
+          boat1.destroy
+          boat2.destroy
+        end
         it "should be possible" do
           expect { port.destroy }.to change(Port, :count).by(-1)
         end
       end
+    end
+  end
+
+  describe "default scope" do
+    before do
+      port.name = "Xanten"
+      port.save!
+    end
+    let!(:port2) { create(:port, name: "Aachen") }
+    it "should yield ports in alphabetical order" do
+      Port.all.should == [port2, port]
     end
   end
 end
