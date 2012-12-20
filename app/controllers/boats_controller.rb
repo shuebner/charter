@@ -2,7 +2,8 @@
 class BoatsController < ApplicationController
 
   def index
-    @boats = Boat.visible
+    @own_ports = Port.own.with_visible_boat
+    @external_ports = Port.external.with_visible_boat
   end
 
   def show

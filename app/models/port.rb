@@ -12,6 +12,17 @@ class Port < ActiveRecord::Base
 
   before_destroy :no_boats_exist
 
+  default_scope order("name ASC")
+
+  scope :with_visible_boat, joins(:boats).merge(Boat.visible).
+    select('ports.*').group('ports.id')
+
+  scope :own, joins(boats: :owner).where('boat_owners.is_self = TRUE').
+    select('ports.*').group('ports.id')
+
+  scope :external, joins(boats: :owner).where('boat_owners.is_self = FALSE').
+    select('ports.*').group('ports.id')
+
   private
 
   def no_boats_exist

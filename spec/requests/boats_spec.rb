@@ -5,16 +5,56 @@ describe "Boats" do
   subject { page }
 
   describe "index page" do
-    let!(:visible_boat) { create(:boat) }
-    let!(:invisible_boat) { create(:unavailable_boat) }
+    # Hafen des Seitenbetreibers mit 2 Schiffen
+    let!(:own_port_with_visible_boat) { create(:port, name: "Zamonien") }
+    let!(:myself) { create(:boat_owner, is_self: true) }
+    let!(:own_visible_boat2) { create(:boat, port: own_port_with_visible_boat, 
+      owner: myself, name: "Zora") }
+    let!(:own_visible_boat1) { create(:boat, port: own_port_with_visible_boat, 
+      owner: myself, name: "Adam") }
+    let!(:own_invisible_boat) { create(:unavailable_boat, port: own_port_with_visible_boat,
+      owner: myself) }
+
+    # Häfen von anderen Vercharterern
+    let!(:other_port_with_visible_boat2) { create(:port, name: "Xanten") }
+    let!(:other_visible_boat2_1) { create(:boat, port: other_port_with_visible_boat2) }
+
+    let!(:other_port_with_visible_boat1) { create(:port, name: "Azeroth") }
+    let!(:other_visible_boat1_1) { create(:boat, port: other_port_with_visible_boat1) }
+
+    # Hafen ohne verfügbares Boot
+    let!(:port_without_visible_boat) { create(:port) }
+    let!(:invisible_boat) { create(:unavailable_boat, port: port_without_visible_boat) }
+    
     before { visit boats_path }
 
-    describe "should display all visible boats" do
-      it { should have_content(visible_boat.name) }
+    it "should show own ports first, then other ports in alphabetical order" do
+      within "ul.port-list" do
+        page.should have_selector('li:nth-child(1)', text: own_port_with_visible_boat.name)
+        page.should have_selector('li:nth-child(2)', text: other_port_with_visible_boat1.name)
+        page.should have_selector('li:nth-child(3)', text: other_port_with_visible_boat2.name)
+      end
     end
 
-    describe "should not display any invisible boats" do      
-      it { should_not have_content(invisible_boat.name) }
+    it "should not display ports without visible boats" do
+      within 'ul.port-list' do
+        page.should_not have_content(port_without_visible_boat.name)
+      end
+    end
+
+    describe "for a given port" do
+      it "should display all visible boats with this port in alphabetical order" do
+        within 'ul.port-list li:nth-child(1) ul.boat-list' do
+          page.should have_selector('li:nth-child(1)', text: own_visible_boat1.name)
+          page.should have_selector('li:nth-child(2)', text: own_visible_boat2.name)
+        end
+      end
+
+      it "should not display invisible boats with this port" do
+        within 'ul.port-list li:nth-child(1) ul.boat-list' do
+          page.should_not have_content(own_invisible_boat.name)
+        end
+      end
     end
   end
 
