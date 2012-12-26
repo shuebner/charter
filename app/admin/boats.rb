@@ -65,9 +65,7 @@ ActiveAdmin.register Boat do
         row(:sail_area_main_sail) { number_with_delimiter b.sail_area_main_sail }
         row(:total_sail_area_with_jib) { number_with_delimiter b.total_sail_area_with_jib }
         row(:total_sail_area_with_genoa) { number_with_delimiter b.total_sail_area_with_genoa }
-        row :engine_manufacturer
         row :engine_model
-        row :engine_design
         row(:engine_output) { number_with_delimiter b.engine_output }
         row(:battery_capacity) { number_with_delimiter b.battery_capacity }
         row(:tank_volume_diesel) { number_with_delimiter b.tank_volume_diesel }
@@ -155,9 +153,7 @@ ActiveAdmin.register Boat do
       f.input :sail_area_jib
       f.input :sail_area_genoa
       f.input :sail_area_main_sail
-      f.input :engine_manufacturer
       f.input :engine_model
-      f.input :engine_design
       f.input :engine_output
       f.input :battery_capacity
       f.input :tank_volume_diesel

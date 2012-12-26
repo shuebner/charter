@@ -30,9 +30,7 @@ describe Boat do
   it { should respond_to(:slug) }
   it { should respond_to(:year_of_construction) }
   it { should respond_to(:year_of_refit) }
-  it { should respond_to(:engine_manufacturer) }
   it { should respond_to(:engine_model) }
-  it { should respond_to(:engine_design) }
   it { should respond_to(:engine_output) }
   it { should respond_to(:battery_capacity) }
   it { should respond_to(:available_for_boat_charter) }
@@ -128,8 +126,7 @@ describe Boat do
   end
 
   describe "when text field" do
-    [:manufacturer, :model, :name, 
-     :engine_manufacturer, :engine_model, :engine_design].each do |a|
+    [:manufacturer, :model, :name, :engine_model].each do |a|
       describe "#{a} contains HTML" do
         before { boat[a] = "<p>Hallo</p>" }
         it "should be sanitized on save" do

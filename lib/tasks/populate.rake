@@ -53,9 +53,7 @@ namespace :db do
       b.slug = b.name.parameterize
       b.year_of_construction = rand(1970..2005)
       b.year_of_refit = 2006..2012
-      b.engine_manufacturer = Faker::Company.name
       b.engine_model = Faker::Name.name
-      b.engine_design = ["Saildrive", "Propeller"]
       b.engine_output = l * 5
       b.battery_capacity = l * 25
       b.available_for_boat_charter = [true, false]

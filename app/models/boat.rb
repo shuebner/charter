@@ -12,7 +12,7 @@ class Boat < ActiveRecord::Base
     :headroom_saloon,
     :name, :slug, 
     :year_of_construction, :year_of_refit,
-    :engine_manufacturer, :engine_model, :engine_design, :engine_output,
+    :engine_model, :engine_output,
     :battery_capacity, 
     :available_for_boat_charter, :available_for_bunk_charter,
     :deposit, :cleaning_charge, :fuel_charge, :gas_charge
@@ -87,8 +87,7 @@ class Boat < ActiveRecord::Base
     where(available_for_boat_charter: true)
 
   before_save do
-    [:manufacturer, :model, :name, 
-     :engine_manufacturer, :engine_model, :engine_design].each do |a|
+    [:manufacturer, :model, :name, :engine_model].each do |a|
       self[a] = sanitize(self[a], tags: [])
     end
   end

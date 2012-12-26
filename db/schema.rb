@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121226170522) do
+ActiveRecord::Schema.define(:version => 20121226171934) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -136,9 +136,7 @@ ActiveRecord::Schema.define(:version => 20121226170522) do
     t.string   "slug",                                                     :null => false
     t.integer  "year_of_construction"
     t.integer  "year_of_refit"
-    t.string   "engine_manufacturer"
     t.string   "engine_model"
-    t.string   "engine_design"
     t.integer  "engine_output"
     t.integer  "battery_capacity"
     t.boolean  "available_for_boat_charter",                               :null => false
