@@ -147,6 +147,7 @@ describe "Boats" do
       end
 
       describe "accessory charges" do
+        let(:boat) { create(:boat_charter_only_boat) }
         before { visit boat_path(boat) }
         [:deposit, :cleaning_charge, :gas_charge].each do |c|
           it "should contain the #{c.to_s}" do

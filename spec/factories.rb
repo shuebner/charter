@@ -26,17 +26,16 @@ FactoryGirl.define do
     manufacturer "Testschiffhersteller"
     model "Testschiff"
     sequence(:name) { |n| "Palve #{n}" }
-    year_of_construction 2011
     permanent_bunks 4
     convertible_bunks 2
-    deposit 1000
-    cleaning_charge 50
-    fuel_charge 7
-    gas_charge 5
     available_for_boat_charter true
     available_for_bunk_charter true
 
     factory :boat_charter_only_boat do
+      deposit 1000
+      cleaning_charge 50
+      fuel_charge 7
+      gas_charge 5
       available_for_boat_charter true
       available_for_bunk_charter false
     end

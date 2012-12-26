@@ -76,11 +76,6 @@ describe Boat do
     end
   end
 
-  describe "when year_of_construction is empty" do
-    before { boat.year_of_construction = nil }
-    it { should_not be_valid }
-  end
-
   describe "when available_for_boat_charter is empty" do
     before { boat.available_for_boat_charter = nil }
     it { should_not be_valid }
@@ -98,41 +93,6 @@ describe Boat do
         boat.available_for_bunk_charter = false
       end
       it { should_not be_valid }
-    end
-  end
-
-  describe "when boat is not available for boat charter" do
-    let!(:no_boat_charter_boat) { build(:bunk_charter_only_boat) }
-    subject { no_boat_charter_boat }
-
-    describe "and charges are given" do
-      it "it should not be valid" do
-        [:deposit, :cleaning_charge, :fuel_charge, :gas_charge].each do |a|
-          no_boat_charter_boat[a] = 100
-          no_boat_charter_boat.should_not be_valid
-          no_boat_charter_boat[a] = nil
-        end
-      end
-    end
-  end
-
-  describe "when boat is available for boat charter" do
-    let!(:boat_for_boat_charter) { build(:boat, available_for_boat_charter: true) }
-    subject { boat_for_boat_charter }
-
-    describe "and any charge is missing (except for gas charge)" do
-      before do
-        [:deposit, :cleaning_charge, :fuel_charge].each do |a|
-          boat_for_boat_charter[a] = 100
-        end
-      end
-      it "it should not be valid" do
-        [:deposit, :cleaning_charge, :fuel_charge].each do |a|
-          boat_for_boat_charter[a] = nil
-          boat_for_boat_charter.should_not be_valid
-          boat_for_boat_charter[a] = 100
-        end
-      end
     end
   end
 

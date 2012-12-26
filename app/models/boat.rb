@@ -60,12 +60,8 @@ class Boat < ActiveRecord::Base
   validates :tank_volume_diesel, :tank_volume_fresh_water, :tank_volume_waste_water, 
     :permanent_bunks, :convertible_bunks, 
     :max_no_of_people, :recommended_no_of_people, 
-    :year_of_refit, :engine_output,
+    :year_of_construction, :year_of_refit, :engine_output,
     allow_nil: true,
-    numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-
-  validates :year_of_construction, 
-    presence: true,
     numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   validates :manufacturer, :model, :name, :slug,
@@ -77,12 +73,6 @@ class Boat < ActiveRecord::Base
   validates :available_for_bunk_charter, if: 'trips.any?',
     inclusion: { in: [true], 
       message: 'es sind noch Törns mit diesem Schiff vorhanden' }
-
-  validates :deposit, :cleaning_charge, :fuel_charge,
-    presence: { if: :available_for_boat_charter }
-
-  validates :deposit, :cleaning_charge, :fuel_charge, :gas_charge,
-    no_presence: { unless: :available_for_boat_charter }
 
   default_scope order("name ASC")
 
