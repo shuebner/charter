@@ -226,6 +226,14 @@ describe Boat do
         end
       end
     end
+
+    describe "display_name" do
+      before do
+        boat.name = "Zora"
+        boat.model = "Sunbeam 25"
+      end
+      its(:display_name) { should == "Sunbeam 25 (Zora)" }
+    end
   end
 
   describe "availability methods" do    
@@ -338,10 +346,10 @@ describe Boat do
   end
 
   describe "default sort order" do
-    let!(:second_boat) { create(:boat, name: "ZZZ") }
-    let!(:first_boat) { create(:boat, name: "AAA") }
+    let!(:second_boat) { create(:boat, model: "ZZZ") }
+    let!(:first_boat) { create(:boat, model: "AAA") }
     
-    it "should sort ascending by name" do
+    it "should sort ascending by model" do
       Boat.all.should == [first_boat, second_boat]
     end
   end
