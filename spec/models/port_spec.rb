@@ -24,8 +24,8 @@ describe Port do
 
   describe "association with boats" do
     before { port.save! }
-    let!(:boat2) { create(:boat, port: port, name: "Zora") }
-    let!(:boat1) { create(:boat, port: port, name: "Adam") }
+    let!(:boat2) { create(:boat, port: port, model: "Zora 26") }
+    let!(:boat1) { create(:boat, port: port, model: "Adam 34") }
     it "should have the right boats in the right order" do
       port.boats.should == [boat1, boat2]
     end

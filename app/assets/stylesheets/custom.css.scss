@@ -74,26 +74,41 @@ nav {
     margin: 0;
     padding: 0;
     text-align: center;
-    li {
+    a {
+      display: block;
+      color: white;
+      background-color: $c_nav_bg;
+      text-decoration: none;
+      &:hover {
+        background-color: white;
+        color: $c_nav_bg;      
+      }  
+    }    
+    >li {
       float: left;
       list-style: none;
+      width: 8.5em;
       ul {        
         margin: 0;
         padding: 0;
         border: 1px solid black;
+        background-color: $c_nav_bg;
+        >li {          
+          text-align: left;
+          border-top: 1px solid #6666cc;
+          #border-bottom: 1px solid white;
+          a {
+            padding: 0.2em 0.5em 0.2em 0.5em;
+          }
+        }
+        &.menu-boat-list >li {
+          width: 20em;
+        }
+        &.menu-trip-list >li {
+          width: 20em;
+        }
       }
     }
-  }
-  a {
-    display: block;
-    width: 8.5em;
-    color: white;
-    background-color: $c_nav_bg;
-    text-decoration: none;
-    &:hover {
-      background-color: white;
-      color: $c_nav_bg;      
-    }  
   }
 }
 

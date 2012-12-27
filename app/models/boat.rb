@@ -74,7 +74,7 @@ class Boat < ActiveRecord::Base
     inclusion: { in: [true], 
       message: 'es sind noch Törns mit diesem Schiff vorhanden' }
 
-  default_scope order("name ASC")
+  default_scope order("model ASC")
 
   scope :visible, 
     where("available_for_boat_charter = ? OR available_for_bunk_charter = ?",
@@ -146,5 +146,9 @@ class Boat < ActiveRecord::Base
 
   def other_images
     images.offset(1)
+  end
+
+  def display_name
+    "#{model} (#{name})"
   end
 end

@@ -9,9 +9,9 @@ describe "Boats" do
     let!(:own_port_with_visible_boat) { create(:port, name: "Zamonien") }
     let!(:myself) { create(:boat_owner, is_self: true) }
     let!(:own_visible_boat2) { create(:boat, port: own_port_with_visible_boat, 
-      owner: myself, name: "Zora") }
+      owner: myself, model: "Zora 32") }
     let!(:own_visible_boat1) { create(:boat, port: own_port_with_visible_boat, 
-      owner: myself, name: "Adam") }
+      owner: myself, name: "Adam 24") }
     let!(:own_invisible_boat) { create(:unavailable_boat, port: own_port_with_visible_boat,
       owner: myself) }
 
@@ -28,7 +28,7 @@ describe "Boats" do
     
     before { visit boats_path }
 
-    it "should show own ports first, then other ports in alphabetical order" do
+    it "should show own ports first, then other ports in alphabetical order by model" do
       within "ul.port-list" do
         page.should have_selector('li:nth-child(1)', text: own_port_with_visible_boat.name)
         page.should have_selector('li:nth-child(2)', text: other_port_with_visible_boat1.name)
@@ -43,7 +43,7 @@ describe "Boats" do
     end
 
     describe "for a given port" do
-      it "should display all visible boats with this port in alphabetical order" do
+      it "should display all visible boats with this port in alphabetical order by model" do
         within 'ul.port-list li:nth-child(1) ul.boat-list' do
           page.should have_selector('li:nth-child(1)', text: own_visible_boat1.name)
           page.should have_selector('li:nth-child(2)', text: own_visible_boat2.name)

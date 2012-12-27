@@ -3,14 +3,14 @@
     <ul>
       <li><%= link_to "Startseite", static_page_path("start") %></li>
       <li><%= link_to "Schiffe", boats_path %>
-        <ul>
+        <ul class="menu-boat-list">
           <% Boat.visible.each do |boat| %>
-            <li><%= link_to boat.name, boat_path(boat) %></li>
+            <li><%= link_to boat.display_name, boat_path(boat) %></li>
           <% end %>
         </ul>
       </li>
       <li><%= link_to "Törns", trips_path %>
-        <ul>
+        <ul class="menu-trip-list">
           <% Trip.all.each do |trip| %>
             <li><%= link_to trip.name, trip_path(trip) %></li>
           <% end %>
