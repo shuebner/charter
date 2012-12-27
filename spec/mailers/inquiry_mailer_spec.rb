@@ -9,6 +9,7 @@ describe InquiryMailer do
     it { should deliver_to('klaus.wenz@palve-charter.de') }
     it { should have_body_text(inquiry.text) }
     it { should have_body_text(inquiry.email) }
+    it { should reply_to(inquiry.email) }
   end
   
   describe "general_inquiry" do
