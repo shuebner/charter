@@ -5,7 +5,8 @@ namespace :db do
     require 'faker'
 
     [Customer, Port, BoatOwner, TripBooking, TripDate, Trip, 
-      Boat, BoatPrice, Captain, Attachment].each(&:delete_all)
+      Boat, BoatPrice, Captain, Attachment,
+      GeneralInquiry, BoatInquiry, TripInquiry].each(&:delete_all)
     booking_number = "000"
     customer_number = 31200
     
@@ -132,6 +133,39 @@ namespace :db do
       c.description = Populator.sentences(5..10)
       c.email = Faker::Internet.email(full_name)
       c.phone_mobile = "0#{rand(10..999)}-#{rand(100000..9999999)}"
+    end
+
+    GeneralInquiry.populate 6 do |i|
+      i.type = "GeneralInquiry"
+      i.first_name = Faker::Name.first_name
+      i.last_name = Faker::Name.last_name
+      i.email = Faker::Internet.email("#{i.first_name} #{i.last_name}")
+      i.text = Populator.sentences(1..10)
+    end
+
+    6.times do
+      i = BoatInquiry.new
+      i.first_name = Faker::Name.first_name
+      i.last_name = Faker::Name.last_name
+      i.email = Faker::Internet.email("#{i.first_name} #{i.last_name}")
+      i.text = Populator.sentences(1..4)
+      i.boat_id = Boat.all.map(&:id).sample
+      i.begin_date = rand(Date.new(2013, 4, 1)..Date.new(2013, 9, 23))
+      i.end_date = i.begin_date + rand(3..14).days
+      i.adults = rand(1..3)
+      i.children = 0
+      i.save!
+    end
+
+    10.times do
+      i = TripInquiry.new
+      i.first_name = Faker::Name.first_name
+      i.last_name = Faker::Name.last_name
+      i.email = Faker::Internet.email("#{i.first_name} #{i.last_name}")
+      i.text = Populator.sentences(1..4)
+      i.trip_date_id = TripDate.all.map(&:id).sample
+      i.bunks = 1
+      i.save!
     end
   end
 end
