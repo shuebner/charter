@@ -4,8 +4,8 @@ namespace :db do
     require 'populator'
     require 'faker'
 
-    [Customer, TripBooking, TripDate, Trip, Boat, 
-      BoatPrice, Captain, Attachment].each(&:delete_all)
+    [Customer, Port, BoatOwner, TripBooking, TripDate, Trip, 
+      Boat, BoatPrice, Captain, Attachment].each(&:delete_all)
     booking_number = "000"
     customer_number = 31200
     
@@ -29,7 +29,26 @@ namespace :db do
       customer_number += 1
     end
 
+    BoatOwner.populate 3 do |bo|
+      bo.name = Faker::Name.name
+      bo.slug = bo.name.parameterize
+      bo.is_self = false
+    end
+
+    BoatOwner.populate 1 do |bo|
+      bo.name = "Palve-Charter"
+      bo.slug = "palve-charter"
+      bo.is_self = true
+    end
+
+    Port.populate 5 do |p|
+      p.name = Faker::Address.city
+      p.slug = p.name.parameterize
+    end
+
     Boat.populate 7 do |b|
+      b.boat_owner_id = BoatOwner.all.map(&:id)
+      b.port_id = Port.all.map(&:id)
       b.manufacturer = Faker::Company.name
       b.length_hull = l = rand(600..1600).to_f / 100
       b.model = "#{b.manufacturer} #{(l * 3.3).ceil}"
