@@ -76,11 +76,11 @@ namespace :db do
           t.price = rand(22..80) * 10
           TripDate.populate 2..4 do |td|
             td.trip_id = t.id
-            td.begin = DateTime.new(2013, 4, 1)..DateTime.new(2013, 9, 23)
-            td.end = td.begin + rand(3..7).days
+            td.begin_date = DateTime.new(2013, 4, 1)..DateTime.new(2013, 9, 23)
+            td.end_date = td.begin_date + rand(3..7).days
             TripBooking.populate 1..3 do |tb|
               tb.trip_date_id = td.id
-              tb.number = "T-#{td.begin.year}-#{booking_number.succ!}"
+              tb.number = "T-#{td.begin_date.year}-#{booking_number.succ!}"
               tb.slug = tb.number.downcase
               tb.customer_number = Customer.all.map(&:number)
               tb.no_of_bunks = 1
