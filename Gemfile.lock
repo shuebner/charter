@@ -90,6 +90,7 @@ GEM
       launchy (~> 2.1)
       mail (~> 2.2)
     erubis (2.7.0)
+    event-calendar (2.3.3)
     execjs (1.4.0)
       multi_json (~> 1.0)
     factory_girl (2.3.2)
@@ -240,6 +241,7 @@ DEPENDENCIES
   delocalize
   dragonfly (~> 0.9.12)
   email_spec
+  event-calendar
   factory_girl_rails (= 1.4.0)
   faker (= 1.0.1)
   formtastic (~> 2.1.1)

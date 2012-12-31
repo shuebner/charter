@@ -3,6 +3,8 @@ class BoatBooking < ActiveRecord::Base
   extend FriendlyId
   friendly_id :number, use: :slugged
 
+  has_event_calendar start_at_field: 'begin_date', end_at_field: 'end_date'
+
   attr_accessible :adults, :begin_date, :children, :end_date,
     :customer_number, :boat_id
 
@@ -61,6 +63,10 @@ class BoatBooking < ActiveRecord::Base
         "#{I18n.l(begin_date)} - #{I18n.l(end_date)})"
   end
   
+  def name
+    customer.full_name
+  end
+
   private
 
   def boat_is_available
