@@ -4,24 +4,26 @@ module BoatsHelper
   end
 
   # custom options for this calendar
-  def event_calendar_options
+  def default_calendar_options
     { 
       :year => @year,
       :month => @month,
       width: 300,
       height: 300,
-      :first_day_of_week => @first_day_of_week,
+      :first_day_of_week => 1,
       :event_strips => @event_strips,
-      :month_name_text => I18n.localize(@shown_month, :format => "%B %Y"),
-      :previous_month_text => "<< " + month_link(@shown_month.prev_month),
-      :next_month_text => month_link(@shown_month.next_month) + " >>"
+      #:month_name_text => I18n.localize(@shown_month, :format => "%B %Y"),
+      #:previous_month_text => "<< " + month_link(@shown_month.prev_month),
+      #:next_month_text => month_link(@shown_month.next_month) + " >>"
     }
   end
 
-  def event_calendar
-    calendar event_calendar_options do |args|
+  def event_calendar(options)
+    calendar default_calendar_options.merge(options) do |args|
       event = args[:event]
-      %(#{h(event.name)})
+      html = %(<span title="#{event.begin_date.hour} - #{event.end_date.hour}">)
+      html << "#{event.name}"
+      html << "</span>"
     end
   end
 end

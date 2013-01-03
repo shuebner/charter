@@ -19,7 +19,10 @@
 
     <%= render partial: 'document_list',
       locals: { documents: @boat.documents } %>
-
-    <%= event_calendar.html_safe %>
   </div>
 </div>
+<ol class="calendar-list">
+  <% @calendar_options.each do |options| %>
+    <li><%= event_calendar(options).html_safe %></li>
+  <% end %>
+</ol>
