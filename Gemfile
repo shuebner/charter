@@ -17,6 +17,7 @@ gem 'delocalize'
 gem 'friendly_id', '~>4.0.1'
 
 gem 'ui_datepicker-rails3'
+gem 'event-calendar', :require => 'event_calendar'
 
 gem 'validates_email_format_of'
 gem 'validates_timeliness', '~>3.0'
