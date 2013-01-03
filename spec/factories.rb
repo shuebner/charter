@@ -193,4 +193,9 @@ FactoryGirl.define do
   factory :port do
     name { Faker::Address.city }
   end
+
+  factory :appointment do
+    sequence(:start_at) { |n| (n*7).days.from_now }
+    sequence(:end_at) { |n| (n*7 + 7).days.from_now }
+  end
 end
