@@ -9,8 +9,6 @@ de:
         number: "Buchungsnummer"
         customer: "Kunde"
         boat: "Schiff"
-        begin_date: "Anfang"
-        end_date: "Ende"
         adults: "Anzahl von Erwachsenen"
         children: "Anzahl von Kindern"
         people: "Anzahl von Personen"

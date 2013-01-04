@@ -21,14 +21,17 @@ class TripDate < ActiveRecord::Base
   default_scope order("begin_date ASC")
 
   def self.overlapping(reservation)
-    if reservation.instance_of?(TripDate) && reservation.id
-      where("TIMEDIFF(begin_date, :end_date) * TIMEDIFF(:begin_date, end_date) >= 0", 
-        { begin_date: reservation.begin_date, end_date: reservation.end_date }).
-        where("NOT trip_dates.id = ?", reservation.id)
-    else
-      where("TIMEDIFF(begin_date, :end_date) * TIMEDIFF(:begin_date, end_date) >= 0", 
+    if reservation.instance_of?(TripDate)
+      scope = where("TIMEDIFF(begin_date, :end_date) * TIMEDIFF(:begin_date, end_date) >= 0", 
         { begin_date: reservation.begin_date, end_date: reservation.end_date })
-    end  
+      if reservation.id 
+        scope = scope.where("NOT trip_dates.id = ?", reservation.id)
+      end
+    else
+      scope = where("TIMEDIFF(begin_date, :end_at) * TIMEDIFF(:start_at, end_date) >= 0", 
+        { start_at: reservation.start_at, end_at: reservation.end_at })
+    end
+    scope
   end
 
   def no_of_available_bunks

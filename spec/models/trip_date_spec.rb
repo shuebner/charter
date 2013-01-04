@@ -70,7 +70,7 @@ describe TripDate do
     describe "with boat booking for the same boat" do
       let!(:boat_booking) do
         create(:boat_booking, boat: date.trip.boat,
-          begin_date: date.begin_date - 1.day, end_date: date.begin_date + 1.day)        
+          start_at: date.begin_date - 1.day, end_at: date.begin_date + 1.day)        
       end
       it { should_not be_valid }
     end

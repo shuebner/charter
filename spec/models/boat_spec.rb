@@ -247,7 +247,7 @@ describe Boat do
 
     let!(:boat_booking) do
       create(:boat_booking, boat: boat,
-        begin_date: 10.days.from_now, end_date: 14.days.from_now)
+        start_at: 10.days.from_now, end_at: 14.days.from_now)
     end
     
     describe "when reservation" do
@@ -255,7 +255,7 @@ describe Boat do
       describe "does not overlap with trip dates or boat bookings" do
         let!(:reservation) do
           build(:trip_date, trip: trip, 
-            begin_date: trip_date.end_date + 1.minute, end_date: boat_booking.begin_date - 1.minute)
+            begin_date: trip_date.end_date + 1.minute, end_date: boat_booking.start_at - 1.minute)
         end
         it "available_for_reservation? should return true" do
           boat.should be_available_for_reservation(reservation)
@@ -282,7 +282,7 @@ describe Boat do
       describe "overlaps with trip dates" do
         let!(:reservation) do
           build(:trip_date, trip: trip, 
-            begin_date: trip_date.end_date - 1.minute, end_date: boat_booking.begin_date - 1.minute)
+            begin_date: trip_date.end_date - 1.minute, end_date: boat_booking.start_at - 1.minute)
         end            
         it "available_for_reservation? should return false" do
           boat.should_not be_available_for_reservation(reservation)
@@ -296,7 +296,7 @@ describe Boat do
       describe "overlaps with boat bookings" do
         let!(:reservation) do
           build(:trip_date, trip: trip,
-            begin_date: trip_date.end_date + 1.minute, end_date: boat_booking.begin_date + 1.minute)
+            begin_date: trip_date.end_date + 1.minute, end_date: boat_booking.start_at + 1.minute)
         end
         it "available_for_reservation? should return false" do
           boat.should_not be_available_for_reservation(reservation)
@@ -382,8 +382,8 @@ describe Boat do
     let!(:boat_booking2) { create(:boat_booking, boat: boat) }
     let!(:boat_booking1) do
       create(:boat_booking, boat: boat,
-        begin_date: boat_booking2.begin_date - 10.days,
-        end_date: boat_booking2.begin_date - 3.days)
+        start_at: boat_booking2.start_at - 10.days,
+        end_at: boat_booking2.start_at - 3.days)
     end
     
     it "should have the right boat bookings in the right order" do
