@@ -8,10 +8,10 @@ describe BoatBooking do
 
   subject { booking }
 
+  it_should_behave_like Appointment
+
   it { should respond_to(:number) }
   it { should respond_to(:slug) }
-  it { should respond_to(:begin_date) }
-  it { should respond_to(:end_date) }
   it { should respond_to(:adults) }
   it { should respond_to(:children) }
   its(:boat) { should == boat }
@@ -32,33 +32,9 @@ describe BoatBooking do
     end
   end
 
-  [:boat, :customer, :begin_date, :end_date, 
-   :adults, :children].each do |a|
+  [:boat, :customer, :adults, :children].each do |a|
     describe "when #{a.to_s} is not present" do
       before { booking.send("#{a.to_s}=".to_sym, nil) }
-      it { should_not be_valid }
-    end
-  end
-
-  describe "dates" do
-    [:begin_date, :end_date].each do |d|
-      describe "when #{d.to_s}" do
-        describe "is not a datetime" do
-          before { booking.send("#{d.to_s}=".to_sym, "10bla") }
-          it { should_not be_valid }
-        end
-        describe "is not a valid datetime" do
-          before { booking.send("#{d.to_s}=".to_sym, "31.02.2012 12:00") }
-          it { should_not be_valid }
-        end
-      end
-    end
-    
-    describe "when end is before beginning" do
-      before do
-        booking.begin_date = 2.day.from_now
-        booking.end_date = 1.day.from_now
-      end
       it { should_not be_valid }
     end
   end
@@ -133,7 +109,7 @@ describe BoatBooking do
   describe "display name" do
     it "should include customer name and begin and end dates" do
       booking.display_name.should == "#{booking.customer.display_name} ("\
-        "#{I18n.l(booking.begin_date)} - #{I18n.l(booking.end_date)})"
+        "#{I18n.l(booking.start_at)} - #{I18n.l(booking.end_at)})"
     end
   end
 
@@ -141,13 +117,13 @@ describe BoatBooking do
     describe "with trip date for the same boat" do
       let(:trip) { create(:trip, boat: booking.boat) }
       let!(:trip_date) { create(:trip_date, trip: trip,
-        begin_date: booking.begin_date - 2.days, end_date: booking.end_date - 2.days) }
+        begin_date: booking.start_at - 2.days, end_date: booking.end_at - 2.days) }
       it { should_not be_valid }
     end
 
     describe "with boat booking for the same boat" do
       let!(:other_booking) { create(:boat_booking, boat: booking.boat,
-        begin_date: booking.begin_date - 2.days, end_date: booking.end_date - 2.days) }
+        start_at: booking.start_at - 2.days, end_at: booking.end_at - 2.days) }
       it { should_not be_valid }
     end    
   end

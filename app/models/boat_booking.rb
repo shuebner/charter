@@ -1,16 +1,17 @@
 # encoding: utf-8
-class BoatBooking < ActiveRecord::Base
+class BoatBooking < Appointment
+  acts_as_citier
+
   extend FriendlyId
+  extend FriendlyIdBaseClassPatch
   friendly_id :number, use: :slugged
 
-  attr_accessible :adults, :begin_date, :children, :end_date,
-    :customer_number, :boat_id
+  attr_accessible :adults, :children, :customer_number, :boat_id
 
   belongs_to :customer, foreign_key: :customer_number, primary_key: :number
   belongs_to :boat
 
-  validates :adults, :children, :begin_date, :end_date,
-    :customer, :boat,
+  validates :adults, :children, :customer, :boat,
     presence: true
 
   validates :number,
@@ -24,25 +25,22 @@ class BoatBooking < ActiveRecord::Base
 
   validate :max_no_of_people_on_boat_is_not_exceeded
 
-  validates :begin_date,
-    timeliness: { type: :datetime }
-
-  validates :end_date,
-    timeliness: { type: :datetime, after: :begin_date }
-
   validate :boat_is_available, if: :boat
 
-  default_scope order("begin_date ASC")
+  default_scope order("start_at ASC")
 
   def self.overlapping(reservation)
-    if reservation.instance_of?(BoatBooking) && reservation.id
-      where("TIMEDIFF(begin_date, :end_date) * TIMEDIFF(:begin_date, end_date) >= 0", 
-        { begin_date: reservation.begin_date, end_date: reservation.end_date }).
-        where("NOT boat_bookings.id = ?", reservation.id)
+    if reservation.instance_of?(BoatBooking)
+      scope = where("TIMEDIFF(start_at, :end_at) * TIMEDIFF(:start_at, end_at) >= 0", 
+        { start_at: reservation.start_at, end_at: reservation.end_at })
+      if reservation.id
+        scope = scope.where("NOT boat_bookings.id = ?", reservation.id)
+      end
     else
-      where("TIMEDIFF(begin_date, :end_date) * TIMEDIFF(:begin_date, end_date) >= 0", 
+      scope = where("TIMEDIFF(start_at, :end_date) * TIMEDIFF(:begin_date, end_at) >= 0", 
         { begin_date: reservation.begin_date, end_date: reservation.end_date })
-    end  
+    end
+    scope
   end
 
   def people
@@ -58,8 +56,9 @@ class BoatBooking < ActiveRecord::Base
 
   def display_name
     "#{customer.display_name} ("\
-        "#{I18n.l(begin_date)} - #{I18n.l(end_date)})"
+        "#{I18n.l(start_at)} - #{I18n.l(end_at)})"
   end
+
   
   private
 
@@ -86,7 +85,7 @@ class BoatBooking < ActiveRecord::Base
         error_text << ")"
       end
 
-      [:begin_date, :end_date].each do |d|
+      [:start_at, :end_at].each do |d|
         errors.add(d, error_text)
       end
     end
@@ -112,8 +111,8 @@ class BoatBooking < ActiveRecord::Base
   end
     
   def generate_number
-    if begin_date
-      self.class.highest_number_for_year(begin_date.year).succ
+    if start_at
+      self.class.highest_number_for_year(start_at.year).succ
     end
   end
 end

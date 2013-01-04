@@ -1,0 +1,10 @@
+de:
+  activerecord:
+    models:
+      appointment:
+        one: "Termin"
+        other: "Termine"
+    attributes:
+      appointment:
+        start_at: "Anfang"
+        end_at: "Ende"

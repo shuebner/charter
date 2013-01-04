@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130103143934) do
+ActiveRecord::Schema.define(:version => 20130104112537) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -49,13 +49,10 @@ ActiveRecord::Schema.define(:version => 20130103143934) do
   create_table "appointments", :force => true do |t|
     t.datetime "start_at"
     t.datetime "end_at"
-    t.integer  "appointable_id"
-    t.string   "appointable_type"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.string   "type"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
-
-  add_index "appointments", ["appointable_id", "appointable_type"], :name => "index_appointments_on_appointable_id_and_appointable_type"
 
   create_table "attachments", :force => true do |t|
     t.string   "type"
@@ -70,16 +67,12 @@ ActiveRecord::Schema.define(:version => 20130103143934) do
   end
 
   create_table "boat_bookings", :force => true do |t|
-    t.integer  "customer_number", :null => false
-    t.integer  "boat_id",         :null => false
-    t.string   "number",          :null => false
-    t.string   "slug",            :null => false
-    t.datetime "begin_date",      :null => false
-    t.datetime "end_date",        :null => false
-    t.integer  "adults",          :null => false
-    t.integer  "children",        :null => false
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.integer "customer_number", :null => false
+    t.integer "boat_id",         :null => false
+    t.string  "number",          :null => false
+    t.string  "slug"
+    t.integer "adults",          :null => false
+    t.integer "children",        :null => false
   end
 
   add_index "boat_bookings", ["number"], :name => "index_boat_bookings_on_number"
@@ -304,6 +297,21 @@ ActiveRecord::Schema.define(:version => 20130103143934) do
 
   add_index "trips", ["boat_id"], :name => "index_trips_on_boat_id"
   add_index "trips", ["slug"], :name => "index_trips_on_slug", :unique => true
+
+  create_view "view_boat_bookings", "select `appointments`.`id` AS `id`,`appointments`.`start_at` AS `start_at`,`appointments`.`end_at` AS `end_at`,`appointments`.`type` AS `type`,`appointments`.`created_at` AS `created_at`,`appointments`.`updated_at` AS `updated_at`,`boat_bookings`.`customer_number` AS `customer_number`,`boat_bookings`.`boat_id` AS `boat_id`,`boat_bookings`.`number` AS `number`,`boat_bookings`.`slug` AS `slug`,`boat_bookings`.`adults` AS `adults`,`boat_bookings`.`children` AS `children` from (`appointments` join `boat_bookings`) where (`appointments`.`id` = `boat_bookings`.`id`)", :force => true do |v|
+    v.column :id
+    v.column :start_at
+    v.column :end_at
+    v.column :type
+    v.column :created_at
+    v.column :updated_at
+    v.column :customer_number
+    v.column :boat_id
+    v.column :number
+    v.column :slug
+    v.column :adults
+    v.column :children
+  end
 
   create_view "view_boat_inquiries", "select `inquiries`.`id` AS `id`,`inquiries`.`first_name` AS `first_name`,`inquiries`.`last_name` AS `last_name`,`inquiries`.`email` AS `email`,`inquiries`.`text` AS `text`,`inquiries`.`created_at` AS `created_at`,`inquiries`.`updated_at` AS `updated_at`,`inquiries`.`type` AS `type`,`boat_inquiries`.`boat_id` AS `boat_id`,`boat_inquiries`.`begin_date` AS `begin_date`,`boat_inquiries`.`end_date` AS `end_date`,`boat_inquiries`.`adults` AS `adults`,`boat_inquiries`.`children` AS `children` from (`inquiries` join `boat_inquiries`) where (`inquiries`.`id` = `boat_inquiries`.`id`)", :force => true do |v|
     v.column :id
