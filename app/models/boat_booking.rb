@@ -91,7 +91,7 @@ class BoatBooking < Appointment
 
   def max_no_of_people_on_boat_is_not_exceeded
     if boat && boat.max_no_of_people && (adults || children)
-      unless people < boat.max_no_of_people
+      unless people <= boat.max_no_of_people
         error_text = "Es dürfen maximal #{boat.max_no_of_people} Personen auf dem Schiff sein"
         errors.add(:adults, error_text)
         errors.add(:children, error_text)
