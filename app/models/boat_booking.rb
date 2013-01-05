@@ -27,8 +27,6 @@ class BoatBooking < Appointment
 
   validate :boat_is_available, if: :boat
 
-  #default_scope order("start_at ASC")
-
   def self.overlapping(reservation)
     if reservation.instance_of?(BoatBooking)
       scope = where("TIMEDIFF(start_at, :end_at) * TIMEDIFF(:start_at, end_at) >= 0", 
@@ -37,8 +35,8 @@ class BoatBooking < Appointment
         scope = scope.where("NOT boat_bookings.id = ?", reservation.id)
       end
     else
-      scope = where("TIMEDIFF(start_at, :end_date) * TIMEDIFF(:begin_date, end_at) >= 0", 
-        { begin_date: reservation.begin_date, end_date: reservation.end_date })
+      scope = where("TIMEDIFF(start_at, :end_at) * TIMEDIFF(:start_at, end_at) >= 0", 
+        { start_at: reservation.start_at, end_at: reservation.end_at })
     end
     scope
   end

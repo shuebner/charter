@@ -121,7 +121,7 @@ class Boat < ActiveRecord::Base
     available_for_bunk_charter || available_for_boat_charter
   end
 
-  # gibt zurück, ob der durch begin_date und end_date in reservation 
+  # gibt zurück, ob der durch start_at und end_at in reservation 
   # angegebene Zeitraum mit einer anderen (!) das Schiff betreffenden
   # Reservierung kollidiert
   def available_for_reservation?(reservation)

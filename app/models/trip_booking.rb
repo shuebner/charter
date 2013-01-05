@@ -67,7 +67,7 @@ class TripBooking < ActiveRecord::Base
     
   def generate_number
     if trip_date
-      self.class.highest_number_for_year(trip_date.begin_date.year).succ
+      self.class.highest_number_for_year(trip_date.start_at.year).succ
     end
   end
 end

@@ -239,7 +239,7 @@ describe Boat do
   describe "availability methods" do    
     let!(:trip_date) do
       create(:trip_date, 
-        begin_date: 1.day.from_now, end_date: 5.days.from_now)
+        start_at: 1.day.from_now, end_at: 5.days.from_now)
     end
 
     let(:trip) { trip_date.trip }
@@ -255,7 +255,7 @@ describe Boat do
       describe "does not overlap with trip dates or boat bookings" do
         let!(:reservation) do
           build(:trip_date, trip: trip, 
-            begin_date: trip_date.end_date + 1.minute, end_date: boat_booking.start_at - 1.minute)
+            start_at: trip_date.end_at + 1.minute, end_at: boat_booking.start_at - 1.minute)
         end
         it "available_for_reservation? should return true" do
           boat.should be_available_for_reservation(reservation)
@@ -282,7 +282,7 @@ describe Boat do
       describe "overlaps with trip dates" do
         let!(:reservation) do
           build(:trip_date, trip: trip, 
-            begin_date: trip_date.end_date - 1.minute, end_date: boat_booking.start_at - 1.minute)
+            start_at: trip_date.end_at - 1.minute, end_at: boat_booking.start_at - 1.minute)
         end            
         it "available_for_reservation? should return false" do
           boat.should_not be_available_for_reservation(reservation)
@@ -296,7 +296,7 @@ describe Boat do
       describe "overlaps with boat bookings" do
         let!(:reservation) do
           build(:trip_date, trip: trip,
-            begin_date: trip_date.end_date + 1.minute, end_date: boat_booking.start_at + 1.minute)
+            start_at: trip_date.end_at + 1.minute, end_at: boat_booking.start_at + 1.minute)
         end
         it "available_for_reservation? should return false" do
           boat.should_not be_available_for_reservation(reservation)
@@ -386,8 +386,8 @@ describe Boat do
         end_at: boat_booking2.start_at - 3.days)
     end
     
-    it "should have the right boat bookings in the right order" do
-      boat.boat_bookings.should == [boat_booking1, boat_booking2]
+    it "should have the right boat bookings" do
+      boat.boat_bookings.sort.should == [boat_booking1, boat_booking2].sort
     end
 
     describe "destruction of boat" do

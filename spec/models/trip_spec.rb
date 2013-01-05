@@ -133,11 +133,11 @@ describe Trip do
 
   describe "TripDate association" do
     let!(:date2) { create(:trip_date, trip: trip, 
-      begin_date: 4.day.from_now, end_date: 7.day.from_now) }
+      start_at: 4.day.from_now, end_at: 7.day.from_now) }
     let!(:date1) { create(:trip_date, trip: trip, 
-      begin_date: 1.day.from_now, end_date: 3.day.from_now) }
-    it "should have the right dates in the right order" do
-      trip.trip_dates.should == [date1, date2]
+      start_at: 1.day.from_now, end_at: 3.day.from_now) }
+    it "should have the right dates" do
+      trip.trip_dates.sort.should == [date1, date2].sort
     end
     describe "deletion" do
       describe "without trip dates" do

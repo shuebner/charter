@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130104112537) do
+ActiveRecord::Schema.define(:version => 20130105093125) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -269,14 +269,9 @@ ActiveRecord::Schema.define(:version => 20130104112537) do
   add_index "trip_bookings", ["trip_date_id"], :name => "index_trip_bookings_on_trip_date_id"
 
   create_table "trip_dates", :force => true do |t|
-    t.integer  "trip_id",    :null => false
-    t.datetime "begin_date", :null => false
-    t.datetime "end_date",   :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer "trip_id", :null => false
   end
 
-  add_index "trip_dates", ["begin_date"], :name => "index_trip_dates_on_begin"
   add_index "trip_dates", ["trip_id"], :name => "index_trip_dates_on_trip_id"
 
   create_table "trip_inquiries", :force => true do |t|
@@ -327,6 +322,16 @@ ActiveRecord::Schema.define(:version => 20130104112537) do
     v.column :end_date
     v.column :adults
     v.column :children
+  end
+
+  create_view "view_trip_dates", "select `appointments`.`id` AS `id`,`appointments`.`start_at` AS `start_at`,`appointments`.`end_at` AS `end_at`,`appointments`.`type` AS `type`,`appointments`.`created_at` AS `created_at`,`appointments`.`updated_at` AS `updated_at`,`trip_dates`.`trip_id` AS `trip_id` from (`appointments` join `trip_dates`) where (`appointments`.`id` = `trip_dates`.`id`)", :force => true do |v|
+    v.column :id
+    v.column :start_at
+    v.column :end_at
+    v.column :type
+    v.column :created_at
+    v.column :updated_at
+    v.column :trip_id
   end
 
   create_view "view_trip_inquiries", "select `inquiries`.`id` AS `id`,`inquiries`.`first_name` AS `first_name`,`inquiries`.`last_name` AS `last_name`,`inquiries`.`email` AS `email`,`inquiries`.`text` AS `text`,`inquiries`.`created_at` AS `created_at`,`inquiries`.`updated_at` AS `updated_at`,`inquiries`.`type` AS `type`,`trip_inquiries`.`trip_date_id` AS `trip_date_id`,`trip_inquiries`.`bunks` AS `bunks` from (`inquiries` join `trip_inquiries`) where (`inquiries`.`id` = `trip_inquiries`.`id`)", :force => true do |v|

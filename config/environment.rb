@@ -1,3 +1,6 @@
+# load rails_sql_views
+require 'rails_sql_views'
+
 # Load the rails application
 require File.expand_path('../application', __FILE__)
 

@@ -9,9 +9,9 @@
   <div class="twocol-col1 trip-description">
     <p><%= @trip.description %></p>
     <%= render partial: 'trip_data', locals: { trip: @trip } %>
-    <%= render partial: 'boat', locals: { boat: @trip.boat } %>
+    <%= render partial: 'boat', locals: { boat: @boat } %>
   </div>
   <div class="twocol-col2">
-    <%= render partial: 'trip_dates', locals: { trip_dates: @trip.trip_dates } %>
+    <%= render partial: 'trip_dates', locals: { trip_dates: @trip_dates } %>
   </div>
 </div>

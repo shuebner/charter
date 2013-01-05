@@ -93,19 +93,7 @@ namespace :db do
           t.slug = t.name.parameterize
           t.description = Populator.sentences(5..10)
           t.no_of_bunks = b.permanent_bunks - 1
-          t.price = rand(22..80) * 10
-          TripDate.populate 2..4 do |td|
-            td.trip_id = t.id
-            td.begin_date = DateTime.new(2013, 4, 1)..DateTime.new(2013, 9, 23)
-            td.end_date = td.begin_date + rand(3..7).days
-            TripBooking.populate 1..3 do |tb|
-              tb.trip_date_id = td.id
-              tb.number = "T-#{td.begin_date.year}-#{booking_number.succ!}"
-              tb.slug = tb.number.downcase
-              tb.customer_number = Customer.all.map(&:number)
-              tb.no_of_bunks = 1
-            end
-          end
+          t.price = rand(22..80) * 10          
         end
       end
     end
@@ -143,18 +131,38 @@ namespace :db do
       i.text = Populator.sentences(1..10)
     end
 
-    6.times do
+    6.times do |n|
       i = BoatInquiry.new
       i.first_name = Faker::Name.first_name
       i.last_name = Faker::Name.last_name
       i.email = Faker::Internet.email("#{i.first_name} #{i.last_name}")
       i.text = Populator.sentences(1..4)
       i.boat_id = Boat.all.map(&:id).sample
-      i.begin_date = rand(Date.new(2013, 4, 1)..Date.new(2013, 9, 23))
+      i.begin_date = Date.new(2013, 4, 1) + (n*7).days
       i.end_date = i.begin_date + rand(3..14).days
       i.adults = rand(1..3)
       i.children = 0
       i.save!
+    end
+
+    Trip.all.each do |t|
+      rand(2..4).times do |n|
+        td = TripDate.new
+        td.trip_id = t.id
+        td.start_at = rand(DateTime.new(2013, 7, 1)..DateTime.new(2013, 9, 30))
+        td.end_at = td.start_at + rand(3..7).days
+        if td.save
+          rand(1..3).times do |m|
+            tb = TripBooking.new            
+            tb.trip_date_id = td.id
+            tb.number = "T-#{td.start_at.year}-#{booking_number.succ!}"
+            tb.slug = tb.number.downcase
+            tb.customer_number = Customer.all.map(&:number).sample
+            tb.no_of_bunks = 1
+            tb.save
+          end
+        end
+      end
     end
 
     10.times do
@@ -165,7 +173,7 @@ namespace :db do
       i.text = Populator.sentences(1..4)
       i.trip_date_id = TripDate.all.map(&:id).sample
       i.bunks = 1
-      i.save!
+      i.save
     end
   end
 end

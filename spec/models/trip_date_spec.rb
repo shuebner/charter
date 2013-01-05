@@ -6,8 +6,8 @@ describe TripDate do
 
   subject { date }
 
-  it { should respond_to(:begin_date) }
-  it { should respond_to(:end_date) }
+  it_should_behave_like Appointment
+
   it { should respond_to(:no_of_available_bunks) }
   it { should respond_to(:trip) }
   its(:trip) { should == trip }
@@ -22,55 +22,17 @@ describe TripDate do
     end
   end
 
-  describe "when begin_date" do
-    describe "is not present" do    
-      before { date.begin_date = nil }
-      it { should_not be_valid }
-    end
-    describe "is not a datetime" do
-      before { date.begin_date = "10bla" }
-      it { should_not be_valid }
-    end
-    describe "is not a valid datetime" do
-      before { date.begin_date = "31.02.2012 12:00" }
-      it { should_not be_valid }
-    end
-  end
-
-  describe "when end_date" do
-    describe "is not present" do
-      before { date.end_date = nil }
-      it { should_not be_valid }
-    end
-    describe "is not a datetime" do
-      before { date.end_date = "10bla" }
-      it { should_not be_valid }
-    end
-    describe "is not a valid datetime" do
-      before { date.end_date = "31.04.2012 12:00" }
-      it { should_not be_valid }
-    end
-  end
-
-  describe "when end_date is before beginning" do
-    before do
-      date.begin_date = 2.day.from_now
-      date.end_date = 1.day.from_now
-    end
-    it { should_not be_valid }
-  end
-
   describe "when trip date overlaps" do
     describe "with other trip date for the same boat" do
       let(:other_trip) { create(:trip, boat: trip.boat) }
       let!(:overlapping_trip_date) { create(:trip_date, trip: other_trip, 
-          begin_date: date.begin_date - 1.day, end_date: date.begin_date + 1.day) }
+          start_at: date.start_at - 1.day, end_at: date.start_at + 1.day) }
       it { should_not be_valid }
     end
     describe "with boat booking for the same boat" do
       let!(:boat_booking) do
         create(:boat_booking, boat: date.trip.boat,
-          start_at: date.begin_date - 1.day, end_at: date.begin_date + 1.day)        
+          start_at: date.start_at - 1.day, end_at: date.start_at + 1.day)        
       end
       it { should_not be_valid }
     end
@@ -79,7 +41,7 @@ describe TripDate do
   describe "when trip dates are not overlapping but have the same day" do
     let(:other_trip) { create(:trip, boat: trip.boat) }
     let!(:not_overlapping_trip_date) { create(:trip_date, trip: other_trip, 
-      begin_date: date.end_date + 1.minute, end_date: date.end_date + 1.day) }
+      start_at: date.end_at + 1.minute, end_at: date.end_at + 1.day) }
     it { should be_valid }
   end
 
@@ -119,8 +81,8 @@ describe TripDate do
   end
 
   describe "display_name" do
-    it  "should include date and time of beginning and end_date" do
-      date.display_name.should == "#{I18n.l(date.begin_date)} - #{I18n.l(date.end_date)}"
+    it  "should include date and time of beginning and end_at" do
+      date.display_name.should == "#{I18n.l(date.start_at)} - #{I18n.l(date.end_at)}"
     end
   end
 

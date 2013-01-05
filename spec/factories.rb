@@ -67,12 +67,6 @@ FactoryGirl.define do
     boat
   end
 
-  factory :trip_date do
-    sequence(:begin_date) { |n| (n*7).day.from_now }
-    sequence(:end_date) { |n| (n*7+4).day.from_now }
-    trip
-  end
-
   factory :customer do
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
@@ -176,13 +170,19 @@ FactoryGirl.define do
     end
   end
 
-  factory :boat_booking do
-    customer
-    boat
+  factory :appointment, class: Appointment do    
     sequence(:start_at) { |n| (n*7).days.from_now }
     sequence(:end_at) { |n| (n*7 + 7).days.from_now }
-    adults 2
-    children 0
+    
+    factory :boat_booking, class: BoatBooking do
+      customer
+      boat
+      adults 2
+      children 0
+    end
+    factory :trip_date, class: TripDate do
+      trip
+    end
   end
 
   factory :boat_owner do

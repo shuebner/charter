@@ -4,14 +4,14 @@
     <p>Dieser Törn ist an folgenden Terminen verfügbar:</p>
     <table>
       <tr>
-        <th><%= TripDate.human_attribute_name(:begin_date) %></th>
-        <th><%= TripDate.human_attribute_name(:end_date) %></th>
+        <th><%= TripDate.human_attribute_name(:start_at) %></th>
+        <th><%= TripDate.human_attribute_name(:end_at) %></th>
         <th><%= TripDate.human_attribute_name(:no_of_available_bunks) %></th>
       </tr>
       <% trip_dates.each do |d| %>
         <tr>
-          <td><%= l(d.begin_date) %></td>
-          <td><%= l(d.end_date) %></td>
+          <td><%= l(d.start_at) %></td>
+          <td><%= l(d.end_at) %></td>
           <td><%= d.no_of_available_bunks %></td>
           <% if d.no_of_available_bunks > 0 %>
             <td>

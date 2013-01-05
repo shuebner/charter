@@ -1,34 +1,32 @@
 # encoding: utf-8
-class TripDate < ActiveRecord::Base
-  attr_accessible :begin_date, :end_date
+class TripDate < Appointment#ActiveRecord::Base
+  acts_as_citier
 
   belongs_to :trip
 
   has_many :trip_bookings
 
-  validates :begin_date,
+  validates :start_at,
     presence: true,
     timeliness: { type: :datetime }
 
-  validates :end_date,
+  validates :end_at,
     presence: true,
-    timeliness: { type: :datetime, after: :begin_date }
+    timeliness: { type: :datetime, after: :start_at }
 
   validate :boat_is_available
 
   before_destroy :no_trip_bookings_exist
 
-  default_scope order("begin_date ASC")
-
   def self.overlapping(reservation)
     if reservation.instance_of?(TripDate)
-      scope = where("TIMEDIFF(begin_date, :end_date) * TIMEDIFF(:begin_date, end_date) >= 0", 
-        { begin_date: reservation.begin_date, end_date: reservation.end_date })
+      scope = where("TIMEDIFF(start_at, :end_at) * TIMEDIFF(:start_at, end_at) >= 0", 
+        { start_at: reservation.start_at, end_at: reservation.end_at })
       if reservation.id 
-        scope = scope.where("NOT trip_dates.id = ?", reservation.id)
+        scope = scope.where("NOT view_trip_dates.id = ?", reservation.id)
       end
     else
-      scope = where("TIMEDIFF(begin_date, :end_at) * TIMEDIFF(:start_at, end_date) >= 0", 
+      scope = where("TIMEDIFF(start_at, :end_at) * TIMEDIFF(:start_at, end_at) >= 0", 
         { start_at: reservation.start_at, end_at: reservation.end_at })
     end
     scope
@@ -44,7 +42,7 @@ class TripDate < ActiveRecord::Base
   end
 
   def display_name
-    "#{I18n.l(begin_date)} - #{I18n.l(end_date)}"
+    "#{I18n.l(start_at)} - #{I18n.l(end_at)}"
   end
 
   def display_name_with_trip
@@ -76,7 +74,7 @@ class TripDate < ActiveRecord::Base
         error_text << ")"
       end
 
-      [:begin_date, :end_date].each do |d|
+      [:start_at, :end_at].each do |d|
         errors.add(d, error_text)
       end
     end
