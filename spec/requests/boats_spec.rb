@@ -191,5 +191,39 @@ describe "Boats" do
         end
       end
     end
+
+    describe "calendar" do
+      # create trip date and boat booking for the shown boat
+      let!(:trip) { create(:trip, boat: boat) }
+      let!(:trip_date) { create(:trip_date, trip: trip) }
+      let!(:boat_booking) { create(:boat_booking, boat: boat,
+        start_at: trip_date.end_at + 3.days,
+        end_at: trip_date.end_at + 10.days) }
+
+      # create another trip date for a different boat
+      let!(:other_boat) { create(:boat) }
+      let!(:other_trip) { create(:trip, boat: other_boat) }
+      let!(:other_trip_date) { create(:trip_date, trip: other_trip) }
+
+      # create a season that spans all the appointments
+      let!(:season) { create(:season, begin_date: Date.new(2013, 1, 1), end_date: Date.new(2013, 12, 31)) }
+
+      before { visit boat_path(boat) }
+
+      it "should contain all trip dates and boat bookings for the boat" do        
+        within ".ec-trip_date-#{trip_date.id}" do
+          page.should have_content(trip.name)
+        end
+        within ".ec-boat_booking-#{boat_booking.id}" do
+          page.should have_content("Schiffscharter")
+        end
+      end
+
+      it "should not contain entries for other boats" do
+        within ".ec-calendar" do
+          page.should_not have_content(other_trip.name)
+        end
+      end
+    end
   end
-end
+end 

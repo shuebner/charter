@@ -1,0 +1,8 @@
+<% if calendar_options %>
+  <h2>Saisonkalender</h2>
+  <ol class="calendar-list">
+    <% calendar_options.each do |options| %>
+      <li><%= event_calendar(options).html_safe %></li>
+    <% end %>
+  </ol>
+<% end %>
