@@ -193,9 +193,11 @@ describe "Boats" do
     end
 
     describe "calendar" do
+      year = Date.today.year
       # create trip date and boat booking for the shown boat
       let!(:trip) { create(:trip, boat: boat) }
-      let!(:trip_date) { create(:trip_date, trip: trip) }
+      let!(:trip_date) { create(:trip_date, trip: trip,
+        start_at: Date.new(year, 4, 1), end_at: Date.new(year, 4, 7)) }
       let!(:boat_booking) { create(:boat_booking, boat: boat,
         start_at: trip_date.end_at + 3.days,
         end_at: trip_date.end_at + 10.days) }
@@ -203,10 +205,11 @@ describe "Boats" do
       # create another trip date for a different boat
       let!(:other_boat) { create(:boat) }
       let!(:other_trip) { create(:trip, boat: other_boat) }
-      let!(:other_trip_date) { create(:trip_date, trip: other_trip) }
+      let!(:other_trip_date) { create(:trip_date, trip: other_trip,
+        start_at: trip_date.start_at, end_at: trip_date.end_at) }
 
       # create a season that spans all the appointments
-      let!(:season) { create(:season, begin_date: Date.new(2013, 1, 1), end_date: Date.new(2013, 12, 31)) }
+      let!(:season) { create(:season, begin_date: Date.new(year, 1, 1), end_date: Date.new(year, 12, 31)) }
 
       before { visit boat_path(boat) }
 
