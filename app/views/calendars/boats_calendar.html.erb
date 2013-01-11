@@ -1,0 +1,15 @@
+<h1>Schiffskalender</h1>
+<p>Wählen Sie die Schiffe aus, deren Buchungskalender Sie sehen möchten:</p>
+<%= form_tag boat_calendar_path, method: 'get' do %>
+  <% @selectable_boats.each do |boat| %>
+    <%= check_box_tag "boat_selection[#{boat.slug}]", boat.slug, @selected_boats[boat.slug] %>
+    <%= label_tag "boat_selection[#{boat.slug}]", 
+      boat.display_name %><br/>
+  <% end %>
+  <%= submit_tag("Aktualisieren") %>
+<% end %>
+<ol class="calendar-list">
+  <% @ec_options.each do |options| %>
+    <li><%= event_calendar(options).html_safe %></li>
+  <% end %>
+</ol>

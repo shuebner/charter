@@ -21,6 +21,9 @@ Charter::Application.routes.draw do
 
     resources :boat_inquiries, only: [:new, :create], path: "schiffsanfragen"
 
+    get '/schiffskalender' => 'calendars#update_boat_calendar',
+      as: :boat_calendar
+
     resources :static_pages, only: [:show], path: "/"
 
   end
