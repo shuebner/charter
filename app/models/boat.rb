@@ -86,6 +86,9 @@ class Boat < ActiveRecord::Base
   scope :boat_charter_only,
     where(available_for_boat_charter: true)
 
+  scope :own,
+    joins(:owner).where('boat_owners.is_self')
+
   before_save do
     [:manufacturer, :model, :name, :engine_model].each do |a|
       self[a] = sanitize(self[a], tags: [])

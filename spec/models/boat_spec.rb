@@ -343,6 +343,20 @@ describe Boat do
         end
       end
     end
+
+    describe "own" do
+      let(:myself) { create(:boat_owner, is_self: true) }
+      let(:someone_else) { create(:boat_owner, is_self: false) }
+      let!(:own_boat) { create(:boat, owner: myself) }
+      let!(:other_boat) { create(:boat, owner: someone_else) }
+      it "should contain all own boat" do
+        Boat.own.should include(own_boat)
+      end
+
+      it "should not contain any external boats" do
+        Boat.own.should_not include(other_boat)
+      end
+    end
   end
 
   describe "default sort order" do
