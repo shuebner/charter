@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121226171934) do
+ActiveRecord::Schema.define(:version => 20130112111545) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -69,8 +69,10 @@ ActiveRecord::Schema.define(:version => 20121226171934) do
     t.integer  "children",        :null => false
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.boolean  "cancelled"
   end
 
+  add_index "boat_bookings", ["cancelled"], :name => "index_boat_bookings_on_cancelled"
   add_index "boat_bookings", ["number"], :name => "index_boat_bookings_on_number"
   add_index "boat_bookings", ["slug"], :name => "index_boat_bookings_on_slug"
 

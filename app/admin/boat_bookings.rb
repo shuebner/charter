@@ -1,3 +1,4 @@
+# encoding: utf-8
 ActiveAdmin.register BoatBooking do
   menu parent: I18n.t('bookings')
 
@@ -6,11 +7,33 @@ ActiveAdmin.register BoatBooking do
   filter :customer
   filter :boat
 
+  scope :all do |bookings|
+    bookings.includes [:customer]
+  end
+
+  scope :effective, default: true do |bookings|
+    bookings.effective.includes [:customer]
+  end
+
   actions :all, except: [:destroy]
 
-  scope :all, default: true do |bookings|
-    bookings.includes [:customer]
-    bookings.includes [:customer]
+  member_action :cancel, method: :put do
+    booking = BoatBooking.find(params[:id])
+    if booking.cancelled?
+      redirect_to admin_boat_booking_path(booking), 
+        alert: "Buchung #{booking.number} ist bereits storniert"
+    else
+      booking.cancel!
+      booking.save!
+      redirect_to admin_boat_booking_path(booking),
+        notice: "Buchung #{booking.number} wurde erfolgreich storniert"
+    end
+  end
+
+  action_item only: :show, if: Proc.new { !boat_booking.cancelled? } do
+    button_to "stornieren", cancel_admin_boat_booking_path, method: :put, 
+      confirm: "Eine Stornierung kann nicht rückgängig gemacht werden!\n" \
+               "Buchung #{boat_booking.number} wirklich stornieren?"
   end
 
   index do
@@ -20,6 +43,13 @@ ActiveAdmin.register BoatBooking do
     column :begin_date
     column :end_date
     column :people
+    column() do |b|
+      if !b.cancelled?
+        link_to "stornieren", cancel_admin_boat_booking_path(b), method: :put, 
+          confirm: "Eine Stornierung kann nicht rückgängig gemacht werden!\n" \
+                   "Buchung #{b.number} wirklich stornieren?"
+      end
+    end
     default_actions
   end
 
@@ -34,6 +64,10 @@ ActiveAdmin.register BoatBooking do
       row :adults
       row :children
       row :people
+      row :cancelled? do |b|
+        status_tag (b.cancelled? ? "ja" : "nein"),
+          (b.cancelled? ? :error : :ok)
+    end
     end
   end
 

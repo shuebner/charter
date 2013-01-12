@@ -14,6 +14,7 @@ describe BoatBooking do
   it { should respond_to(:end_date) }
   it { should respond_to(:adults) }
   it { should respond_to(:children) }
+  it { should respond_to(:cancelled) }
   its(:boat) { should == boat }
   its(:customer) { should == customer }
 
@@ -130,6 +131,28 @@ describe BoatBooking do
     end
   end
 
+  describe "cancellation" do
+    describe "cancel!" do
+      it "on existing boat bookings should not change the number on save" do
+        expect do
+          booking.save
+          booking.cancel!
+          booking.save
+        end.not_to change(booking, :number)
+      end
+    end
+
+    describe "cancelled?" do
+      it "should return false if the boat booking has not been cancelled" do
+        booking.cancelled?.should == false
+      end
+      it "should return true if the trip bookings has been cancelled" do
+        booking.cancel!
+        booking.cancelled?.should == true
+      end    
+    end
+  end
+
   describe "display name" do
     it "should include customer name and begin and end dates" do
       booking.display_name.should == "#{booking.customer.display_name} ("\
@@ -148,7 +171,36 @@ describe BoatBooking do
     describe "with boat booking for the same boat" do
       let!(:other_booking) { create(:boat_booking, boat: booking.boat,
         begin_date: booking.begin_date - 2.days, end_date: booking.end_date - 2.days) }
-      it { should_not be_valid }
-    end    
+      
+      describe "which is still valid" do
+        it { should_not be_valid }
+      end
+    
+      describe "which is cancelled" do
+        before do 
+          other_booking.cancel!
+          other_booking.save!
+        end
+        it { should be_valid }
+      end
+    end
+  end
+
+  describe "scope" do
+    describe ".effective" do
+      let(:cancelled_booking) { create(:boat_booking) }
+      before do
+        cancelled_booking.cancel!
+        cancelled_booking.save!
+        booking.save!
+      end
+
+      it "should include non-cancelled boat bookings" do
+        BoatBooking.effective.should include(booking)
+      end
+      it "should not include cancelled boat bookings" do
+        BoatBooking.effective.should_not include(cancelled_booking)
+      end
+    end
   end
 end

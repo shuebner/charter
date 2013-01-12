@@ -6,6 +6,15 @@ class BoatBooking < ActiveRecord::Base
   attr_accessible :adults, :begin_date, :children, :end_date,
     :customer_number, :boat_id
 
+  after_initialize do
+    if self.new_record?
+      self.cancelled = false
+    end
+  end
+
+  validates :cancelled,
+    inclusion: { in: [true, false] }
+
   belongs_to :customer, foreign_key: :customer_number, primary_key: :number
   belongs_to :boat
 
@@ -34,13 +43,15 @@ class BoatBooking < ActiveRecord::Base
 
   default_scope order("begin_date ASC")
 
+  scope :effective, where(cancelled: false)
+
   def self.overlapping(reservation)
     if reservation.instance_of?(BoatBooking) && reservation.id
-      where("TIMEDIFF(begin_date, :end_date) * TIMEDIFF(:begin_date, end_date) >= 0", 
+      effective.where("TIMEDIFF(begin_date, :end_date) * TIMEDIFF(:begin_date, end_date) >= 0", 
         { begin_date: reservation.begin_date, end_date: reservation.end_date }).
         where("NOT boat_bookings.id = ?", reservation.id)
     else
-      where("TIMEDIFF(begin_date, :end_date) * TIMEDIFF(:begin_date, end_date) >= 0", 
+      effective.where("TIMEDIFF(begin_date, :end_date) * TIMEDIFF(:begin_date, end_date) >= 0", 
         { begin_date: reservation.begin_date, end_date: reservation.end_date })
     end  
   end
@@ -59,6 +70,14 @@ class BoatBooking < ActiveRecord::Base
   def display_name
     "#{customer.display_name} ("\
         "#{I18n.l(begin_date)} - #{I18n.l(end_date)})"
+  end
+
+  def cancel!
+    self.cancelled = true
+  end
+
+  def cancelled?
+    cancelled
   end
   
   private
