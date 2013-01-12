@@ -6,6 +6,14 @@ ActiveAdmin.register TripBooking do
   filter :created_at
   filter :customer
 
+  scope :all do |bookings|
+    bookings.includes [:customer]
+  end
+
+  scope :effective, default: true do |bookings|
+    bookings.effective.includes [:customer]
+  end
+
   actions :all, except: [:destroy]
 
   member_action :cancel, method: :put do
@@ -28,10 +36,6 @@ ActiveAdmin.register TripBooking do
                "Buchung #{trip_booking.number} wirklich stornieren?"
   end
 
-  scope :all, default: true do |bookings|
-    bookings.includes [:customer]
-  end
-
   index do
     column :number
     column(Boat.model_name.human) { |b| b.trip.boat.name }
@@ -46,7 +50,13 @@ ActiveAdmin.register TripBooking do
                    "Buchung #{b.number} wirklich stornieren?"
       end
     end
-    default_actions
+    column "" do |b|
+      link_to I18n.t('active_admin.view'), admin_boat_booking_path(b)
+    end
+    column "" do |b|
+      b.cancelled? ? '' : 
+        link_to(I18n.t('active_admin.edit'), edit_admin_boat_booking_path(b))
+    end
   end
 
   show title: :number do |b|

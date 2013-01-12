@@ -30,7 +30,20 @@ class TripBooking < ActiveRecord::Base
 
   validates :trip_date,
     presence: true
-  
+
+  # cancellation mechanic
+  after_initialize do
+    if cancelled?
+      self.readonly!
+    end
+  end
+
+  after_save do
+    if cancelled?
+      self.readonly!
+    end
+  end
+
   default_scope order("number DESC")
 
   scope :effective, 
