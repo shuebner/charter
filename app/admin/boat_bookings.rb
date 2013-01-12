@@ -6,7 +6,7 @@ ActiveAdmin.register BoatBooking do
   filter :customer
   filter :boat
 
-  actions :all, except: [:edit, :destroy]
+  actions :all, except: [:destroy]
 
   scope :all, default: true do |bookings|
     bookings.includes [:customer]
@@ -39,8 +39,11 @@ ActiveAdmin.register BoatBooking do
 
   form do |f|
     f.inputs do
-      f.input :customer, collection: Customer.by_name.map{ |c| [c.display_name, c.number] }
-      f.input :boat, collection: Boat.boat_charter_only.map{ |b| [b.name, b.id] }
+      options = { 
+        false => { input_html: { disabled: true } },
+        true => {} }[f.object.new_record?]
+      f.input :customer, options.merge(collection: Customer.by_name.map{ |c| [c.display_name, c.number] })
+      f.input :boat, options.merge(collection: Boat.boat_charter_only.map{ |b| [b.name, b.id] })
       f.input :begin_date
       f.input :end_date
       f.input :adults, as: :select, collection: 1..6

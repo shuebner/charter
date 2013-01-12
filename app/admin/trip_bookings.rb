@@ -6,7 +6,7 @@ ActiveAdmin.register TripBooking do
   filter :created_at
   filter :customer
 
-  actions :all, except: [:edit, :destroy]
+  actions :all, except: [:destroy]
 
   member_action :cancel, method: :put do
     booking = TripBooking.find(params[:id])
@@ -63,8 +63,11 @@ ActiveAdmin.register TripBooking do
 
   form do |f|
     f.inputs do
-      f.input :customer, collection: Customer.by_name.map{ |c| [c.display_name, c.number] }
-      f.input :trip_date, collection: TripDate.all.map{ |d| [d.display_name_with_trip, d.id] }
+      options = { 
+        false => { input_html: { disabled: true } },
+        true => {} }[f.object.new_record?]
+      f.input :customer, options.merge(collection: Customer.by_name.map{ |c| [c.display_name, c.number] })
+      f.input :trip_date, options.merge(collection: TripDate.all.map{ |d| [d.display_name_with_trip, d.id] })
       f.input :no_of_bunks, as: :select, collection: 1..6
     end
     f.actions
