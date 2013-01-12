@@ -151,6 +151,19 @@ describe BoatBooking do
         booking.cancelled?.should == true
       end    
     end
+
+    describe "cancelled bookings" do
+      before do
+        booking.cancel!
+        booking.save!
+      end
+      it "should not be changeable" do
+        expect do
+          booking.begin_date = booking.end_date - 1.day
+          booking.save!
+        end.to raise_error(ActiveRecord::ReadOnlyRecord)
+      end
+    end
   end
 
   describe "display name" do

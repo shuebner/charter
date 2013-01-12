@@ -6,15 +6,6 @@ class BoatBooking < ActiveRecord::Base
   attr_accessible :adults, :begin_date, :children, :end_date,
     :customer_number, :boat_id
 
-  after_initialize do
-    if self.new_record?
-      self.cancelled = false
-    end
-  end
-
-  validates :cancelled,
-    inclusion: { in: [true, false] }
-
   belongs_to :customer, foreign_key: :customer_number, primary_key: :number
   belongs_to :boat
 
@@ -40,6 +31,25 @@ class BoatBooking < ActiveRecord::Base
     timeliness: { type: :datetime, after: :begin_date }
 
   validate :boat_is_available, if: :boat
+
+  # cancellation mechanic
+  validates :cancelled,
+    inclusion: { in: [true, false] }
+
+  after_initialize do
+    if self.new_record?
+      self.cancelled = false
+    end
+    if cancelled?
+      self.readonly!
+    end
+  end
+
+  after_save do
+    if cancelled?
+      self.readonly!
+    end
+  end
 
   default_scope order("begin_date ASC")
 

@@ -50,7 +50,13 @@ ActiveAdmin.register BoatBooking do
                    "Buchung #{b.number} wirklich stornieren?"
       end
     end
-    default_actions
+    column "" do |b|
+      link_to I18n.t('active_admin.view'), admin_boat_booking_path(b)
+    end
+    column "" do |b|
+      b.cancelled? ? '' : 
+        link_to(I18n.t('active_admin.edit'), edit_admin_boat_booking_path(b))
+    end
   end
 
   show title: :number do |b|
@@ -67,7 +73,7 @@ ActiveAdmin.register BoatBooking do
       row :cancelled? do |b|
         status_tag (b.cancelled? ? "ja" : "nein"),
           (b.cancelled? ? :error : :ok)
-    end
+      end
     end
   end
 
