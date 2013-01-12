@@ -165,7 +165,7 @@ namespace :db do
       i.text = Populator.sentences(1..4)
       i.trip_date_id = TripDate.all.map(&:id).sample
       i.bunks = 1
-      i.save!
+      i.save
     end
   end
 end
