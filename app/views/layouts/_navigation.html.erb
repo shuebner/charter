@@ -1,25 +1,25 @@
 <nav>
   <div id="nav-frame" class="clearfix">
     <ul>
-      <li><%= link_to "Startseite", static_page_path("start") %></li>
-      <li><%= link_to "Schiffe", boats_path %>
+      <li id="start"><%= link_to "Startseite", static_page_path("start") %></li>
+      <li id="boats"><%= link_to "Schiffe", boats_path %>
         <ul class="menu-boat-list">
           <% Boat.visible.each do |boat| %>
             <li><%= link_to boat.display_name, boat_path(boat) %></li>
           <% end %>
         </ul>
       </li>
-      <li><%= link_to "Törns", trips_path %>
+      <li id="trips"><%= link_to "Törns", trips_path %>
         <ul class="menu-trip-list">
           <% Trip.all.each do |trip| %>
             <li><%= link_to trip.name, trip_path(trip) %></li>
           <% end %>
         </ul>
       </li>
-      <li><%= link_to "Skipper", captains_path %></li>
-      <li><%= link_to "Reisebedingungen", static_page_path("reisebedingungen") %></li>
-      <li><%= link_to "Anfrage", new_general_inquiry_path %></li>
-      <li><%= link_to "Impressum", static_page_path("impressum") %></li>
+      <li id="captains"><%= link_to "Skipper", captains_path %></li>
+      <li id="conditions"><%= link_to "Geschäftsbedingungen", static_page_path("reisebedingungen") %></li>
+      <li id="inquiry"><%= link_to "Anfrage", new_general_inquiry_path %></li>
+      <li id="imprint"><%= link_to "Impressum", static_page_path("impressum") %></li>
     </ul>
   </div>
 </nav>

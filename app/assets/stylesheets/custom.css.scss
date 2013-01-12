@@ -1,10 +1,6 @@
 // Farben für ganze Seite
 $c_bg: #eeeeff;
 
-// Farben für Navigation
-$c_nav_bg: #4444aa;
-$c_nav_text: white;
-
 // Farben für Blocklinks
 $c_block_link_border: grey;
 $c_block_link_bg: #e9e9ff;
@@ -61,74 +57,7 @@ header {
 }
 
 
-// NAVIGATION
 
-// Formatierung
-#nav-frame {
-  border: 1px solid black;
-  background-color: $c_nav_bg
-}
-
-nav {
-  ul {
-    margin: 0;
-    padding: 0;
-    text-align: center;
-    a {
-      display: block;
-      color: white;
-      background-color: $c_nav_bg;
-      text-decoration: none;
-      &:hover {
-        background-color: white;
-        color: $c_nav_bg;      
-      }  
-    }    
-    >li {
-      float: left;
-      list-style: none;
-      width: 8.5em;
-      ul {        
-        margin: 0;
-        padding: 0;
-        border: 1px solid black;
-        background-color: $c_nav_bg;
-        >li {          
-          text-align: left;
-          border-top: 1px solid #6666cc;
-          #border-bottom: 1px solid white;
-          a {
-            padding: 0.2em 0.5em 0.2em 0.5em;
-          }
-        }
-        &.menu-boat-list >li {
-          width: 20em;
-        }
-        &.menu-trip-list >li {
-          width: 20em;
-        }
-      }
-    }
-  }
-}
-
-// Dynamik
-nav ul {
-  li {
-    position: relative;    
-    ul {
-      display: none;
-      position: absolute;      
-      li {        
-        float: none;
-        display: block;
-      }
-    }
-    &:hover ul {
-      display: block;
-    }
-  }
-}
 
 
 // HELFER
@@ -208,22 +137,4 @@ ul.index-list {
 #content {
   padding: 0 1em;
   //border: 1px dashed grey;
-}
-
-
-// Statische Seiten
-
-.static_page {
-  text-align: justify;
-  img {
-    float: left;
-    margin-right: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .paragraph_wrapper {
-    h2, p {
-      clear: left;
-    }
-  }
 }

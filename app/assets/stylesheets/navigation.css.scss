@@ -1,0 +1,80 @@
+// Farben für Navigation
+$c_nav_bg: #4444aa;
+$c_nav_text: white;
+
+// Breite der Leistenelemente
+nav ul>li {
+  &#start       { width: 12% }
+  &#boats       { width: 12% }
+  &#trips       { width: 12% }
+  &#captains    { width: 12% }
+  &#conditions  { width: 20% }
+  &#inquiry     { width: 12% }
+  &#imprint     { width: 12% }
+}
+
+// Formatierung
+#nav-frame {
+  border: 1px solid black;
+  background-color: $c_nav_bg
+}
+
+nav {
+  ul {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    a {
+      display: block;
+      color: white;
+      background-color: $c_nav_bg;
+      text-decoration: none;
+      &:hover {
+        background-color: white;
+        color: $c_nav_bg;      
+      }  
+    }    
+    >li {
+      float: left;
+      list-style: none;
+      ul {        
+        margin: 0;
+        padding: 0;
+        border: 1px solid black;
+        background-color: $c_nav_bg;
+        >li {          
+          text-align: left;
+          border-top: 1px solid #6666cc;
+          #border-bottom: 1px solid white;
+          a {
+            padding: 0.2em 0.5em 0.2em 0.5em;
+          }
+        }
+        &.menu-boat-list >li {
+          width: 20em;
+        }
+        &.menu-trip-list >li {
+          width: 20em;
+        }
+      }
+    }
+  }
+}
+
+// Dynamik
+nav ul {
+  li {
+    position: relative;    
+    ul {
+      display: none;
+      position: absolute;      
+      li {        
+        float: none;
+        display: block;
+      }
+    }
+    &:hover ul {
+      display: block;
+    }
+  }
+}

@@ -1,7 +1,19 @@
-// Place all the styles related to the StaticPages controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+// Statische Seiten
 
+.static_page {
+  text-align: justify;
+  img {
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .paragraph_wrapper {
+    h2, p {
+      clear: left;
+    }
+  }
+}
 
 // Home page buttons
 ul#home-button-list {
