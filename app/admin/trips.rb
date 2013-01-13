@@ -3,11 +3,41 @@ ActiveAdmin.register Trip do
   config.filters = false
   config.sort_order = 'name_asc'
 
+  member_action :activate, method: :put do
+    trip = Trip.find(params[:id])
+    trip.activate!
+    trip.save
+    redirect_to admin_trips_path,
+      notice: "Törn #{trip.name} wurde aktiviert"
+  end
+
+  member_action :deactivate, method: :put do
+    trip = Trip.find(params[:id])
+    trip.deactivate!
+    trip.save
+    redirect_to admin_trips_path,
+      notice: "Törn #{trip.name} wurde deaktiviert"
+  end
+
   index do
     column :name
     column :no_of_bunks
     column(:price) { |t| number_to_currency(t.price) }
     column(Boat.model_name.human) { |t| t.boat.name }
+
+    column :active do |t|
+      status_tag (t.active? ? "ja" : "nein"), (t.active? ? :ok : :error)
+    end
+    column() do |t|
+      if t.active?
+        link_to "deaktivieren", deactivate_admin_trip_path(t), method: :put,
+          confirm: "Törn #{t.name} wirklich deaktivieren?"
+      else
+        link_to "aktivieren", activate_admin_trip_path(t), method: :put,
+          confirm: "Sie haben die Törndaten korrekturgelesen "\
+            "und möchten den Törn #{t.name} wirklich aktivieren?"
+      end
+    end
     default_actions
   end
 
@@ -18,6 +48,9 @@ ActiveAdmin.register Trip do
       row(:price) { number_to_currency(t.price) }
       row :description
       row(Boat.model_name.human) { t.boat.name }
+      row :active do |b|
+        status_tag (b.active? ? "ja" : "nein"), (b.active? ? :ok : :error)
+      end      
     end
 
     panel t("activerecord.models.trip_image.other") do
