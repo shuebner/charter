@@ -7,22 +7,34 @@ describe "Trips" do
   subject { page }
 
   describe "index page" do
+    let!(:inactive_trip) { create(:trip, active: false) }
     before { visit trips_path }
 
-    describe "should display all trips" do
-      it { should have_content(trip.name) }
+    it "should display all active trips" do
+      page.should have_selector('#content', text: trip.name)
     end
-  end
-
-  describe "when trip does not exist" do
-    it "should raise a routing error" do
-      expect do
-        visit trip_path('bla')
-      end.to raise_error(ActionController::RoutingError)
+    it "should not display inactive trips" do
+      page.should_not have_selector('#content', text: inactive_trip.name)
     end
   end
 
   describe "show page" do
+    describe "when trip does not exist" do
+      it "should raise a routing error" do
+        expect do
+          visit trip_path('bla')
+        end.to raise_error(ActionController::RoutingError)
+      end
+    end
+    describe "when trip is not visible" do
+      let!(:inactive_trip) { create(:trip, active: false) }
+      it "should raise a routing error" do
+        expect do
+          visit trip_path(inactive_trip)
+        end.to raise_error(ActionController::RoutingError)
+      end
+    end
+
     let!(:image) { create(:trip_image, attachable: trip) }
     before { visit trip_path(trip) }
 

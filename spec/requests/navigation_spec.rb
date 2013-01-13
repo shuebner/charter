@@ -24,11 +24,15 @@ describe "Navigation" do
   end
 
   describe "Links to trips" do
-    let!(:trip) { create(:trip) }    
+    let!(:active_trip) { create(:trip, active: true) }
+    let!(:inactive_trip) { create(:trip, active: false) }
     before { visit root_path }
 
-    describe "should include a link to every trip" do
-      it { should have_selector('a', text: trip.name) }
+    it "should include a link to every active trip" do      
+      page.should have_selector('nav a', text: active_trip.name)
+    end
+    it "should not include a link to any inactive trip" do
+      page.should_not have_selector('nav a', text: inactive_trip.name)
     end
   end
 end

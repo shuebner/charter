@@ -1,10 +1,10 @@
 
 class TripsController < ApplicationController
   def index
-    @trips = Trip.all
+    @trips = Trip.visible
   end
 
   def show
-    @trip = Trip.find_by_slug(params[:id]) || not_found
+    @trip = Trip.visible.find_by_slug(params[:id]) || not_found
   end
 end

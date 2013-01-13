@@ -11,7 +11,7 @@
       </li>
       <li id="trips"><%= link_to "Törns", trips_path %>
         <ul class="menu-trip-list">
-          <% Trip.all.each do |trip| %>
+          <% Trip.visible.each do |trip| %>
             <li><%= link_to trip.name, trip_path(trip) %></li>
           <% end %>
         </ul>
