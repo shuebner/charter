@@ -46,6 +46,8 @@ describe Boat do
   it { should respond_to(:port) }
 
   it { should be_valid }
+
+  it_behaves_like "activatable", Boat
   
   describe "when manufacturer is not present" do
     before { boat.manufacturer = nil }
@@ -147,27 +149,6 @@ describe Boat do
   describe "when port is not present" do
     before { boat.port = nil }
     it { should_not be_valid }
-  end
-
-  describe "activation" do
-    let(:default_boat) { Boat.new }
-    subject { default_boat }
-    
-    describe "active" do
-      it "should be false by default" do      
-        default_boat.should_not be_active
-      end
-    end
-    
-    describe "after activation by activate!" do
-      before { default_boat.activate! }
-      it { should be_active }
-
-      describe "followed by deactivation by deactivate!" do
-        before { default_boat.deactivate! }
-        it { should_not be_active }
-      end
-    end
   end
 
   describe "calculated field" do

@@ -3,6 +3,8 @@ class Trip < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: :slugged
 
+  include Activatable
+
   attr_accessible :name, :description, :no_of_bunks, :price, :boat_id,
     :trip_dates_attributes
 
@@ -33,6 +35,8 @@ class Trip < ActiveRecord::Base
   validate :boat_is_available_for_bunk_charter, if: :boat
 
   default_scope order("name ASC")
+
+  scope :visible, where(active: true)
 
   before_save do
     [:name, :description].each do |a|

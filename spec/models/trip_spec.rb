@@ -18,6 +18,8 @@ describe Trip do
   its(:boat) { should == boat }
 
   it { should be_valid }
+
+  it_should_behave_like "activatable", Trip
 =begin
   describe "accessible attributes" do
     it "should not allow access to boat_id" do
@@ -120,6 +122,19 @@ describe Trip do
     let!(:first_trip) { create(:trip, name: "A-Törn") }
     it "should be ascending by name" do
       Trip.all.should == [first_trip, second_trip]
+    end
+  end
+
+  describe "scope" do
+    describe ".visible" do
+      let!(:inactive_trip) { create(:trip, active: false) }
+      let!(:active_trip) { create(:trip, active: true) }
+      it "should include all active trips" do
+        Trip.visible.should include(active_trip)
+      end
+      it "should not include any inactive trips" do
+        Trip.visible.should_not include(inactive_trip)
+      end
     end
   end
 

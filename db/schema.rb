@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130113141800) do
+ActiveRecord::Schema.define(:version => 20130113154135) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -293,8 +293,10 @@ ActiveRecord::Schema.define(:version => 20130113141800) do
     t.decimal  "price",       :precision => 7, :scale => 2, :null => false
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
+    t.boolean  "active"
   end
 
+  add_index "trips", ["active"], :name => "index_trips_visibility"
   add_index "trips", ["boat_id"], :name => "index_trips_on_boat_id"
   add_index "trips", ["slug"], :name => "index_trips_on_slug", :unique => true
 

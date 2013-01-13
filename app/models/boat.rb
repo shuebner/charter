@@ -3,6 +3,8 @@ class Boat < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: :slugged
 
+  include Activatable
+
   attr_accessible :manufacturer, :model, 
     :length_hull, :length_waterline, :beam, :draft, :air_draft, :displacement, 
     :sail_area_jib, :sail_area_genoa, :sail_area_main_sail, 
@@ -74,15 +76,6 @@ class Boat < ActiveRecord::Base
     inclusion: { in: [true], 
       message: 'es sind noch Törns mit diesem Schiff vorhanden' }
 
-  # activation
-  validates :active,
-    inclusion: { in: [true, false] }
-  after_initialize do
-    if self.new_record?
-      deactivate!
-    end
-  end
-
   default_scope order("model ASC")
 
   scope :visible, 
@@ -123,14 +116,6 @@ class Boat < ActiveRecord::Base
     if permanent_bunks && convertible_bunks
       permanent_bunks + convertible_bunks
     end
-  end
-
-  def activate!
-    self.active = true
-  end
-
-  def deactivate!
-    self.active = false
   end
 
   # gibt zurück, ob der durch begin_date und end_date in reservation 

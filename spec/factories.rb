@@ -66,6 +66,7 @@ FactoryGirl.define do
     no_of_bunks 3
     price 560
     boat
+    active true
   end
 
   factory :trip_date do
