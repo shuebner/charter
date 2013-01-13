@@ -196,30 +196,6 @@ describe Boat do
         its(:total_sail_area_with_genoa) { should be_nil }
       end
     end
-    
-    describe "visible?" do
-      describe "should be true if boat is available for boat charter" do
-        before do
-          boat.available_for_boat_charter = true
-          boat.available_for_bunk_charter = false
-        end
-        it { should be_visible }
-      end
-      describe "should be true if boat is available for bunk charter" do
-        before do
-          boat.available_for_boat_charter = false
-          boat.available_for_bunk_charter = true
-        end
-        it { should be_visible }
-      end
-      describe "should be false if boat is available for NEITHER boat NOR bunk charter" do
-        before do
-          boat.available_for_bunk_charter = false
-          boat.available_for_boat_charter = false
-        end
-        it { should_not be_visible }
-      end
-    end
 
     describe "max_no_of_bunks should be sum of permanent and convertible bunks" do
       before do
@@ -339,7 +315,7 @@ describe Boat do
       let(:active_available_boat3) { create(:boat_charter_only_boat) }
       let(:active_unavailable_boat) { create(:unavailable_boat) }
       let(:inactive_available_boat) { create(:boat, active: false) }
-      
+
       it "should contain all available and active boats" do
         Boat.visible.should include(active_available_boat1, active_available_boat2,
           active_available_boat3)        

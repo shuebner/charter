@@ -133,10 +133,6 @@ class Boat < ActiveRecord::Base
     self.active = false
   end
 
-  def visible?
-    available_for_bunk_charter || available_for_boat_charter
-  end
-
   # gibt zurück, ob der durch begin_date und end_date in reservation 
   # angegebene Zeitraum mit einer anderen (!) das Schiff betreffenden
   # Reservierung kollidiert
