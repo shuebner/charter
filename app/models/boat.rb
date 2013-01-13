@@ -74,11 +74,19 @@ class Boat < ActiveRecord::Base
     inclusion: { in: [true], 
       message: 'es sind noch Törns mit diesem Schiff vorhanden' }
 
+  # activation
+  validates :active,
+    inclusion: { in: [true, false] }
+  after_initialize do
+    if self.new_record?
+      deactivate!
+    end
+  end
+
   default_scope order("model ASC")
 
   scope :visible, 
-    where("available_for_boat_charter = ? OR available_for_bunk_charter = ?",
-        true, true)
+    where("active AND (available_for_boat_charter OR available_for_bunk_charter)")
 
   scope :bunk_charter_only,
     where(available_for_bunk_charter: true)
@@ -115,6 +123,14 @@ class Boat < ActiveRecord::Base
     if permanent_bunks && convertible_bunks
       permanent_bunks + convertible_bunks
     end
+  end
+
+  def activate!
+    self.active = true
+  end
+
+  def deactivate!
+    self.active = false
   end
 
   def visible?

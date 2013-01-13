@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130112111545) do
+ActiveRecord::Schema.define(:version => 20130113141800) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -151,8 +151,10 @@ ActiveRecord::Schema.define(:version => 20130112111545) do
     t.datetime "updated_at",                                               :null => false
     t.integer  "boat_owner_id",                                            :null => false
     t.integer  "port_id",                                                  :null => false
+    t.boolean  "active"
   end
 
+  add_index "boats", ["available_for_boat_charter", "available_for_bunk_charter", "active"], :name => "index_boats_visibility"
   add_index "boats", ["boat_owner_id"], :name => "index_boats_on_boat_owner_id"
   add_index "boats", ["port_id"], :name => "index_boats_on_port_id"
   add_index "boats", ["slug"], :name => "index_boats_on_slug"
