@@ -5,6 +5,22 @@ ActiveAdmin.register Boat do
 
   config.filters = false
   config.sort_order = 'name_asc'
+
+  member_action :activate, method: :put do
+    boat = Boat.find(params[:id])
+    boat.activate!
+    boat.save
+    redirect_to admin_boats_path,
+      notice: "Schiff #{boat.name} wurde aktiviert"
+  end
+
+  member_action :deactivate, method: :put do
+    boat = Boat.find(params[:id])
+    boat.deactivate!
+    boat.save
+    redirect_to admin_boats_path,
+      notice: "Schiff #{boat.name} wurde deaktiviert"
+  end
   
   index do
     column :owner
@@ -18,6 +34,19 @@ ActiveAdmin.register Boat do
     column :available_for_bunk_charter do |b|
       status_tag (b.available_for_bunk_charter ? "ja" : "nein"),
         (b.available_for_bunk_charter ? :ok : :error)
+    end
+    column :active do |b|
+      status_tag (b.active? ? "ja" : "nein"), (b.active? ? :ok : :error)
+    end
+    column() do |b|
+      if b.active?
+        link_to "deaktivieren", deactivate_admin_boat_path(b), method: :put,
+          confirm: "Schiff #{b.name} wirklich deaktivieren?"
+      else
+        link_to "aktivieren", activate_admin_boat_path(b), method: :put,
+          confirm: "Sie haben die Schiffsdaten korrekturgelesen "\
+            "und möchten das Schiff #{b.name} wirklich aktivieren?"
+      end
     end
     default_actions
   end
@@ -33,6 +62,9 @@ ActiveAdmin.register Boat do
         row :model
         row :year_of_construction
         row :year_of_refit
+        row :active do |b|
+          status_tag (b.active? ? "ja" : "nein"), (b.active? ? :ok : :error)
+        end
       end
     end
 
