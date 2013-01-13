@@ -9,11 +9,17 @@ describe "Navigation" do
   subject { page }
 
   describe "Links to boats" do
-    let!(:boat) { create(:boat) }
+    let!(:available_active_boat) { create(:boat) }
+    let!(:unavailable_active_boat) { create(:unavailable_boat) }
+    let!(:available_inactive_boat) { create(:boat, active: false) }
     before { visit root_path }
     
-    describe "should include a link to every visible boat" do
-      it { should have_selector('a', text: boat.name) }
+    it "should include a link to every visible boat" do
+      page.should have_selector('a', text: available_active_boat.name)
+    end
+    it "should not include a link to any invisible boat" do
+      page.should_not have_selector('a', text: unavailable_active_boat.name)
+      page.should_not have_selector('a', text: available_inactive_boat.name)
     end
   end
 
