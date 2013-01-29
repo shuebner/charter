@@ -51,11 +51,11 @@ ActiveAdmin.register TripBooking do
       end
     end
     column "" do |b|
-      link_to I18n.t('active_admin.view'), admin_boat_booking_path(b)
+      link_to I18n.t('active_admin.view'), admin_trip_booking_path(b)
     end
     column "" do |b|
       b.cancelled? ? '' : 
-        link_to(I18n.t('active_admin.edit'), edit_admin_boat_booking_path(b))
+        link_to(I18n.t('active_admin.edit'), edit_admin_trip_booking_path(b))
     end
   end
 
