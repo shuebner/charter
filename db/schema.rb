@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130105093125) do
+ActiveRecord::Schema.define(:version => 20130129084748) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -73,8 +73,10 @@ ActiveRecord::Schema.define(:version => 20130105093125) do
     t.string  "slug"
     t.integer "adults",          :null => false
     t.integer "children",        :null => false
+    t.boolean "cancelled"
   end
 
+  add_index "boat_bookings", ["cancelled"], :name => "index_boat_bookings_on_cancelled"
   add_index "boat_bookings", ["number"], :name => "index_boat_bookings_on_number"
   add_index "boat_bookings", ["slug"], :name => "index_boat_bookings_on_slug"
 
@@ -153,8 +155,10 @@ ActiveRecord::Schema.define(:version => 20130105093125) do
     t.datetime "updated_at",                                               :null => false
     t.integer  "boat_owner_id",                                            :null => false
     t.integer  "port_id",                                                  :null => false
+    t.boolean  "active"
   end
 
+  add_index "boats", ["available_for_boat_charter", "available_for_bunk_charter", "active"], :name => "index_boats_visibility"
   add_index "boats", ["boat_owner_id"], :name => "index_boats_on_boat_owner_id"
   add_index "boats", ["port_id"], :name => "index_boats_on_port_id"
   add_index "boats", ["slug"], :name => "index_boats_on_slug"
@@ -288,12 +292,14 @@ ActiveRecord::Schema.define(:version => 20130105093125) do
     t.decimal  "price",       :precision => 7, :scale => 2, :null => false
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
+    t.boolean  "active"
   end
 
+  add_index "trips", ["active"], :name => "index_trips_visibility"
   add_index "trips", ["boat_id"], :name => "index_trips_on_boat_id"
   add_index "trips", ["slug"], :name => "index_trips_on_slug", :unique => true
 
-  create_view "view_boat_bookings", "select `appointments`.`id` AS `id`,`appointments`.`start_at` AS `start_at`,`appointments`.`end_at` AS `end_at`,`appointments`.`type` AS `type`,`appointments`.`created_at` AS `created_at`,`appointments`.`updated_at` AS `updated_at`,`boat_bookings`.`customer_number` AS `customer_number`,`boat_bookings`.`boat_id` AS `boat_id`,`boat_bookings`.`number` AS `number`,`boat_bookings`.`slug` AS `slug`,`boat_bookings`.`adults` AS `adults`,`boat_bookings`.`children` AS `children` from (`appointments` join `boat_bookings`) where (`appointments`.`id` = `boat_bookings`.`id`)", :force => true do |v|
+  create_view "view_boat_bookings", "select `appointments`.`id` AS `id`,`appointments`.`start_at` AS `start_at`,`appointments`.`end_at` AS `end_at`,`appointments`.`type` AS `type`,`appointments`.`created_at` AS `created_at`,`appointments`.`updated_at` AS `updated_at`,`boat_bookings`.`customer_number` AS `customer_number`,`boat_bookings`.`boat_id` AS `boat_id`,`boat_bookings`.`number` AS `number`,`boat_bookings`.`slug` AS `slug`,`boat_bookings`.`adults` AS `adults`,`boat_bookings`.`children` AS `children`,`boat_bookings`.`cancelled` AS `cancelled` from (`appointments` join `boat_bookings`) where (`appointments`.`id` = `boat_bookings`.`id`)", :force => true do |v|
     v.column :id
     v.column :start_at
     v.column :end_at
@@ -306,6 +312,7 @@ ActiveRecord::Schema.define(:version => 20130105093125) do
     v.column :slug
     v.column :adults
     v.column :children
+    v.column :cancelled
   end
 
   create_view "view_boat_inquiries", "select `inquiries`.`id` AS `id`,`inquiries`.`first_name` AS `first_name`,`inquiries`.`last_name` AS `last_name`,`inquiries`.`email` AS `email`,`inquiries`.`text` AS `text`,`inquiries`.`created_at` AS `created_at`,`inquiries`.`updated_at` AS `updated_at`,`inquiries`.`type` AS `type`,`boat_inquiries`.`boat_id` AS `boat_id`,`boat_inquiries`.`begin_date` AS `begin_date`,`boat_inquiries`.`end_date` AS `end_date`,`boat_inquiries`.`adults` AS `adults`,`boat_inquiries`.`children` AS `children` from (`inquiries` join `boat_inquiries`) where (`inquiries`.`id` = `boat_inquiries`.`id`)", :force => true do |v|

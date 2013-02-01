@@ -110,33 +110,51 @@ describe TripBooking do
     end
   end
 
-  describe "cancel!" do
-    it "on existing trip bookings should not change the number on save" do
-      expect do
-        booking.save
-        booking.cancel!
-        booking.save
-      end.not_to change(booking, :number)
-    end
-    describe "if trip booking is still valid should set the right cancellation time" do
-      before { booking.cancel! }
-      its(:cancelled_at) { should >= Time.now - 1.second }
-    end
-    describe "if trip booking was already cancelled" do
-      before { booking.cancel! }
-      it "should not change the cancellation time" do
-        expect { booking.cancel! }.not_to change(booking, :cancelled_at)
+  describe "cancellation" do
+
+    describe "cancel!" do      
+      it "on existing trip bookings should not change the number on save" do
+        expect do
+          booking.save
+          booking.cancel!
+          booking.save
+        end.not_to change(booking, :number)
+      end
+
+      describe "if trip booking is still valid should set the right cancellation time" do
+        before { booking.cancel! }
+        its(:cancelled_at) { should >= Time.now - 1.second }
+      end
+
+      describe "if trip booking was already cancelled" do
+        before { booking.cancel! }
+        it "should not change the cancellation time" do
+          expect { booking.cancel! }.not_to change(booking, :cancelled_at)
+        end
+      end
+
+      describe "cancelled bookings" do
+        before do
+          booking.cancel!
+          booking.save!
+        end
+        it "should not be changeable" do
+          expect do
+            booking.no_of_bunks = booking.no_of_bunks + 1
+            booking.save!
+          end.to raise_error(ActiveRecord::ReadOnlyRecord)
+        end
       end
     end
-  end
 
-  describe "cancelled?" do
-    it "should return false if the trip booking has not been cancelled" do
-      booking.cancelled?.should == false
-    end
-    it "should return true if the trip booking has been cancelled" do
-      booking.cancel!
-      booking.cancelled?.should == true
+    describe "cancelled?" do
+      it "should return false if the trip booking has not been cancelled" do
+        booking.cancelled?.should == false
+      end
+      it "should return true if the trip booking has been cancelled" do
+        booking.cancel!
+        booking.cancelled?.should == true
+      end
     end
   end
 

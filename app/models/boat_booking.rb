@@ -27,15 +27,38 @@ class BoatBooking < Appointment
 
   validate :boat_is_available, if: :boat
 
+  # cancellation mechanic
+  validates :cancelled,
+    inclusion: { in: [true, false] }
+
+  after_initialize do
+    if self.has_attribute?(:cancelled)
+      if self.new_record?
+        self.cancelled = false
+      end
+      if cancelled?
+        self.readonly!
+      end
+    end
+  end
+
+  after_save do
+    if cancelled?
+      self.readonly!
+    end
+  end
+
+  scope :effective, where(cancelled: false)
+
   def self.overlapping(reservation)
     if reservation.instance_of?(BoatBooking)
-      scope = where("TIMEDIFF(start_at, :end_at) * TIMEDIFF(:start_at, end_at) >= 0", 
+      scope = effective.where("TIMEDIFF(start_at, :end_at) * TIMEDIFF(:start_at, end_at) >= 0", 
         { start_at: reservation.start_at, end_at: reservation.end_at })
       if reservation.id
-        scope = scope.where("NOT boat_bookings.id = ?", reservation.id)
+      	scope = scope.where("NOT view_boat_bookings.id = ?", reservation.id)
       end
     else
-      scope = where("TIMEDIFF(start_at, :end_at) * TIMEDIFF(:start_at, end_at) >= 0", 
+      scope = effective.where("TIMEDIFF(start_at, :end_at) * TIMEDIFF(:start_at, end_at) >= 0", 
         { start_at: reservation.start_at, end_at: reservation.end_at })
     end
     scope
@@ -57,6 +80,13 @@ class BoatBooking < Appointment
         "#{I18n.l(start_at)} - #{I18n.l(end_at)})"
   end
 
+  def cancel!
+    self.cancelled = true
+  end
+
+  def cancelled?
+    cancelled
+  end
   
   private
 

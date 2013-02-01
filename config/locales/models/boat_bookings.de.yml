@@ -12,3 +12,4 @@ de:
         adults: "Anzahl von Erwachsenen"
         children: "Anzahl von Kindern"
         people: "Anzahl von Personen"
+        cancelled?: "storniert"

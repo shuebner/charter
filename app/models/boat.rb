@@ -3,6 +3,8 @@ class Boat < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: :slugged
 
+  include Activatable
+
   attr_accessible :manufacturer, :model, 
     :length_hull, :length_waterline, :beam, :draft, :air_draft, :displacement, 
     :sail_area_jib, :sail_area_genoa, :sail_area_main_sail, 
@@ -77,8 +79,7 @@ class Boat < ActiveRecord::Base
   default_scope order("model ASC")
 
   scope :visible, 
-    where("available_for_boat_charter = ? OR available_for_bunk_charter = ?",
-        true, true)
+    where("active AND (available_for_boat_charter OR available_for_bunk_charter)")
 
   scope :bunk_charter_only,
     where(available_for_bunk_charter: true)
@@ -118,10 +119,6 @@ class Boat < ActiveRecord::Base
     if permanent_bunks && convertible_bunks
       permanent_bunks + convertible_bunks
     end
-  end
-
-  def visible?
-    available_for_bunk_charter || available_for_boat_charter
   end
 
   # gibt zurück, ob der durch start_at und end_at in reservation 

@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.5'
+gem 'rails', '3.2.11'
 gem 'bcrypt-ruby', '3.0.1'
 
 # Bundle edge Rails instead:
@@ -14,7 +14,7 @@ gem 'meta_search', '>= 1.1.0.pre'
 gem 'rack-cache', require: 'rack/cache'
 gem 'dragonfly', '~>0.9.12'
 gem 'delocalize'
-gem 'friendly_id', '~>4.0.1'
+gem 'friendly_id', '~>4.0.9'
 
 gem 'ui_datepicker-rails3'
 gem 'event-calendar', :require => 'event_calendar'

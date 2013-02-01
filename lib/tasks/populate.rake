@@ -85,6 +85,7 @@ namespace :db do
         b.gas_charge = [rand(4..8), 0]
       end
       b.created_at = 2.years.ago..Time.now
+      b.active = true
 
       if b.available_for_bunk_charter
         Trip.populate 1..4 do |t|
@@ -93,7 +94,8 @@ namespace :db do
           t.slug = t.name.parameterize
           t.description = Populator.sentences(5..10)
           t.no_of_bunks = b.permanent_bunks - 1
-          t.price = rand(22..80) * 10          
+          t.price = rand(22..80) * 10
+          t.active = true
         end
       end
     end

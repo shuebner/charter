@@ -5,15 +5,16 @@ describe "Boats" do
   subject { page }
 
   describe "index page" do
-    # Hafen des Seitenbetreibers mit 2 Schiffen
+    # Hafen des Seitenbetreibers mit 2 sichbaren Schiffen
     let!(:own_port_with_visible_boat) { create(:port, name: "Zamonien") }
     let!(:myself) { create(:boat_owner, is_self: true) }
     let!(:own_visible_boat2) { create(:boat, port: own_port_with_visible_boat, 
       owner: myself, model: "Zora 32") }
     let!(:own_visible_boat1) { create(:boat, port: own_port_with_visible_boat, 
       owner: myself, name: "Adam 24") }
-    let!(:own_invisible_boat) { create(:unavailable_boat, port: own_port_with_visible_boat,
+    let!(:own_invisible_boat1) { create(:unavailable_boat, port: own_port_with_visible_boat,
       owner: myself) }
+    let!(:own_invisible_boat2) { create(:boat, active: false, port: own_port_with_visible_boat) }
 
     # Häfen von anderen Vercharterern
     let!(:other_port_with_visible_boat2) { create(:port, name: "Xanten") }
@@ -52,7 +53,8 @@ describe "Boats" do
 
       it "should not display invisible boats with this port" do
         within 'ul.port-list li:nth-child(1) ul.boat-list' do
-          page.should_not have_content(own_invisible_boat.name)
+          page.should_not have_content(own_invisible_boat1.name)
+          page.should_not have_content(own_invisible_boat2.name)
         end
       end
     end

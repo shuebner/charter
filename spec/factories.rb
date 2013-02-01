@@ -30,6 +30,7 @@ FactoryGirl.define do
     convertible_bunks 2
     available_for_boat_charter true
     available_for_bunk_charter true
+    active true
 
     factory :boat_charter_only_boat do
       deposit 1000
@@ -65,6 +66,7 @@ FactoryGirl.define do
     no_of_bunks 3
     price 560
     boat
+    active true
   end
 
   factory :customer do

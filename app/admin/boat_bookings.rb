@@ -1,3 +1,4 @@
+# encoding: utf-8
 ActiveAdmin.register BoatBooking do
   menu parent: I18n.t('bookings')
 
@@ -6,11 +7,33 @@ ActiveAdmin.register BoatBooking do
   filter :customer
   filter :boat
 
-  actions :all, except: [:edit, :destroy]
+  scope :all do |bookings|
+    bookings.includes [:customer]
+  end
 
-  scope :all, default: true do |bookings|
-    bookings.includes [:customer]
-    bookings.includes [:customer]
+  scope :effective, default: true do |bookings|
+    bookings.effective.includes [:customer]
+  end
+
+  actions :all, except: [:destroy]
+
+  member_action :cancel, method: :put do
+    booking = BoatBooking.find(params[:id])
+    if booking.cancelled?
+      redirect_to admin_boat_booking_path(booking), 
+        alert: "Buchung #{booking.number} ist bereits storniert"
+    else
+      booking.cancel!
+      booking.save!
+      redirect_to admin_boat_booking_path(booking),
+        notice: "Buchung #{booking.number} wurde erfolgreich storniert"
+    end
+  end
+
+  action_item only: :show, if: Proc.new { !boat_booking.cancelled? } do
+    button_to "stornieren", cancel_admin_boat_booking_path, method: :put, 
+      confirm: "Eine Stornierung kann nicht rückgängig gemacht werden!\n" \
+               "Buchung #{boat_booking.number} wirklich stornieren?"
   end
 
   index do
@@ -20,7 +43,20 @@ ActiveAdmin.register BoatBooking do
     column :start_at
     column :end_at
     column :people
-    default_actions
+    column() do |b|
+      if !b.cancelled?
+        link_to "stornieren", cancel_admin_boat_booking_path(b), method: :put, 
+          confirm: "Eine Stornierung kann nicht rückgängig gemacht werden!\n" \
+                   "Buchung #{b.number} wirklich stornieren?"
+      end
+    end
+    column "" do |b|
+      link_to I18n.t('active_admin.view'), admin_boat_booking_path(b)
+    end
+    column "" do |b|
+      b.cancelled? ? '' : 
+        link_to(I18n.t('active_admin.edit'), edit_admin_boat_booking_path(b))
+    end
   end
 
   show title: :number do |b|
@@ -34,13 +70,20 @@ ActiveAdmin.register BoatBooking do
       row :adults
       row :children
       row :people
+      row :cancelled? do |b|
+        status_tag (b.cancelled? ? "ja" : "nein"),
+          (b.cancelled? ? :error : :ok)
+      end
     end
   end
 
   form do |f|
     f.inputs do
-      f.input :customer, collection: Customer.by_name.map{ |c| [c.display_name, c.number] }
-      f.input :boat, collection: Boat.boat_charter_only.map{ |b| [b.name, b.id] }
+      options = { 
+        false => { input_html: { disabled: true } },
+        true => {} }[f.object.new_record?]
+      f.input :customer, options.merge(collection: Customer.by_name.map{ |c| [c.display_name, c.number] })
+      f.input :boat, options.merge(collection: Boat.boat_charter_only.map{ |b| [b.name, b.id] })
       f.input :start_at
       f.input :end_at
       f.input :adults, as: :select, collection: 1..6

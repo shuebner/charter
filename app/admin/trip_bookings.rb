@@ -6,7 +6,15 @@ ActiveAdmin.register TripBooking do
   filter :created_at
   filter :customer
 
-  actions :all, except: [:edit, :destroy]
+  scope :all do |bookings|
+    bookings.includes [:customer]
+  end
+
+  scope :effective, default: true do |bookings|
+    bookings.effective.includes [:customer]
+  end
+
+  actions :all, except: [:destroy]
 
   member_action :cancel, method: :put do
     booking = TripBooking.find(params[:id])
@@ -16,7 +24,7 @@ ActiveAdmin.register TripBooking do
                 "#{I18n.l(booking.cancelled_at)} storniert"
     else
       booking.cancel!
-      booking.save
+      booking.save!
       redirect_to admin_trip_booking_path(booking),
         notice: "Buchung #{booking.number} wurde erfolgreich storniert"
     end
@@ -26,10 +34,6 @@ ActiveAdmin.register TripBooking do
     button_to "stornieren", cancel_admin_trip_booking_path, method: :put, 
       confirm: "Eine Stornierung kann nicht rückgängig gemacht werden!\n" \
                "Buchung #{trip_booking.number} wirklich stornieren?"
-  end
-
-  scope :all, default: true do |bookings|
-    bookings.includes [:customer]
   end
 
   index do
@@ -46,7 +50,13 @@ ActiveAdmin.register TripBooking do
                    "Buchung #{b.number} wirklich stornieren?"
       end
     end
-    default_actions
+    column "" do |b|
+      link_to I18n.t('active_admin.view'), admin_trip_booking_path(b)
+    end
+    column "" do |b|
+      b.cancelled? ? '' : 
+        link_to(I18n.t('active_admin.edit'), edit_admin_trip_booking_path(b))
+    end
   end
 
   show title: :number do |b|
@@ -63,8 +73,11 @@ ActiveAdmin.register TripBooking do
 
   form do |f|
     f.inputs do
-      f.input :customer, collection: Customer.by_name.map{ |c| [c.display_name, c.number] }
-      f.input :trip_date, collection: TripDate.all.map{ |d| [d.display_name_with_trip, d.id] }
+      options = { 
+        false => { input_html: { disabled: true } },
+        true => {} }[f.object.new_record?]
+      f.input :customer, options.merge(collection: Customer.by_name.map{ |c| [c.display_name, c.number] })
+      f.input :trip_date, options.merge(collection: TripDate.all.map{ |d| [d.display_name_with_trip, d.id] })
       f.input :no_of_bunks, as: :select, collection: 1..6
     end
     f.actions
