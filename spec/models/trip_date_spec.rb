@@ -10,7 +10,9 @@ describe TripDate do
 
   it { should respond_to(:no_of_available_bunks) }
   it { should respond_to(:trip) }
+  it { should respond_to(:color) }
   its(:trip) { should == trip }
+  its(:color) { should == trip.boat.color }
 
   it { should be_valid }
 

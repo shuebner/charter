@@ -31,6 +31,7 @@ FactoryGirl.define do
     available_for_boat_charter true
     available_for_bunk_charter true
     active true
+    color { "##{rand(2**24).to_s(16).rjust(6, '0')}" }
 
     factory :boat_charter_only_boat do
       deposit 1000

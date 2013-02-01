@@ -35,6 +35,18 @@ describe "Calendar" do
       start_at: checked_boat_booking.start_at, end_at: checked_boat_booking.end_at) }
 
     describe "actual calendar" do
+      describe "colors" do
+        before { visit boat_calendar_path }
+
+        it "should show boat bookings in the color of the corresponding boat" do
+          page.find(".ec-boat_booking-#{checked_boat_booking.id}")['style'].should include(checked_boat_booking.boat.color)
+        end
+
+        it "should show trip dates in the color of the corresponding boat" do
+          page.find(".ec-trip_date-#{trip_date.id}")['style'].should include(trip_date.trip.boat.color)
+        end      
+      end
+      
       describe "without parameters" do
         before { visit boat_calendar_path }
 
@@ -91,6 +103,10 @@ describe "Calendar" do
 
       it "should have unchecked previously unchecked boats" do        
         find("#boat_selection_#{own_unchecked_boat.slug}").should_not be_checked
+      end
+
+      it "should show a preview of the boat color" do
+        find(".calendar-selection-item##{own_checked_boat.slug} span")['style'].should include(own_checked_boat.color)
       end
     end
 

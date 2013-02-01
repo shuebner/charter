@@ -42,6 +42,8 @@ describe Boat do
 
   it { should respond_to(:active) }
 
+  it { should respond_to(:color) }
+
   it { should respond_to(:owner) }
   it { should respond_to(:port) }
 
@@ -149,6 +151,21 @@ describe Boat do
   describe "when port is not present" do
     before { boat.port = nil }
     it { should_not be_valid }
+  end
+
+  describe "when color" do
+    describe "is not present" do
+      before { boat.color = nil }
+      it { should_not be_valid }
+    end
+    describe "is not a valid CSS color" do
+      before { boat.color = "#aaaaag" }
+      it { should_not be_valid }
+    end
+    describe "is a valid CSS color" do
+      before { boat.color = "#0ffd6a" }
+      it { should be_valid }
+    end
   end
 
   describe "calculated field" do

@@ -65,6 +65,10 @@ ActiveAdmin.register Boat do
         row :active do |b|
           status_tag (b.active? ? "ja" : "nein"), (b.active? ? :ok : :error)
         end
+        row :color do |b|
+          div(style: "width:6em; height:2em; background-color:#{b.color}")
+          span "CSS-String: #{b.color}"
+        end
       end
     end
 
@@ -143,6 +147,7 @@ ActiveAdmin.register Boat do
       f.input :model
       f.input :year_of_construction
       f.input :year_of_refit
+      f.input :color
     end
 
     f.has_many :images do |i|

@@ -15,8 +15,10 @@ describe BoatBooking do
   it { should respond_to(:adults) }
   it { should respond_to(:children) }
   it { should respond_to(:cancelled) }
+  it { should respond_to(:color) }
   its(:boat) { should == boat }
   its(:customer) { should == customer }
+  its(:color) { should == booking.boat.color }
 
   it { should be_valid }
   

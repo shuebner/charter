@@ -17,7 +17,8 @@ class Boat < ActiveRecord::Base
     :engine_model, :engine_output,
     :battery_capacity, 
     :available_for_boat_charter, :available_for_bunk_charter,
-    :deposit, :cleaning_charge, :fuel_charge, :gas_charge
+    :deposit, :cleaning_charge, :fuel_charge, :gas_charge,
+    :color
 
 # Association to Boat Owner
   belongs_to :owner, class_name: "BoatOwner", foreign_key: "boat_owner_id"
@@ -75,6 +76,11 @@ class Boat < ActiveRecord::Base
   validates :available_for_bunk_charter, if: 'trips.any?',
     inclusion: { in: [true], 
       message: 'es sind noch Törns mit diesem Schiff vorhanden' }
+
+  validates :color,
+    presence: true,
+    format: { with: /#[0-9a-f]{6}/,
+      message: "ist keine valide CSS-Farbe im Format #(0-9a-f)^6"}
 
   default_scope order("model ASC")
 

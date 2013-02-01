@@ -2,9 +2,12 @@
 <p>Wählen Sie die Schiffe aus, deren Buchungskalender Sie sehen möchten:</p>
 <%= form_tag boat_calendar_path, method: 'get' do %>
   <% @selectable_boats.each do |boat| %>
-    <%= check_box_tag "boat_selection[#{boat.slug}]", boat.slug, @selected_boats[boat.slug] %>
-    <%= label_tag "boat_selection[#{boat.slug}]", 
-      boat.display_name %><br/>
+    <div class="calendar-selection-item" id="<%=boat.slug%>">
+      <%= check_box_tag "boat_selection[#{boat.slug}]", boat.slug, @selected_boats[boat.slug] %>
+      <span style="border-color: <%=boat.color%>"></span>
+      <%= label_tag "boat_selection[#{boat.slug}]", 
+        boat.display_name %>
+    </div>
   <% end %>
   <%= submit_tag("Aktualisieren") %>
 <% end %>

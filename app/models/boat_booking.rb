@@ -11,6 +11,8 @@ class BoatBooking < Appointment
   belongs_to :customer, foreign_key: :customer_number, primary_key: :number
   belongs_to :boat
 
+  delegate :color, to: :boat
+
   validates :adults, :children, :customer, :boat,
     presence: true
 

@@ -9,3 +9,11 @@ ol.calendar-list {
     }
   }
 }
+
+.calendar-selection-item {
+  margin: 0.5em 0;
+  span {
+    border-left: 2em solid;
+    margin: 0 0.5em;
+  }
+}

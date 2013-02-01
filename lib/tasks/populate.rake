@@ -86,6 +86,7 @@ namespace :db do
       end
       b.created_at = 2.years.ago..Time.now
       b.active = true
+      b.color = "##{rand(2**24).to_s(16).rjust(6, '0')}"
 
       if b.available_for_bunk_charter
         Trip.populate 1..4 do |t|

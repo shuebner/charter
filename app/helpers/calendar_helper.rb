@@ -14,7 +14,7 @@ module CalendarHelper
       #month: @month,
       first_day_of_week: 1,
       width: 300,
-      height: 300,
+      height: 350,
       #event_strips: @event_strips,
       #month_name_text: I18n.localize(@shown_month, :format => "%B %Y"),
       #previous_month_text: "<< " + month_link(@shown_month.prev_month),

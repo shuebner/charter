@@ -48,6 +48,10 @@ class TripDate < Appointment#ActiveRecord::Base
   def display_name_with_trip
     "#{trip.name} (#{display_name})"
   end
+
+  def color
+    trip.boat.color
+  end
   
   private
   

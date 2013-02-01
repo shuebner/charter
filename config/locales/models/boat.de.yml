@@ -58,3 +58,4 @@ de:
         tank_volume_fresh_water: "in l"
         tank_volume_waste_water: "in l"
         headroom_saloon: "in m"
+        color: "CSS-String im Format: #(0-9a-f)^6, wird als Farbe für die Balken im Schiffsbuchungskalender verwendet, daher bitte dunkle Farben wählen"
