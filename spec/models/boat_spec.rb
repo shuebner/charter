@@ -231,6 +231,23 @@ describe Boat do
       end
       its(:display_name) { should == "Sunbeam 25 (Zora)" }
     end
+
+    describe "own?" do
+      let(:myself) { create(:boat_owner, is_self: true) }
+      let(:someone_else) { create(:boat_owner, is_self: false) }
+      describe "if oneself is the owner" do
+        before { boat.owner = myself }
+        it "should return true" do
+          boat.own?.should == true
+        end
+      end
+      describe "if someone else is the owner" do
+        before { boat.owner = someone_else }
+        it "should return false" do
+          boat.own?.should == false
+        end
+      end
+    end
   end
 
   describe "availability methods" do    

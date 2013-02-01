@@ -22,7 +22,14 @@
         </tr>
       <% end %>
     </table>
+
     <p>Andere Charterdauern oder Termine sind auf Anfrage möglich.</p>
+    
+    <% if boat.own? %>
+      <p><%= link_to "Buchungskalender ansehen", 
+        boat_calendar_path(boat_selection: { boat.slug => boat.slug }) %></p>
+    <% end %>
+    
     <p><%= link_to "Jetzt buchen", new_boat_inquiry_path(boat: boat.slug) %></p>
     
     <h3>Nebenkosten</h3>

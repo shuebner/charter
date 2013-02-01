@@ -160,6 +160,29 @@ describe "Boats" do
           page.should have_selector('small', text: number_to_currency(boat.fuel_charge))
         end
       end
+
+
+      
+      describe "of own boat" do
+        let(:myself) { create(:boat_owner, is_self: true) }      
+        let(:own_boat) { create(:boat, owner: myself) }
+        before { visit boat_path(own_boat) }
+        
+        it "should have a link to the calendar of the boat" do
+          page.should have_selector("a[href='"\
+            "#{boat_calendar_path(boat_selection: { own_boat.slug => own_boat.slug })}']")
+        end
+      end
+      describe "of external boat" do
+        let(:someone_else) { create(:boat_owner, is_self: false) }      
+        let(:other_boat) { create(:boat, owner: someone_else) }
+        before { visit boat_path(other_boat) }
+
+        it "should not have a link to the calendar of the boat" do
+          page.should_not have_selector("a[href='"\
+            "#{boat_calendar_path(boat_selection: { other_boat.slug => other_boat.slug })}']")
+        end
+      end
     end
 
     describe "should not show charter section when boat is not available for boat charter" do
@@ -190,43 +213,6 @@ describe "Boats" do
         end
         it "should not show the document section" do
           page.should_not have_content('Dokumente')
-        end
-      end
-    end
-
-    describe "calendar" do
-      year = Date.today.year
-      # create trip date and boat booking for the shown boat
-      let!(:trip) { create(:trip, boat: boat) }
-      let!(:trip_date) { create(:trip_date, trip: trip,
-        start_at: Date.new(year, 4, 1), end_at: Date.new(year, 4, 7)) }
-      let!(:boat_booking) { create(:boat_booking, boat: boat,
-        start_at: trip_date.end_at + 3.days,
-        end_at: trip_date.end_at + 10.days) }
-
-      # create another trip date for a different boat
-      let!(:other_boat) { create(:boat) }
-      let!(:other_trip) { create(:trip, boat: other_boat) }
-      let!(:other_trip_date) { create(:trip_date, trip: other_trip,
-        start_at: trip_date.start_at, end_at: trip_date.end_at) }
-
-      # create a season that spans all the appointments
-      let!(:season) { create(:season, begin_date: Date.new(year, 1, 1), end_date: Date.new(year, 12, 31)) }
-
-      before { visit boat_path(boat) }
-
-      it "should contain all trip dates and boat bookings for the boat" do        
-        within ".ec-trip_date-#{trip_date.id}" do
-          page.should have_content(trip.name)
-        end
-        within ".ec-boat_booking-#{boat_booking.id}" do
-          page.should have_content("Schiffscharter")
-        end
-      end
-
-      it "should not contain entries for other boats" do
-        within ".ec-calendar" do
-          page.should_not have_content(other_trip.name)
         end
       end
     end

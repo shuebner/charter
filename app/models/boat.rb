@@ -157,4 +157,8 @@ class Boat < ActiveRecord::Base
   def display_name
     "#{model} (#{name})"
   end
+
+  def own?
+    owner.is_self
+  end
 end
