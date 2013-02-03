@@ -91,4 +91,15 @@ describe TripDate do
   describe "display_name_with_trip should include trip and display name" do
     its(:display_name_with_trip) { should == "#{date.trip.name} (#{date.display_name})" }
   end
+
+  describe "scope" do
+    describe ".booked" do
+      let(:booked_trip_date) { create(:trip_date) }
+      let!(:trip_booking) { create(:trip_booking, trip_date: booked_trip_date) }
+      let!(:unbooked_trip_date) { create(:trip_date) }
+      it "should only contain trip dates for which at least one booking exists" do
+        TripDate.booked.should == [booked_trip_date]
+      end
+    end    
+  end
 end

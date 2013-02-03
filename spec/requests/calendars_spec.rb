@@ -12,11 +12,22 @@ describe "Calendar" do
     # create own boat with trip dates and boat bookings
     let!(:own_checked_boat) { create(:boat, owner: myself) }
     let!(:trip) { create(:trip, boat: own_checked_boat) }
-    let!(:trip_date) { create(:trip_date, trip: trip,
+      # unbooked trip date
+    let!(:unbooked_trip_date) { create(:trip_date, trip: trip,
       start_at: Date.new(year, 4, 1), end_at: Date.new(year, 4, 7)) }
+      # booked trip date
+    let!(:booked_trip_date) { create(:trip_date, trip: trip,
+      start_at: unbooked_trip_date.end_at + 1.day, end_at: unbooked_trip_date.end_at + 5.days) }
+    let!(:trip_booking) { create(:trip_booking, trip_date: booked_trip_date) }
+      # trip date that has a cancelled booking
+    let!(:cancelled_trip_date) { create(:trip_date, trip: trip,
+      start_at: booked_trip_date.end_at + 1.day, end_at: booked_trip_date.end_at + 5.days) }
+    let!(:cancelled_trip_booking) { create(:trip_booking, trip_date: cancelled_trip_date,
+      cancelled_at: Time.now) }
+      # boat booking
     let!(:checked_boat_booking) { create(:boat_booking, 
       boat: own_checked_boat,
-      start_at: trip_date.end_at + 3.days, end_at: trip_date.end_at + 10.days) }
+      start_at: cancelled_trip_date.end_at + 3.days, end_at: cancelled_trip_date.end_at + 10.days) }
 
     # create own boat with boat bookings
     let!(:own_unchecked_boat) { create(:boat, owner: myself) }
@@ -42,16 +53,28 @@ describe "Calendar" do
           page.find(".ec-boat_booking-#{checked_boat_booking.id}")['style'].should include(checked_boat_booking.boat.color)
         end
 
-        it "should show trip dates in the color of the corresponding boat" do
-          page.find(".ec-trip_date-#{trip_date.id}")['style'].should include(trip_date.trip.boat.color)
-        end      
+        it "should show booked trip dates in the color of the corresponding boat" do
+          page.find(".ec-trip_date-#{booked_trip_date.id}")['style'].should 
+            include(booked_trip_date.trip.boat.color)
+        end
+      end
+
+      describe "scope of trip dates" do
+        before { visit boat_calendar_path }
+        it "should not show unbooked trip dates" do
+          page.should_not have_selector(".ec-trip_date-#{unbooked_trip_date.id}")
+        end
+
+        it "should not show trip dates with only cancelled bookings" do
+          page.should_not have_selector(".ec-trip_date-#{cancelled_trip_date.id}")
+        end
       end
       
       describe "without parameters" do
         before { visit boat_calendar_path }
 
-        it "should show trip_dates of all own boats available for boat charter" do
-          page.should have_selector(".ec-trip_date-#{trip_date.id}")
+        it "should show booked trip_dates of all own boats available for boat charter" do
+          page.should have_selector(".ec-trip_date-#{booked_trip_date.id}")
         end
 
         it "should show boat bookings of all own boats available for boat charter" do
@@ -71,8 +94,8 @@ describe "Calendar" do
       describe "with parameters" do
         before { select_boats }
 
-        it "should show trip_dates with trip name for checked boats" do
-          page.should have_selector(".ec-trip_date-#{trip_date.id}")
+        it "should show booked trip_dates with trip name for checked boats" do
+          page.should have_selector(".ec-trip_date-#{booked_trip_date.id}")
         end
 
         it "should show boat bookings for checked boats" do

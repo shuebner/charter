@@ -18,6 +18,9 @@ class TripDate < Appointment#ActiveRecord::Base
 
   before_destroy :no_trip_bookings_exist
 
+  scope :booked,
+    joins(:trip_bookings).merge(TripBooking.effective).uniq
+
   def self.overlapping(reservation)
     if reservation.instance_of?(TripDate)
       scope = where("TIMEDIFF(start_at, :end_at) * TIMEDIFF(:start_at, end_at) >= 0", 
