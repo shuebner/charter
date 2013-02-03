@@ -170,7 +170,7 @@ describe "Boats" do
         
         it "should have a link to the calendar of the boat" do
           page.should have_selector("a[href='"\
-            "#{boat_calendar_path(boat_selection: { own_boat.slug => own_boat.slug })}']")
+            "#{boat_calendar_path(schiffe: { own_boat.slug => own_boat.slug })}']")
         end
       end
       describe "of external boat" do
@@ -180,7 +180,7 @@ describe "Boats" do
 
         it "should not have a link to the calendar of the boat" do
           page.should_not have_selector("a[href='"\
-            "#{boat_calendar_path(boat_selection: { other_boat.slug => other_boat.slug })}']")
+            "#{boat_calendar_path(schiffe: { other_boat.slug => other_boat.slug })}']")
         end
       end
     end

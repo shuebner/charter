@@ -112,20 +112,20 @@ describe "Calendar" do
       before { select_boats }
 
       it "should offer selection of own boats" do
-        page.should have_selector("#boat_selection_#{own_checked_boat.slug}")
-        page.should have_selector("#boat_selection_#{own_unchecked_boat.slug}")        
+        page.should have_selector("#schiffe_#{own_checked_boat.slug}")
+        page.should have_selector("#schiffe_#{own_unchecked_boat.slug}")        
       end
 
       it "should not offer selection of other boats" do
-        page.should_not have_selector("#boat_selection_#{external_boat.slug}")
+        page.should_not have_selector("#schiffe_#{external_boat.slug}")
       end
 
       it "should have checked previously checked boats" do
-        find("#boat_selection_#{own_checked_boat.slug}").should be_checked
+        find("#schiffe_#{own_checked_boat.slug}").should be_checked
       end
 
       it "should have unchecked previously unchecked boats" do        
-        find("#boat_selection_#{own_unchecked_boat.slug}").should_not be_checked
+        find("#schiffe_#{own_unchecked_boat.slug}").should_not be_checked
       end
 
       it "should show a preview of the boat color" do
@@ -135,8 +135,8 @@ describe "Calendar" do
 
     def select_boats
       visit boat_calendar_path
-      check "boat_selection_#{own_checked_boat.slug}"
-      uncheck "boat_selection_#{own_unchecked_boat.slug}"
+      check "schiffe_#{own_checked_boat.slug}"
+      uncheck "schiffe_#{own_unchecked_boat.slug}"
       click_button "Aktualisieren"
     end
   end

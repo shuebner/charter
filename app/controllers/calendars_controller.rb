@@ -7,7 +7,7 @@ class CalendarsController < ApplicationController
       includes(:boat_bookings, :trip_dates)
     
     # retrieve previous selection in the form
-    @selected_boats = params[:boat_selection] || Hash[@selectable_boats.map{ |b| [b.slug, b.slug] }]
+    @selected_boats = params[:schiffe] || Hash[@selectable_boats.map{ |b| [b.slug, b.slug] }]
     scope = @selectable_boats.select('boats.id')
     
     if @selected_boats
