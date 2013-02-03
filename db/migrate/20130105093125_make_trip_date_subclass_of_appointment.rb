@@ -1,6 +1,6 @@
 class MakeTripDateSubclassOfAppointment < ActiveRecord::Migration
   def up
-#=begin
+=begin
     dates = execute(
       "SELECT id, trip_id, begin_date, end_date, created_at, updated_at "\
       "FROM trip_dates")
@@ -18,7 +18,7 @@ class MakeTripDateSubclassOfAppointment < ActiveRecord::Migration
         "WHERE type = 'TripDate' AND start_at = '#{d[2]}' AND "\
           "end_at = '#{d[3]}' AND created_at = '#{d[4]}' AND "\
           "updated_at = '#{d[5]}'").first[0]
-#=end
+=end
 =begin      
       # there should be exactly one entry equal to d
       if id.is_a?(Array)
@@ -28,7 +28,7 @@ class MakeTripDateSubclassOfAppointment < ActiveRecord::Migration
         raise message
       end
 =end
-#=begin
+=begin
       # remember the new id for the TripDate
       d[6] = id
     end
@@ -55,7 +55,7 @@ class MakeTripDateSubclassOfAppointment < ActiveRecord::Migration
           "WHERE trip_date_id = #{d[0]}")
       end
     end
-#=end
+=end
     create_citier_view(TripDate)
   end
 
