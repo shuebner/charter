@@ -42,20 +42,39 @@ class MakeTripDateSubclassOfAppointment < ActiveRecord::Migration
     execute("DELETE FROM trip_dates")
 
     # insert the old trip dates with their new ids
+    # remember the trip bookings and trip inquiries for each one
+    trip_booking_ids = Hash.new
+    trip_inquiry_ids = Hash.new
     dates.each do |d|
       execute(
         "INSERT INTO trip_dates (id, trip_id) "\
         "VALUES (#{d[6]}, #{d[1]})")
       
       # update the trip_date_id in trip_inquiries and trip_bookings
+      # THIS CODE IS WRONG!!!
+=begin
       ['trip_inquiries', 'trip_bookings'].each do |table|
         execute(
           "UPDATE #{table} "\
           "SET trip_date_id = #{d[6]} "\
           "WHERE trip_date_id = #{d[0]}")
       end
+=end
+      # THIS IS THE RIGHT CODE
+      # just remember the corresponding trip bookings and trip inquiries for later
+      trip_booking_ids[d[0]] = execute("SELECT id FROM trip_bookings WHERE trip_date_id = #{d[0]}").to_a.flatten
+      trip_inquiry_ids[d[0]] = execute("SELECT id FROM trip_inquiries WHERE trip_date_id = #{d[0]}").to_a.flatten
+      
     end
-#=end
+
+    # now update with the remembered old ids
+    trip_booking_ids.each do |date_id, trip_booking_ids|
+      execute("UPDATE trip_bookings SET trip_date_id = #{date_id} WHERE id IN (#{trip_booking_ids.join('-')})")
+    end
+
+    trip_inquiry_ids.each do |date_id, trip_inquiry_ids|
+      execute("UPDATE trip_inquiries SET trip_date_id = #{date_id} WHERE id IN (#{trip_inquiry_id.join('-')})")
+    end
     create_citier_view(TripDate)
   end
 
