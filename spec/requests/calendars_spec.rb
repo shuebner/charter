@@ -28,6 +28,10 @@ describe "Calendar" do
     let!(:checked_boat_booking) { create(:boat_booking, 
       boat: own_checked_boat,
       start_at: cancelled_trip_date.end_at + 3.days, end_at: cancelled_trip_date.end_at + 10.days) }
+      # cancelled boat booking
+    let!(:cancelled_checked_boat_booking) { create(:boat_booking,
+      boat: own_checked_boat, cancelled: true,
+      start_at: checked_boat_booking.end_at + 1.day, end_at: checked_boat_booking.end_at + 5.days) }
 
     # create own boat with boat bookings
     let!(:own_unchecked_boat) { create(:boat, owner: myself) }
@@ -67,6 +71,13 @@ describe "Calendar" do
 
         it "should not show trip dates with only cancelled bookings" do
           page.should_not have_selector(".ec-trip_date-#{cancelled_trip_date.id}")
+        end
+      end
+
+      describe "scope of boat bookings" do
+        before { visit boat_calendar_path }
+        it "should not show cancelled boat bookings" do
+          page.should_not have_selector(".ec-boat_booking-#{cancelled_checked_boat_booking.id}")
         end
       end
       

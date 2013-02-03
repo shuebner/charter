@@ -19,7 +19,7 @@ class CalendarsController < ApplicationController
     # get all the Appointments to be displayed
     app_ids = []
     selected_boats.each do |boat|
-      app_ids += boat.boat_bookings.map(&:id) + boat.trip_dates.booked.map(&:id)      
+      app_ids += boat.boat_bookings.effective.map(&:id) + boat.trip_dates.booked.map(&:id)      
     end
     apps = Appointment.where(id: app_ids)
 
