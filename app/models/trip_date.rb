@@ -18,8 +18,9 @@ class TripDate < Appointment#ActiveRecord::Base
 
   before_destroy :no_trip_bookings_exist
 
-  scope :booked,
+  def self.booked
     joins(:trip_bookings).merge(TripBooking.effective).uniq
+  end
 
   def self.overlapping(reservation)
     if reservation.instance_of?(TripDate)

@@ -1,5 +1,6 @@
 class MakeBoatBookingSubclassOfAppointment < ActiveRecord::Migration
-  def up    
+  def up
+=begin    
     bookings = execute(
       "SELECT id, begin_date, end_date, created_at, "\
       "updated_at FROM boat_bookings")
@@ -17,7 +18,7 @@ class MakeBoatBookingSubclassOfAppointment < ActiveRecord::Migration
     [:begin_date, :end_date, :created_at, :updated_at].each do |c|
       remove_column :boat_bookings, c
     end
-
+=end
     create_citier_view(BoatBooking)
   end
 
