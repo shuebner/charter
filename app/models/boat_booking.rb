@@ -50,7 +50,7 @@ class BoatBooking < Appointment
     end
   end
 
-  scope :effective, where(cancelled: false)
+  scope :effective, where('NOT cancelled')
 
   def self.overlapping(reservation)
     if reservation.instance_of?(BoatBooking)
