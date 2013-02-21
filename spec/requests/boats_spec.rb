@@ -74,6 +74,51 @@ describe "Boats" do
         end
       end
     end
+
+    describe "with parameter hafen" do
+      before { visit boats_path(hafen: own_port_with_visible_boat.slug) }
+      it "should show visible boats from that port" do
+        within 'ul.boat-list' do
+          page.should have_selector('li:nth-child(1)', text: own_visible_boat1.name)
+          page.should have_selector('li:nth-child(2)', text: own_visible_boat2.name)
+          page.should have_selector('li:nth-child(3)', text: extern_boat_in_own_port.name)
+        end
+      end
+      
+      it "should not show other ports" do
+        within '#content' do
+          page.should_not have_selector('li', text: other_port_with_visible_boat1.name)
+          page.should_not have_selector('li', text: other_port_with_visible_boat2.name)
+        end
+      end
+
+      describe "link to boat calendar" do
+        describe "if port is own port" do
+          before { visit boats_path(hafen: own_port_with_visible_boat.slug) }
+          it "should be present" do
+            within '#content' do
+              page.should have_link('Buchungskalender')
+            end
+          end
+          it "should pre-select the own boats of this port" do
+            within '#content' do
+              page.should have_link('Buchungskalender', href: boat_calendar_path(
+                schiffe: Hash[own_port_with_visible_boat.boats.own.visible.
+                  boat_charter_only.map { |b| [b.slug, b.slug]}]))
+            end
+          end
+        end
+
+        describe "if port is external port" do
+          before { visit boats_path(hafen: other_port_with_visible_boat1) }
+          it "should not be present" do
+            within '#content' do
+              page.should_not have_link('Buchungskalender', href: boat_calendar_path)
+            end
+          end
+        end
+      end
+    end
   end
 
 

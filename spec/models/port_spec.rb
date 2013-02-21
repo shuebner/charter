@@ -48,6 +48,24 @@ describe Port do
     end
   end
 
+  describe "method own?" do
+    let(:myself) { create(:boat_owner, is_self: true) }
+    let(:someone_else) { create(:boat_owner, is_self: false) }
+    let(:own_port) { create(:port) }
+    let(:external_port) { create(:port) }
+    let(:own_boat_at_own_port) { create(:boat, owner: myself, port: own_port) }
+    let(:external_boat_at_own_port) { create(:boat, owner: myself, port: own_port) }
+    let(:external_boat_at_external_port) { create(:boat, owner: someone_else, port: external_port) }
+
+    it "should return false for external port" do
+      external_port.own? == false
+    end
+
+    it "should return true for own port" do
+      own_port.own? == true
+    end
+  end
+
 
   describe "scope" do
     describe "default" do

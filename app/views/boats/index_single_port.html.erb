@@ -1,0 +1,9 @@
+<% provide(:title, "Schiffe") %>
+<h1>Schiffscharter ab <%= @port.name %></h1>
+<% if @port.own? %>
+  <p><%= link_to "Buchungskalender ansehen", boat_calendar_path(schiffe: Hash[@port.boats.own.visible.boat_charter_only.map { |b| [b.slug, b.slug] }]) %></p>
+<% end %>
+<p>Sie können folgende Schiffe bei uns ab <%= @port.name %> chartern:</p>
+<ul class="block-list index-list boat-list clearfix">
+  <%= render @port.boats.visible %>
+</ul>

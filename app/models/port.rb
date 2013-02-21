@@ -30,6 +30,10 @@ class Port < ActiveRecord::Base
       select('ports.*').group('ports.id')
   end
 
+  def own?
+    Boat.own.where(port_id: id).any?
+  end
+
   private
 
   def no_boats_exist
