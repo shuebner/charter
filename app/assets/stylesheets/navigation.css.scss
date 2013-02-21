@@ -46,12 +46,37 @@ nav {
           text-align: left;
           border-top: 1px solid #6666cc;
           #border-bottom: 1px solid white;
+          ul {
+            left: 14.9em;
+            top: -2px;
+            #border: 1px solid red;
+          }
           a {
             padding: 0.2em 0.5em 0.2em 0.5em;
+            &:after { 
+              position: absolute;
+              right: 5px;
+              // small right arrow
+              width: 0px; 
+              height: 0px; 
+              border-bottom: 8px solid transparent; 
+              border-top: 8px solid transparent; 
+              border-left: 8px solid #6666cc; 
+              font-size: 0px;
+              line-height: 0px;
+              content: "";
+            }
+            // no arrow if there is no ul child and therefore no submenu
+            &:only-child:after {
+              border: none;
+            }
           }
         }
-        &.menu-boat-list >li {
-          width: 20em;
+        &.menu-port-list >li {
+          width: 15em;
+          ul.menu-boat-list >li {
+            width: 20em;
+          }          
         }
         &.menu-trip-list >li {
           width: 20em;
@@ -63,17 +88,22 @@ nav {
 
 // Dynamik
 nav ul {
-  li {
+  z-index: 100;
+  >li {
     position: relative;    
-    ul {
+    >ul {
       display: none;
-      position: absolute;      
-      li {        
+      position: absolute;
+      z-index: 200;
+      >li {
         float: none;
         display: block;
+        >ul {
+          z-index: 300;
+        }
       }
     }
-    &:hover ul {
+    &:hover >ul {
       display: block;
     }
   }

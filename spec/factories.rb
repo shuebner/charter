@@ -24,7 +24,7 @@ FactoryGirl.define do
     association :owner, factory: :boat_owner
     port
     manufacturer "Testschiffhersteller"
-    model "Testschiff"
+    sequence(:model) { |n| "Modell #{n}" }
     sequence(:name) { |n| "Palve #{n}" }
     permanent_bunks 4
     convertible_bunks 2
