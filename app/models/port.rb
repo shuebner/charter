@@ -17,11 +17,18 @@ class Port < ActiveRecord::Base
   scope :with_visible_boat, joins(:boats).merge(Boat.visible).
     select('ports.*').group('ports.id')
 
-  scope :own, joins(boats: :owner).where('boat_owners.is_self = TRUE').
+  # Häfen, an denen ein eigenes Schiff liegt
+  scope :own, joins(boats: :owner).where('boat_owners.is_self').
     select('ports.*').group('ports.id')
 
-  scope :external, joins(boats: :owner).where('boat_owners.is_self = FALSE').
-    select('ports.*').group('ports.id')
+  # Häfen, an denen ein fremdes Schiff aber kein eigenes Schiff liegt
+  # (hat nicht als scope mit eingebautem Port.own.map(&:id) funktioniert)
+  def self.external
+    own_ids = own.map(&:id)
+    joins(:boats).where('boats.id IS NOT NULL').
+      where('ports.id NOT IN (:own_ids)', own_ids: own_ids).
+      select('ports.*').group('ports.id')
+  end
 
   private
 

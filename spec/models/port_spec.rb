@@ -79,13 +79,14 @@ describe Port do
       let!(:other_port) { create(:port) }
       let!(:own_boat) { create(:boat, owner: myself, port: own_port) }
       let!(:other_boat) { create(:boat, owner: someone_else, port: other_port) }
+      let!(:external_boat_at_own_port) { create(:boat, owner: someone_else, port: own_port) }
       describe "own" do
         it "should only yield ports that have boats which belong to oneself" do
           Port.own.should == [own_port]
         end
       end
       describe "external" do
-        it "should only yield port that have boats which belong to others" do
+        it "should only yield ports that have boats which belong to others and none that belong to oneself" do
           Port.external.should == [other_port]
         end
       end
