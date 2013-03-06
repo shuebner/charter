@@ -19,7 +19,16 @@ class TripBooking < ActiveRecord::Base
   
   validates :no_of_bunks,
     numericality: {
-      less_than_or_equal_to: Proc.new { |b| b.trip_date.no_of_available_bunks },
+      less_than_or_equal_to: Proc.new do |b|        
+        if b.new_record?
+          b.trip_date.no_of_available_bunks
+        else
+          # beide Summanden sind die alten Werte aus der DB,
+          # d. h. berücksichtigen nicht den evtl. geänderten Wert no_of_bunks von b
+          # das ist für die Korrektheit der Berechnung notwendig!
+          b.trip_date.no_of_available_bunks + TripBooking.find_by_id(b.id).no_of_bunks
+        end
+      end,
       if: :trip_date }
 
   validates :number,

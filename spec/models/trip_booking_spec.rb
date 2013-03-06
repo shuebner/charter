@@ -59,12 +59,36 @@ describe TripBooking do
       it { should_not be_valid}
     end
 
-    describe "is more than the number of bunks still available for the date" do
+    describe "for new booking is greater than the number still available" do
       before do
         other_booking = create(:trip_booking, trip_date: date, no_of_bunks: 1)
         booking.no_of_bunks = date.trip.no_of_bunks
       end
       it { should_not be_valid }
+    end
+
+    describe "for existing booking" do
+      let!(:other_booking) { create(:trip_booking, trip_date: date, no_of_bunks: 2) }
+      before do
+        @max_bunks = 4
+        trip = booking.trip
+        trip.no_of_bunks = 4
+        trip.save!        
+        booking.no_of_bunks = @max_bunks - other_booking.no_of_bunks
+        booking.save!
+      end
+
+      describe "is greater than the number still available "\
+                "minus the ones of other effective bookings" do
+        before { booking.no_of_bunks = @max_bunks - other_booking.no_of_bunks + 1 }
+        it { should_not be_valid }
+      end
+      
+      describe "is between the number still available "\
+                "minus the ones of other effective bookings and "\
+                "the the number still available" do
+        it { should be_valid }
+      end
     end
   end
 
