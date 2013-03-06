@@ -27,7 +27,7 @@ class BoatBooking < Appointment
 
   validate :max_no_of_people_on_boat_is_not_exceeded
 
-  validate :boat_is_available, if: :boat
+  validate :boat_is_available, if: :boat, unless: :cancelled?
 
   # cancellation mechanic
   validates :cancelled,
