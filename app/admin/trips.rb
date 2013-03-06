@@ -1,5 +1,7 @@
 # encoding: utf-8
 ActiveAdmin.register Trip do
+  menu parent: I18n.t("trip_data")
+
   config.filters = false
   config.sort_order = 'name_asc'
 
@@ -90,18 +92,6 @@ ActiveAdmin.register Trip do
             i.template.content_tag(:span, I18n.t('no_picture_available')) :
             i.template.image_tag(i.object.attachment.thumb('200x200').url)
         i.input :retained_attachment, as: :hidden
-      end
-    end
-    
-    f.has_many :trip_dates do |td|
-      td.inputs do
-        if !td.object.nil?
-          td.input :_destroy, as: :boolean, label: "Termin löschen"
-        end
-      end
-      td.inputs do
-        td.input :start_at
-        td.input :end_at
       end
     end
     f.actions
