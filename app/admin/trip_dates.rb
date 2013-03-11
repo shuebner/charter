@@ -29,7 +29,7 @@ ActiveAdmin.register TripDate do
     else
       redirect_to admin_trip_dates_path,
         alert: "Törntermin #{trip_date.display_name_with_trip} konnte nicht reaktiviert werden. "\
-                "Fehler: #{trip_date.errors[:deferred].join(', ')}"
+                "Fehler: #{trip_date.errors[:start_at].join(', ')}"
     end
   end
 
