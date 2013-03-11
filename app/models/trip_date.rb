@@ -14,7 +14,18 @@ class TripDate < Appointment#ActiveRecord::Base
     presence: true,
     timeliness: { type: :datetime, after: :start_at }
 
-  validate :boat_is_available
+  validates :deferred,
+    inclusion: { in: [true, false] }  
+  # Termin soll nur zurückstellbar sein, falls keine unstornierten Buchungen darauf existieren
+  validate :no_effective_trip_bookings_exist, if: :deferred?
+
+  validate :boat_is_available, unless: :deferred?
+
+  after_initialize do
+    if self.new_record?
+      self.deferred = false
+    end
+  end
 
   before_destroy :no_trip_bookings_exist
 
@@ -22,15 +33,19 @@ class TripDate < Appointment#ActiveRecord::Base
     joins(:trip_bookings).merge(TripBooking.effective).uniq
   end
 
+  def self.effective
+    where("NOT deferred")
+  end
+
   def self.overlapping(reservation)
     if reservation.instance_of?(TripDate)
-      scope = where("TIMEDIFF(start_at, :end_at) * TIMEDIFF(:start_at, end_at) >= 0", 
+      scope = effective.where("TIMEDIFF(start_at, :end_at) * TIMEDIFF(:start_at, end_at) >= 0", 
         { start_at: reservation.start_at, end_at: reservation.end_at })
       if reservation.id 
         scope = scope.where("NOT view_trip_dates.id = ?", reservation.id)
       end
     else
-      scope = where("TIMEDIFF(start_at, :end_at) * TIMEDIFF(:start_at, end_at) >= 0", 
+      scope = effective.where("TIMEDIFF(start_at, :end_at) * TIMEDIFF(:start_at, end_at) >= 0", 
         { start_at: reservation.start_at, end_at: reservation.end_at })
     end
     scope
@@ -43,6 +58,18 @@ class TripDate < Appointment#ActiveRecord::Base
       booked_bunks = 0
     end
     trip.no_of_bunks - booked_bunks
+  end
+
+  def deferred?
+    deferred
+  end
+
+  def defer!
+    self.deferred = true
+  end
+
+  def undefer!
+    self.deferred = false
   end
 
   def display_name
@@ -92,6 +119,12 @@ class TripDate < Appointment#ActiveRecord::Base
     unless trip_bookings.empty?
       errors.add(:base, "Für diesen Termin existieren bereits Buchungen.")
       return false
+    end
+  end
+
+  def no_effective_trip_bookings_exist
+    unless trip_bookings.effective.empty?
+      errors.add(:deferred, "Für diesen Termin existieren unstornierte Buchungen")
     end
   end
 end

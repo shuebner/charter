@@ -156,14 +156,25 @@ describe BoatBooking do
       let(:trip) { create(:trip, boat: booking.boat) }
       let!(:trip_date) { create(:trip_date, trip: trip,
         start_at: booking.start_at - 2.days, end_at: booking.end_at - 2.days) }
-      it { should_not be_valid }
+      
+      describe "which is not deferred" do
+        it { should_not be_valid }
+      end
+
+      describe "which is deferred" do
+        before do
+          trip_date.defer!
+          trip_date.save!
+        end
+        it { should be_valid }
+      end
     end
 
     describe "with boat booking for the same boat" do
       let!(:other_booking) { create(:boat_booking, boat: booking.boat,
         start_at: booking.start_at - 2.days, end_at: booking.end_at - 2.days) }
       
-      describe "which is still valid" do
+      describe "which is still effective" do
         it { should_not be_valid }
       end
     
@@ -192,6 +203,31 @@ describe BoatBooking do
       it "should not include cancelled boat bookings" do
         BoatBooking.effective.should_not include(cancelled_booking)
       end
+    end
+  end
+
+  describe "method overlapping" do    
+    before { booking.save! }
+
+    let(:non_overlapping_boat_booking) { build(:boat_booking, boat: booking.boat,
+      start_at: booking.end_at + 1.day, end_at: booking.end_at + 3.days) }
+    let(:overlapping_boat_booking) { build(:boat_booking, boat: booking.boat,
+      start_at: booking.end_at - 1.day, end_at: booking.end_at + 1.day) }
+    
+    it "should return effective overlapping boat bookings" do
+      BoatBooking.overlapping(overlapping_boat_booking).should include(booking)
+    end
+    it "should not return cancelled overlapping boat bookings" do
+      booking.cancel!
+      booking.save!
+      BoatBooking.overlapping(overlapping_boat_booking).should_not include(booking)
+    end 
+    it "should not return non-overlapping boat bookings" do
+      BoatBooking.overlapping(non_overlapping_boat_booking).should_not include(booking)
+    end
+    it "should not return the argument itself" do
+      non_overlapping_boat_booking.save!
+      BoatBooking.overlapping(non_overlapping_boat_booking).should_not include(non_overlapping_boat_booking)
     end
   end
 end
