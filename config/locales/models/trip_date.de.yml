@@ -7,3 +7,4 @@ de:
     attributes:
       trip_date:
         no_of_available_bunks: "freie Plätze"
+        deferred: "zurückgestellt"
