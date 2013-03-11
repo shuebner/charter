@@ -3,15 +3,16 @@ ActiveAdmin.register TripBooking do
   menu parent: I18n.t('bookings')
   
   filter :number
-  filter :created_at
-  filter :customer
-
+  filter :customer, collection: Proc.new { Customer.by_name.map { |c| [c.display_name, c.number] } }
+  filter :trip_date_trip_slug, label: I18n.t("activerecord.models.trip.one"),
+    as: :select, collection: Proc.new { Trip.all.map { |t| [t.name, t.slug] } }
+  
   scope :all do |bookings|
     bookings.includes [:customer]
   end
 
   scope :effective, default: true do |bookings|
-    bookings.effective.includes [:customer]
+    bookings.effective.includes [:customer, { trip_date: :trip }]
   end
 
   actions :all, except: [:destroy]
@@ -38,11 +39,11 @@ ActiveAdmin.register TripBooking do
 
   index do
     column :number
-    column(Boat.model_name.human) { |b| b.trip.boat.name }
-    column :trip, sortable: false
+    column :trip, sortable: 'trips.name'
+    column(:start_at, sortable: 'view_trip_dates.start_at') { |b| I18n.l(b.trip_date.start_at) }
+    column(:end_at, sortable: 'view_trip_dates.end_at') { |b| I18n.l(b.trip_date.end_at) }
     column :customer, sortable: 'customers.last_name'
     column :no_of_bunks
-    column :created_at
     column() do |b|
       if !b.cancelled?
         link_to "stornieren", cancel_admin_trip_booking_path(b), method: :put, 

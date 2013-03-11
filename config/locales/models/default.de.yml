@@ -15,3 +15,5 @@ de:
     active: "aktiv"
     color: "Farbe"
     trip: "Törn"
+    start_at: "Anfang"
+    end_at: "Ende"
