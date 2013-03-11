@@ -9,12 +9,18 @@
         <th><%= TripDate.human_attribute_name(:no_of_available_bunks) %></th>
       </tr>
       <% trip_dates.each do |d| %>
-        <tr>
-          <td><%= l(d.start_at) %></td>
-          <td><%= l(d.end_at) %></td>
-          <td><%= d.no_of_available_bunks %></td>
-          <% if d.no_of_available_bunks > 0 %>
-            <td>
+        <tr id="trip-date-<%= d.id %>">
+          <td class="start-at"><%= l(d.start_at) %></td>
+          <td class="end-at"><%= l(d.end_at) %></td>
+          <td class="available-bunks">
+            <% if d.deferred? %>
+              0
+            <% else %>
+              <%= d.no_of_available_bunks %>
+            <% end %>
+          </td>
+          <% if !d.deferred? && d.no_of_available_bunks > 0 %>
+            <td class="book">
               <%= link_to "buchen", new_trip_inquiry_path(trip_date_id: d.id) %>
             </td>
           <% else %>

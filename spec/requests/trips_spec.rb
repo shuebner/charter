@@ -53,13 +53,34 @@ describe "Trips" do
     end
 
     describe "trip dates" do
-      let!(:date) { create(:trip_date, trip:trip, 
+      let!(:date) { create(:trip_date, trip: trip, 
         start_at: 2.days.from_now, end_at: 3.days.from_now) }
+      let!(:deferred_date) { create(:deferred_trip_date, trip: trip,
+        start_at: 4.days.from_now, end_at: 6.days.from_now) }
       before { visit trip_path(trip) }
       
-      it "should show the dates for the trip" do
-        page.should have_content(I18n.l(date.start_at))
-        page.should have_content(I18n.l(date.end_at))
+      it "should show the dates for the trips" do
+        [date, deferred_date].each do |td|
+          within "#trip-dates #trip-date-#{td.id}" do        
+            page.should have_selector(".start-at", text: I18n.l(td.start_at))
+            page.should have_selector(".end-at", text: I18n.l(td.end_at))
+          end
+        end
+      end
+
+      describe "the number of available bunks" do
+        it "for undeferred trip dates should be the actual number of available bunks" do
+          within "#trip-dates #trip-date-#{date.id}" do
+            page.should have_selector(".available-bunks", text: "#{date.no_of_available_bunks}")
+          end
+        end
+
+        it "for deferred trip dates should be zero" do
+          within "#trip-dates #trip-date-#{deferred_date.id}" do
+            page.should_not have_selector(".available-bunks", text: "#{deferred_date.no_of_available_bunks}")
+            page.should have_selector(".available-bunks", text: "0")
+          end
+        end
       end
 
       describe "links to trip inquiries" do
@@ -67,11 +88,14 @@ describe "Trips" do
         let!(:full_booking) { create(:trip_booking, trip_date: full_date, 
           no_of_bunks: full_date.no_of_available_bunks) }
         before { visit trip_path(trip) }
-        it "should have a link to the right trip inquiry form for non-full trips" do
+        it "should have a link to the right trip inquiry form for non-full trip dates" do
           page.should have_link("buchen", href: new_trip_inquiry_path(trip_date_id: date.id))
         end
-        it "should not have a link to an inquiry for full trips" do
+        it "should not have a link to an inquiry for full trip dates" do
           page.should_not have_link("buchen", href: new_trip_inquiry_path(trip_date_id: full_date.id))
+        end
+        it "should not have a link to an inquiry for deferred trip dates" do
+          page.should_not have_link("buchen", href: new_trip_inquiry_path(trip_date_id: deferred_date.id))
         end
       end
     end

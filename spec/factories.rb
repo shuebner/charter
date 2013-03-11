@@ -185,6 +185,9 @@ FactoryGirl.define do
     end
     factory :trip_date, class: TripDate do
       trip
+      factory :deferred_trip_date, class: TripDate do
+        deferred true
+      end
     end
   end
 

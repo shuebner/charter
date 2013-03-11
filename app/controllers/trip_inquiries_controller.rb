@@ -2,7 +2,7 @@
 class TripInquiriesController < ApplicationController
 
   def new
-    @trip_date = TripDate.find_by_id(params[:trip_date_id])
+    @trip_date = TripDate.effective.find_by_id(params[:trip_date_id]) || not_found
     @trip_inquiry = TripInquiry.new(trip_date_id: @trip_date.id)
   end
 

@@ -11,6 +11,16 @@ describe "TripInquiries" do
   describe "trip inquiry" do
     let(:trip) { create(:trip, no_of_bunks: 4) }
     let!(:trip_date) { create(:trip_date, trip: trip) }
+    let!(:deferred_trip_date) { create(:deferred_trip_date, trip: trip) }
+
+    describe "for deferred trip date" do
+      it "should cause a routing error" do
+        expect do
+          visit new_trip_inquiry_path(trip_date_id: deferred_trip_date.id)
+        end.to raise_error(ActionController::RoutingError)
+      end
+    end
+
     before do
       visit new_trip_inquiry_path(trip_date_id: trip_date.id)
     end
