@@ -5,6 +5,8 @@ describe Document do
 
   subject { doc }
 
+  it_should_behave_like Attachment
+
   it { should be_valid }
 
   describe "when type is not present" do

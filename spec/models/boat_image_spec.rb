@@ -6,6 +6,8 @@ describe BoatImage do
 
   subject { image }
 
+  it_should_behave_like Image
+
   its(:attachable) { should == boat }
 
   it { should be_valid }
