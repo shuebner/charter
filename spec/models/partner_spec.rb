@@ -8,6 +8,7 @@ describe Partner do
   it { should respond_to(:name) }
   it { should respond_to(:url) }
   it { should respond_to(:order) }
+  it { should respond_to(:image) }
 
   it { should be_valid }
 
@@ -44,6 +45,17 @@ describe Partner do
     describe "is not an integer" do
       before { partner.order = 2.3 }
       it { should_not be_valid }
+    end
+  end
+
+  describe "association to partner image" do
+    before { partner.save! }
+    let!(:image) { create(:partner_image, attachable: partner) }
+    
+    its(:image) { should == image }
+
+    it "should delete the associated image" do
+      expect { partner.destroy }.to change(PartnerImage, :count).by(-1)
     end
   end
 end

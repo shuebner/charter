@@ -3,6 +3,9 @@
 class Partner < ActiveRecord::Base
   attr_accessible :name, :order, :url
 
+  has_one :image, as: :attachable, class_name: "PartnerImage",
+    dependent: :destroy
+
   validates :name,
     presence: true
 
@@ -14,4 +17,5 @@ class Partner < ActiveRecord::Base
   validates :order,
     presence: true,
     numericality: { only_integer: true }
+
 end
