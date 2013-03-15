@@ -44,6 +44,9 @@ describe "Calendar" do
     let!(:no_boat_charter_trip_date) { create(:trip_date, trip: no_boat_charter_trip,
       start_at: checked_boat_booking.start_at, end_at: checked_boat_booking.end_at) }
 
+    # create own inactive boat
+    let!(:own_inactive_boat) { create(:boat, owner: myself, active: false) }
+
     # create other boat with boat bookings
     let!(:external_boat) { create(:boat, owner: someone_else) }
     let!(:external_boat_booking) { create(:boat_booking, boat: external_boat,
@@ -122,9 +125,17 @@ describe "Calendar" do
     describe "boat selection form" do
       before { select_boats }
 
-      it "should offer selection of own boats" do
+      it "should offer selection of own active boats available for boat charter" do
         page.should have_selector("#schiffe_#{own_checked_boat.slug}")
-        page.should have_selector("#schiffe_#{own_unchecked_boat.slug}")        
+        page.should have_selector("#schiffe_#{own_unchecked_boat.slug}")
+      end
+
+      it "should not offer selection of boats not available for boat charter" do
+        page.should_not have_selector("#schiffe_#{own_no_boat_charter_boat.slug}")
+      end
+
+      it "should not offer selection of inactive boats" do
+        page.should_not have_selector("#schiffe_#{own_inactive_boat.slug}")
       end
 
       it "should not offer selection of other boats" do
