@@ -126,12 +126,31 @@ describe "Boats" do
     let!(:boat) { create(:boat) }
     let!(:image) { create(:boat_image, attachable: boat) }
 
-    describe "when boat is not visible" do
-      let!(:invisible_boat) { create(:unavailable_boat) }
-      it "should not be available" do        
-        expect do
-          visit boat_path(invisible_boat)
-        end.to raise_error(ActionController::RoutingError)
+    describe "with invalid parameters" do
+      describe "when boat does not exist" do
+        it "should cause routing error" do
+          expect do
+            visit "#{boats_path}/gibtsnicht"
+          end.to raise_error(ActionController::RoutingError)
+        end
+      end
+
+      describe "when boat is not available" do
+        let!(:invisible_boat) { create(:unavailable_boat) }
+        it "should cause routing error" do        
+          expect do
+            visit boat_path(invisible_boat)
+          end.to raise_error(ActionController::RoutingError)
+        end
+      end
+
+      describe "when boat is not active" do
+        let!(:inactive_boat) { create(:boat, active: false) }
+        it "should cause routing error" do
+          expect do
+            visit boat_path(inactive_boat)
+          end.to raise_error(ActionController::RoutingError)
+        end
       end
     end
 
