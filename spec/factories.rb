@@ -199,4 +199,10 @@ FactoryGirl.define do
   factory :port do
     name { Faker::Address.city }
   end
+
+  factory :partner do
+    name { Faker::Name.name }
+    url { Faker::Internet.url }
+    sequence(:order) { |n| n }
+  end
 end

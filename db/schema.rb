@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130306081154) do
+ActiveRecord::Schema.define(:version => 20130315135842) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -226,6 +226,16 @@ ActiveRecord::Schema.define(:version => 20130306081154) do
 
   add_index "paragraphs", ["order"], :name => "index_paragraphs_on_order"
   add_index "paragraphs", ["static_page_id"], :name => "index_paragraphs_on_static_page_id"
+
+  create_table "partners", :force => true do |t|
+    t.string   "name"
+    t.string   "url"
+    t.integer  "order"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "partners", ["order"], :name => "index_partners_on_order"
 
   create_table "ports", :force => true do |t|
     t.string   "name",       :null => false

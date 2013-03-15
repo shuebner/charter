@@ -1,5 +1,8 @@
 Charter::Application.routes.draw do
 
+  resources :partners
+
+
   scope(path_names: { new: "neu", edit: "bearbeiten" }) do
 
     ActiveAdmin.routes(self)
