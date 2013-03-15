@@ -2,7 +2,7 @@
 class BoatInquiriesController < ApplicationController
 
   def new
-    @boat = Boat.find_by_slug(params[:boat])
+    @boat = Boat.visible.find_by_slug(params[:boat]) || not_found
     @boat_inquiry = BoatInquiry.new(boat_id: @boat.id)
   end
 

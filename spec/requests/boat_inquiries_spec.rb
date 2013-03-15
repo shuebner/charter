@@ -10,6 +10,35 @@ describe "BoatInquiries" do
 
   describe "boat inquiry" do
     let(:boat) { create(:boat, name: "Palve") }
+
+    describe "with invalid parameters" do
+      describe "for non-existing boat" do
+        it "should cause a routing error" do
+          expect do
+            visit new_boat_inquiry_path(boat: "gibtsnicht")
+          end.to raise_error(ActionController::RoutingError)
+        end
+      end
+   
+      describe "for unavailable boat" do
+        let!(:unavailable_boat) { create(:unavailable_boat) }
+        it "should cause a routing error" do
+          expect do
+            visit new_boat_inquiry_path(boat: unavailable_boat.slug)
+          end.to raise_error(ActionController::RoutingError)
+        end
+      end
+
+      describe "for inactive boat" do
+        let!(:inactive_boat) { create(:boat, active: false) }
+        it "should cause a routing error" do
+          expect do
+            visit new_boat_inquiry_path(boat: inactive_boat.slug)
+          end.to raise_error(ActionController::RoutingError)
+        end
+      end
+    end    
+
     before do
       visit new_boat_inquiry_path(boat: boat.slug)
     end
