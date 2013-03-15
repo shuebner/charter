@@ -19,19 +19,23 @@ describe "Trips" do
   end
 
   describe "show page" do
-    describe "when trip does not exist" do
-      it "should raise a routing error" do
-        expect do
-          visit trip_path('bla')
-        end.to raise_error(ActionController::RoutingError)
+    
+    describe "with invalid parameters" do
+      describe "when trip does not exist" do
+        it "should raise a routing error" do
+          expect do
+            visit trip_path('bla')
+          end.to raise_error(ActionController::RoutingError)
+        end
       end
-    end
-    describe "when trip is not visible" do
-      let!(:inactive_trip) { create(:trip, active: false) }
-      it "should raise a routing error" do
-        expect do
-          visit trip_path(inactive_trip)
-        end.to raise_error(ActionController::RoutingError)
+
+      describe "when trip is not active" do
+        let!(:inactive_trip) { create(:trip, active: false) }
+        it "should raise a routing error" do
+          expect do
+            visit trip_path(inactive_trip)
+          end.to raise_error(ActionController::RoutingError)
+        end
       end
     end
 
