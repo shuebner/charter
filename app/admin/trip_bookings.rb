@@ -8,7 +8,7 @@ ActiveAdmin.register TripBooking do
     as: :select, collection: Proc.new { Trip.all.map { |t| [t.name, t.slug] } }
   
   scope :all do |bookings|
-    bookings.includes [:customer]
+    bookings.includes [:customer, { trip_date: :trip }]
   end
 
   scope :effective, default: true do |bookings|
