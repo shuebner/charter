@@ -11,13 +11,23 @@ describe "TripInquiries" do
   describe "trip inquiry" do
     let(:trip) { create(:trip, no_of_bunks: 4) }
     let!(:trip_date) { create(:trip_date, trip: trip) }
-    let!(:deferred_trip_date) { create(:deferred_trip_date, trip: trip) }
-
-    describe "for deferred trip date" do
-      it "should cause a routing error" do
-        expect do
-          visit new_trip_inquiry_path(trip_date_id: deferred_trip_date.id)
-        end.to raise_error(ActionController::RoutingError)
+    
+    describe "with invalid parameters" do
+      describe "for non-existing trip date" do
+        it "should cause a routing error" do
+          expect do
+            visit new_trip_inquiry_path(trip_date_id: 1)
+          end.to raise_error(ActionController::RoutingError)
+        end
+      end
+   
+      describe "for deferred trip date" do
+        let!(:deferred_trip_date) { create(:deferred_trip_date, trip: trip) }
+        it "should cause a routing error" do
+          expect do
+            visit new_trip_inquiry_path(trip_date_id: deferred_trip_date.id)
+          end.to raise_error(ActionController::RoutingError)
+        end
       end
     end
 
