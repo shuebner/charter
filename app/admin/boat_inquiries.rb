@@ -5,17 +5,22 @@ ActiveAdmin.register BoatInquiry do
 
   filter :last_name
   filter :email
-  filter :created_at  
+  filter :created_at
+  filter :boat
+
+  scope :all, default: true do |i|
+    i.includes(:boat)
+  end
   
   actions :all, except: [:new, :edit]
 
   index do
     column :created_at
-    column :boat
-    column :people
+    column :boat, sortable: "boats.name"
+    column :begin_date
+    column :end_date
     column :full_name, sortable: :last_name
     column :email
-    column(:text) { |i| i.text.length <= 50 ? i.text : "#{i.text.to(50)}..." }
     default_actions
   end
 
@@ -23,6 +28,8 @@ ActiveAdmin.register BoatInquiry do
     attributes_table_for i do
       row :created_at
       row :boat
+      row :begin_date
+      row :end_date
       row :adults
       row :children
       row :people
