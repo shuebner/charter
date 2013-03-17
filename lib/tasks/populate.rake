@@ -6,7 +6,8 @@ namespace :db do
 
     [Customer, Port, BoatOwner, TripBooking, TripDate, Trip, 
       Boat, BoatPrice, Captain, Attachment,
-      GeneralInquiry, BoatInquiry, TripInquiry].each(&:delete_all)
+      GeneralInquiry, BoatInquiry, TripInquiry,
+      Partner].each(&:delete_all)
     booking_number = "000"
     customer_number = 31200
     
@@ -177,6 +178,21 @@ namespace :db do
       i.trip_date_id = TripDate.all.map(&:id).sample
       i.bunks = 1
       i.save
+    end
+
+    (1..8).each do |i|
+      p = Partner.new
+      p.name = Faker::Name.name
+      p.url = Faker::Internet.url
+      p.order = i
+      p.save!
+    end
+
+    Partner.all.each do |p|
+      p.build_image
+      p.image.attachment = [File.new("/home/sven/Bilder/HYS3-quer.jpg"), File.new("/home/sven/Bilder/HYS3.jpg")].sample
+      p.image.attachment_title = Populator.words(2..5)
+      p.image.save!
     end
   end
 end
