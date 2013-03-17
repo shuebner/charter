@@ -1,0 +1,16 @@
+<li>
+  <%= block_link_to partner.url, class: " clearfix" do %>
+    <div class="partner-container">
+      <div class="partner-image">
+        <% if partner.image %>
+          <%= image_tag(partner.image.thumb('120x120').url,
+            alt: partner.image.title) %>
+        <% end %>
+      </div>
+      <div class="partner-data">
+        <h2><%= partner.name %></h2>
+        <p>(<%= partner.url %>)</p>
+      </div>
+    </div>
+  <% end %>
+</li>

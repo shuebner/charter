@@ -1,0 +1,35 @@
+$thumb_size: 120px;
+
+ul.partner-list {
+  li {
+    width: 48%;
+    float: left;
+    margin-right: 1em;
+    &:nth-child(odd) {
+      clear: both;
+    }
+    a.block-link {
+      min-height: $thumb_size;
+      div.partner-container {
+        height: $thumb_size;
+        div.partner-image {
+          float: left;
+          width: 120px;
+          min-height: 1px;
+          margin-right: 2em;
+          img {
+            display: block;
+            float: none;
+            margin-left: auto;
+            margin-right: auto;            
+          }
+        }
+        div.partner-data {
+          width: 250px;
+          float: left;
+          min-height: $thumb_size;         
+        }
+      }
+    }
+  }
+}

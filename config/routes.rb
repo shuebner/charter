@@ -1,8 +1,5 @@
 Charter::Application.routes.draw do
 
-  resources :partners
-
-
   scope(path_names: { new: "neu", edit: "bearbeiten" }) do
 
     ActiveAdmin.routes(self)
@@ -26,6 +23,8 @@ Charter::Application.routes.draw do
 
     get '/schiffskalender' => 'calendars#update_boat_calendar',
       as: :boat_calendar
+
+    resources :partners, only: [:index], path: "partner"
 
     resources :static_pages, only: [:show], path: "/"
 
