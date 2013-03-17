@@ -18,4 +18,5 @@ class Partner < ActiveRecord::Base
     presence: true,
     numericality: { only_integer: true }
 
+  default_scope includes(:image).order("partners.order ASC")
 end

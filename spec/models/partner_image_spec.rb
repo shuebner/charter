@@ -16,4 +16,11 @@ describe PartnerImage do
     before { create(:partner_image, attachable: partner) }
     it { should_not be_valid }
   end
+
+  describe "by default order" do
+    let!(:new_image) { PartnerImage.new }
+    it "should be set to 1" do
+      new_image.order.should == 1
+    end
+  end
 end

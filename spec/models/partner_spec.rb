@@ -58,4 +58,12 @@ describe Partner do
       expect { partner.destroy }.to change(PartnerImage, :count).by(-1)
     end
   end
+
+  describe "default scope" do
+    before { partner.save! }
+    let!(:other_partner) { create(:partner, order: partner.order - 1) }
+    it "should order ascending by order" do
+      Partner.all.should == [other_partner, partner]
+    end
+  end
 end
