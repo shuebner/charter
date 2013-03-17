@@ -1,0 +1,12 @@
+de:
+  activerecord:
+    models:
+      partner:
+        one: "Partner"
+        other: "Partner"
+    attributes:
+      partner:
+        name: "Name"
+        url: "Internetadresse"
+        order: "Reihenfolge"
+        image: "Bild"

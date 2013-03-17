@@ -1,10 +1,11 @@
 # encoding: utf-8
 
 class Partner < ActiveRecord::Base
-  attr_accessible :name, :order, :url
+  attr_accessible :name, :order, :url, :image_attributes
 
   has_one :image, as: :attachable, class_name: "PartnerImage",
     dependent: :destroy
+  accepts_nested_attributes_for :image, allow_destroy: true
 
   validates :name,
     presence: true

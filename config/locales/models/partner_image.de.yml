@@ -1,0 +1,9 @@
+de:
+  activerecord:
+    models:
+      partner_image:
+        one: "Partnerbild"
+        other: "Partnerbilder"
+    attributes:
+      partner_image:
+        attachment: "Bild"
