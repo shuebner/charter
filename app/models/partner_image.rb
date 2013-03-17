@@ -8,7 +8,11 @@ class PartnerImage < Image
 
   validate :no_other_image_already_exists_for_partner, if: :attachable
 
-  after_initialize { self.order = 1 }
+  after_initialize do
+    if new_record?
+      self.order = 1
+    end
+  end
 
 
   private

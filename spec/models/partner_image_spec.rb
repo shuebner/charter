@@ -17,10 +17,17 @@ describe PartnerImage do
     it { should_not be_valid }
   end
 
-  describe "by default order" do
+  describe "by default, order" do
     let!(:new_image) { PartnerImage.new }
-    it "should be set to 1" do
+    it "should be set to 1 on new records" do
       new_image.order.should == 1
+    end
+
+    it "should be set to the real value for non-new records" do
+      image.order = 5
+      image.save!
+      image.reload
+      image.order.should == 5
     end
   end
 end
