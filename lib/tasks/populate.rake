@@ -137,6 +137,16 @@ namespace :db do
       c.phone_mobile = "0#{rand(10..999)}-#{rand(100000..9999999)}"
     end
 
+    Captain.all.each do |c|
+      rand(3..10).times do |n|
+        i = c.build_image
+        i.order = n + 1
+        i.attachment = [File.new("/home/sven/Bilder/HYS3-quer.jpg"), File.new("/home/sven/Bilder/HYS3.jpg")].sample
+        i.attachment_title = Populator.words(2..5)
+        i.save!
+      end        
+    end
+
     GeneralInquiry.populate 6 do |i|
       i.type = "GeneralInquiry"
       i.first_name = Faker::Name.first_name
