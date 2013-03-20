@@ -8,7 +8,7 @@ gem 'bcrypt-ruby', '3.0.1'
 
 gem 'mysql2'
 
-gem 'activeadmin'
+gem 'activeadmin', '0.5.0'
 gem 'formtastic', '~>2.1.1'
 gem 'meta_search', '>= 1.1.0.pre'
 gem 'rack-cache', require: 'rack/cache'
