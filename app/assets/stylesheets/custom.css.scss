@@ -6,6 +6,9 @@ $c_block_link_border: grey;
 $c_block_link_bg: #e9e9ff;
 $c_block_link_bg_hover: #ddddff;
 
+// Thumbnail-Größe auf Indexseiten
+$index_thumbnail_size: 120px;
+
 // Runde Ecken
 @mixin round-edges {
   $radius: 10px;
@@ -71,14 +74,6 @@ header {
   visibility: hidden;
 }
 
-ul.block-list {
-  margin: 0;
-  padding: 0;
-  li {
-    list-style: none;  
-  }
-}
-
 a.block-link {  
   @include round-edges;
   border: 1px solid $c_block_link_border;
@@ -120,14 +115,44 @@ a.block-link {
 }
 
 // INDEXE
+
 ul.index-list {
+  margin: 0;
+  padding: 0;
   li {
     margin-bottom: 1em;
     list-style: none;
-    img {
-      float: left;
-      border: 1px solid grey;
-      margin-right: 2em;
+    a {
+      min-height: $index_thumbnail_size;
+      div.index-image {
+        float: left;
+        width: $index_thumbnail_size;
+        min-height: 1px;
+        margin-right: 2em;
+        img {
+          border: 1px solid grey;
+          display: block;
+          float: none;
+          margin: 0 auto;
+        }
+      }
+      div.index-data {
+        float: left;
+      }
+    }
+  }
+}
+
+ul.twocol-list {
+  li {
+    width: 48%;
+    float: left;
+    margin-right: 1em;
+    &:nth-child(odd) {
+      clear: both;
+    }
+    div.index-data {
+      max-width: 270px;
     }
   }
 }

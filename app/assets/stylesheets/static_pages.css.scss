@@ -16,7 +16,10 @@
 }
 
 // Home page buttons
-ul#home-button-list {
+ul.home-button-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
   li {
     margin-right: 1em;
     float: left;
