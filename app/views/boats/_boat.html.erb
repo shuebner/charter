@@ -1,10 +1,12 @@
 <li>
   <%= block_link_to boat_path(boat), class: " clearfix" do %>
     <% image = boat.title_image %>
-    <% if image %>
-      <%= image_tag(image.thumb('120x120').url,
-        alt: image.title) %>
-    <% end %>
+    <div class="boat-image">
+      <% if image %>
+        <%= image_tag(image.thumb('120x120').url,
+          alt: image.title) %>
+      <% end %>
+    </div>
     <div class="boat-data">
       <h3><%= boat.name %></h3>
       <p>
