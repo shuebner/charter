@@ -1,25 +1,27 @@
 <li>
   <%= block_link_to boat_path(boat), class: " clearfix" do %>
     <% image = boat.title_image %>
-    <% if image %>
-      <%= image_tag(image.thumb('120x120').url,
-        alt: image.title) %>
-    <% end %>
-    <div class="boat-data">
+    <div class="index-image">
+      <% if image %>
+        <%= image_tag(image.thumb('120x120').url,
+          alt: image.title) %>
+      <% end %>
+    </div>
+    <div class="index-data">
       <h3><%= boat.name %></h3>
       <p>
         <%= boat.model %><br/>
         <%= Boat.human_attribute_name(:year_of_construction) %> <%= boat.year_of_construction %>
       </p>
       <table>
-        <tr>
-          <td><%= Boat.human_attribute_name(:max_no_of_people) %></td>
-          <td><%= boat.max_no_of_people %></td>
-        </tr>
-        <tr>
-          <td><%= Boat.human_attribute_name(:recommended_no_of_people) %></td>
-          <td><%= boat.recommended_no_of_people %></td>
-        </tr>
+        <% [:max_no_of_people, :recommended_no_of_people].each do |a| %>
+          <% if boat.send(a) %>
+            <tr>
+              <td><%= Boat.human_attribute_name(a) %></td>
+              <td><%= boat.send(a) %></td>
+            </tr>
+          <% end %>
+        <% end %>        
       </table>
     </div>
   <% end %>

@@ -6,24 +6,16 @@
 
 ul.boat-list {
   li {
-    width: 48%;
-    float: left;
-    margin-right: 1em;
-    &:nth-child(odd) {
-      clear: both;
-    }
     a {
-      min-height: 125px;
-    }
-    .boat-data {
-      float: left;
-      max-width: 270px;
-      table {
-        font-size: 90%;
-        margin-top: 0.5em;
-        margin-bottom: 0;
-        td {
-          padding: 0 0.5em 0 0;
+      div.index-data {
+        table {
+          font-size: 90%;
+          margin-top: 0.5em;
+          margin-bottom: 0;
+          border-collapse: collapse;
+          td {
+            padding: 0 0.5em 0 0;
+          }
         }
       }
     }
@@ -31,6 +23,7 @@ ul.boat-list {
 }
 
 ul.port-list {
+  list-style: none;
   margin: 0 0.5em 0 0;
   padding: 0;
 }
