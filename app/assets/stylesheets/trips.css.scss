@@ -1,6 +1,25 @@
 // Place all the styles related to the Trips controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+ul.trip-list {
+  li {
+    a {
+      min-height: 120px;    
+      div.trip-image {
+        float: left;
+        width: 120px;
+        min-height: 1px;
+        margin-right: 2em;          
+        img {
+          display: block;
+          float: none;
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+    }
+  }
+}
 
 #trip-dates {
   table {

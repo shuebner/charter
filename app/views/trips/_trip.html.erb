@@ -1,10 +1,12 @@
 <li>
   <%= block_link_to trip_path(trip), class: "clearfix" do %>
     <% image = trip.title_image %>
-    <% if image %>
-      <%= image_tag(image.thumb('120x120').url,
-        alt: image.title) %>
-    <% end %>
+    <div class="trip-image">
+      <% if image %>
+        <%= image_tag(image.thumb('120x120').url,
+          alt: image.title) %>
+      <% end %>
+    </div>
     <div class="trip-data">
       <h2><%= trip.name %></h2>
       <p><%= Trip.human_attribute_name(:no_of_bunks) %>: 
