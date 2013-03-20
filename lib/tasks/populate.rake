@@ -102,6 +102,16 @@ namespace :db do
       end
     end
 
+    Boat.all.each do |b|
+      rand(3..10).times do |n|
+        i = b.images.build
+        i.order = n + 1
+        i.attachment = [File.new("/home/sven/Bilder/HYS3-quer.jpg"), File.new("/home/sven/Bilder/HYS3.jpg")].sample
+        i.attachment_title = Populator.words(2..5)
+        i.save!
+      end      
+    end
+
     Season.all.each do |s|
       BoatPriceType.all.each do |bpt|
         Boat.boat_charter_only.each do |b|
@@ -150,6 +160,13 @@ namespace :db do
     end
 
     Trip.all.each do |t|
+      rand(2..4).times do |n|
+        i = t.images.build
+        i.order = n + 1
+        i.attachment = [File.new("/home/sven/Bilder/HYS3-quer.jpg"), File.new("/home/sven/Bilder/HYS3.jpg")].sample
+        i.attachment_title = Populator.words(2..5)
+        i.save!
+      end
       rand(2..4).times do |n|
         td = TripDate.new
         td.trip_id = t.id
