@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 namespace :db do
   desc "Erase and fill database"
   task populate: :environment do
@@ -5,7 +7,7 @@ namespace :db do
     require 'faker'
 
     [Customer, Port, BoatOwner, TripBooking, TripDate, Trip, 
-      Boat, BoatPrice, Captain, Attachment,
+      CompositeTrip, Boat, BoatPrice, Captain, Attachment,
       GeneralInquiry, BoatInquiry, TripInquiry,
       Partner].each(&:delete_all)
     booking_number = "000"
@@ -49,45 +51,9 @@ namespace :db do
     end
 
     Boat.populate 7 do |b|
-      b.boat_owner_id = BoatOwner.all.map(&:id)
-      b.port_id = Port.all.map(&:id)
-      b.manufacturer = Faker::Company.name
-      b.length_hull = l = rand(600..1600).to_f / 100
-      b.model = "#{b.manufacturer} #{(l * 3.3).ceil}"
-      b.length_waterline = l * 0.9
-      b.beam = l * 0.27
-      b.draft = l * 0.17
-      b.air_draft = l * 1.1
-      b.displacement = l * 0.6
-      b.sail_area_jib = l * 2
-      b.sail_area_genoa = l * 3
-      b.sail_area_main_sail = l * 2.7
-      b.tank_volume_diesel = [50, 100, 200, 300, 400]
-      b.tank_volume_fresh_water = [50, 100, 200, 300, 400]
-      b.tank_volume_waste_water = [10, 20, 50, 100]
-      b.permanent_bunks = [2, 3, 4, 5, 6]
-      b.convertible_bunks = [0, 1, 2]
-      b.max_no_of_people = b.permanent_bunks + b.convertible_bunks
-      b.recommended_no_of_people = b.permanent_bunks
-      b.headroom_saloon = rand(180..200).to_f / 100
-      b.name = Faker::Name.first_name
-      b.slug = b.name.parameterize
-      b.year_of_construction = rand(1970..2005)
-      b.year_of_refit = 2006..2012
-      b.engine_model = Faker::Name.name
-      b.engine_output = l * 5
-      b.battery_capacity = l * 25
       b.available_for_boat_charter = [true, false]
       b.available_for_bunk_charter = [true, false]
-      if b.available_for_boat_charter
-        b.deposit = [500, 1000, 2000]
-        b.cleaning_charge = [50, 75, 100]
-        b.fuel_charge = 5..10
-        b.gas_charge = [rand(4..8), 0]
-      end
-      b.created_at = 2.years.ago..Time.now
-      b.active = true
-      b.color = "##{rand(2**24).to_s(16).rjust(6, '0')}"
+      set_boat_attributes_except_availability(b)
 
       if b.available_for_bunk_charter
         Trip.populate 1..4 do |t|
@@ -101,6 +67,56 @@ namespace :db do
         end
       end
     end
+
+    # create composite trip on separate boat
+    1.times do
+      b = Boat.new
+      b.available_for_boat_charter = false
+      b.available_for_bunk_charter = true
+      set_boat_attributes_except_availability(b)
+      b.save!
+
+      ct = CompositeTrip.new
+      ct.name = "Etappentörn #{Date.today.year}"
+      ct.slug = ct.name.parameterize
+      ct.description = Populator.sentences(5..10)
+      ct.active = true
+      ct.boat_id = b.id
+      ct.save!
+      
+      3.times do |n|
+        i = ct.images.build
+        i.order = n + 1
+        i.attachment = [File.new("/home/sven/Bilder/HYS3-quer.jpg"), File.new("/home/sven/Bilder/HYS3.jpg")].sample
+        i.attachment_title = Populator.words(2..5)
+        i.save!
+      end
+
+      4.times do |n|
+        t = ct.trips.build
+        t.name = "Etappe #{n + 1}"
+        t.slug = t.name.parameterize
+        t.description = Populator.sentences(5..10)
+        t.no_of_bunks = 2
+        t.price = 500
+        t.active = true
+        t.boat_id = ct.boat_id
+        t.save!
+
+        td = t.trip_dates.build
+        td.start_at = DateTime.new(2013, 6, 3, 10, 0, 0) + (n*14).days
+        td.end_at = td.start_at + 13.days
+        td.save!
+
+        rand(2..5).times do |n|
+          i = t.images.build          
+          i.order = n + 1
+          i.attachment = [File.new("/home/sven/Bilder/HYS3-quer.jpg"), File.new("/home/sven/Bilder/HYS3.jpg")].sample
+          i.attachment_title = Populator.words(2..5)
+          i.save!          
+        end
+      end
+    end    
 
     Boat.all.each do |b|
       rand(3..10).times do |n|
@@ -169,7 +185,7 @@ namespace :db do
       i.save!
     end
 
-    Trip.all.each do |t|
+    Trip.where("composite_trip_id IS NULL").each do |t|
       rand(2..4).times do |n|
         i = t.images.build
         i.order = n + 1
@@ -222,4 +238,44 @@ namespace :db do
       p.image.save!
     end
   end
+
+  def set_boat_attributes_except_availability(b)
+    b.boat_owner_id = BoatOwner.all.map(&:id).sample
+    b.port_id = Port.all.map(&:id).sample
+    b.manufacturer = Faker::Company.name
+    b.length_hull = l = rand(600..1600).to_f / 100
+    b.model = "#{b.manufacturer} #{(l * 3.3).ceil}"
+    b.length_waterline = l * 0.9
+    b.beam = l * 0.27
+    b.draft = l * 0.17
+    b.air_draft = l * 1.1
+    b.displacement = l * 0.6
+    b.sail_area_jib = l * 2
+    b.sail_area_genoa = l * 3
+    b.sail_area_main_sail = l * 2.7
+    b.tank_volume_diesel = [50, 100, 200, 300, 400].sample
+    b.tank_volume_fresh_water = [50, 100, 200, 300, 400].sample
+    b.tank_volume_waste_water = [10, 20, 50, 100].sample
+    b.permanent_bunks = [2, 3, 4, 5, 6].sample
+    b.convertible_bunks = [0, 1, 2].sample
+    b.max_no_of_people = b.permanent_bunks + b.convertible_bunks
+    b.recommended_no_of_people = b.permanent_bunks
+    b.headroom_saloon = rand(180..200).to_f / 100
+    b.name = Faker::Name.first_name
+    b.slug = b.name.parameterize
+    b.year_of_construction = rand(1970..2005)
+    b.year_of_refit = rand(2006..2012)
+    b.engine_model = Faker::Name.name
+    b.engine_output = (l * 5).to_i
+    b.battery_capacity = (l * 25).to_i
+    if b.available_for_boat_charter
+      b.deposit = [500, 1000, 2000].sample
+      b.cleaning_charge = [50, 75, 100].sample
+      b.fuel_charge = rand(5..10)
+      b.gas_charge = [rand(4..8), 0].sample
+    end
+    b.created_at = 2.years.ago..Time.now
+    b.active = true
+    b.color = "##{rand(2**24).to_s(16).rjust(6, '0')}"     
+  end  
 end
