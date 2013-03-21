@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130321082457) do
+ActiveRecord::Schema.define(:version => 20130321085439) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -309,19 +309,21 @@ ActiveRecord::Schema.define(:version => 20130321082457) do
   end
 
   create_table "trips", :force => true do |t|
-    t.integer  "boat_id",                                   :null => false
-    t.string   "name",                                      :null => false
-    t.string   "slug",                                      :null => false
-    t.text     "description",                               :null => false
-    t.integer  "no_of_bunks",                               :null => false
-    t.decimal  "price",       :precision => 7, :scale => 2, :null => false
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.integer  "boat_id",                                         :null => false
+    t.string   "name",                                            :null => false
+    t.string   "slug",                                            :null => false
+    t.text     "description",                                     :null => false
+    t.integer  "no_of_bunks",                                     :null => false
+    t.decimal  "price",             :precision => 7, :scale => 2, :null => false
+    t.datetime "created_at",                                      :null => false
+    t.datetime "updated_at",                                      :null => false
     t.boolean  "active"
+    t.integer  "composite_trip_id"
   end
 
   add_index "trips", ["active"], :name => "index_trips_visibility"
   add_index "trips", ["boat_id"], :name => "index_trips_on_boat_id"
+  add_index "trips", ["composite_trip_id"], :name => "index_trips_on_composite_trip_id"
   add_index "trips", ["slug"], :name => "index_trips_on_slug", :unique => true
 
   create_view "view_boat_bookings", "select `appointments`.`id` AS `id`,`appointments`.`start_at` AS `start_at`,`appointments`.`end_at` AS `end_at`,`appointments`.`type` AS `type`,`appointments`.`created_at` AS `created_at`,`appointments`.`updated_at` AS `updated_at`,`boat_bookings`.`customer_number` AS `customer_number`,`boat_bookings`.`boat_id` AS `boat_id`,`boat_bookings`.`number` AS `number`,`boat_bookings`.`slug` AS `slug`,`boat_bookings`.`adults` AS `adults`,`boat_bookings`.`children` AS `children`,`boat_bookings`.`cancelled` AS `cancelled` from (`appointments` join `boat_bookings`) where (`appointments`.`id` = `boat_bookings`.`id`)", :force => true do |v|

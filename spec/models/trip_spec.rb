@@ -14,6 +14,7 @@ describe Trip do
   it { should respond_to(:description) }
   it { should respond_to(:no_of_bunks) }
   it { should respond_to(:price) }
+  it { should respond_to(:composite_trip) }
 
   its(:boat) { should == boat }
 
@@ -144,6 +145,27 @@ describe Trip do
       trip = build(:trip, boat: no_bunk_charter_boat)
       trip.should_not be_valid
     end
+
+    describe "when part of a composite trip" do
+      let(:ctrip) { create(:composite_trip) }
+      before { trip.composite_trip = ctrip }        
+      
+      it "should set the boat to the same boat when setting the composite trip" do
+        trip.boat.should == ctrip.boat
+      end
+
+      describe "when boat is different from the boat of the composite trip" do
+        before { trip.boat_id = boat.id }
+        it { should_not be_valid }
+      end
+    end
+  end
+
+  describe "association to composite trip" do
+    let(:ctrip) { create(:composite_trip) }
+    before { trip.composite_trip = ctrip }
+
+    its(:composite_trip) { should == ctrip }
   end
 
   describe "TripDate association" do

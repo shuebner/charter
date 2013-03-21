@@ -6,9 +6,11 @@ class Trip < ActiveRecord::Base
   include Activatable
 
   attr_accessible :name, :description, :no_of_bunks, :price, :boat_id,
-    :trip_dates_attributes
+    :trip_dates_attributes, :composite_trip_id
 
   belongs_to :boat
+
+  belongs_to :composite_trip
   
   has_many :trip_dates
 
@@ -34,6 +36,8 @@ class Trip < ActiveRecord::Base
 
   validate :boat_is_available_for_bunk_charter, if: :boat
 
+  validate :boat_should_be_same_as_for_composite_trip, if: :composite_trip
+
   default_scope order("name ASC")
 
   scope :visible, where(active: true)
@@ -42,6 +46,11 @@ class Trip < ActiveRecord::Base
     [:name, :description].each do |a|
       self[a] = sanitize(self[a], tags: [])
     end
+  end
+
+  def composite_trip=(ctrip)
+    self.boat = ctrip.boat
+    super
   end
 
   def display_name
@@ -69,6 +78,12 @@ class Trip < ActiveRecord::Base
     unless trip_dates.empty?
       errors.add(:base, "Es sind bereits Törntermine vorhanden.")
       return false
+    end
+  end
+
+  def boat_should_be_same_as_for_composite_trip
+    unless boat_id == composite_trip.boat_id
+      errors.add(:boat, "Muss gleich dem Schiff des Etappentörns sein")
     end
   end
 end

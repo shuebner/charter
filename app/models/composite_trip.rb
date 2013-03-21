@@ -8,6 +8,8 @@ class CompositeTrip < ActiveRecord::Base
 
   belongs_to :boat
 
+  has_many :trips, dependent: :destroy
+
   validates :name,
     presence: true
 

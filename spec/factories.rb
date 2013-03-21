@@ -68,6 +68,10 @@ FactoryGirl.define do
     price 560
     boat
     active true
+    factory :trip_for_composite_trip do
+      composite_trip { FactoryGirl.create(:composite_trip) }
+      boat { composite_trip.boat }
+    end
   end
 
   factory :composite_trip do

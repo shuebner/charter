@@ -2,15 +2,18 @@ require 'spec_helper'
 
 describe CompositeTrip do
   let(:boat) { create(:boat) }
-  let(:ctrip) { build(:composite_trip, boat: boat) }
+  let(:ctrip) { create(:composite_trip, boat: boat) }
+  let(:trip) { create(:trip_for_composite_trip, composite_trip: ctrip) }
 
   subject { ctrip }
 
   it { should respond_to(:name) }
   it { should respond_to(:slug) }
   it { should respond_to(:description) }
-  it { should respond_to(:boat) }
   it { should respond_to(:active) }
+
+  it { should respond_to(:boat) }
+  it { should respond_to(:trips) }
 
   it { should be_valid }
 
@@ -55,5 +58,14 @@ describe CompositeTrip do
 
   describe "association with boat" do
     its(:boat) { should == boat }
+  end
+
+  describe "association with trips" do
+    its(:trips) { should == [trip] }
+
+    it "should destroy associated trips" do
+      trip.save!
+      expect { ctrip.destroy }.to change(Trip, :count).by(-1)
+    end
   end
 end
