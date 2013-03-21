@@ -20,13 +20,17 @@ describe "Boats" do
     let!(:own_invisible_boat2) { create(:boat, active: false, port: own_port_with_visible_boat) }
 
     # Häfen von anderen Vercharterern
+    # Hafen mit ausschließlich fremden Schiffen
     let!(:other_port_with_visible_boat2) { create(:port, name: "Xanten") }
     let!(:other_visible_boat2_1) { create(:boat, 
       owner: someone_else, port: other_port_with_visible_boat2) }
 
+    # Hafen mit eigenen ausschließlich unsichtbaren Schiffen und sichtbaren fremden Schiffen
     let!(:other_port_with_visible_boat1) { create(:port, name: "Azeroth") }
     let!(:other_visible_boat1_1) { create(:boat, 
       owner: someone_else, port: other_port_with_visible_boat1) }
+    let!(:own_invisible_own_boat1_1) { create(:boat,
+      owner: myself, port: other_port_with_visible_boat1, active: false) }
 
     # Hafen ohne verfügbares Boot
     let!(:port_without_visible_boat) { create(:port) }

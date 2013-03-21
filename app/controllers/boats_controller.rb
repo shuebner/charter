@@ -6,8 +6,8 @@ class BoatsController < ApplicationController
       @port = Port.with_visible_boat.find_by_slug(params[:hafen]) || not_found
       render 'index_single_port'
     else
-      @own_ports = Port.own.with_visible_boat
-      @external_ports = Port.external.with_visible_boat
+      @own_ports = Port.with_visible_boat.own
+      @external_ports = Port.with_visible_boat.external
     end
   end
 
