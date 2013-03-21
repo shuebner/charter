@@ -21,6 +21,8 @@ describe Trip do
   it { should be_valid }
 
   it_should_behave_like "activatable", Trip
+
+  it_should_behave_like "imageable", :trip, :trip_image
 =begin
   describe "accessible attributes" do
     it "should not allow access to boat_id" do
@@ -190,46 +192,5 @@ describe Trip do
         end
       end
     end
-  end
-
-  describe "association with trip images" do
-    before { trip.save }
-    let!(:trip_image2) { create(:trip_image, attachable: trip, order: 2) }
-    let!(:trip_image1) { create(:trip_image, attachable: trip, order: 1) }
-
-    it "should have the right images in the right order" do
-      trip.images.should == [trip_image1, trip_image2]
-    end
-    it "should destroy associated images" do
-      expect { trip.destroy }.to change(TripImage, :count).by(-2)
-    end
-
-    describe "title_image" do
-      describe "if there is at least one image" do
-        it "should return the first image of the trip" do
-          trip.title_image.should == trip_image1
-        end
-      end
-      describe "if there are no images" do
-        before { trip.images.destroy_all }
-        it "should not raise an error and return nil" do
-          trip.title_image.should be_nil
-        end
-      end
-    end
-
-    describe "other_images" do
-      describe "if there is at least one other than the title image" do
-        it "should return all the images except the title image" do
-          trip.other_images.should == [trip_image2]
-        end
-      end
-      describe "if there are no images except the title image" do
-        before { trip.images.destroy(trip_image2) }
-        it "should return an empty array" do
-          trip.other_images.should == []
-        end
-      end
-    end    
   end
 end

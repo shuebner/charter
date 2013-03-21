@@ -5,6 +5,9 @@ class Trip < ActiveRecord::Base
 
   include Activatable
 
+  include Imageable
+  imageable_image_class_name "TripImage"
+
   attr_accessible :name, :description, :no_of_bunks, :price, :boat_id,
     :trip_dates_attributes, :composite_trip_id
 
@@ -13,11 +16,6 @@ class Trip < ActiveRecord::Base
   belongs_to :composite_trip
   
   has_many :trip_dates
-
-  has_many :images, as: :attachable, class_name: "TripImage",
-    dependent: :destroy
-  accepts_nested_attributes_for :images, allow_destroy: true
-  attr_accessible :images_attributes
 
   before_destroy :no_trip_dates_exist
 
@@ -57,15 +55,6 @@ class Trip < ActiveRecord::Base
     name
   end
 
-  def title_image
-    unless images.empty?
-      images.first
-    end
-  end
-
-  def other_images
-    images.offset(1)
-  end
 
   private
   def boat_is_available_for_bunk_charter

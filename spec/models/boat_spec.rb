@@ -49,7 +49,9 @@ describe Boat do
 
   it { should be_valid }
 
-  it_behaves_like "activatable", Boat
+  it_should_behave_like "activatable", Boat
+
+  it_should_behave_like "imageable", :boat, :boat_image
   
   describe "when manufacturer is not present" do
     before { boat.manufacturer = nil }
@@ -445,48 +447,6 @@ describe Boat do
 
     it "should delete associated boat prices" do
       expect { boat.destroy }.to change(BoatPrice, :count).by(-1)
-    end
-  end
-
-  describe "association with images" do
-    before { boat.save }
-    let!(:boat_image2) { create(:boat_image, attachable: boat, order: 2) }
-    let!(:boat_image1) { create(:boat_image, attachable: boat, order: 1) }
-
-    it "should have the right images in the right order" do
-      boat.images.should == [boat_image1, boat_image2]
-    end
-
-    it "should delete associated images" do
-      expect { boat.destroy }.to change(BoatImage, :count).by(-2)
-    end
-
-    describe "title_image" do
-      describe "if there is at least one image" do
-        it "should return the first image of the boat" do
-          boat.title_image.should == boat_image1
-        end
-      end
-      describe "if there are no images" do
-        before { boat.images.destroy_all }
-        it "should not raise an error and return nil" do
-          boat.title_image.should be_nil
-        end
-      end
-    end
-
-    describe "other_images" do
-      describe "if there is at least one other than the title image" do
-        it "should return all the images except the title image" do
-          boat.other_images.should == [boat_image2]
-        end
-      end
-      describe "if there are no images except the title image" do
-        before { boat.images.destroy(boat_image2) }
-        it "should return an empty array" do
-          boat.other_images.should == []
-        end
-      end
     end
   end
 

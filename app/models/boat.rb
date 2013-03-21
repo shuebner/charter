@@ -5,6 +5,9 @@ class Boat < ActiveRecord::Base
 
   include Activatable
 
+  include Imageable
+  imageable_image_class_name "BoatImage"
+
   attr_accessible :manufacturer, :model, 
     :length_hull, :length_waterline, :beam, :draft, :air_draft, :displacement, 
     :sail_area_jib, :sail_area_genoa, :sail_area_main_sail, 
@@ -41,11 +44,6 @@ class Boat < ActiveRecord::Base
   has_many :boat_prices, dependent: :destroy
 
   has_many :boat_bookings
-
-  has_many :images, as: :attachable, class_name: "BoatImage", 
-    dependent: :destroy
-  accepts_nested_attributes_for :images, allow_destroy: true
-  attr_accessible :images_attributes
 
   has_many :documents, as: :attachable, dependent: :destroy
   accepts_nested_attributes_for :documents, allow_destroy: true
@@ -142,16 +140,6 @@ class Boat < ActiveRecord::Base
 
   def prices(season, type)
     boat_prices.where(season_id: season.id, boat_price_type_id: type.id).first
-  end
-
-  def title_image
-    unless images.empty?
-      images.first
-    end
-  end
-
-  def other_images
-    images.offset(1)
   end
 
   def display_name
