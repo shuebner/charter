@@ -4,6 +4,9 @@ class CompositeTrip < ActiveRecord::Base
 
   include Activatable
 
+  include Imageable
+  imageable_image_class_name "CompositeTripImage"
+
   attr_accessible :active, :boat, :name, :slug
 
   belongs_to :boat

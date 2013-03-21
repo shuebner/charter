@@ -142,6 +142,9 @@ FactoryGirl.define do
       factory :trip_image, class: TripImage do
         attachable { FactoryGirl.create(:trip) }
       end
+      factory :composite_trip_image, class: CompositeTripImage do
+        attachable { FactoryGirl.create(:composite_trip) }
+      end
       factory :captain_image, class: CaptainImage do
         attachable { FactoryGirl.create(:captain) }
       end
