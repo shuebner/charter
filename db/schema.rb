@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130317070128) do
+ActiveRecord::Schema.define(:version => 20130321082457) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -178,6 +178,19 @@ ActiveRecord::Schema.define(:version => 20130317070128) do
   end
 
   add_index "captains", ["slug"], :name => "index_captains_on_slug", :unique => true
+
+  create_table "composite_trips", :force => true do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.text     "description"
+    t.integer  "boat_id"
+    t.boolean  "active"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "composite_trips", ["boat_id", "active"], :name => "index_composite_trips_on_boat_id_and_active"
+  add_index "composite_trips", ["slug", "active"], :name => "index_composite_trips_on_slug_and_active"
 
   create_table "customers", :force => true do |t|
     t.string   "first_name",                     :null => false

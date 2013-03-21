@@ -70,6 +70,13 @@ FactoryGirl.define do
     active true
   end
 
+  factory :composite_trip do
+    sequence(:name) { |n| "Etappentörn #{n}" }
+    description "Ein toller Etappentörn."
+    boat
+    active true
+  end
+
   factory :customer do
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
