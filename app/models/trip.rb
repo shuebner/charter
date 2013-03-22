@@ -40,6 +40,8 @@ class Trip < ActiveRecord::Base
 
   scope :visible, where(active: true)
 
+  scope :single, where("composite_trip_id IS NULL")
+
   before_save do
     [:name, :description].each do |a|
       self[a] = sanitize(self[a], tags: [])

@@ -139,6 +139,17 @@ describe Trip do
         Trip.visible.should_not include(inactive_trip)
       end
     end
+
+    describe "single" do
+      let!(:single_trip) { create(:trip) }
+      let!(:trip_for_composite_trip) { create(:trip_for_composite_trip) }
+      it "should include single trips" do
+        Trip.single.should include(single_trip)
+      end
+      it "should not include trips which belong to a composite trip" do
+        Trip.single.should_not include(trip_for_composite_trip)
+      end
+    end
   end
 
   describe "Boat association" do    
