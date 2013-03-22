@@ -13,6 +13,8 @@ Charter::Application.routes.draw do
 
     resources :trips, only: [:index, :show], path: "toerns"
 
+    resources :composite_trips, only: [:show], path: "etappentoerns"
+
     resources :captains, only: [:index], path: "skipper"
 
     resources :general_inquiries, only: [:new, :create], path: "allgemeine-anfragen"

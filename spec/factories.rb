@@ -71,6 +71,9 @@ FactoryGirl.define do
     factory :trip_for_composite_trip do
       composite_trip { FactoryGirl.create(:composite_trip) }
       boat { composite_trip.boat }
+      after_create do |trip|
+        FactoryGirl.create(:trip_date, trip: trip)
+      end
     end
   end
 
@@ -79,6 +82,13 @@ FactoryGirl.define do
     description "Ein toller Etappentörn."
     boat
     active true
+    factory :composite_trip_with_trips do
+      after_create do |ctrip|
+        4.times do
+          FactoryGirl.create(:trip_for_composite_trip, composite_trip: ctrip)
+        end
+      end
+    end
   end
 
   factory :customer do

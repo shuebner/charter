@@ -8,13 +8,36 @@ describe "Trips" do
 
   describe "index page" do
     let!(:inactive_trip) { create(:trip, active: false) }
+    let!(:composite_trip) { create(:composite_trip) }
+    let!(:trip_for_composite_trip) { create(:trip_for_composite_trip,
+      composite_trip: composite_trip) }
+    let!(:inactive_composite_trip) { create(:composite_trip, active: false) }
     before { visit trips_path }
 
-    it "should display all active trips" do
-      page.should have_selector('#content', text: trip.name)
+    it "should display all active trips at the bottom" do
+      within "#content ul.trip-list" do
+        page.should have_selector('li:nth-child(2)', text: trip.name)
+      end
     end
     it "should not display inactive trips" do
-      page.should_not have_selector('#content', text: inactive_trip.name)
+      within "#content ul.trip-list" do
+        page.should_not have_selector('li', text: inactive_trip.name)
+      end
+    end
+    it "should not display trips which belong to a composite trip" do
+      within "#content ul.trip-list" do
+        page.should_not have_selector('>li', text: trip_for_composite_trip.name)
+      end
+    end
+    it "should display composite trips at the top" do
+      within "#content ul.trip-list" do
+        page.should have_selector('li:nth-child(1)', text: composite_trip.name)
+      end
+    end
+    it "should not display inactive composite trips" do
+      within "#content ul.trip-list" do
+        page.should_not have_selector('li', text: inactive_composite_trip.name)
+      end
     end
   end
 
@@ -34,6 +57,17 @@ describe "Trips" do
         it "should raise a routing error" do
           expect do
             visit trip_path(inactive_trip)
+          end.to raise_error(ActionController::RoutingError)
+        end
+      end
+
+      describe "when trip belongs to composite trip" do
+        let!(:composite_trip) { create(:composite_trip) }
+        let!(:trip_for_composite_trip) { create(:trip_for_composite_trip,
+          composite_trip: composite_trip) }
+        it "should raise a routing error" do
+          expect do
+            visit trip_path(trip_for_composite_trip)
           end.to raise_error(ActionController::RoutingError)
         end
       end

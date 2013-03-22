@@ -17,8 +17,11 @@
       </li>
       <li id="trips"><%= link_to "Törns", trips_path %>
         <ul class="menu-trip-list">
-          <% Trip.visible.each do |trip| %>
-            <li><%= link_to trip.name, trip_path(trip) %></li>
+          <% CompositeTrip.visible.each do |ctrip| %>
+            <li class="menu-trip-list-item-composite-trip"><%= link_to ctrip.name, composite_trip_path(ctrip) %></li>
+          <% end %>
+          <% Trip.single.visible.each do |trip| %>
+            <li class="menu-trip-list-item-trip"><%= link_to trip.name, trip_path(trip) %></li>
           <% end %>
         </ul>
       </li>

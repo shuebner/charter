@@ -43,7 +43,7 @@ nav {
         padding: 0;
         border: 1px solid black;
         background-color: $c_nav_bg;
-        >li {          
+        >li {
           text-align: left;
           border-top: 1px solid #6666cc;
           #border-bottom: 1px solid white;
@@ -70,6 +70,14 @@ nav {
             // no arrow if there is no ul child and therefore no submenu
             &:only-child:after {
               border: none;
+            }
+          }
+          &.menu-trip-list-item-composite-trip {
+            a {
+              background-color: #6666cc;
+              &:hover {
+                background-color: white;
+              }
             }
           }
         }

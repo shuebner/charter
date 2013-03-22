@@ -1,0 +1,20 @@
+<li class="index-list-item-composite-trip">
+  <%= block_link_to composite_trip_path(composite_trip), class: "clearfix" do %>
+    <% image = composite_trip.title_image %>
+    <div class="index-image">
+      <% if image %>
+        <%= image_tag(image.thumb('120x120').url, alt: image.title) %>
+      <% end %>
+    </div>
+    <div class="index-data">
+      <h2><%= composite_trip.name %></h2>
+      <ul>
+        <% composite_trip.trips.each do |t| %>
+          <li><%= t.name %>: 
+            <%= t.trip_dates.any? ? "#{l(t.trip_dates.first.start_at)} - #{l(t.trip_dates.first.end_at)}" : "" %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</li>

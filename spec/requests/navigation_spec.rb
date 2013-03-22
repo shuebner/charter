@@ -83,13 +83,36 @@ describe "Navigation" do
   describe "Links to trips" do
     let!(:active_trip) { create(:trip, active: true) }
     let!(:inactive_trip) { create(:trip, active: false) }
+    let!(:composite_trip) { create(:composite_trip) }
+    let!(:trip_for_composite_trip) { create(:trip_for_composite_trip, 
+      composite_trip: composite_trip) }
+    let!(:inactive_composite_trip) { create(:composite_trip, active: false) }
     before { visit root_path }
 
-    it "should include a link to every active trip" do      
-      page.should have_selector('nav a', text: active_trip.name)
+    it "should include a link to every active trip at the bottom" do      
+      within "nav ul li#trips ul" do
+        page.should have_selector('li:nth-child(2)', text: active_trip.name)
+      end
     end
     it "should not include a link to any inactive trip" do
-      page.should_not have_selector('nav a', text: inactive_trip.name)
+      within "nav ul li#trips ul" do
+        page.should_not have_selector('li', text: inactive_trip.name)
+      end
+    end
+    it "should not include a link to any trip which belongs to a composite trip" do
+      within "nav ul li#trips ul" do
+        page.should_not have_selector('li', text: trip_for_composite_trip.name)
+      end
+    end
+    it "should include a link to composite trips at the top" do
+      within "nav ul li#trips ul" do
+        page.should have_selector('li:nth-child(1)', text: composite_trip.name)
+      end
+    end
+    it "should not include a link to inactive composite trips" do
+      within "nav ul li#trips ul" do
+        page.should_not have_selector('li', text: inactive_composite_trip.name)
+      end
     end
   end
 end
