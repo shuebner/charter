@@ -8,5 +8,6 @@ de:
       attachment:
         attachment_name: "Dateiname"
         attachment_title: "Bezeichnung"
+        title: "Bezeichnung"
         attachment: "Anhang"
         order: "Reihenfolge"

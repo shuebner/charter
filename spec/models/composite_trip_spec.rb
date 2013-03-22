@@ -21,6 +21,11 @@ describe CompositeTrip do
 
   it_should_behave_like "imageable", :composite_trip, :composite_trip_image
 
+  describe "when boat is not present" do
+    before { ctrip.boat = nil }
+    it { should_not be_valid }
+  end
+
   describe "when name" do
     describe "is not present" do
       before { ctrip.name = "" }

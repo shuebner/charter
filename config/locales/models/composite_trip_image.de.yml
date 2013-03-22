@@ -1,0 +1,8 @@
+de:
+  activerecord:
+    models:
+      composite_trip_image:
+        one: "Etappentörnbild"
+        other: "Etappentörnbilder"
+    attributes:
+      composite_trip_image:  

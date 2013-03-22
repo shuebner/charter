@@ -1,0 +1,10 @@
+de:
+  activerecord:
+    models:
+      composite_trip:
+        one: "Etappentörn"
+        other: "Etappentörns"
+    attributes:
+      composite_trip:
+        trips: "zugehörige Törns"
+        boat: "Schiff"      
