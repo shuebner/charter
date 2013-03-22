@@ -192,7 +192,7 @@ FactoryGirl.define do
 
   factory :appointment, class: Appointment do    
     sequence(:start_at) { |n| (n*7).days.from_now }
-    sequence(:end_at) { |n| (n*7 + 7).days.from_now }
+    sequence(:end_at) { |n| (n*7 + 6).days.from_now }
     
     factory :boat_booking, class: BoatBooking do
       customer
