@@ -75,4 +75,17 @@ describe CompositeTrip do
       expect { ctrip.destroy }.to change(Trip, :count).by(-1)
     end
   end
+
+  describe "scope" do
+    describe "visible" do
+      let(:active_ctrip) { create(:composite_trip) }
+      let(:inactive_ctrip) { create(:composite_trip, active: false) }
+      it "should include active composite trips" do
+        CompositeTrip.visible.should include(active_ctrip)
+      end
+      it "should not include inactive composite trips" do
+        CompositeTrip.visible.should_not include(inactive_ctrip)
+      end
+    end
+  end
 end

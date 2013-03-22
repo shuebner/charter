@@ -26,5 +26,7 @@ class CompositeTrip < ActiveRecord::Base
     [:name, :description].each do |a|
       self[a] = sanitize(self[a], tags: [])
     end
-  end    
+  end
+
+  scope :visible, where(active: true)
 end
