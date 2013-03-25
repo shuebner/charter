@@ -1,0 +1,14 @@
+<% provide(:title, "Etappentörns") %>
+<h1><%= @ctrip.name %></h1>
+<div class="clearfix">
+  <%= render partial: 'shared/image_gallery',
+    locals: { title_image: @ctrip.title_image,
+              other_images: @ctrip.other_images } %>
+</div>
+<p class="trip-description"><%= @ctrip.description %></p>
+<p>Dieser Törn wird mit dem Schiff <%= link_to @ctrip.boat.name, boat_path(@ctrip.boat) %> gefahren.</p>
+<p>Die Etappen im Überblick:<p>
+<%= render partial: 'leg_overview', locals: { trips: @trips } %>
+<ul class="leg-list">
+  <%= render partial: 'leg', collection: @trips %>
+</ul>

@@ -13,3 +13,28 @@ ul.index-list {
     }
   }
 }
+
+table.legs {
+  text-align: left;
+  td, th {
+    padding: 0.5em 1.5em 0 0;
+  }  
+}
+
+ul.leg-list {
+  padding: 0;
+  li {
+    border-top: 1px solid black;
+  }
+  
+  table.trip-dates {
+    margin-bottom: 2em;
+    width: 40%;
+    td, th {
+      padding: 0 1em 0 0;      
+    }
+  }
+  p {
+    margin-top: 0;
+  }
+}

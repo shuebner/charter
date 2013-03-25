@@ -1,0 +1,25 @@
+$thumb_gallery_thumbnail_size: 100px;
+
+div.thumb-gallery {
+  width: 100%;
+  div.image {
+    display: block;
+    float: left;
+    font-size: 75%;
+    font-style: italic;    
+    margin: 1em;
+    text-align: center;
+    width: 28%;
+    div.image-container {
+      height: $thumb_gallery_thumbnail_size;
+      line-height: $thumb_gallery_thumbnail_size;
+      margin: 0.2em auto;
+      text-align: center;
+      width: $thumb_gallery_thumbnail_size;
+      img {
+        border: 1px solid grey;
+        vertical-align: middle;
+      }
+    }
+  }
+}

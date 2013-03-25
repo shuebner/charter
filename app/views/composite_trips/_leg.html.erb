@@ -1,0 +1,18 @@
+<li>
+  <h2><%= leg.name %></h2>
+  <% if leg.trip_dates.any? %>
+    <%= render partial: 'shared/trip_dates_table',
+      locals: { trip_dates: leg.trip_dates } %>
+  <% else %>
+    <p>kein Termin festgelegt</p>
+  <% end %>
+  <div class="twocol clearfix">
+    <div class="twocol-col1">
+      <p class="trip-description"><%= leg.description %></p>
+    </div>
+    <div class="twocol-col2">
+      <%= render partial: 'shared/thumb_gallery',
+        locals: { images: leg.images } %>
+    </div>
+  </div>
+</li>

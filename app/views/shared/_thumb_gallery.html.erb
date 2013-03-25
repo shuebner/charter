@@ -1,0 +1,15 @@
+<% if images.any? %>
+  <div class="thumb-gallery clearfix">
+    <% images.each do |i| %>
+      <% thumb = i.thumb('100x100') %>
+      <div class="image">
+        <div class="image-container">
+          <%= link_to i.thumb('1280x1280>').url, target: '_blank' do
+            image_tag(thumb.url, alt: i.title)
+          end %>
+        </div>
+        <%= i.title %>
+      </div>
+    <% end %>        
+  </div>
+<% end %>

@@ -1,0 +1,13 @@
+<table class="legs">
+  <th><%= Trip.human_attribute_name(:name) %></th>
+  <th><%= TripDate.human_attribute_name(:start_at) %></th>
+  <th><%= TripDate.human_attribute_name(:end_at) %></th>
+  <% trips.each do |t| %>
+    <% date = t.trip_dates.first %>
+    <tr>
+      <td><%= t.name %></td>
+      <td><%= l(date.start_at) %></td>
+      <td><%= l(date.end_at) %></td>
+    </tr>
+  <% end %>
+</table>

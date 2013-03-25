@@ -6,8 +6,8 @@
               other_images: @trip.other_images } %>
 </div>
 <div class="twocol clearfix">
-  <div class="twocol-col1 trip-description">
-    <p><%= @trip.description %></p>
+  <div class="twocol-col1">
+    <p class="trip-description"><%= @trip.description %></p>
     <%= render partial: 'trip_data', locals: { trip: @trip } %>
     <%= render partial: 'boat', locals: { boat: @boat } %>
   </div>
