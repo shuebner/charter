@@ -33,6 +33,10 @@ body {
   width: 1000px;
 }
 
+ul {
+  list-style: none;
+}
+
 // kein Rahmen um verlinkte Bilder im IE
 a {
   img {
@@ -121,7 +125,6 @@ ul.index-list {
   padding: 0;
   li {
     margin-bottom: 1em;
-    list-style: none;
     a {
       min-height: $index_thumbnail_size;
       div.index-image {
