@@ -1,17 +1,6 @@
 // Place all the styles related to the Trips controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
-#trip-dates {
-  table {
-    font-size: 90%;
-    text-align: left;
-    td, th {
-      padding: 0.5em 1em 0 0.5em;
-    }
-  }
-}
-
 .trip-description {
   text-align: justify;
 }

@@ -1,0 +1,27 @@
+<table class="trip-dates">
+  <tr>
+    <th><%= TripDate.human_attribute_name(:start_at) %></th>
+    <th><%= TripDate.human_attribute_name(:end_at) %></th>
+    <th><%= TripDate.human_attribute_name(:no_of_available_bunks) %></th>
+  </tr>
+  <% trip_dates.each do |d| %>
+    <tr id="trip-date-<%= d.id %>">
+      <td class="start-at"><%= l(d.start_at) %></td>
+      <td class="end-at"><%= l(d.end_at) %></td>
+      <td class="available-bunks">
+        <% if d.deferred? %>
+          0
+        <% else %>
+          <%= d.no_of_available_bunks %>
+        <% end %>
+      </td>
+      <% if !d.deferred? && d.no_of_available_bunks > 0 %>
+        <td class="book">
+          <%= link_to "buchen", new_trip_inquiry_path(trip_date_id: d.id) %>
+        </td>
+      <% else %>
+        <td>ausgebucht</td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
