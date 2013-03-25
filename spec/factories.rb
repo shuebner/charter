@@ -71,9 +71,6 @@ FactoryGirl.define do
     factory :trip_for_composite_trip do
       composite_trip { FactoryGirl.create(:composite_trip) }
       boat { composite_trip.boat }
-      after_create do |trip|
-        FactoryGirl.create(:trip_date, trip: trip)
-      end
     end
   end
 
