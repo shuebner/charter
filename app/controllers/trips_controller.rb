@@ -1,8 +1,8 @@
 
 class TripsController < ApplicationController
   def index
-    @single_trips = Trip.single.visible
-    @composite_trips = CompositeTrip.visible
+    @single_trips = Trip.single.visible.order('name ASC')
+    @composite_trips = CompositeTrip.visible.order('name ASC')
   end
 
   def show

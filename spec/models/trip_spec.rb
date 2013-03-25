@@ -120,14 +120,6 @@ describe Trip do
     end
   end
 
-  describe "default sort order" do
-    let!(:second_trip) { create(:trip, name: "Z-Törn") }
-    let!(:first_trip) { create(:trip, name: "A-Törn") }
-    it "should be ascending by name" do
-      Trip.all.should == [first_trip, second_trip]
-    end
-  end
-
   describe "scope" do
     describe ".visible" do
       let!(:inactive_trip) { create(:trip, active: false) }

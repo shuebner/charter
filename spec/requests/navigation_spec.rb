@@ -81,17 +81,20 @@ describe "Navigation" do
   end
 
   describe "Links to trips" do
-    let!(:active_trip) { create(:trip, active: true) }
+    let!(:active_trip) { create(:trip, name: "Zamonien", active: true) }
+    let!(:previous_active_trip) { create(:trip, name: "Hel", active: true) }
     let!(:inactive_trip) { create(:trip, active: false) }
-    let!(:composite_trip) { create(:composite_trip) }
+    let!(:composite_trip) { create(:composite_trip, name: "Finsterwald") }
     let!(:trip_for_composite_trip) { create(:trip_for_composite_trip, 
       composite_trip: composite_trip) }
+    let!(:previous_composite_trip) { create(:composite_trip, name: "Buntbärenwald") }
     let!(:inactive_composite_trip) { create(:composite_trip, active: false) }
     before { visit root_path }
 
-    it "should include a link to every active trip at the bottom" do      
+    it "should include a link to every active trip at the bottom ascending by name" do      
       within "nav ul li#trips ul" do
-        page.should have_selector('li:nth-child(2)', text: active_trip.name)
+        page.should have_selector('li:nth-child(3)', text: previous_active_trip.name)
+        page.should have_selector('li:nth-child(4)', text: active_trip.name)
       end
     end
     it "should not include a link to any inactive trip" do
@@ -106,7 +109,8 @@ describe "Navigation" do
     end
     it "should include a link to composite trips at the top" do
       within "nav ul li#trips ul" do
-        page.should have_selector('li:nth-child(1)', text: composite_trip.name)
+        page.should have_selector('li:nth-child(1)', text: previous_composite_trip.name)
+        page.should have_selector('li:nth-child(2)', text: composite_trip.name)
       end
     end
     it "should not include a link to inactive composite trips" do

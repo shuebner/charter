@@ -36,8 +36,6 @@ class Trip < ActiveRecord::Base
 
   validate :boat_should_be_same_as_for_composite_trip, if: :composite_trip
 
-  default_scope order("name ASC")
-
   scope :visible, where(active: true)
 
   scope :single, where("composite_trip_id IS NULL")

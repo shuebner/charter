@@ -37,7 +37,7 @@ class Boat < ActiveRecord::Base
   attr_accessible :port_id
 ###
 
-  has_many :trips, dependent: :destroy
+  has_many :trips, order: 'name ASC', dependent: :destroy
 
   has_many :trip_dates, through: :trips
 

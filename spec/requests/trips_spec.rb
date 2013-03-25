@@ -2,21 +2,24 @@
 require 'spec_helper'
 
 describe "Trips" do
-  let!(:trip) { create(:trip) }
+  let!(:trip) { create(:trip, name: "Zamonien") }
 
   subject { page }
 
   describe "index page" do
     let!(:inactive_trip) { create(:trip, active: false) }
-    let!(:composite_trip) { create(:composite_trip) }
+    let!(:composite_trip) { create(:composite_trip, name: "Finsterwald") }
+    let!(:previous_composite_trip) { create(:composite_trip, name: "Buntbärenwald" )}
     let!(:trip_for_composite_trip) { create(:trip_for_composite_trip,
       composite_trip: composite_trip) }
     let!(:inactive_composite_trip) { create(:composite_trip, active: false) }
+    let!(:previous_trip) { create(:trip, name: "Azeroth") }
     before { visit trips_path }
 
-    it "should display all active trips at the bottom" do
+    it "should display all active trips at the bottom ordered ascending by name" do
       within "#content ul.trip-list" do
-        page.should have_selector('li:nth-child(2)', text: trip.name)
+        page.should have_selector('li:nth-child(3)', text: previous_trip.name)
+        page.should have_selector('li:nth-child(4)', text: trip.name)
       end
     end
     it "should not display inactive trips" do
@@ -29,9 +32,10 @@ describe "Trips" do
         page.should_not have_selector('>li', text: trip_for_composite_trip.name)
       end
     end
-    it "should display composite trips at the top" do
+    it "should display active composite trips at the top ascending by name" do
       within "#content ul.trip-list" do
-        page.should have_selector('li:nth-child(1)', text: composite_trip.name)
+        page.should have_selector('li:nth-child(1)', text: previous_composite_trip.name)
+        page.should have_selector('li:nth-child(2)', text: composite_trip.name)
       end
     end
     it "should not display inactive composite trips" do
