@@ -1,0 +1,30 @@
+div#image-gallery {
+  margin-bottom: 2em;
+  font-size: 75%;
+  font-style: italic;
+  text-align: center;
+  .title-image {
+    float: left;
+    margin-right: 2em;
+    img {
+      display: block;
+      border: 1px solid black;
+    }
+  }
+  .image-list {
+    float: left;
+    width: 400px;
+    margin-top: 0;
+    .other-image {
+      padding-bottom: 3px;
+      margin: 0 3px 3px 3px;
+      float: left;
+      img {
+        display: block;        
+        margin-left: auto;
+        margin-right: auto;
+        border: 1px solid black;
+      }
+    }    
+  }
+}
