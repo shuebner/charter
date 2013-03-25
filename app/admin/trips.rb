@@ -23,6 +23,7 @@ ActiveAdmin.register Trip do
 
   index do
     column :name
+    column :composite_trip
     column :no_of_bunks
     column(:price) { |t| number_to_currency(t.price) }
     column(Boat.model_name.human) { |t| t.boat.name }
@@ -46,10 +47,11 @@ ActiveAdmin.register Trip do
   show title: :name do |t|
     attributes_table do
       row :name
+      row :composite_trip
       row :no_of_bunks
       row(:price) { number_to_currency(t.price) }
       row :description
-      row(Boat.model_name.human) { t.boat.name }
+      row :boat
       row :active do |b|
         status_tag (b.active? ? "ja" : "nein"), (b.active? ? :ok : :error)
       end      
@@ -74,6 +76,7 @@ ActiveAdmin.register Trip do
   form do |f|
     f.inputs do
       f.input :name
+      f.input :composite_trip
       f.input :no_of_bunks
       f.input :price
       f.input :description

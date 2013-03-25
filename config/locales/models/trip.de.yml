@@ -9,3 +9,9 @@ de:
         description: "Törnbeschreibung"
         no_of_bunks: "Maximale Teilnehmerzahl"
         price: "Preis"
+        composite_trip: "Etappentörn"
+        boat: "Schiff"
+  formtastic:
+    hints:
+      trip:
+        composite_trip: "falls es sich um einen eigenständigen Törn handelt, einfach freilassen"
