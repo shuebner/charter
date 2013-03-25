@@ -74,14 +74,7 @@ describe TripDate do
       describe "when a trip date already exists" do
         let!(:existing_trip_date) { create(:trip_date, trip: trip) }
         it { should_not be_valid }
-
-        describe "but is not effective" do
-          before do
-            existing_trip_date.defer!
-            existing_trip_date.save!
-          end
-          it { should be_valid }
-        end
+        # hier ist es auch egal, ob effektiv oder nicht!
       end
     end
   end

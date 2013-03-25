@@ -21,7 +21,7 @@ class TripDate < Appointment#ActiveRecord::Base
 
   validate :boat_is_available, unless: :deferred?
 
-  validate :trip_has_no_other_effective_trip_date, if: Proc.new { trip && trip.composite_trip }
+  validate :trip_has_no_other_trip_date, if: Proc.new { trip && trip.composite_trip }
 
   after_initialize do
     if self.new_record?
@@ -130,8 +130,8 @@ class TripDate < Appointment#ActiveRecord::Base
     end
   end
 
-  def trip_has_no_other_effective_trip_date
-    scope = trip.trip_dates.effective
+  def trip_has_no_other_trip_date
+    scope = trip.trip_dates.all
     unless new_record?
       scope = scope.where('id != ?', id)
     end
