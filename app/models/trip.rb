@@ -16,6 +16,7 @@ class Trip < ActiveRecord::Base
   belongs_to :composite_trip
   
   has_many :trip_dates
+  validate :has_at_most_one_trip_date, if: :composite_trip
 
   before_destroy :no_trip_dates_exist
 
@@ -73,6 +74,12 @@ class Trip < ActiveRecord::Base
   def boat_should_be_same_as_for_composite_trip
     unless boat_id == composite_trip.boat_id
       errors.add(:boat, "Muss gleich dem Schiff des Etappentörns sein")
+    end
+  end
+
+  def has_at_most_one_trip_date
+    unless trip_dates.count <= 1
+      errors.add(:composite_trip, "Teiltörn eines Etappentörns darf maximal einen Termin haben")
     end
   end
 end

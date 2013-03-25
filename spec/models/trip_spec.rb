@@ -171,6 +171,16 @@ describe Trip do
     before { trip.composite_trip = ctrip }
 
     its(:composite_trip) { should == ctrip }
+
+    describe "when trip has more than one trip date" do
+      let!(:new_trip) { create(:trip) }
+      let!(:date1) { create(:trip_date, trip: new_trip) }
+      let!(:date2) { create(:trip_date, trip: new_trip) }
+      subject { new_trip }
+      before { new_trip.composite_trip = ctrip }
+      
+      it { should_not be_valid }
+    end
   end
 
   describe "TripDate association" do
