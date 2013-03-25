@@ -37,6 +37,10 @@ ul {
   list-style: none;
 }
 
+table {
+  border-collapse: collapse;
+}
+
 // kein Rahmen um verlinkte Bilder im IE
 a {
   img {
@@ -101,12 +105,13 @@ a.block-link {
 // SPALTENLAYOUTS
 .twocol {
   .twocol-col1 {
-    width: 380px;
+    width: 40%;
     float: left;
     margin-right: 2em;
   }
   .twocol-col2 {
     float: left;
+    width: 55%;
   }
 }
 
