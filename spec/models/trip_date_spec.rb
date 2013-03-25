@@ -65,6 +65,27 @@ describe TripDate do
     it { should be_valid }
   end
 
+  describe "association to trip" do
+    describe "which is part of a composite trip" do
+      let(:ctrip) { create(:composite_trip) }
+      before do
+        trip.composite_trip = ctrip
+      end
+      describe "when a trip date already exists" do
+        let!(:existing_trip_date) { create(:trip_date, trip: trip) }
+        it { should_not be_valid }
+
+        describe "but is not effective" do
+          before do
+            existing_trip_date.defer!
+            existing_trip_date.save!
+          end
+          it { should be_valid }
+        end
+      end
+    end
+  end
+
   describe "association to trip bookings" do
     let!(:booking1) { create(:trip_booking, trip_date: date, no_of_bunks: 1) }
     let!(:booking2) { create(:trip_booking, trip_date: date, no_of_bunks: 1, cancelled_at: Time.now) }

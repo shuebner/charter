@@ -21,6 +21,8 @@ class TripDate < Appointment#ActiveRecord::Base
 
   validate :boat_is_available, unless: :deferred?
 
+  validate :trip_has_no_other_effective_trip_date, if: Proc.new { trip && trip.composite_trip }
+
   after_initialize do
     if self.new_record?
       self.deferred = false
@@ -125,6 +127,16 @@ class TripDate < Appointment#ActiveRecord::Base
   def no_effective_trip_bookings_exist
     unless trip_bookings.effective.empty?
       errors.add(:deferred, "Für diesen Termin existieren unstornierte Buchungen")
+    end
+  end
+
+  def trip_has_no_other_effective_trip_date
+    scope = trip.trip_dates.effective
+    unless new_record?
+      scope = scope.where('id != ?', id)
+    end
+    if scope.any?
+      errors.add(:trip, "Dieser Teiltörn eines Etappentörns hat bereits einen Termin")
     end
   end
 end
