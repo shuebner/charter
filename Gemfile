@@ -28,6 +28,16 @@ gem 'rails_sql_views', git: 'git://github.com/centresource/rails_sql_views'
 # Gems used only for assets and not required
 # in production environments by default.
 
+group :test do
+  gem 'capybara', '1.1.2'
+  gem 'rb-inotify', '0.8.8'
+  gem 'libnotify', '0.5.9'
+  gem 'guard-spork', '0.3.2'
+  gem 'spork', '0.9.0'
+  gem 'factory_girl_rails', '1.4.0'
+  gem 'email_spec'
+end
+
 group :development, :test do
 	gem 'rspec-rails', '2.10.0'
 	gem 'guard-rspec', '0.5.5'
@@ -48,15 +58,6 @@ end
 
 gem 'jquery-rails'
 
-group :test do
-	gem 'capybara', '1.1.2'
-	gem 'rb-inotify', '0.8.8'
-	gem 'libnotify', '0.5.9'
-	gem 'guard-spork', '0.3.2'
-	gem 'spork', '0.9.0'
-	gem 'factory_girl_rails', '1.4.0'
-  gem 'email_spec'
-end
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
