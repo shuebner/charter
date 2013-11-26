@@ -131,7 +131,7 @@ class TripDate < Appointment#ActiveRecord::Base
   end
 
   def trip_has_no_other_trip_date
-    scope = trip.trip_dates.all
+    scope = trip.trip_dates
     unless new_record?
       scope = scope.where('id != ?', id)
     end
