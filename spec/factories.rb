@@ -231,7 +231,10 @@ FactoryGirl.define do
   end
 
   factory :setting do
-    sequence(:key) { |n| "setting_#{n}" }
+    sequence(:key) { |n| "key_#{n}" }
     sequence(:value) { |n| "value_#{n}" }
+    factory :date_setting do
+      sequence(:value) { |n| "#{I18n.l(Date.new(2013, 9, 30) + n.months)}" }
+    end
   end
 end
