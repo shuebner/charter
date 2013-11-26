@@ -32,4 +32,22 @@ describe Setting do
       end
     end
   end
+
+  describe "destruction" do
+    before { setting.save }
+    it "should not be possible at all" do
+      expect { setting.destroy }.not_to change(Setting, :count)
+    end
+  end
+
+  describe "change of key name" do
+    before { setting.save }
+    it "should not be possible at all" do
+      old_key = setting.key
+      setting.key = 'not' + old_key
+      setting.save!
+      setting.reload
+      setting.key.should == old_key
+    end
+  end
 end

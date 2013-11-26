@@ -1,12 +1,19 @@
 # encoding: utf-8
 class Setting < ActiveRecord::Base
-  attr_accessible :key, :value
+
+  attr_accessible :value
+  attr_readonly :key
 
   validates :key, :value,
     presence: true
 
   validate :value_is_valid_date?, if: :date_setting?
-    
+
+  before_destroy { 
+    errors.add(:base, "Einstellungen können nicht gelöscht werden.")
+    false
+  }
+
   def current_period_start_at
     Setting.find_by_key(:current_period_start_at).value
   end
