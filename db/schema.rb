@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130321085439) do
+ActiveRecord::Schema.define(:version => 20131126082024) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -266,6 +266,13 @@ ActiveRecord::Schema.define(:version => 20130321085439) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "settings", :force => true do |t|
+    t.string "key"
+    t.string "value"
+  end
+
+  add_index "settings", ["key"], :name => "index_settings_on_key"
 
   create_table "static_pages", :force => true do |t|
     t.string   "slug",         :limit => 30,  :null => false

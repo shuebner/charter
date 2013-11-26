@@ -229,4 +229,9 @@ FactoryGirl.define do
     url { Faker::Internet.url }
     sequence(:order) { |n| n }
   end
+
+  factory :setting do
+    sequence(:key) { |n| "setting_#{n}" }
+    sequence(:value) { |n| "value_#{n}" }
+  end
 end
