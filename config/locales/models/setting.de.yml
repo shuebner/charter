@@ -1,0 +1,12 @@
+de:
+  activerecord:
+    models:
+      setting:
+        one: "Einstellung"
+        other: "Einstellungen"
+        current_period_start_at: "Beginn des Anzeigezeitraums"
+        current_period_end_at: "Ende des Anzeigezeitraums"
+    attributes:
+      setting:
+        key: "Bezeichnung"
+        value: "Wert"
