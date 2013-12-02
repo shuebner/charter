@@ -7,8 +7,6 @@ describe Setting do
 
   it { should respond_to(:key) }
   it { should respond_to(:value) }
-  it { should respond_to(:current_period_start_at) }
-  it { should respond_to(:current_period_end_at) }
 
   it { should be_valid }
 
@@ -22,9 +20,33 @@ describe Setting do
   end
 
   describe "date settings" do
+    describe "class methods" do    
+      describe "getters" do
+        before { create(:setting, key: 'current_period_start_at', value: I18n.l(Date.new(2014, 1, 1))) }
+        it "should retrieve the date as Date object" do
+          Setting.current_period_start_at.class.should == Date
+          # Setting.current_period_end_at.class.should == Date
+        end
+      end
+      describe "setters" do
+        describe "if setting already exists" do
+          before { create(:setting, key: 'current_period_start_at', value: I18n.l(Date.new(2014, 1, 1))) }
+          it "should set the date from a date object" do
+            new_date = Date.new(2014, 1, 2)
+            Setting.current_period_start_at = new_date
+            Setting.current_period_start_at.should == new_date
+          end
+        end
+        describe "if setting does not yet exist" do
+          it "should create the setting" do
+            expect { Setting.current_period_start_at = Date.new(2014, 1, 1) }.to change(Setting, :count).by(1)
+          end
+        end
+      end
+    end
     [:current_period_start_at, :current_period_end_at].each do |key|
-      before { setting.key = key.to_s }
-      describe "when #{key.to_s} it not a valid date" do        
+      let(:setting) { build(:setting, key: key.to_s) }
+      describe "when #{key.to_s} is not a valid date" do        
         ["bla", "31.02.2013"].each do |invalid_date_string|
           before { setting.value = invalid_date_string }
           it { should_not be_valid }

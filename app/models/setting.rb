@@ -14,20 +14,39 @@ class Setting < ActiveRecord::Base
     false
   }
 
-  def current_period_start_at
-    Setting.find_by_key(:current_period_start_at).value
+  DF_CURRENT_PERIOD_START_AT = Date.new(2014, 1, 1)
+  DF_CURRENT_PERIOD_END_AT = Date.new(2014, 12, 31)
+
+  def self.current_period_start_at
+    setting = Setting.find_by_key('current_period_start_at')
+    value = setting ? setting.value : DF_CURRENT_PERIOD_START_AT
+    Date.strptime(value, I18n.t('date.formats.default'))
   end
 
-  def current_period_start_at=(date_string)
-    Setting.find_by_key(:current_period_start_at).value = date_string
+  def self.current_period_start_at=(date)
+    setting = Setting.find_by_key('current_period_start_at')
+    unless setting
+      setting = Setting.new
+      setting.key = 'current_period_start_at'
+    end
+    setting.value = I18n.l(date)
+    setting.save
   end
 
-  def current_period_end_at
-    Setting.find_by_key(:current_period_end_at).value
+  def self.current_period_end_at
+    setting = Setting.find_by_key('current_period_end_at')
+    value = setting ? setting.value : DF_CURRENT_PERIOD_END_AT
+    Date.strptime(value, I18n.t('date.formats.default'))
   end
 
-  def current_period_end_at=(date_string)
-    Setting.find_by_key(:current_period_end_at).value = date_string
+  def self.current_period_end_at=(date)
+    setting = Setting.find_by_key('current_period_end_at')
+    unless setting
+      setting = Setting.new
+      setting.key = 'current_period_end_at'
+    end
+    setting.value = I18n.l(date)
+    setting.save
   end
 
 
