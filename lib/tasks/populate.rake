@@ -9,7 +9,11 @@ namespace :db do
     [Customer, Port, BoatOwner, TripBooking, TripDate, Trip, 
       CompositeTrip, Boat, BoatPrice, Captain, Attachment,
       GeneralInquiry, BoatInquiry, TripInquiry,
-      Partner].each(&:delete_all)
+      Partner, Setting].each(&:delete_all)
+    
+    Setting.current_period_start_at = Date.new(2014, 1, 1)
+    Setting.current_period_end_at = Date.new(2014, 12, 31)
+
     booking_number = "000"
     customer_number = 31200
     
@@ -277,5 +281,5 @@ namespace :db do
     b.created_at = 2.years.ago..Time.now
     b.active = true
     b.color = "##{rand(2**24).to_s(16).rjust(6, '0')}"     
-  end  
+  end
 end
