@@ -135,7 +135,7 @@ class TripDate < Appointment#ActiveRecord::Base
     unless new_record?
       scope = scope.where('id != ?', id)
     end
-    if scope.any?
+    if scope.all.any?
       errors.add(:trip, "Dieser Teiltörn eines Etappentörns hat bereits einen Termin")
     end
   end
