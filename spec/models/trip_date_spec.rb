@@ -217,6 +217,25 @@ describe TripDate do
         TripDate.effective.should_not include(deferred_trip_date)
       end
     end
+
+    describe ".in_current_period" do
+      let!(:start_at) { create(:setting, key: 'current_period_start_at', value: I18n.l(Date.new(2014, 1, 1))) }
+      let!(:end_at) { create(:setting, key: 'current_period_end_at', value: I18n.l(Date.new(2014, 12, 31))) }
+      let(:date_completely_in_current_period) { create(:trip_date, start_at: DateTime.new(2014, 1, 2), end_at: DateTime.new(2014, 1, 5)) }
+      let(:date_starting_in_current_period) { create(:trip_date, start_at: DateTime.new(2014, 12, 30), end_at: DateTime.new(2015, 1, 5)) }
+      let(:date_ending_in_current_period) { create(:trip_date, start_at: DateTime.new(2013, 12, 30), end_at: DateTime.new(2014, 1, 5)) }
+      let(:date_surrounding_current_period) { create(:trip_date, start_at: DateTime.new(2013, 12, 30), end_at: DateTime.new(2015, 1, 5)) }
+      let(:date_not_in_current_period) { create(:trip_date, start_at: DateTime.new(2013, 1, 5), end_at: DateTime.new(2013, 1, 8)) }
+      it "should include trip dates which partially fall into the current period" do
+        [date_completely_in_current_period, date_starting_in_current_period, 
+          date_ending_in_current_period, date_surrounding_current_period].each do |d|
+          TripDate.in_current_period.should include(d)
+        end
+      end
+      it "should not include trip dates which lie completely outside the current period" do
+        TripDate.in_current_period.should_not include(date_not_in_current_period)
+      end
+    end
   end
 
   describe "method overlapping" do
