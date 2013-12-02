@@ -95,18 +95,28 @@ describe "Trips" do
     end
 
     describe "trip dates" do
+      let!(:start_at) { create(:setting, key: 'current_period_start_at', value: I18n.l(Date.new(2014, 1, 1))) }
+      let!(:end_at) { create(:setting, key: 'current_period_end_at', value: I18n.l(Date.new(2014, 12, 31))) }
       let!(:date) { create(:trip_date, trip: trip, 
-        start_at: 2.days.from_now, end_at: 3.days.from_now) }
+        start_at: Setting.current_period_start_at + 1.day, end_at: Setting.current_period_start_at + 5.days) }
       let!(:deferred_date) { create(:deferred_trip_date, trip: trip,
-        start_at: 4.days.from_now, end_at: 6.days.from_now) }
+        start_at: Setting.current_period_start_at + 6.days, end_at: Setting.current_period_start_at + 9.days) }
+      let!(:date_outside_current_period) { create(:trip_date, trip: trip,
+        start_at: Setting.current_period_end_at + 2.days, end_at: Setting.current_period_end_at + 6.days) }
       before { visit trip_path(trip) }
       
-      it "should show the dates for the trips" do
+      it "should show the dates for the trips in the current period" do
         [date, deferred_date].each do |td|
           within "#trip-dates #trip-date-#{td.id}" do        
             page.should have_selector(".start-at", text: I18n.l(td.start_at))
             page.should have_selector(".end-at", text: I18n.l(td.end_at))
           end
+        end
+      end
+
+      it "should not show dates for the trips outside of the current period" do
+        within "#trip-dates" do
+          page.should_not have_selector("#trip-date-#{date_outside_current_period.id}")
         end
       end
 
