@@ -19,7 +19,7 @@ class Setting < ActiveRecord::Base
 
   def self.current_period_start_at
     setting = Setting.find_by_key('current_period_start_at')
-    value = setting ? setting.value : DF_CURRENT_PERIOD_START_AT
+    value = setting ? setting.value : I18n.l(DF_CURRENT_PERIOD_START_AT)
     Date.strptime(value, I18n.t('date.formats.default'))
   end
 
@@ -35,7 +35,7 @@ class Setting < ActiveRecord::Base
 
   def self.current_period_end_at
     setting = Setting.find_by_key('current_period_end_at')
-    value = setting ? setting.value : DF_CURRENT_PERIOD_END_AT
+    value = setting ? setting.value : I18n.l(DF_CURRENT_PERIOD_END_AT)
     Date.strptime(value, I18n.t('date.formats.default'))
   end
 
