@@ -28,8 +28,8 @@ class CalendarsController < ApplicationController
       first_date = Season.order('begin_date ASC').first.begin_date
       last_date = Season.unscoped.order('end_date DESC').first.end_date
     else
-      first_date = Date.new(Date.today.year, 1, 1)
-      last_date = Date.new(Date.today.year, 12, 31)
+      first_date = Setting.current_period_start_at
+      last_date = Setting.current_period_end_at
     end
 
     @ec_options = Array.new
