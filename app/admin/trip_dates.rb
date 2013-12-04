@@ -75,6 +75,7 @@ ActiveAdmin.register TripDate do
 
   form do |f|
     f.inputs do
+      f.input :trip
       f.input :start_at
       f.input :end_at
     end
