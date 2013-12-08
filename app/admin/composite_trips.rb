@@ -33,7 +33,7 @@ ActiveAdmin.register CompositeTrip do
         link_to "deaktivieren", deactivate_admin_composite_trip_path(ct), method: :put,
           confirm: "Etappentörn #{ct.name} wirklich deaktivieren?"
       else
-        link_to "aktivieren", activate_admin_composite_trip_path(t), method: :put,
+        link_to "aktivieren", activate_admin_composite_trip_path(ct), method: :put,
           confirm: "Sie haben die Törndaten korrekturgelesen "\
             "und möchten den Etappentörn #{ct.name} wirklich aktivieren?"
       end
