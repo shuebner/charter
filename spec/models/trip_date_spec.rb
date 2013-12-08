@@ -17,14 +17,6 @@ describe TripDate do
 
   it { should be_valid }
 
-  describe "accessible attributes" do
-    it "should not allow access to trip_id" do
-      expect do
-        TripDate.new(trip_id: 2)
-      end.should raise_error(ActiveModel::MassAssignmentSecurity::Error)
-    end
-  end
-
   describe "when trip date overlaps" do
     describe "with other trip date for the same boat" do
       let(:other_trip) { create(:trip, boat: trip.boat) }

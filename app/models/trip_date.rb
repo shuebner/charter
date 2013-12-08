@@ -2,6 +2,8 @@
 class TripDate < Appointment#ActiveRecord::Base
   acts_as_citier
 
+  attr_accessible :trip_id
+
   belongs_to :trip
 
   has_many :trip_bookings
