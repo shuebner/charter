@@ -136,7 +136,7 @@ describe "Trips" do
       end
 
       describe "links to trip inquiries" do
-        let!(:full_date) { create(:trip_date, trip: trip) }
+        let!(:full_date) { create(:trip_date, start_at: date.end_at + 1.day, end_at: date.end_at + 5.days, trip: trip) }
         let!(:full_booking) { create(:trip_booking, trip_date: full_date, 
           no_of_bunks: full_date.no_of_available_bunks) }
         before { visit trip_path(trip) }
