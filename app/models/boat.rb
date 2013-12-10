@@ -94,6 +94,9 @@ class Boat < ActiveRecord::Base
   scope :own,
     joins(:owner).where('boat_owners.is_self')
 
+  scope :active,
+    where(active: true)
+
   before_save do
     [:manufacturer, :model, :name, :engine_model].each do |a|
       self[a] = sanitize(self[a], tags: [])

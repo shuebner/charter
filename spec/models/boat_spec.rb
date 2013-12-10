@@ -376,6 +376,17 @@ describe Boat do
         Boat.own.should_not include(other_boat)
       end
     end
+
+    describe "active" do
+      let(:active_boat) { create(:boat, active: true) }
+      let(:inactive_boat) { create(:boat, active: false) }
+      it "should contain active boats" do
+        Boat.active.should include(active_boat)
+      end
+      it "should not contain inactive boats" do
+        Boat.active.should_not include(inactive_boat)
+      end
+    end
   end
 
   describe "default sort order" do
