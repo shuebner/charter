@@ -8,11 +8,11 @@ ActiveAdmin.register TripDate do
   filter :end_at
 
   scope :all do |dates|
-    dates
+    dates.includes [:trip]
   end
 
   scope :in_current_period, default: true do |dates|
-    dates.in_current_period
+    dates.in_current_period.includes [:trip]
   end
 
   member_action :defer, method: :put do
@@ -52,7 +52,7 @@ ActiveAdmin.register TripDate do
   end
 
   index do
-    column :trip
+    column :trip, sortable: 'trips.name'
     column :start_at
     column :end_at
     column(:deferred) do |td|
