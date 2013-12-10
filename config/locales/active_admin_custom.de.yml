@@ -3,3 +3,4 @@ de:
     scopes:
       all: "alle"
       effective: "in Kraft"
+      in_current_period: "aktuell"

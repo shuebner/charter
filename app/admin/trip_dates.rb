@@ -7,6 +7,14 @@ ActiveAdmin.register TripDate do
   filter :start_at
   filter :end_at
 
+  scope :all do |dates|
+    dates
+  end
+
+  scope :in_current_period, default: true do |dates|
+    dates.in_current_period
+  end
+
   member_action :defer, method: :put do
     trip_date = TripDate.find(params[:id])
     trip_date.defer!
