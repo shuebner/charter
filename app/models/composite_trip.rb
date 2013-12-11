@@ -29,4 +29,6 @@ class CompositeTrip < ActiveRecord::Base
   end
 
   scope :visible, where(active: true)
+
+  scope :active, where(active: true)
 end

@@ -87,5 +87,15 @@ describe CompositeTrip do
         CompositeTrip.visible.should_not include(inactive_ctrip)
       end
     end
+    describe "active" do
+      let(:active_ctrip) { create(:composite_trip) }
+      let(:inactive_ctrip) { create(:composite_trip, active: false) }
+      it "should include active composite trips" do
+        CompositeTrip.active.should include(active_ctrip)
+      end
+      it "should not include inactive composite trips" do
+        CompositeTrip.active.should_not include(inactive_ctrip)
+      end
+    end
   end
 end
