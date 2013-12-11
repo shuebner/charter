@@ -174,14 +174,13 @@ describe "Boats" do
       end
     end
 
-    describe "trip section" do
-      
-      describe "should show available trips for the boat" do
-        let!(:trip) { create(:trip, boat: boat) }
-        before { visit boat_path(boat) }      
-
-        it { should have_selector('h2', text: 'Törns') }
-        it { should have_content(trip.name) }
+    describe "trip section" do      
+      let!(:trip) { create(:trip, boat: boat) }
+      before { visit boat_path(boat) }    
+      it "should have a link to the trips of this boat" do
+        within '#content' do
+          page.should have_link('hier', href: trips_path(schiff: boat.slug))
+        end
       end
     end
 

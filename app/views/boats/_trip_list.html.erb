@@ -2,6 +2,6 @@
   <div id="boat-trips">
     <h2>Törns mit diesem Schiff</h2>
     Die auf diesem Schiff verfügbaren Törns finden Sie
-    <%= link_to 'hier', trips_path %>.
+    <%= link_to 'hier', trips_path(schiff: boat.slug) %>.
   </div>
 <% end %>

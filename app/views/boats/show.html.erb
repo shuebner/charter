@@ -11,7 +11,7 @@
       locals: { boat: @boat, seasons: @seasons, 
                 boat_price_types: @boat_price_types } %>   
     <%= render partial: 'trip_list',
-      locals: { trips: @boat.trips } %>
+      locals: { boat: @boat, trips: @boat.trips } %>
   </div>
   <div class="twocol-col2">
     <%= render partial: 'technical_data',

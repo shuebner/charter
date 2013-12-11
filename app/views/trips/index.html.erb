@@ -1,6 +1,7 @@
 <% provide(:title, "Törns") %>
 <h1>Kojencharter</h1>
-<p>Sie können folgende Törns als Gast bei uns mitfahren:</p>
+<% text = @per_boat ? "auf dem Schiff #{link_to(@boat.name, boat_path(@boat))}" : "bei uns" %>
+<p>Sie können folgende Törns als Gast <%=text.html_safe %> mitfahren:</p>
 <ul class="index-list trip-list">
   <%= render @composite_trips %>
   <%= render @single_trips %>

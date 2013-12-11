@@ -7,40 +7,81 @@ describe "Trips" do
   subject { page }
 
   describe "index page" do
-    let!(:inactive_trip) { create(:trip, active: false) }
-    let!(:composite_trip) { create(:composite_trip, name: "Finsterwald") }
-    let!(:previous_composite_trip) { create(:composite_trip, name: "Buntbärenwald" )}
-    let!(:trip_for_composite_trip) { create(:trip_for_composite_trip,
-      composite_trip: composite_trip) }
-    let!(:inactive_composite_trip) { create(:composite_trip, active: false) }
-    let!(:previous_trip) { create(:trip, name: "Azeroth") }
-    before { visit trips_path }
 
-    it "should display all active trips at the bottom ordered ascending by name" do
-      within "#content ul.trip-list" do
-        page.should have_selector('li:nth-child(3)', text: previous_trip.name)
-        page.should have_selector('li:nth-child(4)', text: trip.name)
+    describe "without parameter" do
+      let!(:inactive_trip) { create(:trip, active: false) }
+      let!(:composite_trip) { create(:composite_trip, name: "Finsterwald") }
+      let!(:previous_composite_trip) { create(:composite_trip, name: "Buntbärenwald" )}
+      let!(:trip_for_composite_trip) { create(:trip_for_composite_trip,
+        composite_trip: composite_trip) }
+      let!(:inactive_composite_trip) { create(:composite_trip, active: false) }
+      let!(:previous_trip) { create(:trip, name: "Azeroth") }
+      before { visit trips_path }
+
+      it "should display all active trips at the bottom ordered ascending by name" do
+        within "#content ul.trip-list" do
+          page.should have_selector('li:nth-child(3)', text: previous_trip.name)
+          page.should have_selector('li:nth-child(4)', text: trip.name)
+        end
+      end
+      it "should not display inactive trips" do
+        within "#content ul.trip-list" do
+          page.should_not have_selector('li', text: inactive_trip.name)
+        end
+      end
+      it "should not display trips which belong to a composite trip" do
+        within "#content ul.trip-list" do
+          page.should_not have_selector('>li', text: trip_for_composite_trip.name)
+        end
+      end
+      it "should display active composite trips at the top ascending by name" do
+        within "#content ul.trip-list" do
+          page.should have_selector('li:nth-child(1)', text: previous_composite_trip.name)
+          page.should have_selector('li:nth-child(2)', text: composite_trip.name)
+        end
+      end
+      it "should not display inactive composite trips" do
+        within "#content ul.trip-list" do
+          page.should_not have_selector('li', text: inactive_composite_trip.name)
+        end
       end
     end
-    it "should not display inactive trips" do
-      within "#content ul.trip-list" do
-        page.should_not have_selector('li', text: inactive_trip.name)
+
+    describe "with parameter boat" do
+      describe "which is invalid" do
+        no_bunk_charter_boat = FactoryGirl.create(:boat_charter_only_boat)
+        inactive_boat = FactoryGirl.create(:boat, active: false)
+        [ { reason: "because boat does not exist", slug: 'gibts nicht' },
+          { reason: "because boat is not available for bunk charter", slug: no_bunk_charter_boat.slug },
+          { reason: "because boat is inactive", slug: inactive_boat.slug }].each do |t|
+          describe t[:reason] do
+            it "should cause a routing error" do
+              expect do
+                visit trips_path(schiff: t[:slug])
+              end.to raise_error(ActionController::RoutingError)
+            end
+          end
+        end
       end
-    end
-    it "should not display trips which belong to a composite trip" do
-      within "#content ul.trip-list" do
-        page.should_not have_selector('>li', text: trip_for_composite_trip.name)
-      end
-    end
-    it "should display active composite trips at the top ascending by name" do
-      within "#content ul.trip-list" do
-        page.should have_selector('li:nth-child(1)', text: previous_composite_trip.name)
-        page.should have_selector('li:nth-child(2)', text: composite_trip.name)
-      end
-    end
-    it "should not display inactive composite trips" do
-      within "#content ul.trip-list" do
-        page.should_not have_selector('li', text: inactive_composite_trip.name)
+
+      describe "for valid boat" do
+        let!(:trip_with_other_boat) { create(:trip) }
+        before { visit trips_path(schiff: trip.boat.slug) }
+        it "should show trips with this boat" do
+          within '#content ul.trip-list' do
+            page.should have_selector('li', text: trip.name)
+          end        
+        end
+        it "should not show trips with other boats" do
+          within '#content ul.trip-list' do
+            page.should_not have_selector('li', text: trip_with_other_boat.name)
+          end
+        end
+        it "should link to the boat in question" do
+          within '#content' do
+            page.should have_link(trip.boat.name, href: boat_path(trip.boat))
+          end
+        end
       end
     end
   end
