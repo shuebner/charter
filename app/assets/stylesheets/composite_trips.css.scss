@@ -18,7 +18,11 @@ table.legs {
   text-align: left;
   td, th {
     padding: 0.5em 1.5em 0 0;
-  }  
+    &#name {
+      min-width: 60%;
+      max-width: 60%;      
+    }
+  }
 }
 
 ul.leg-list {
