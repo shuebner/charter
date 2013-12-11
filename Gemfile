@@ -36,7 +36,6 @@ group :test do
   gem 'spork', '0.9.0'
   gem 'factory_girl_rails', '1.4.0'
   gem 'email_spec'
-  gem 'database_cleaner'
 end
 
 group :development, :test do

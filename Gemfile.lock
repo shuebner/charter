@@ -79,7 +79,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
-    database_cleaner (1.2.0)
     delocalize (0.3.2)
       rails (>= 3.0, < 4)
     devise (3.2.2)
@@ -264,7 +263,6 @@ DEPENDENCIES
   capybara (= 1.1.2)
   citier
   coffee-rails (~> 3.2.1)
-  database_cleaner
   delocalize
   dragonfly (~> 0.9.12)
   email_spec

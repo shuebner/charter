@@ -1,6 +1,5 @@
 # encoding: utf-8
 require 'spec_helper'
-require 'database_cleaner'
 
 describe "Trips" do
 
