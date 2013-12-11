@@ -2,7 +2,7 @@
 ActiveAdmin.register TripDate do
   menu parent: I18n.t("trip_data")
 
-  config.sort_order = 'start_at'
+  config.sort_order = 'start_at_asc'
   filter :trip
   filter :start_at
   filter :end_at
