@@ -69,10 +69,40 @@ describe "StaticPages" do
       page.should have_selector('h1', text: 'Segeln auf der Ostsee')
     end
 
-    it "should contain buttons directly to boat charter and bunk charter" do
+    it "should contain button directly to boat charter" do
       within('#content') do
-        page.should have_selector('a', text: 'Kojencharter')
-        page.should have_selector('a', text: 'Schiffscharter')
+        page.should have_link('Schiffscharter', href: boats_path)
+      end
+    end
+
+    it "should contain button directly to bunk charter" do
+      within('#content') do
+        page.should have_link('Kojencharter', href: trips_path)
+      end
+    end
+
+    describe "when there are composite trips" do
+      let!(:ctrip) { create(:composite_trip) }
+      let!(:ctrip_leg) { create(:trip, composite_trip: ctrip) }
+      let!(:ctrip_leg_date) { create(:trip_date, trip: ctrip_leg) }
+      before { visit root_path }
+      it "should contain buttons directly to the active composite trips" do
+        within('#content') do
+          page.should have_link(ctrip.name, href: composite_trip_path(ctrip))
+        end
+      end
+
+      describe "which are inactive" do
+        before do 
+          ctrip.deactivate!
+          ctrip.save!
+          visit root_path
+        end
+        it "should not contain buttons to inactive composite trips" do
+          within('#content') do
+            page.should_not have_link(ctrip.name, href: composite_trip_path(ctrip))
+          end
+        end
       end
     end
   end
