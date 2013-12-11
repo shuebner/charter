@@ -1,7 +1,9 @@
 # encoding: utf-8
 require 'spec_helper'
+require 'database_cleaner'
 
 describe "Trips" do
+
   let!(:trip) { create(:trip, name: "Zamonien") }
 
   subject { page }
@@ -47,19 +49,17 @@ describe "Trips" do
       end
     end
 
-    describe "with parameter boat" do
-      describe "which is invalid" do
-        no_bunk_charter_boat = FactoryGirl.create(:boat_charter_only_boat)
-        inactive_boat = FactoryGirl.create(:boat, active: false)
-        [ { reason: "because boat does not exist", slug: 'gibts nicht' },
-          { reason: "because boat is not available for bunk charter", slug: no_bunk_charter_boat.slug },
-          { reason: "because boat is inactive", slug: inactive_boat.slug }].each do |t|
-          describe t[:reason] do
-            it "should cause a routing error" do
-              expect do
-                visit trips_path(schiff: t[:slug])
-              end.to raise_error(ActionController::RoutingError)
-            end
+    describe "with parameter boat" do        
+      describe "which is invalid" do        
+        let(:no_bunk_charter_boat) { FactoryGirl.create(:boat_charter_only_boat) }
+        let(:inactive_boat) { FactoryGirl.create(:boat, active: false) }
+        it "should cause a routing error" do
+          [ { reason: "because boat does not exist", slug: 'gibts nicht' },
+            { reason: "because boat is not available for bunk charter", slug: no_bunk_charter_boat.slug },
+            { reason: "because boat is inactive", slug: inactive_boat.slug }].each do |t|    
+            expect do
+              visit trips_path(schiff: t[:slug])
+            end.to raise_error(ActionController::RoutingError)
           end
         end
       end
@@ -87,7 +87,6 @@ describe "Trips" do
   end
 
   describe "show page" do
-    
     describe "with invalid parameters" do
       describe "when trip does not exist" do
         it "should raise a routing error" do
