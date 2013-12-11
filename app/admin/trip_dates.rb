@@ -3,16 +3,18 @@ ActiveAdmin.register TripDate do
   menu parent: I18n.t("trip_data")
 
   config.sort_order = 'start_at_asc'
+  filter :trip_boat_slug, label: I18n.t("activerecord.models.boat.one"), as: :select,
+    collection: Proc.new { Boat.bunk_charter_only.map { |b| [b.display_name, b.slug] } }
   filter :trip
   filter :start_at
   filter :end_at
 
   scope :all do |dates|
-    dates.includes [:trip]
+    dates.includes [{ trip: :boat }]
   end
 
   scope :in_current_period, default: true do |dates|
-    dates.in_current_period.includes [:trip]
+    dates.in_current_period.includes [{ trip: :boat }]
   end
 
   member_action :defer, method: :put do
@@ -53,6 +55,9 @@ ActiveAdmin.register TripDate do
 
   index do
     column :trip, sortable: 'trips.name'
+    column I18n.t("activerecord.models.boat.one"), sortable: 'boats.name' do |td| 
+      link_to td.trip.boat.name, admin_boat_path(td.trip.boat)
+    end
     column :start_at
     column :end_at
     column(:deferred) do |td|
@@ -73,6 +78,7 @@ ActiveAdmin.register TripDate do
   show title: :display_name_with_trip do |td|
     attributes_table do
       row :trip
+      row(I18n.t("activerecord.models.boat.one")) { |td| td.trip.boat.display_name }
       row :start_at
       row :end_at
       row(:deferred) do |td|
