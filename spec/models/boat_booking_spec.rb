@@ -204,6 +204,20 @@ describe BoatBooking do
         BoatBooking.effective.should_not include(cancelled_booking)
       end
     end
+    describe ".in_current_period" do
+      let!(:current_period_start_at) { create(:setting, key: 'current_period_start_at', value: I18n.l(Date.new(2014, 1, 1))) }
+      let!(:current_period_end_at) { create(:setting, key: 'current_period_end_at', value: I18n.l(Date.new(2014, 12, 31))) }      
+      let(:booking_in_current_period) { create(:boat_booking, 
+        start_at: Date.new(2014, 1, 2), end_at: Date.new(2014, 1, 20)) }
+      let(:booking_not_in_current_period) { create(:boat_booking, 
+        start_at: Date.new(2015, 1, 2), end_at: Date.new(2015, 1, 20)) }
+      it "should contain boat bookings within the current period" do
+        BoatBooking.in_current_period.should include(booking_in_current_period)
+      end
+      it "should not contain boat bookings outside of the current period" do
+        BoatBooking.in_current_period.should_not include(booking_not_in_current_period)
+      end
+    end
   end
 
   describe "method overlapping" do    

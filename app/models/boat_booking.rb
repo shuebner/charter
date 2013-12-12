@@ -54,6 +54,12 @@ class BoatBooking < Appointment
     where('NOT cancelled')
   end
 
+  def self.in_current_period
+    where("DATEDIFF(start_at, :current_period_end_at) * DATEDIFF(:current_period_start_at, end_at) >= 0", 
+        { current_period_start_at: Setting.current_period_start_at, 
+          current_period_end_at: Setting.current_period_end_at })
+  end
+
   def self.overlapping(reservation)
     if reservation.instance_of?(BoatBooking)
       scope = effective.where("TIMEDIFF(start_at, :end_at) * TIMEDIFF(:start_at, end_at) >= 0", 
