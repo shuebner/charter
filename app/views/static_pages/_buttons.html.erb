@@ -1,7 +1,7 @@
 <ul class="home-button-list clearfix">
   <% composite_trips.each do |ct| %>
     <li>
-      <%= block_link_to composite_trip_path(ct) do %>
+      <%= block_link_to composite_trip_path(ct), { class: 'important' } do %>
         <h2><%= ct.name %></h2>
         <p>Seien Sie bei einer Etappe dieses mehrwöchigen Törns dabei</p>
       <% end %>
