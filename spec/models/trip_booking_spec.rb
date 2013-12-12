@@ -123,14 +123,32 @@ describe TripBooking do
     its(:slug) { should == booking.number.parameterize }
   end
 
-  describe "scope effective" do
-    let!(:effective_booking) { create(:trip_booking) }
-    let!(:cancelled_booking) { create(:trip_booking, cancelled_at: Time.now) }
-    it "should show effective bookings" do
-      TripBooking.effective.should include(effective_booking)
+  describe "scope" do
+    describe "effective" do
+      let!(:effective_booking) { create(:trip_booking) }
+      let!(:cancelled_booking) { create(:trip_booking, cancelled_at: Time.now) }
+      it "should show effective bookings" do
+        TripBooking.effective.should include(effective_booking)
+      end
+      it "should not show cancelled bookings" do
+        TripBooking.effective.should_not include(cancelled_booking)
+      end
     end
-    it "should not show cancelled bookings" do
-      TripBooking.effective.should_not include(cancelled_booking)
+    describe "in current period" do
+      let!(:start_at) { create(:setting, key: 'current_period_start_at', value: I18n.l(Date.new(2014, 1, 1))) }
+      let!(:end_at) { create(:setting, key: 'current_period_end_at', value: I18n.l(Date.new(2014, 12, 31))) }
+      let(:date_in_current_period) { create(:trip_date, 
+        start_at: I18n.l(Date.new(2014, 1, 2)), end_at: I18n.l(Date.new(2014, 1, 20))) }
+      let(:booking_in_current_period) { create(:trip_booking, trip_date: date_in_current_period)}
+      let(:date_not_in_current_period) { create(:trip_date, 
+        start_at: I18n.l(Date.new(2015, 1, 2)), end_at: I18n.l(Date.new(2015, 1, 20))) }
+      let(:booking_not_in_current_period) { create(:trip_booking, trip_date: date_not_in_current_period) }
+      it "should contain trip bookings to trip dates within the current period" do
+        TripBooking.in_current_period.should include(booking_in_current_period)
+      end
+      it "should not contain trip bookings to trip dates outside of the current period" do
+        TripBooking.in_current_period.should_not include(booking_not_in_current_period)
+      end
     end
   end
 

@@ -60,6 +60,8 @@ class TripBooking < ActiveRecord::Base
   scope :effective, 
     where("cancelled_at IS NULL")
 
+  scope :in_current_period,
+    joins(:trip_date).merge(TripDate.in_current_period)
 
   def cancel!
     unless cancelled?
