@@ -11,8 +11,16 @@ ActiveAdmin.register BoatBooking do
     bookings.includes [:customer]
   end
 
-  scope :effective, default: true do |bookings|
+  scope :effective do |bookings|
     bookings.effective.includes [:customer]
+  end
+
+  scope :in_current_period do |bookings|
+    bookings.in_current_period.includes [:customer]
+  end
+
+  scope :effective_in_current_period, default: true do |bookings|
+    bookings.effective.in_current_period.includes [:customer]
   end
 
   actions :all, except: [:destroy]
