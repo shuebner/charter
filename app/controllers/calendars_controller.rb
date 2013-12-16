@@ -3,7 +3,7 @@ class CalendarsController < ApplicationController
 
   def update_boat_calendar    
     # retrieve boats that are displayable in this calendar
-    @selectable_boats = Boat.own.boat_charter_only.visible.order('model ASC').
+    @selectable_boats = Boat.own.visible.order('model ASC').
       includes(:boat_bookings, :trip_dates)
     
     # retrieve previous selection in the form

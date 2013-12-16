@@ -41,12 +41,6 @@ describe "Calendar" do
     let!(:unchecked_boat_booking) { create(:boat_booking, boat: own_unchecked_boat,
       start_at: checked_boat_booking.start_at, end_at: checked_boat_booking.end_at) }
 
-    # create own boat which is not available for boat charter
-    let!(:own_no_boat_charter_boat) { create(:bunk_charter_only_boat, owner: myself) }
-    let!(:no_boat_charter_trip) { create(:trip, boat: own_no_boat_charter_boat) }
-    let!(:no_boat_charter_trip_date) { create(:trip_date, trip: no_boat_charter_trip,
-      start_at: checked_boat_booking.start_at, end_at: checked_boat_booking.end_at) }
-
     # create own inactive boat
     let!(:own_inactive_boat) { create(:boat, owner: myself, active: false) }
 
@@ -110,17 +104,13 @@ describe "Calendar" do
       describe "without parameters" do
         before { visit boat_calendar_path }
 
-        it "should show booked trip_dates of all own boats available for boat charter" do
+        it "should show booked trip_dates of all own boats" do
           page.should have_selector(".ec-trip_date-#{booked_trip_date.id}")
         end
 
-        it "should show boat bookings of all own boats available for boat charter" do
+        it "should show boat bookings of all own boats" do
           page.should have_selector(".ec-boat_booking-#{checked_boat_booking.id}")
           page.should have_selector(".ec-boat_booking-#{unchecked_boat_booking.id}")
-        end
-
-        it "should not show trip dates of any own boats not available for boat charter" do
-          page.should_not have_selector(".ec-trip_date-#{no_boat_charter_trip_date.id}")
         end
 
         it "should not show anything of any external boats" do
@@ -148,13 +138,9 @@ describe "Calendar" do
     describe "boat selection form" do
       before { select_boats }
 
-      it "should offer selection of own active boats available for boat charter" do
+      it "should offer selection of own active boats" do
         page.should have_selector("#schiffe_#{own_checked_boat.slug}")
         page.should have_selector("#schiffe_#{own_unchecked_boat.slug}")
-      end
-
-      it "should not offer selection of boats not available for boat charter" do
-        page.should_not have_selector("#schiffe_#{own_no_boat_charter_boat.slug}")
       end
 
       it "should not offer selection of inactive boats" do
