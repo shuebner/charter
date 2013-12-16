@@ -69,7 +69,7 @@ describe "Calendar" do
         end
       end
 
-      describe "if there are no seasons" do
+      describe "date scope" do
         before { visit boat_calendar_path }
         it "should show all months of the current period" do
           within '#content ol.calendar-list' do
@@ -82,28 +82,6 @@ describe "Calendar" do
           within '#content ol.calendar-list' do
             month_before = Setting.current_period_start_at - 1.month
             month_after = Setting.current_period_end_at + 1.month
-            [month_before, month_after].each do |d|
-              page.should_not have_selector('th.ec-month-name', text: "#{I18n.t('date.month_names')[d.month]} #{d.year}")
-            end
-          end
-        end
-      end
-
-      describe "if there are seasons" do
-        let!(:first_season) { create(:season, begin_date: Date.new(2014, 3, 5), end_date: Date.new(2014, 4, 15)) }
-        let!(:last_season) { create(:season, begin_date: Date.new(2014, 8, 1), end_date: Date.new(2014, 8, 30)) }
-        before { visit boat_calendar_path }
-        it "should show all months between the earliest and the latest season" do
-          within '#content ol.calendar-list' do
-            months_between(first_season.begin_date, last_season.end_date).each do |s|
-              page.should have_selector('th.ec-month-name', text: s)
-            end
-          end
-        end
-        it "should not show months before the earliest or after the latest season" do
-          within '#content ol.calendar-list' do
-            month_before = first_season.begin_date - 1.month
-            month_after = last_season.end_date + 1.month
             [month_before, month_after].each do |d|
               page.should_not have_selector('th.ec-month-name', text: "#{I18n.t('date.month_names')[d.month]} #{d.year}")
             end

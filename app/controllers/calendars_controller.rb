@@ -23,14 +23,9 @@ class CalendarsController < ApplicationController
     end
     apps = Appointment.where(id: app_ids)
 
-    # restrict the calender to the seasons if there are any, else the full year
-    if Season.all.any?
-      first_date = Season.order('begin_date ASC').first.begin_date
-      last_date = Season.unscoped.order('end_date DESC').first.end_date
-    else
-      first_date = Setting.current_period_start_at
-      last_date = Setting.current_period_end_at
-    end
+    # restrict the calender to the current period
+    first_date = Setting.current_period_start_at
+    last_date = Setting.current_period_end_at
 
     @ec_options = Array.new
 
