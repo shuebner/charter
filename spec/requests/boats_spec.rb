@@ -182,6 +182,32 @@ describe "Boats" do
           page.should have_link('hier', href: trips_path(schiff: boat.slug))
         end
       end
+
+      describe "when own boat is not available for boat charter" do
+        let(:myself) { create(:boat_owner, is_self: true) }
+        let(:own_boat) { create(:boat, owner: myself, available_for_boat_charter: false) }
+        let!(:trip) { create(:trip, boat: own_boat) }
+        before { visit boat_path(own_boat) }
+        it "should have a link to the calendar of this boat" do
+          within '#content #boat-trips' do
+            page.should have_link('Buchungskalender ansehen', 
+              href: boat_calendar_path(schiffe: { own_boat.slug => own_boat.slug }))
+          end
+        end
+      end
+
+      describe "when own boat is available for boat charter" do
+        let(:myself) { create(:boat_owner, is_self: true) }
+        let(:own_boat) { create(:boat, owner: myself, available_for_boat_charter: true) }
+        let!(:trip) { create(:trip, boat: own_boat) }
+        before { visit boat_path(own_boat) }
+        it "should not have a link to the calendar of this boat" do
+          within '#boat-trips' do
+            page.should_not have_link('Buchungskalender ansehen', 
+              href: boat_calendar_path(schiffe: { own_boat.slug => own_boat.slug }))
+          end
+        end
+      end
     end
 
     describe "should not show trips when none are available" do

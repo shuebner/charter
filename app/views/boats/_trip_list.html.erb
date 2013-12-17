@@ -1,7 +1,14 @@
 <% if trips.any? %>
   <div id="boat-trips">
     <h2>Törns mit diesem Schiff</h2>
-    Die auf diesem Schiff verfügbaren Törns finden Sie
-    <%= link_to 'hier', trips_path(schiff: boat.slug) %>.
+    <p>
+      Die auf diesem Schiff verfügbaren Törns finden Sie
+      <%= link_to 'hier', trips_path(schiff: boat.slug) %>.
+    </p>
+    <% if !boat.available_for_boat_charter %>
+      <p>
+        <%= link_to 'Buchungskalender ansehen', boat_calendar_path(schiffe: { boat.slug => boat.slug }) %>
+      </p>
+    <% end %>
   </div>
 <% end %>
