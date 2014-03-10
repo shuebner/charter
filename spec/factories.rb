@@ -237,4 +237,10 @@ FactoryGirl.define do
       sequence(:value) { |n| "#{I18n.l(Date.new(2013, 9, 30) + n.months)}" }
     end
   end
+
+  factory :blog_entry do
+    heading { Faker::Lorem.words.to_s }
+    text { Faker::Lorem.sentences(10).to_s }
+    active true
+  end
 end
