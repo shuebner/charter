@@ -8,6 +8,7 @@ describe BlogEntry do
 
   it { should respond_to(:heading) }
   it { should respond_to(:text) }
+  it { should respond_to(:images) }
   
   it { should be_valid }
 
@@ -29,4 +30,6 @@ describe BlogEntry do
   end
 
   it_should_behave_like "activatable", BlogEntry
+
+  it_should_behave_like "imageable", :blog_entry, :blog_entry_image
 end

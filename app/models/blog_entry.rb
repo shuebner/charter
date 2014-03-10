@@ -6,6 +6,9 @@ class BlogEntry < ActiveRecord::Base
 
   include Activatable
 
+  include Imageable
+  imageable_image_class_name "BlogEntryImage"
+
   validates :heading,
     presence: true
 

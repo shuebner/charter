@@ -158,6 +158,9 @@ FactoryGirl.define do
       factory :partner_image, class: PartnerImage do
         attachable { FactoryGirl.create(:partner) }
       end
+      factory :blog_entry_image, class: BlogEntryImage do
+        attachable { FactoryGirl.create(:blog_entry) }
+      end
     end
     factory :document, class: Document do
       attachment File.new("/home/sven/Dokumente/Anforderungen.pdf")
