@@ -9,6 +9,10 @@ class BlogEntry < ActiveRecord::Base
   include Imageable
   imageable_image_class_name "BlogEntryImage"
 
+  belongs_to :blog_category
+
+  alias :category :blog_category
+
   validates :heading,
     presence: true
 

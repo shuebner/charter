@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140310172439) do
+ActiveRecord::Schema.define(:version => 20140310173628) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -80,10 +80,12 @@ ActiveRecord::Schema.define(:version => 20140310172439) do
     t.string   "slug"
     t.text     "text"
     t.boolean  "active"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.integer  "blog_category_id"
   end
 
+  add_index "blog_entries", ["blog_category_id"], :name => "index_blog_entries_on_blog_category_id"
   add_index "blog_entries", ["slug"], :name => "index_blog_entries_on_slug"
 
   create_table "boat_bookings", :force => true do |t|

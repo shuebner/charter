@@ -2,13 +2,18 @@ require 'spec_helper'
 
 describe BlogEntry do
   
-  let(:entry) { build(:blog_entry) }
+  let(:category) { create(:blog_category) }
+  let(:entry) { build(:blog_entry, blog_category: category) }
 
   subject { entry }
 
   it { should respond_to(:heading) }
   it { should respond_to(:text) }
   it { should respond_to(:images) }
+  it { should respond_to(:blog_category) }
+  it { should respond_to(:category) }
+
+  its(:category) { should == category }
   
   it { should be_valid }
 
