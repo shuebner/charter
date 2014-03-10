@@ -246,4 +246,8 @@ FactoryGirl.define do
     text { Faker::Lorem.sentences(10).to_s }
     active true
   end
+
+  factory :blog_category do
+    name { Faker::Lorem.words.to_s }
+  end
 end
