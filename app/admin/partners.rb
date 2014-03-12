@@ -25,13 +25,19 @@ ActiveAdmin.register Partner do
     end
 
     panel t("activerecord.models.partner_image.one") do
-      attributes_table_for p.image do      
-        row :attachment_title
-        row "Bild" do |image|
-          image.nil? ? I18n.t('no_picture_available') :
-            image_tag(image.thumb('200x200').url)
+      attributes_table_for p.image do
+        if p.image
+          row :attachment_title
+          row I18n.t('activerecord.attributes.partner.image') do
+            p.image.nil? ? I18n.t('no_picture_available') :
+              image_tag(p.image.thumb('200x200').url)
+          end
+        else
+          row I18n.t('activerecord.attributes.partner.image') do
+            I18n.t('no_picture_available')
+          end
         end
-      end
+      end      
     end
   end
 
