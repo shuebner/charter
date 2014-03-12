@@ -83,6 +83,11 @@ describe "CompositeTrips" do
                 within("#content") { page.should have_content(trip1.send(a)) }
               end
             end
+            it "should include the price" do
+              within "#content li##{trip1.slug}" do
+                page.should have_content(number_to_currency(trip1.price))
+              end
+            end
           end
           describe "trip dates" do
             it "should include start and end" do
@@ -111,7 +116,7 @@ describe "CompositeTrips" do
                   end                  
                 end
               end
-            end
+            end            
           end
         end
       end

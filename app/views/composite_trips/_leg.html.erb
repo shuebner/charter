@@ -1,4 +1,4 @@
-<li>
+<li id="<%= leg.slug =%>">
   <h2><%= leg.name %></h2>
   <% if leg.trip_dates.any? %>
     <%= render partial: 'shared/trip_dates_table',
@@ -9,6 +9,7 @@
   <div class="twocol clearfix">
     <div class="twocol-col1">
       <p class="trip-description"><%= leg.description %></p>
+      <p>Preis: <%= number_to_currency(leg.price) %></p>
     </div>
     <div class="twocol-col2">
       <%= render partial: 'shared/thumb_gallery',
