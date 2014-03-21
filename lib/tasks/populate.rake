@@ -9,7 +9,7 @@ namespace :db do
     [Customer, Port, BoatOwner, TripBooking, TripDate, Trip, 
       CompositeTrip, Boat, BoatPrice, Captain, Attachment,
       GeneralInquiry, BoatInquiry, TripInquiry,
-      Partner, Setting].each(&:delete_all)
+      Partner, Setting, BlogCategory, BlogEntry].each(&:delete_all)
     
     Setting.current_period_start_at = Date.new(2014, 1, 1)
     Setting.current_period_end_at = Date.new(2014, 12, 31)
@@ -165,6 +165,33 @@ namespace :db do
         i.attachment_title = Populator.words(2..5)
         i.save!
       end        
+    end
+
+    BlogCategory.populate 3 do |c|
+      c.name = Faker::Name.name
+      c.slug = c.name.parameterize
+      c.created_at = 2.years.ago..Time.now
+      c.updated_at = c.created_at
+      BlogEntry.populate 7 do |e|
+        e.blog_category_id = c.id
+        e.heading = Populator.words(2..4)
+        e.text = Populator.sentences(3..20)
+        e.created_at = c.created_at..Time.now
+        e.updated_at = e.created_at..Time.now
+        if rand(1..10) >= 3
+          e.active = true
+        end
+      end
+    end
+
+    BlogEntry.all.each do |e|
+      rand(1..5).times do |n|
+        i = e.images.build
+        i.order = n + 1
+        i.attachment = [File.new("/home/sven/Bilder/HYS3-quer.jpg"), File.new("/home/sven/Bilder/HYS3.jpg")].sample
+        i.attachment_title = Populator.words(2..5)
+        i.save!
+      end
     end
 
     GeneralInquiry.populate 6 do |i|
