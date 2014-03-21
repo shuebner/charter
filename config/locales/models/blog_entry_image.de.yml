@@ -1,0 +1,6 @@
+de:
+  activerecord:
+    models:
+      blog_entry_image:
+        one: "Bild zum Blogeintrag"
+        other: "Bilder zum Blogeintrag"

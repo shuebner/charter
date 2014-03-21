@@ -2,7 +2,7 @@ class BlogEntry < ActiveRecord::Base
   extend FriendlyId
   friendly_id :heading, use: :slugged
   
-  attr_accessible :heading, :text
+  attr_accessible :heading, :text, :blog_category_id
 
   include Activatable
 

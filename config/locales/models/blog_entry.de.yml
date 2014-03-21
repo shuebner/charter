@@ -1,0 +1,9 @@
+de:
+  activerecord:
+    models:
+      blog_entry:
+        one: "Blogeintrag"
+        other: "Blogeinträge"
+    attributes:
+      blog_entry:
+        blog_category: "Rubrik"

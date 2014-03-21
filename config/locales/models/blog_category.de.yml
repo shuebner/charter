@@ -1,0 +1,6 @@
+de:
+  activerecord:
+    models:
+      blog_category:
+        one: "Blogrubrik"
+        other: "Blogrubriken"
