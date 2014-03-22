@@ -17,6 +17,10 @@ class BlogEntry < ActiveRecord::Base
 
   alias :category :blog_category
 
+  def name
+    heading
+  end
+
   validates :heading,
     presence: true
 

@@ -4,6 +4,8 @@ class BlogEntryComment < ActiveRecord::Base
   belongs_to :blog_entry
   alias :entry :blog_entry
 
+  delegate :category, to: :blog_entry
+
   validates :author,
     presence: true
 

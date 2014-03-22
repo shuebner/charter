@@ -38,6 +38,10 @@ describe BlogEntry do
 
   it_should_behave_like "imageable", :blog_entry, :blog_entry_image
 
+  describe "method name" do
+    its(:name) { should == entry.heading }
+  end
+
   describe "scope" do
     describe "active" do
       let!(:active_entry) { create(:blog_entry, active: true) }

@@ -9,7 +9,8 @@ namespace :db do
     [Customer, Port, BoatOwner, TripBooking, TripDate, Trip, 
       CompositeTrip, Boat, BoatPrice, Captain, Attachment,
       GeneralInquiry, BoatInquiry, TripInquiry,
-      Partner, Setting, BlogCategory, BlogEntry].each(&:delete_all)
+      Partner, Setting, BlogCategory, BlogEntry, 
+      BlogEntryComment].each(&:delete_all)
     
     Setting.current_period_start_at = Date.new(2014, 1, 1)
     Setting.current_period_end_at = Date.new(2014, 12, 31)
@@ -180,6 +181,13 @@ namespace :db do
         e.updated_at = e.created_at..Time.now
         if rand(1..10) >= 3
           e.active = true
+        end
+        BlogEntryComment.populate 0..7 do |comment|
+          comment.blog_entry_id = e.id
+          comment.author = Faker::Name.name
+          comment.text = Populator.sentences(1..9)
+          comment.created_at = e.created_at..Time.now
+          comment.updated_at = comment.created_at
         end
       end
     end

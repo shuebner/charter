@@ -1,0 +1,14 @@
+de:
+  activerecord:
+    models:
+      blog_entry_comment:
+        one: "Kommentar"
+        other: "Kommentare"
+    attributes:
+      blog_entry_comment:
+        author: "Autor"
+        text: "Text"
+        blog_category: "Rubrik"
+        category: "Rubrik"
+        blog_entry: "Blogeintrag"
+        entry: "Blogeintrag"
