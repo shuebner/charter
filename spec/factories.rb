@@ -242,6 +242,7 @@ FactoryGirl.define do
   end
 
   factory :blog_entry do
+    blog_category
     heading { Faker::Lorem.sentence(3) }
     text { Faker::Lorem.sentence(10) }
     active true
@@ -249,5 +250,11 @@ FactoryGirl.define do
 
   factory :blog_category do
     name { Faker::Lorem.sentence(3) }
+  end
+
+  factory :blog_entry_comment do
+    blog_entry
+    author { Faker::Name.name }
+    text { Faker::Lorem.sentence(10) }
   end
 end

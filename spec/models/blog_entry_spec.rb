@@ -47,4 +47,12 @@ describe BlogEntry do
       end
     end
   end
+
+  describe "BlogEntryComment association" do
+    let!(:comment1) { create(:blog_entry_comment, blog_entry: entry) }
+    let!(:comment2) { create(:blog_entry_comment, blog_entry: entry) }
+    it "should have the right comments" do
+      entry.comments.sort.should == [comment1, comment2].sort
+    end
+  end
 end

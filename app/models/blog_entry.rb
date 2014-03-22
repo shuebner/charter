@@ -11,6 +11,10 @@ class BlogEntry < ActiveRecord::Base
 
   belongs_to :blog_category
 
+  has_many :blog_entry_comments
+
+  alias :comments :blog_entry_comments
+
   alias :category :blog_category
 
   validates :heading,
