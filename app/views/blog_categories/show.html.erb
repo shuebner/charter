@@ -1,0 +1,43 @@
+<h1>Palve-Blog</h1>
+<div class="blog-categories">
+  <h2>Andere Rubriken</h2>
+  <% if @other_categories.any? %>
+    <ul class="blog-category-list">
+      <% @other_categories.each do |c| %>
+        <li><%= link_to c.name, blog_category_path(c) %></li>
+      <% end %>    
+    </ul>
+  <% else %>
+    keine anderen Rubriken verfügbar
+  <% end %>
+</div>
+<div class='current-category'>
+  <h2><%= @current_category.name %></h2>
+  <% if @current_entries.any? %>
+    <ul class="blog-entry-list">
+      <% @current_entries.each do |e| %>
+        <li>
+          <h3><%= e.heading %></h3>
+          <small>erstellt: <%= l(e.created_at) %>
+            <br/>
+            zuletzt bearbeitet: <%= l(e.updated_at) %>
+          </small>
+          <p class="blog-entry-text"><%= e.text %></p>
+          <div class="blog-entry-images clearfix">
+            <% e.images.each do |i| %>
+              <% thumb = i.thumb('100x100') %>
+              <div class="blog-entry-image" style="width: <%= thumb.width + 20 %>px">
+                <%= link_to i.thumb('1280x960>').url, target: '_blank' do
+                  image_tag(thumb.url, alt: i.title)
+                end %>
+              <%= i.title %>
+              </div>
+            <% end %>    
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    noch keine Einträge vorhanden
+  <% end %>
+</div>

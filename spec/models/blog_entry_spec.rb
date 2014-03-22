@@ -37,4 +37,14 @@ describe BlogEntry do
   it_should_behave_like "activatable", BlogEntry
 
   it_should_behave_like "imageable", :blog_entry, :blog_entry_image
+
+  describe "scope" do
+    describe "active" do
+      let!(:active_entry) { create(:blog_entry, active: true) }
+      let!(:inactive_entry) { create(:blog_entry, active: false) }
+      it "should return only active entries" do
+        BlogEntry.active.should == [active_entry]
+      end
+    end
+  end
 end

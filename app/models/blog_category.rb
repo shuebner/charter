@@ -17,6 +17,21 @@ class BlogCategory < ActiveRecord::Base
 
   before_destroy :no_blog_entries_exist
 
+  scope :by_time, order('updated_at DESC')
+
+  def self.latest
+    latest_entry = BlogEntry.order('updated_at DESC').limit(1).first
+    if latest_entry
+      latest_entry.blog_category
+    else
+      order('updated_at DESC').limit(1).first
+    end
+  end
+
+  def self.others(category)
+    where('id <> ?', category.id)
+  end
+
   private
   def no_blog_entries_exist
     unless entries.empty?

@@ -46,4 +46,43 @@ describe BlogCategory do
       end
     end
   end
+
+  describe "scope" do
+    describe "temporal" do
+
+      describe "if there are no categories" do
+        
+        it "latest should return nil" do
+          BlogCategory.latest.should be_nil
+        end
+        
+        it "by_time should return empty array" do
+          BlogCategory.by_time.should be_empty
+        end
+      end
+
+      describe "if there are categories" do
+        let!(:latest_category) { create(:blog_category) }
+        let!(:past_category) { create(:blog_category,
+          updated_at: latest_category.updated_at - 1.month) }
+        
+        it "latest should return the category with the most recently updated entry" do
+          BlogCategory.latest.should == latest_category
+        end
+
+        it "by_time should return all categories descending by updated_at" do
+          BlogCategory.by_time.should == 
+            [latest_category, past_category]
+        end
+      end
+    end
+  
+    describe "others" do
+      let!(:category) { create(:blog_category) }
+      let!(:other_category) { create(:blog_category) }
+      it "should return all categories except the one given" do
+        BlogCategory.others(category).should == [other_category]
+      end
+    end
+  end
 end

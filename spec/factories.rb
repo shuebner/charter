@@ -242,12 +242,12 @@ FactoryGirl.define do
   end
 
   factory :blog_entry do
-    heading { Faker::Lorem.words.to_s }
-    text { Faker::Lorem.sentences(10).to_s }
+    heading { Faker::Lorem.sentence(3) }
+    text { Faker::Lorem.sentence(10) }
     active true
   end
 
   factory :blog_category do
-    name { Faker::Lorem.words.to_s }
+    name { Faker::Lorem.sentence(3) }
   end
 end

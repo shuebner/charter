@@ -19,6 +19,8 @@ class BlogEntry < ActiveRecord::Base
   validates :text,
     presence: true
 
+  scope :active, where(active: true)
+
   before_save do
     [:heading, :text].each do |a|
       self[a] = sanitize(self[a], tags: [])

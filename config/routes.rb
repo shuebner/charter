@@ -15,6 +15,8 @@ Charter::Application.routes.draw do
 
     resources :composite_trips, only: [:show], path: "etappentoerns"
 
+    resources :blog_categories, only: [:index, :show], path: "blog"
+
     resources :captains, only: [:index], path: "skipper"
 
     resources :general_inquiries, only: [:new, :create], path: "allgemeine-anfragen"
