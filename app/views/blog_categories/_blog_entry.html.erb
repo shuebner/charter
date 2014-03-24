@@ -16,4 +16,4 @@
   <% end %>    
 </div>
 <%= render partial: 'blog_entry_comments',
-  locals: { comments: entry.comments.order('created_at DESC') } %>
+  locals: { comments: entry.comments } %>

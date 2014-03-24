@@ -8,8 +8,8 @@ class BlogCategoriesController < ApplicationController
 
   def show
     @current_category = BlogCategory.find_by_slug(params[:id]) || not_found
-    @current_entries = @current_category.blog_entries.active.order('updated_at DESC')
-      .includes(:blog_entry_comments)
+    @current_entries = @current_category.blog_entries.active.order('blog_entries.updated_at DESC')
+      .includes(:blog_entry_comments).order('blog_entry_comments.created_at DESC')
     @other_categories = BlogCategory.others(@current_category).by_time
   end
 end
