@@ -18,10 +18,10 @@
       <% @current_entries.each do |e| %>
         <li>
           <h3><%= e.heading %></h3>
-          <small>erstellt: <%= l(e.created_at) %>
+          <div class="blog-entry-date">erstellt am <%= l(e.created_at) %>
             <br/>
-            zuletzt bearbeitet: <%= l(e.updated_at) %>
-          </small>
+            zuletzt bearbeitet am <%= l(e.updated_at) %>
+          </div>
           <p class="blog-entry-text"><%= e.text %></p>
           <div class="blog-entry-images clearfix">
             <% e.images.each do |i| %>
