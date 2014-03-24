@@ -1,0 +1,19 @@
+<h3><%= entry.heading %></h3>
+<div class="blog-entry-date">erstellt am <%= l(entry.created_at) %>
+  <br/>
+  zuletzt bearbeitet am <%= l(entry.updated_at) %>
+</div>
+<p class="blog-entry-text"><%= entry.text %></p>
+<div class="blog-entry-images clearfix">
+  <% entry.images.each do |i| %>
+    <% thumb = i.thumb('100x100') %>
+    <div class="blog-entry-image" style="width: <%= thumb.width + 20 %>px">
+      <%= link_to i.thumb('1280x960>').url, target: '_blank' do
+        image_tag(thumb.url, alt: i.title)
+      end %>
+    <%= i.title %>
+    </div>
+  <% end %>    
+</div>
+<%= render partial: 'blog_entry_comments',
+  locals: { comments: entry.comments.order('created_at DESC') } %>

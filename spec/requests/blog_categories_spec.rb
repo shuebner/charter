@@ -49,6 +49,11 @@ describe "Blog" do
           updated_at: secondlatest_entry.updated_at + 1.day) }
         let!(:latest_entry_image) { create(:blog_entry_image, attachable: latest_entry) }
 
+        let!(:past_comment) { create(:blog_entry_comment, author: "past author",
+          blog_entry: latest_entry) }
+        let!(:latest_comment) { create(:blog_entry_comment, author: "latest author",
+          blog_entry: latest_entry, created_at: past_comment.created_at + 1.day) }
+
         let!(:deactivated_entry) { create(:blog_entry, blog_category: current_category,
           active: false) }
         
@@ -82,8 +87,29 @@ describe "Blog" do
           end
         end
 
-        it "should now show deactivated entries of the current category" do
+        it "should not show deactivated entries of the current category" do
           page.should_not have_selector('#content li', text: deactivated_entry.heading)
+        end
+
+        it "should show comments for the right entry descending by created_at" do
+          within '#content ul.blog-entry-list li:nth-child(1) ul.blog-entry-comment-list' do
+            page.should have_selector('li:nth-child(1)', text: latest_comment.author)
+            page.should have_selector('li:nth-child(2)', text: past_comment.author)
+          end
+        end
+
+        it "should show comments to every shown entry with author, text and created_at descending by created_at" do
+          within '#content ul.blog-entry-comment-list li:nth-child(1)' do
+            page.should have_content(latest_comment.author)
+            page.should have_content(latest_comment.text)
+            page.should have_content(I18n.l(latest_comment.created_at))
+          end
+        end
+
+        it "should show a message that there are no comments if there are none" do
+          within '#content ul.blog-entry-list li:nth-child(2) div.blog-entry-comments' do
+            page.should have_content("noch keine")
+          end
         end
         
         it "should not show entries of other categories" do

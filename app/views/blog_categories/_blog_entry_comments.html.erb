@@ -1,0 +1,12 @@
+<div class="blog-entry-comments">
+  <h4>Kommentare</h4>
+  <% if comments.any? %>
+    <ul class="blog-entry-comment-list">
+      <% comments.each do |c| %>
+        <%= render partial: 'blog_entry_comment', locals: { comment: c } %>
+      <% end %>
+    </ul>
+  <% else %>
+    noch keine Kommentare vorhanden
+  <% end %>
+</div>

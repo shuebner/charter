@@ -20,10 +20,26 @@ describe BlogEntryComment do
     end
     describe "when #{a.to_s} contains HTML" do
       before { comment[a] = "<p>Hallo<p>" }
-      it "shouldbe sanitized on save" do
+      it "should be sanitized on save" do
         comment.save!
         comment[a].should == "Hallo"
       end
+    end
+  end
+
+  describe "when author is too long" do
+    before { comment.author = "A" * 51 }
+    it { should_not be_valid }
+  end
+
+  describe "when text" do
+    describe "is too short" do
+      before { comment.text = "A" * 4 }
+      it { should_not be_valid }
+    end
+    describe "is too long" do
+      before { comment.text = "A" * 1001 }
+      it { should_not be_valid }
     end
   end
 end

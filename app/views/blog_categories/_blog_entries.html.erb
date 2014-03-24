@@ -1,0 +1,13 @@
+<div class="blog-entries">
+  <% if entries.any? %>
+    <ul class="blog-entry-list">
+      <% entries.each do |e| %>
+        <li>
+          <%= render partial: 'blog_entry', locals: { entry: e } %>
+        </li>        
+      <% end %>
+    </ul>
+  <% else %>
+    noch keine Einträge vorhanden
+  <% end %>
+</div>

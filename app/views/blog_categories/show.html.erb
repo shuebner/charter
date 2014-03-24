@@ -13,31 +13,5 @@
 </div>
 <div class='current-category'>
   <h2><%= @current_category.name %></h2>
-  <% if @current_entries.any? %>
-    <ul class="blog-entry-list">
-      <% @current_entries.each do |e| %>
-        <li>
-          <h3><%= e.heading %></h3>
-          <div class="blog-entry-date">erstellt am <%= l(e.created_at) %>
-            <br/>
-            zuletzt bearbeitet am <%= l(e.updated_at) %>
-          </div>
-          <p class="blog-entry-text"><%= e.text %></p>
-          <div class="blog-entry-images clearfix">
-            <% e.images.each do |i| %>
-              <% thumb = i.thumb('100x100') %>
-              <div class="blog-entry-image" style="width: <%= thumb.width + 20 %>px">
-                <%= link_to i.thumb('1280x960>').url, target: '_blank' do
-                  image_tag(thumb.url, alt: i.title)
-                end %>
-              <%= i.title %>
-              </div>
-            <% end %>    
-          </div>
-        </li>
-      <% end %>
-    </ul>
-  <% else %>
-    noch keine Einträge vorhanden
-  <% end %>
+  <%= render partial: 'blog_entries', locals: { entries: @current_entries } %>
 </div>

@@ -7,10 +7,12 @@ class BlogEntryComment < ActiveRecord::Base
   delegate :category, to: :blog_entry
 
   validates :author,
-    presence: true
+    presence: true,
+    length: { maximum: 50 }
 
   validates :text,
-    presence: true
+    presence: true,
+    length: { minimum: 5, maximum: 1000 }
 
   before_save do
     [:author, :text].each do |a|
