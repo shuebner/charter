@@ -1,5 +1,5 @@
 class BlogEntryComment < ActiveRecord::Base
-  attr_accessible :author, :text
+  attr_accessible :author, :text, :blog_entry_id
 
   belongs_to :blog_entry
   alias :entry :blog_entry

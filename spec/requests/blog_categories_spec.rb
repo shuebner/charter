@@ -111,6 +111,20 @@ describe "Blog" do
             page.should have_content("noch keine")
           end
         end
+
+        describe "a new comment link" do
+          it "should exist" do
+            within 'ul.blog-entry-list li:nth-child(1)' do
+              page.should have_link("neuen Kommentar")
+            end
+          end
+          it "should lead to the new comment page for the right blog entry" do            
+            within 'ul.blog-entry-list li:nth-child(1)' do
+              click_link "neuen Kommentar erstellen"
+            end
+            page.should have_selector('#content', text: latest_entry.heading)
+          end
+        end
         
         it "should not show entries of other categories" do
           within '#content' do

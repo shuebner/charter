@@ -1,0 +1,7 @@
+<h1>Kommentar zum Blogeintrag "<%= @entry.heading %>" erstellen</h1>
+<%= render partial: 'shared/blog_entry', locals: { entry: @entry, comments: @comments } %>
+<%= render partial: 'form',
+  locals: { 
+    entry: @entry,
+    cancel_path: blog_category_path(@entry.category), 
+    comment: @new_comment } %>

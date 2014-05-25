@@ -3,7 +3,9 @@
     <ul class="blog-entry-list">
       <% entries.each do |e| %>
         <li>
-          <%= render partial: 'blog_entry', locals: { entry: e } %>
+          <%= render partial: 'shared/blog_entry', locals: { entry: e } %>
+
+          <%= link_to "neuen Kommentar erstellen", new_blog_entry_comment_path(blogeintrag: e.slug) %>
         </li>        
       <% end %>
     </ul>

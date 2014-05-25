@@ -13,7 +13,8 @@
       end %>
     <%= i.title %>
     </div>
-  <% end %>    
+  <% end %>
 </div>
-<%= render partial: 'blog_entry_comments',
-  locals: { comments: entry.comments } %>
+<%= render partial: 'shared/blog_entry_comments',
+  locals: { 
+    comments: entry.comments } %>

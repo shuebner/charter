@@ -17,6 +17,8 @@ Charter::Application.routes.draw do
 
     resources :blog_categories, only: [:index, :show], path: "blog"
 
+    resources :blog_entry_comments, only: [:new, :create], path: "kommentare"
+
     resources :captains, only: [:index], path: "skipper"
 
     resources :general_inquiries, only: [:new, :create], path: "allgemeine-anfragen"

@@ -1,0 +1,12 @@
+<h2>Kommentar erstellen</h2>
+<%= semantic_form_for comment do |c| %>
+  <%= c.inputs do %>
+    <%= c.input :blog_entry_id, as: :hidden, value: entry.id %>
+    <%= c.input :author %>
+    <%= c.input :text %>
+  <% end %>
+  <%= c.actions do %>
+    <%= c.action :submit, label: "Erstellen" %>
+    <%= c.action :cancel, label: "Verwerfen", url: cancel_path %>
+  <% end %>
+<% end %>

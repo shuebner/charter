@@ -176,6 +176,7 @@ namespace :db do
       BlogEntry.populate 7 do |e|
         e.blog_category_id = c.id
         e.heading = Populator.words(2..4)
+        e.slug = e.heading.parameterize
         e.text = Populator.sentences(3..20)
         e.created_at = c.created_at..Time.now
         e.updated_at = e.created_at..Time.now

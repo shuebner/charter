@@ -1,0 +1,36 @@
+.blog-entry-date {      
+  font-size: 75%;
+}
+.blog-entry-images {
+  font-size: 75%;
+  font-style: italic;
+  text-align: center;
+  .blog-entry-image {
+    padding-bottom: 3px;
+    margin: 0 3px 3px 3px;
+    float: left;
+    img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      border: 1px solid black;
+    }
+  }
+}
+.blog-entry-comments {
+  padding-left: 2em;
+  font-size: 80%;
+  ul.blog-entry-comment-list {
+    padding-left: 0;
+    li {
+      border-bottom: none;
+    }
+  }
+  .comment-author, .comment-date {
+    font-style: italic;
+    margin-bottom: 0;
+  }
+  .comment-text {
+    margin-top: 0;
+  }
+}
