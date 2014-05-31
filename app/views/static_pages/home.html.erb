@@ -5,5 +5,14 @@
   <% if @page.heading %>
     <h2><%= @page.heading %></h2>
   <% end %>
-  <%= render partial: 'text_and_paragraphs', locals: { page: @page } %>
+  <% if @blog_entry %>
+    <div class="text">
+    <%= render partial: 'text_and_paragraphs', locals: { page: @page } %>
+    </div>
+    <div class="latest-blog">
+      <%= render partial: 'latest_blog', locals: { blog_entry: @blog_entry } %>
+    </div>
+  <% else %>
+    <%= render partial: 'text_and_paragraphs', locals: { page: @page } %>
+  <% end %>
 </div>

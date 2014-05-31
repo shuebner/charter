@@ -63,21 +63,23 @@ describe "StaticPages" do
 
   describe "Starting page" do
     let!(:start) { create(:static_page, title: 'Start') }
-    before { visit root_path }
-    
-    it "should be handled separately" do
-      page.should have_selector('h1', text: 'Segeln auf der Ostsee')
-    end
-
-    it "should contain button directly to boat charter" do
-      within('#content') do
-        page.should have_link('Schiffscharter', href: boats_path)
+    describe "in general" do
+      before { visit root_path }
+      
+      it "should be handled separately" do
+        page.should have_selector('h1', text: 'Segeln auf der Ostsee')
       end
-    end
 
-    it "should contain button directly to bunk charter" do
-      within('#content') do
-        page.should have_link('Kojencharter', href: trips_path)
+      it "should contain button directly to boat charter" do
+        within('#content') do
+          page.should have_link('Schiffscharter', href: boats_path)
+        end
+      end
+
+      it "should contain button directly to bunk charter" do
+        within('#content') do
+          page.should have_link('Kojencharter', href: trips_path)
+        end
       end
     end
 
@@ -102,6 +104,40 @@ describe "StaticPages" do
           within('#content') do
             page.should_not have_link(ctrip.name, href: composite_trip_path(ctrip))
           end
+        end
+      end
+    end
+
+    describe "when there is an active blog entry" do
+      let!(:latest_inactive_entry) { create(:blog_entry, active: false) }
+      let!(:latest_entry) { create(:blog_entry, active: true,
+        created_at: latest_inactive_entry.created_at - 1.day) }
+      let!(:second_latest_entry) { create(:blog_entry, active: true,
+        created_at: latest_entry.created_at - 1.day) }
+      before { visit root_path }
+      it "should show latest active blog entry" do
+        within '#content' do
+          page.should have_content(latest_entry.category.name)
+          page.should have_content(latest_entry.heading)
+        end
+      end
+      it "should have a link to the blog category with the latest entry" do
+        within '#content' do
+          page.should have_selector('a', text: "Blog", href: blog_category_path(latest_entry.category.name))
+        end
+      end
+      it "should not show other blog entries" do
+        within '#content' do
+          page.should_not have_content(second_latest_entry.heading)
+        end
+      end
+    end
+
+    describe "when there is no active blog entry" do
+      before { visit root_path }
+      it "should not show the page part with the blog at all" do
+        within "#content" do
+          page.should_not have_content("Blog")
         end
       end
     end

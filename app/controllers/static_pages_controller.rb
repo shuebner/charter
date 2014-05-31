@@ -7,5 +7,6 @@ class StaticPagesController < ApplicationController
   def home
     @page = StaticPage.find_by_slug('start') || not_found
     @composite_trips = CompositeTrip.active
+    @blog_entry = BlogEntry.active.latest
   end
 end

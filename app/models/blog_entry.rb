@@ -29,6 +29,10 @@ class BlogEntry < ActiveRecord::Base
 
   scope :active, where(active: true)
 
+  def self.latest
+    order('created_at DESC').limit(1).first
+  end
+
   before_save do
     [:heading, :text].each do |a|
       self[a] = sanitize(self[a], tags: [])

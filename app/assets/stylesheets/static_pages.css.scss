@@ -25,3 +25,20 @@ ul.home-button-list {
     width: 200px;
   }
 }
+
+div.text {
+  float: left;
+  margin-right: 3em;
+  width: 55%;
+}
+
+div.latest-blog {
+  h2 {
+    text-align: left;
+  }
+  h4 {
+    margin-bottom: 0;
+  }
+  float: left;
+  width: 35%;
+}

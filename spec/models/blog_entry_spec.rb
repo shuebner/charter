@@ -50,6 +50,15 @@ describe BlogEntry do
         BlogEntry.active.should == [active_entry]
       end
     end
+
+    describe "latest" do
+      let!(:secondlatest_entry) { create(:blog_entry) }
+      let!(:latest_entry) { create(:blog_entry, created_at: secondlatest_entry.created_at + 1.day) }
+      # in contrast to the latest category which is the one with the lastly updated entry
+      it "should return the entry lastly created" do
+        BlogEntry.latest.should.equal? latest_entry
+      end
+    end
   end
 
   describe "BlogEntryComment association" do

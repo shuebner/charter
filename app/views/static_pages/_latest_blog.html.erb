@@ -1,0 +1,6 @@
+<h2>Neuigkeiten aus dem Palve-Blog</h2>
+<h3>Rubrik: <%= blog_entry.category.name %></h3>
+<h4><%= blog_entry.heading %></h4>
+<div class="blog-entry-date">erstellt am: <%= l(blog_entry.created_at) %></div>
+<p><%= blog_entry.text[0..200] %>...</p>
+<%= link_to "weiterlesen im Blog...", blog_category_path(blog_entry.category) %>
