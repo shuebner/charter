@@ -5,7 +5,7 @@
         <li>
           <%= render partial: 'shared/blog_entry', locals: { entry: e } %>
 
-          <%= link_to "neuen Kommentar erstellen", new_blog_entry_comment_path(blogeintrag: e.slug) %>
+          <%#= link_to "neuen Kommentar erstellen", new_blog_entry_comment_path(blogeintrag: e.slug) %>
         </li>        
       <% end %>
     </ul>
