@@ -17,7 +17,7 @@ Charter::Application.routes.draw do
 
     get '/blog', to: redirect('/blog/')
 
-    # resources :blog_categories, only: [:index, :show], path: "blog"
+    resources :blog_categories, only: [:index, :show], path: "blog"
 
     # resources :blog_entry_comments, only: [:new, :create], path: "kommentare"
 
