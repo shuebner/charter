@@ -24,6 +24,8 @@ gem 'validates_timeliness', '~>3.0'
 gem 'citier'
 gem 'rails_sql_views', git: 'git://github.com/centresource/rails_sql_views'
 
+gem 'rack-reverse-proxy', :require => 'rack/reverse_proxy'
+
 
 # Gems used only for assets and not required
 # in production environments by default.

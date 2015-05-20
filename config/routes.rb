@@ -15,7 +15,9 @@ Charter::Application.routes.draw do
 
     resources :composite_trips, only: [:show], path: "etappentoerns"
 
-    resources :blog_categories, only: [:index, :show], path: "blog"
+    get '/blog', to: redirect('/blog/')
+
+    # resources :blog_categories, only: [:index, :show], path: "blog"
 
     # resources :blog_entry_comments, only: [:new, :create], path: "kommentare"
 
