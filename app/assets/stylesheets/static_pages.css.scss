@@ -2,6 +2,10 @@
 
 .static_page {
   text-align: justify;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+
   img {
     float: left;
     margin-right: 10px;
@@ -17,7 +21,7 @@
 
 // Home page buttons
 ul.home-button-list {
-  margin: 0;
+  margin-left: 0;
   padding: 0;
   li {
     margin-right: 1em;
@@ -27,18 +31,5 @@ ul.home-button-list {
 }
 
 div.text {
-  float: left;
-  margin-right: 3em;
-  width: 55%;
-}
-
-div.latest-blog {
-  h2 {
-    text-align: left;
-  }
-  h4 {
-    margin-bottom: 0;
-  }
-  float: left;
-  width: 35%;
+  clear: left;
 }
