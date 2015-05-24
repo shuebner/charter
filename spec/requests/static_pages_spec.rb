@@ -70,15 +70,9 @@ describe "StaticPages" do
         page.should have_selector('h1', text: 'Segeln auf der Ostsee')
       end
 
-      it "should contain button directly to boat charter" do
+      it "should contain button directly to blog" do
         within('#content') do
-          page.should have_link('Schiffscharter', href: boats_path)
-        end
-      end
-
-      it "should contain button directly to bunk charter" do
-        within('#content') do
-          page.should have_link('Kojencharter', href: trips_path)
+          page.should have_link('Blog', href: 'blog')
         end
       end
     end

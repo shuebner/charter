@@ -8,15 +8,9 @@
     </li>
   <% end %>
   <li>
-    <%= block_link_to boats_path do %>
-      <h2>Schiffscharter</h2>
-      <p>Segeln Sie selbst auf unseren Schiffen, wohin Sie möchten</p>
-    <% end %>
-  </li>
-  <li>
-    <%= block_link_to trips_path do %>
-      <h2>Kojencharter</h2>
-      <p>Seien Sie Gast auf einem unserer Segeltörns</p>
+    <%= block_link_to "blog", target: '_blank' do %>
+      <h2>Blog</h2>
+      <p>Verfolgen Sie das aktuelle Törngeschehen.</p>
     <% end %>
   </li>
 </ul>
