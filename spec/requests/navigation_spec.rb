@@ -9,19 +9,29 @@ describe "Navigation" do
   subject { page }
 
   describe "Link to the only boat" do
-    # Schiffseigner
-    let!(:myself) { create(:boat_owner, is_self: true) }
-    
-    # Hafen des Seitenbetreibers mit 1 sichtbarem Schiff
-    let!(:own_port_with_visible_boat) { create(:port, name: "Zamonien") }
-    let!(:own_visible_boat1) { create(:boat, port: own_port_with_visible_boat, 
-      owner: myself, name: "Adam 24") }
+    describe "when there is actually a boat" do
+      # Schiffseigner
+      let!(:myself) { create(:boat_owner, is_self: true) }
+      
+      # Hafen des Seitenbetreibers mit 1 sichtbarem Schiff
+      let!(:own_port_with_visible_boat) { create(:port, name: "Zamonien") }
+      let!(:own_visible_boat1) { create(:boat, port: own_port_with_visible_boat, 
+        owner: myself, name: "Adam 24") }
 
-    before { visit root_path }
+      before { visit root_path }
 
-    it "should contain a link to one of the boats (there should be only one" do
-      within 'nav' do
-        page.should have_link("Die Palve", href: boat_path(own_visible_boat1))
+      it "should contain a link to one of the boats (there should be only one" do
+        within 'nav' do
+          page.should have_link("Die Palve", href: boat_path(own_visible_boat1))
+        end
+      end
+    end
+    describe "when there is no boat" do
+      before { visit root_path }
+      it "should not be there" do
+        within 'nav' do
+          page.should_not have_link("Die Palve")
+        end
       end
     end
   end

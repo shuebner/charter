@@ -2,7 +2,11 @@
   <div id="nav-frame" class="clearfix">
     <ul>
       <li id="start"><%= link_to "Startseite", static_page_path("start") %></li>
-      <li id="boat"><%= link_to "Die Palve", boat_path(Boat.first) %></li>
+      <li id="boat">
+        <% if Boat.first %>
+          <%= link_to "Die Palve", boat_path(Boat.first) %>
+        <% end %>
+      </li>
       <li id="trips"><%= link_to "Törns", trips_path %>
         <ul class="menu-trip-list">
           <% CompositeTrip.visible.order('name ASC').each do |ctrip| %>

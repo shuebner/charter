@@ -9,7 +9,7 @@ Charter::Application.routes.draw do
     root to: 'static_pages#home'
     get '/start' => 'static_pages#home'
     
-    resources :boats, only: [:index, :show], path: "schiffe"
+    resources :boats, only: [:show], path: "schiffe"
 
     resources :trips, only: [:index, :show], path: "toerns"
 
