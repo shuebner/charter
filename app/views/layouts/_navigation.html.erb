@@ -2,19 +2,7 @@
   <div id="nav-frame" class="clearfix">
     <ul>
       <li id="start"><%= link_to "Startseite", static_page_path("start") %></li>
-      <li id="boats"><%= link_to "Schiffe", boats_path %>
-        <ul class="menu-port-list">
-          <% Port.own.with_visible_boat.concat(Port.external.with_visible_boat).each do |port| %>
-            <li><%= link_to "Standort #{port.name}", boats_path(hafen: port.slug) %>
-              <ul class="menu-boat-list">
-                <% port.boats.visible.each do |boat| %>
-                  <li><%= link_to boat.display_name, boat_path(boat) %></li>
-                <% end %>
-              </ul>
-            </li>
-          <% end %>
-        </ul>
-      </li>
+      <li id="boat"><%= link_to "Die Palve", boat_path(Boat.first) %></li>
       <li id="trips"><%= link_to "Törns", trips_path %>
         <ul class="menu-trip-list">
           <% CompositeTrip.visible.order('name ASC').each do |ctrip| %>
